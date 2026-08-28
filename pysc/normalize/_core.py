@@ -274,7 +274,20 @@ def resolve_variables(text, variables):
     return text
 
 
-def normalize_info(raw):
+# Per-platform info sentence limits (detection codes, e.g. 'F5' -> 3).
+# Populated from pysc.toml platform profiles via pysc.normalize.apply_platform_overrides;
+# empty by default so behavior matches the legacy engine byte-for-byte.
+INFO_SENTENCES_BY_PLATFORM = {}
+
+
+def _info_sentence_limit(platform_hint):
+    try:
+        return max(1, int(INFO_SENTENCES_BY_PLATFORM.get(platform_hint, 1)))
+    except (TypeError, ValueError):
+        return 1
+
+
+def normalize_info(raw, max_sentences=1):
     if not raw:
         return None
     s = raw.strip()
@@ -284,7 +297,10 @@ def normalize_info(raw):
     if s.startswith('This audit is written to dynamically identify if all paths are present in any order.'):
         s = s.rstrip('.') + '.'
         return f'"{s}"'
-    sentence = s.split('.')[0].strip()
+    if max_sentences > 1:
+        sentence = '.'.join(s.split('.')[:max_sentences]).strip()
+    else:
+        sentence = s.split('.')[0].strip()
     if not sentence:
         return None
     return f"\"{sentence}.\""
@@ -3042,7 +3058,7 @@ def emit(document, variables, platform_hint=''):
                 if k == "see_also":
                     pairs.append((k, f"\"{SEE_ALSO_REPLACEMENT}\""))
                 elif k == "info":
-                    info = normalize_info(v)
+                    info = normalize_info(v, _info_sentence_limit(platform_hint))
                     if info:
                         pairs.append((k, info))
                 elif k == "reference":
@@ -3080,7 +3096,7 @@ def emit(document, variables, platform_hint=''):
                 pairs.append((k, f"\"{SEE_ALSO_REPLACEMENT}\""))
 
             elif k == "info":
-                info = normalize_info(v)
+                info = normalize_info(v, _info_sentence_limit(platform_hint))
                 if info:
                     pairs.append((k, info))
 

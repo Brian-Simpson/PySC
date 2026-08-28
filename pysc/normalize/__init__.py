@@ -36,3 +36,34 @@ def reset_validation_summary():
 
 def print_validation_summary():
     return _core._print_validation_summary()
+
+
+# pysc.toml platform codes -> the engine's filename-detection codes
+_CONFIG_TO_DETECTION = {
+    "VMware": "VMware",
+    "MSSRV": "MSSRV",
+    "MSWRK": "MSWRK",
+    "RHEL": "RHEL",
+    "MSSQL": "SQL",
+    "NetIOS": "IOS",
+    "NetPAFW": "PAFW",
+    "NetNXOS": "NX-OS",
+    "NetF5": "F5",
+    "Azure": "MSAZ",
+    "NetASA": "ASA",
+    "AWS": "Amazon",
+}
+
+
+def apply_platform_overrides(cfg):
+    """Load per-platform normalize overrides (e.g. NetF5 info_sentences = 3)
+    from pysc.toml into the engine. Intentional divergence from the legacy
+    engine's fixed 1-sentence info — see tests/golden/KNOWN_DIFFS.md."""
+    overrides = {}
+    for code, profile in cfg.platforms().items():
+        sentences = profile.get("info_sentences")
+        detection = _CONFIG_TO_DETECTION.get(code)
+        if sentences and detection:
+            overrides[detection] = int(sentences)
+    _core.INFO_SENTENCES_BY_PLATFORM = overrides
+    return overrides

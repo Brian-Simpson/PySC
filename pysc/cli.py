@@ -57,6 +57,7 @@ def cmd_normalize(cfg, args):
     from pysc import normalize
 
     legacy = _legacy_session(cfg)
+    normalize.apply_platform_overrides(cfg)
     normalize.reset_validation_summary()
     try:
         target = args.input.strip().strip('"').strip("'")
@@ -152,6 +153,38 @@ def cmd_gap_platform(cfg, args):
             out = os.path.join(args.dir, f"NIST_Gap_Analysis_{stamp}.xlsx")
         export_workbook(analysis, out)
         print(f"Wrote {out}")
+
+
+def cmd_gap_f5_compare(cfg, args):
+    import os
+    import time
+    from pathlib import Path
+
+    from pysc.gap.engine import _find_baseline_path
+    from pysc.gap.f5compare import compare, splice_orphans, write_comparison_workbook
+
+    folder = Path(args.dir)
+    audit_files = sorted(p for p in folder.glob("*.audit") if p.is_file())
+    baseline_name = args.baseline
+    if not baseline_name:
+        baseline_path = cfg.baseline_path("NetF5")
+        baseline_name = baseline_path.name if baseline_path else None
+    baseline = _find_baseline_path(audit_files, baseline_name)
+    comparisons = [p for p in audit_files if p != baseline]
+
+    result = compare(baseline, comparisons)
+    print(f"Baseline  : {result['baseline_file']} ({result['baseline_active']} active F5 controls)")
+    for r in result["results"]:
+        print(f"  {r['file']}: active={r['active']} matching={r['matching']} orphaned={r['orphaned']}")
+
+    stamp = time.strftime("%y%m%d%H%M")
+    out = args.out or os.path.join(str(folder), f"Baseline_vs_CIS_Comparison_{stamp}.xlsx")
+    write_comparison_workbook(result, out)
+    print(f"Wrote {out}")
+
+    if args.splice_orphans and result["orphans"]:
+        spliced = splice_orphans(baseline, result["orphans"])
+        print(f"Wrote {spliced}")
 
 
 def cmd_gap_harvest(cfg, args):
@@ -415,6 +448,17 @@ def build_parser():
     gh.add_argument("--baseline", help="Baseline audit path for suppression (overrides --platform)")
     gh.add_argument("--out", help="Output path (default: <dir>\\normalized_custom_items.audit)")
     gh.set_defaults(func=cmd_gap_harvest)
+
+    gf = gap_sub.add_parser(
+        "f5-compare",
+        help="F5 baseline vs CIS structural diff by (f5_command, json_transform) signature",
+    )
+    gf.add_argument("--dir", required=True, help="Folder with the F5 baseline + CIS audits")
+    gf.add_argument("--baseline", help="Baseline filename (default: NetF5 profile from pysc.toml)")
+    gf.add_argument("--splice-orphans", action="store_true",
+                    help="Also write a baseline copy with orphaned controls spliced in")
+    gf.add_argument("--out", help="Comparison workbook path")
+    gf.set_defaults(func=cmd_gap_f5_compare)
 
     p = sub.add_parser("catalog", help="Generate controls catalog workbook for a folder")
     p.add_argument("input", nargs="?", help="Audit folder (default: vendor_inputs)")

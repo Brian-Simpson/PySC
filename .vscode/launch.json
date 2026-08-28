@@ -2,15 +2,39 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Normalize_f5",
-            "type": "python",
+            "name": "pysc: full pipeline (run)",
+            "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}\\Normalize_f5.py",
-            "args": [
-                "--input",
-                "${workspaceFolder}\\Audits\\f5"
-            ],
-            "cwd": "C:\\PySC",
+            "module": "pysc",
+            "args": ["run"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "pysc: enterprise reports (report all)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pysc",
+            "args": ["report", "all"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "pysc: normalize vendor inputs",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pysc",
+            "args": ["normalize", "${workspaceFolder}\\audit_inputs"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "pytest: full suite",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests", "-q"],
+            "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"
         }
     ]

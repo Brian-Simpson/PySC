@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-GAP_MSSRV = REPO_ROOT / "Gap" / "MSSRV"
+GAP_FIXTURES = REPO_ROOT / "tests" / "golden" / "gap_fixtures"
 
 from pysc.gap import analyze_folder  # noqa: E402
 from pysc.gap.engine import GapError, _covered_map  # noqa: E402
@@ -47,7 +47,7 @@ PARITY_FILES = [
 
 @pytest.mark.parametrize("name", PARITY_FILES)
 def test_active_extraction_matches_legacy(legacy_gap, name):
-    path = str(GAP_MSSRV / name)
+    path = str(GAP_FIXTURES / name)
     ours = extract_active_checks(path)
     theirs = legacy_gap.extract_audit_items(path)
     assert len(ours) == len(theirs)
@@ -58,7 +58,7 @@ def test_active_extraction_matches_legacy(legacy_gap, name):
 
 
 def test_inactive_extraction_matches_legacy(legacy_gap):
-    path = str(GAP_MSSRV / "MSSRV_Baseline.audit")
+    path = str(GAP_FIXTURES / "MSSRV_Baseline.audit")
     ours = extract_inactive_checks(path)
     theirs = legacy_gap.extract_inactive_audit_items(path)
     assert len(ours) == len(theirs)
@@ -68,7 +68,7 @@ def test_inactive_extraction_matches_legacy(legacy_gap):
 
 
 def test_rollup_matches_legacy(legacy_gap, catalog):
-    path = str(GAP_MSSRV / "MSSRV_Baseline.audit")
+    path = str(GAP_FIXTURES / "MSSRV_Baseline.audit")
     items = extract_active_checks(path)
     target = catalog.base_controls("full")
     theirs = legacy_gap.analyze_single_file(items, target, catalog.parents)

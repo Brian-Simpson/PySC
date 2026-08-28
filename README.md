@@ -9,31 +9,64 @@ and producing enterprise compliance reporting.
 > in the Tenable console; scan results come back into this tooling as Excel
 > exports.
 
-## Status
-
-Under active modernization (see the phased plan). Current legacy entry points:
-
-| Script | Purpose |
-|---|---|
-| `ALL_AUDITS.py` | Canonical engine: normalize → catalog → merge → validate → gap analysis. No-arg run processes `actual_audit_inputs\` then `audit_inputs\`. |
-| `NIST_audit_Gap_Analysis.py` | Interactive OSCAL-catalog gap analysis over `Gap\<PLATFORM>\` folders. |
-| `Gap Controls.py` | Harvests gap-closing checks from CIS audits per a `controls.txt` list. |
-| `Normalize_f5.py` | F5-specific normalizer (being folded into the main engine). |
-| `compare_f5_baseline_vs_cis.py` | F5 baseline vs CIS structural diff. |
-
-`Normalize_AUDITS.py` is superseded by `ALL_AUDITS.py` and will be archived.
-
-## Data layout
-
-- `actual_audit_inputs\` — production HTH baselines (canonical)
-- `audit_inputs\` — vendor CIS/DISA source benchmarks (canonical)
-- `NIST_SP-800-53_rev5_catalog.json` — NIST OSCAL catalog (static reference)
-- `Gap\`, `Audits\`, `Normal\`, `Normalization\` — legacy trees, being consolidated
-
 ## Setup
 
 ```powershell
 & "C:\Program Files\Python39\python.exe" -m pip install -r requirements.txt
 ```
 
-See `SECURITY_NOTE.md` for credential-handling rules.
+Configuration lives in `pysc.toml` (paths, normalize defaults, one
+`[platforms.<CODE>]` profile per platform declaring its production baseline).
+Docker Desktop (with the `tenable/audit-utils` image) enables check_audit
+validation during normalization; without it, validation is skipped.
+
+## CLI
+
+All commands: `python -m pysc <command>` (run from `C:\PySC`).
+
+| Command | Purpose |
+|---|---|
+| `normalize <file\|folder> [--strict] [--engine legacy]` | Normalize vendor audits into HTH baseline format (golden-tested engine; catalog + merge follow automatically on folder runs) |
+| `run` | Full legacy-equivalent pipeline: production + vendor inputs, catalogs, crosswalk, merge, production gap analysis |
+| `gap platform --dir <folder> [--platform CODE]` | Baseline vs candidates for one platform against the OSCAL catalog, incl. recoverable coverage from commented-out checks |
+| `gap production [--stage]` | Whole-estate reference gap analysis (legacy engine) |
+| `gap harvest --dir <folder> [--platform CODE]` | Pull gap-closing checks from candidate audits into a paste-ready `.audit` |
+| `gap f5-compare --dir <folder> [--splice-orphans]` | F5 structural diff by (f5_command, json_transform) signature |
+| `report matrix\|html\|all` | Unified_Compliance_Matrix workbook and/or self-contained HTML dashboard into `Output\`; records a history snapshot |
+| `history show\|export` | Per-run per-platform coverage trend from `pysc_history.sqlite` |
+| `maturity --audit <baseline> --pass-rates <export.xlsx> [--apply]` | Propose/apply comment-outs for checks under the fleet pass-rate threshold (default 90%) |
+| `catalog`, `match-catalogs`, `validate`, `threat-intel` | Catalog/crosswalk/Docker-validation utilities |
+
+## The maturity loop
+
+1. Normalize vendor benchmarks; merge into the HTH baseline (`pysc run`).
+2. Load the baseline into the Tenable console and scan.
+3. Export scan results to Excel (Description + Pass columns).
+4. `pysc maturity --audit <baseline> --pass-rates <export> --apply` comments
+   out checks failing fleet-wide.
+5. Commented checks surface as **recoverable coverage** in `pysc gap` — the
+   remediation queue for bringing them back.
+6. `pysc report all` publishes the executive workbook + dashboard and records
+   the trend snapshot.
+
+## Data layout
+
+- `actual_audit_inputs\` — production HTH baselines (canonical)
+- `audit_inputs\` — vendor CIS/DISA source benchmarks (canonical)
+- `Output\` — generated reports (git-ignored)
+- `NIST_SP-800-53_rev5_catalog.json` — NIST OSCAL catalog (static reference)
+- `pysc\` — the package (`pysc\_legacy\` holds the vendored parity oracle)
+- `tests\golden\` — byte-parity snapshots; see `KNOWN_DIFFS.md` for the
+  documented divergences (no undocumented diff passes the suite)
+- `Archive\2026-08_legacy\` — superseded scripts and trees (git-ignored,
+  preserved on disk; also in git history before commit d059730's follow-up)
+
+`ALL_AUDITS.py` and `NIST_audit_Gap_Analysis.py` remain at the root as parity
+oracles; they archive after two clean production cycles through `pysc run`.
+
+Legacy-only inputs that never existed in this workspace and are NOT required
+by the package: `Baseline_-_MSSRV.csv`, `Merged_2607.csv`,
+`MSSRV_Mature.xlsx`/`MSWRK_Mature.xlsx` (replaced by `pysc maturity`
+pass-rate exports).
+
+See `SECURITY_NOTE.md` for credential-handling rules and keys pending rotation.

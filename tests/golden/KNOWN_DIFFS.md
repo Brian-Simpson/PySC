@@ -2,7 +2,15 @@
 
 ## Normalization (pysc/normalize/_core.py vs pysc/_legacy/all_audits.py)
 
-None. Byte-identical on every golden input.
+- **NetF5 keeps 3-sentence info summaries** (approved plan ruling, replacing
+  the retired Normalize_f5.py's separate semantics). The engine default is
+  unchanged — 1 sentence, byte-identical to legacy, enforced by the golden
+  suite — but the `pysc normalize` CLI applies `[platforms.NetF5]
+  info_sentences = 3` from pysc.toml, so F5 outputs produced via the CLI
+  differ from the golden snapshot **in info lines only**
+  (tests/test_f5_override.py codifies exactly that).
+
+Otherwise byte-identical on every golden input.
 
 ## Platform gap analysis (pysc/gap vs NIST_audit_Gap_Analysis.py)
 
