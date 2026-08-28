@@ -239,6 +239,79 @@ def cmd_threat_intel(cfg, args):
     )
 
 
+def _enterprise_result(cfg):
+    from pysc.gap.enterprise import analyze_enterprise
+
+    result = analyze_enterprise(cfg)
+    for name in result.unmatched_candidates:
+        print(f"[-] No platform mapping for candidate: {name}")
+    return result
+
+
+def _history_store(cfg):
+    from pysc.history import HistoryStore
+
+    return HistoryStore(cfg.path("history_db"))
+
+
+def cmd_report(cfg, args):
+    import os
+    import time
+
+    result = _enterprise_result(cfg)
+    history = _history_store(cfg)
+    try:
+        if not args.no_snapshot:
+            run_id = history.record_enterprise_run(result, notes=f"pysc report {args.format}")
+            print(f"History snapshot recorded (run {run_id})")
+
+        out_dir = cfg.path("report_output")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        stamp = time.strftime("%y%m%d%H%M")
+
+        if args.format in ("matrix", "all"):
+            from pysc.report.matrix import build_matrix
+
+            out = args.out if (args.out and args.format == "matrix") else os.path.join(
+                str(out_dir), f"Unified_Compliance_Matrix_{stamp}.xlsx"
+            )
+            build_matrix(result, out, history=history)
+            print(f"Wrote {out}")
+
+        if args.format in ("html", "all"):
+            from pysc.report.html import build_dashboard
+
+            out = args.out if (args.out and args.format == "html") else os.path.join(
+                str(out_dir), f"dashboard_{stamp}.html"
+            )
+            build_dashboard(result, out, history=history)
+            print(f"Wrote {out}")
+    finally:
+        history.close()
+
+
+def cmd_history(cfg, args):
+    history = _history_store(cfg)
+    try:
+        if args.history_command == "show":
+            rows = history.platform_trend(args.platform)
+            if not rows:
+                print("No history recorded yet (run: pysc report all)")
+                return
+            print(f"{'Run':>4} {'Timestamp':<20} {'Platform':<10} "
+                  f"{'Covered':>8} {'Recov':>6} {'Total':>6} {'Cov %':>7}")
+            for run_id, ts, platform, covered, recoverable, total in rows:
+                pct = round((covered / total) * 100, 2) if total else 0
+                print(f"{run_id:>4} {ts:<20} {platform:<10} "
+                      f"{covered:>8} {recoverable:>6} {total:>6} {pct:>6}%")
+        elif args.history_command == "export":
+            out = args.out or "coverage_history.csv"
+            history.export_csv(out)
+            print(f"Wrote {out}")
+    finally:
+        history.close()
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="pysc",
@@ -321,6 +394,24 @@ def build_parser():
     p = sub.add_parser("threat-intel", help="Show or refresh the threat-intel cache")
     p.add_argument("--refresh", action="store_true")
     p.set_defaults(func=cmd_threat_intel)
+
+    p = sub.add_parser(
+        "report",
+        help="Enterprise compliance reports (Excel matrix, HTML dashboard) + history snapshot",
+    )
+    p.add_argument("format", choices=["matrix", "html", "all"], help="Which report(s) to produce")
+    p.add_argument("--out", help="Output path (single-format runs only)")
+    p.add_argument("--no-snapshot", action="store_true", help="Skip recording a history snapshot")
+    p.set_defaults(func=cmd_report)
+
+    p = sub.add_parser("history", help="Coverage history (trend) inspection")
+    hist_sub = p.add_subparsers(dest="history_command", required=True)
+    hs = hist_sub.add_parser("show", help="Print per-run per-platform coverage")
+    hs.add_argument("--platform", help="Filter to one platform code")
+    hs.set_defaults(func=cmd_history)
+    he = hist_sub.add_parser("export", help="Export coverage history to CSV")
+    he.add_argument("--out", help="CSV path (default: coverage_history.csv)")
+    he.set_defaults(func=cmd_history)
 
     return parser
 

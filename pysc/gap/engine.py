@@ -182,6 +182,37 @@ def _find_baseline_path(audit_files, baseline_name):
     )
 
 
+def analyze_files(baseline_path, candidate_paths, catalog_path, profile="full", catalog=None):
+    """Gap analysis over an explicit baseline + candidate file list."""
+    if catalog is None:
+        catalog = OscalCatalog.load(catalog_path)
+
+    baseline_path = Path(baseline_path)
+    checks = extract_active_checks(str(baseline_path))
+    if not checks:
+        raise GapError(f"Baseline file {baseline_path.name} produced no checks")
+    baseline_fa = FileAnalysis(
+        baseline_path,
+        checks,
+        extract_inactive_checks(str(baseline_path)),
+        _covered_map(checks, catalog),
+        True,
+    )
+
+    candidates = []
+    for path in candidate_paths:
+        path = Path(path)
+        cand_checks = extract_active_checks(str(path))
+        if not cand_checks:
+            print(f"[-] Skipping {path.name}: no parsable checks")
+            continue
+        candidates.append(
+            FileAnalysis(path, cand_checks, [], _covered_map(cand_checks, catalog), False)
+        )
+
+    return PlatformGapAnalysis(catalog, baseline_fa, candidates, profile)
+
+
 def analyze_folder(folder, catalog_path, baseline_name=None, profile="full"):
     """Gap analysis over every .audit in a folder (one platform's worth)."""
     folder = Path(folder)
@@ -190,26 +221,5 @@ def analyze_folder(folder, catalog_path, baseline_name=None, profile="full"):
         raise GapError(f"No .audit files in {folder}")
 
     baseline_path = _find_baseline_path(audit_files, baseline_name)
-    catalog = OscalCatalog.load(catalog_path)
-
-    baseline_fa = None
-    candidates = []
-    for path in audit_files:
-        checks = extract_active_checks(str(path))
-        if not checks:
-            print(f"[-] Skipping {path.name}: no parsable checks")
-            continue
-        is_baseline = path == baseline_path
-        inactive = extract_inactive_checks(str(path)) if is_baseline else []
-        fa = FileAnalysis(
-            path, checks, inactive, _covered_map(checks, catalog), is_baseline
-        )
-        if is_baseline:
-            baseline_fa = fa
-        else:
-            candidates.append(fa)
-
-    if baseline_fa is None:
-        raise GapError(f"Baseline file {baseline_path.name} produced no checks")
-
-    return PlatformGapAnalysis(catalog, baseline_fa, candidates, profile)
+    candidates = [p for p in audit_files if p != baseline_path]
+    return analyze_files(baseline_path, candidates, catalog_path, profile)
