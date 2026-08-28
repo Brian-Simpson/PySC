@@ -103,7 +103,7 @@ def cmd_run(cfg, args):
     _run_legacy_main(cfg, argv)
 
 
-def cmd_gap(cfg, args):
+def cmd_gap_production(cfg, args):
     legacy = _legacy_session(cfg)
     try:
         if args.stage:
@@ -111,6 +111,71 @@ def cmd_gap(cfg, args):
         legacy.run_production_gap_analysis()
     finally:
         _finish_legacy(legacy)
+
+
+def cmd_gap_platform(cfg, args):
+    import time
+
+    from pysc.gap import analyze_folder
+    from pysc.gap.xlsx import export_workbook
+
+    baseline = args.baseline
+    if not baseline and args.platform:
+        baseline_path = cfg.baseline_path(args.platform)
+        if baseline_path is not None:
+            baseline = baseline_path.name
+
+    analysis = analyze_folder(
+        args.dir,
+        catalog_path=cfg.path("oscal_catalog"),
+        baseline_name=baseline,
+        profile=args.profile,
+    )
+
+    total = len(analysis.target_baseline)
+    print(f"Baseline audit     : {analysis.baseline.short_name}")
+    print(f"Candidate audits   : {len(analysis.candidates)}")
+    print(
+        f"Current coverage   : {analysis.baseline_coverage_count} / {total} "
+        f"({round(analysis.baseline_coverage_count / total * 100, 2)}%)"
+    )
+    print(f"Opportunities      : {len(analysis.coverage_opportunities)}")
+    print(f"  recoverable (un-comment) : {len(analysis.inactive_coverage_opportunities)}")
+    print(f"  require new checks       : {len(analysis.additional_controls_not_present)}")
+
+    if not args.no_xlsx:
+        out = args.out
+        if not out:
+            import os
+
+            stamp = time.strftime("%y%m%d%H%M")
+            out = os.path.join(args.dir, f"NIST_Gap_Analysis_{stamp}.xlsx")
+        export_workbook(analysis, out)
+        print(f"Wrote {out}")
+
+
+def cmd_gap_harvest(cfg, args):
+    from pysc.gap import harvest
+
+    baseline = args.baseline
+    if not baseline and args.platform:
+        baseline_path = cfg.baseline_path(args.platform)
+        if baseline_path is not None:
+            baseline = str(baseline_path)
+
+    out, count, skipped = harvest(
+        args.dir,
+        controls_file=args.controls,
+        baseline_path=baseline,
+        output_file=args.out,
+    )
+    for row in skipped:
+        print(
+            f"[SKIP] {row['nist_ref']} {row['rule_id']} covered by baseline "
+            f"control {row['covered_by']}"
+        )
+    print(f"Gaps harvested : {count}")
+    print(f"Output file    : {out}")
 
 
 def cmd_catalog(cfg, args):
@@ -201,9 +266,41 @@ def build_parser():
     p.add_argument("--strict", action="store_true")
     p.set_defaults(func=cmd_run)
 
-    p = sub.add_parser("gap", help="Production NIST reference gap analysis")
-    p.add_argument("--stage", action="store_true", help="Re-stage For_Gap combined audits first")
-    p.set_defaults(func=cmd_gap)
+    p = sub.add_parser("gap", help="NIST 800-53 gap analysis")
+    gap_sub = p.add_subparsers(dest="gap_command", required=True)
+
+    gp = gap_sub.add_parser(
+        "platform",
+        help="Baseline vs candidate audits for one platform (OSCAL catalog, recoverable coverage)",
+    )
+    gp.add_argument("--dir", required=True, help="Folder of .audit files (e.g. Gap\\MSSRV)")
+    gp.add_argument("--platform", help="Platform code from pysc.toml (supplies the baseline name)")
+    gp.add_argument("--baseline", help="Baseline audit filename (overrides --platform lookup)")
+    gp.add_argument(
+        "--profile",
+        choices=["full", "high", "moderate", "low"],
+        default="full",
+        help="Target baseline profile (only 'full' is available)",
+    )
+    gp.add_argument("--out", help="Output workbook path (default: <dir>\\NIST_Gap_Analysis_<ts>.xlsx)")
+    gp.add_argument("--no-xlsx", action="store_true", help="Print summary only")
+    gp.set_defaults(func=cmd_gap_platform)
+
+    gpr = gap_sub.add_parser(
+        "production", help="Whole-estate reference gap analysis (legacy engine)"
+    )
+    gpr.add_argument("--stage", action="store_true", help="Re-stage For_Gap combined audits first")
+    gpr.set_defaults(func=cmd_gap_production)
+
+    gh = gap_sub.add_parser(
+        "harvest", help="Pull gap-closing checks from candidate audits into a paste-ready .audit"
+    )
+    gh.add_argument("--dir", required=True, help="Folder of candidate .audit files")
+    gh.add_argument("--controls", help="Controls list file (default: <dir>\\controls.txt)")
+    gh.add_argument("--platform", help="Platform code from pysc.toml (supplies the baseline for suppression)")
+    gh.add_argument("--baseline", help="Baseline audit path for suppression (overrides --platform)")
+    gh.add_argument("--out", help="Output path (default: <dir>\\normalized_custom_items.audit)")
+    gh.set_defaults(func=cmd_gap_harvest)
 
     p = sub.add_parser("catalog", help="Generate controls catalog workbook for a folder")
     p.add_argument("input", nargs="?", help="Audit folder (default: vendor_inputs)")
