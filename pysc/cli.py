@@ -312,6 +312,47 @@ def cmd_history(cfg, args):
         history.close()
 
 
+def cmd_maturity(cfg, args):
+    from pysc.maturity import (
+        apply_proposals,
+        load_pass_rates,
+        propose,
+        write_proposal_workbook,
+    )
+
+    threshold = (args.threshold if args.threshold is not None
+                 else cfg.data.get("maturity", {}).get("pass_threshold", 90)) / 100.0
+
+    rates = load_pass_rates(args.pass_rates)
+    proposals, unmatched = propose(args.audit, rates, threshold)
+    print(f"Export rows           : {len(rates)}")
+    print(f"Below threshold       : {len(proposals) + len(unmatched)} "
+          f"(threshold {round(threshold * 100, 1)}%)")
+    print(f"Matching active checks: {len(proposals)}")
+    if unmatched:
+        print(f"No matching active check for {len(unmatched)} export row(s)")
+
+    import os
+    import time
+
+    out_dir = cfg.path("report_output")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamp = time.strftime("%y%m%d%H%M")
+    workbook = os.path.join(str(out_dir), f"Maturity_Proposals_{stamp}.xlsx")
+    write_proposal_workbook(proposals, unmatched, threshold, workbook)
+    print(f"Wrote {workbook}")
+
+    if args.apply:
+        if not proposals:
+            print("Nothing to apply.")
+            return
+        out = apply_proposals(args.audit, proposals, args.out)
+        print(f"Wrote matured audit: {out}")
+        print("Commented checks will appear as recoverable coverage in the next gap run.")
+    else:
+        print("Proposal only (use --apply to write the matured audit).")
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="pysc",
@@ -412,6 +453,23 @@ def build_parser():
     he = hist_sub.add_parser("export", help="Export coverage history to CSV")
     he.add_argument("--out", help="CSV path (default: coverage_history.csv)")
     he.set_defaults(func=cmd_history)
+
+    p = sub.add_parser(
+        "maturity",
+        help="Propose/apply comment-outs for checks under the fleet pass-rate threshold",
+    )
+    p.add_argument("--audit", required=True, help="Baseline .audit file to mature")
+    p.add_argument(
+        "--pass-rates", required=True,
+        help="Tenable results export (.xlsx with Description + Pass columns)",
+    )
+    p.add_argument(
+        "--threshold", type=float,
+        help="Pass-rate threshold in percent (default: [maturity].pass_threshold, 90)",
+    )
+    p.add_argument("--apply", action="store_true", help="Write the matured audit copy")
+    p.add_argument("--out", help="Matured audit output path (with --apply)")
+    p.set_defaults(func=cmd_maturity)
 
     return parser
 
