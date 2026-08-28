@@ -1,0 +1,71 @@
+# PySC configuration — replaces PYSC_* environment variables and hardcoded paths.
+# All relative paths resolve against [paths].root.
+
+[paths]
+root = "C:/PySC"
+production_inputs = "actual_audit_inputs"      # was PYSC_PRODUCTION_AUDIT_ROOT
+vendor_inputs = "audit_inputs"
+normalized = "actual_audit_inputs/Normalized"  # was PYSC_PRODUCTION_NORMALIZED_ROOT
+gap_staging = "actual_audit_inputs/For_Gap"    # was PYSC_PRODUCTION_GAP_ROOT
+gap_output = "actual_audit_inputs"             # was PYSC_PRODUCTION_GAP_OUTPUT_ROOT
+oscal_catalog = "NIST_SP-800-53_rev5_catalog.json"
+threat_intel_cache = "Scripts/threat_intel_cache.json"
+history_db = "pysc_history.sqlite"
+report_output = "Output"
+
+# Legacy description-match workbook inputs (optional; skipped when absent)
+baseline_mssrv_csv = "Baseline_-_MSSRV.csv"                              # was PYSC_BASELINE_MSSRV_CSV
+merged_mssrv_csv = "Merged_2607.csv"                                     # was PYSC_MERGED_MSSRV_CSV
+description_match_xlsx = "Baseline_vs_Merged_MSSRV_Description_Matches.xlsx"  # was PYSC_DESCRIPTION_MATCH_XLSX
+
+[normalize]
+info_sentences = 1
+see_also_replacement = "See HTH Policies and Standards"
+
+[maturity]
+# Fleet pass-rate threshold (percent). Checks below this get comment-out proposals.
+pass_threshold = 90
+
+# --- Platform profiles -------------------------------------------------------
+# baseline: the production baseline audit for the platform (in production_inputs
+# unless an absolute path is given). Other keys override [normalize] defaults.
+
+[platforms.MSSRV]
+baseline = "HTH_MSSRV_BASELINE.audit"
+
+[platforms.MSWRK]
+baseline = "HTH_MSWRK_BASELINE.audit"
+
+[platforms.MSSQL]
+baseline = "HTH_SQL_BASELINE.audit"
+
+[platforms.RHEL]
+baseline = "Red Hat Enterprise Linux.audit"
+
+[platforms.VMware]
+baseline = ""   # no production baseline yet
+
+[platforms.Azure]
+baseline = ""   # no production baseline yet
+
+[platforms.AWS]
+baseline = ""   # no production baseline yet
+
+[platforms.NetIOS]
+baseline = "Baseline_NetIOS_AuditFile.audit"
+
+[platforms.NetNXOS]
+baseline = "NETNXOS.audit"
+
+[platforms.NetASA]
+baseline = "NetASA.audit"
+
+[platforms.NetPAFW]
+baseline = "NETPAFW.audit"
+
+[platforms.NetF5]
+baseline = "NetF5.audit"
+info_sentences = 3   # F5 keeps richer summaries (legacy Normalize_f5.py behavior)
+
+[platforms.NetACI]
+baseline = ""   # no production baseline yet

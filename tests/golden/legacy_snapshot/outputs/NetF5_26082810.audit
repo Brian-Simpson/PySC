@@ -1,0 +1,294 @@
+
+<check_type:"F5">
+
+<custom_item>
+  description    : "1.0000 - F5 - NetF5 - Configure Secure Password Policy - User Lockout"
+  info           : "To assist users in maintaining strong passwords, ensure that passwords are changed at appropriate intervals and new passwords to be used."
+  reference      : "NIST 800-53r5|IA-5(1)"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "(30\d|3[1-9]\d|[4-9]\d{2}|[1-9]\d{3,5}|0)"
+  f5_command     : "/tm/auth/password-policy"
+  json_transform : ".lockoutDuration"
+</custom_item>
+
+<custom_item>
+  description    : "1.0001 - F5 - NetF5 - Authentication - Lock down Remote Role"
+  info           : "The BIG-IP system provides a number of access control mechanisms to maintain secure access to the device, to ensure interoperability in a variety of environments with established requirements, and to assist in meeting industry standards, such as PCI compliance."
+  reference      : "NIST 800-53r5|CM-5(1)"
+  see_also       : "See HTH Policies and Standards"
+  expect         : ".*"
+  f5_command     : "/tm/auth/remote-role/role-info"
+  json_transform : ".items"
+  regex          : "\\"role\\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0002 - F5 - NetF5 - Idle Session Timeout - SSH"
+  info           : "A session lock is a temporary network device- or administrator-initiated action taken when the administrator stops work but does not log out of the SSH session."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^SSH Idle Timeout:[\s]*600$"
+  f5_command     : "/tm/sys/sshd"
+  json_transform : "\"SSH Idle Timeout: \(.inactivityTimeout)\""
+  regex          : "SSH Idle Timeout:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0003 - F5 - NetF5 - Idle Session Timeout - Console Sessions"
+  info           : "A session lock is a temporary network device- or administrator-initiated action taken when the administrator stops work but does not log out of the console session."
+  reference      : "NIST 800-53r5|AC-11a."
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^Console Idle Timeout:[\s]*600$"
+  f5_command     : "/tm/sys/global-settings"
+  json_transform : "\"Console Idle Timeout: \(.consoleInactivityTimeout)\""
+  regex          : "Console Idle Timeout:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0004 - F5 - NetF5 - Idle Session Timeout - TMSH"
+  info           : "A session lock is a temporary network device- or administrator-initiated action taken when the administrator stops work but does not log out of the network device."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^TMSH Timeout:[\s]*15$"
+  f5_command     : "/tm/cli/global-settings"
+  json_transform : "\"TMSH Timeout: \(.idleTimeout)\""
+  regex          : "TMSH Timeout:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0005 - F5 - NetF5 - Banner - Enabled"
+  info           : "The pre-login message banner sends a message to the remote user who attempts to log in to the system using SSH."
+  reference      : "NIST 800-53r5|AC-8a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enabled"
+  f5_command     : "/tm/sys/sshd"
+  json_transform : ".banner"
+</custom_item>
+
+<custom_item>
+  description    : "1.0006 - F5 - NetF5 - NTP - Configured"
+  info           : "NTP is a protocol for synchronizing the clocks of computer systems over the network."
+  reference      : "NIST 800-53r5|SC-45(1)"
+  f5_command     : "/tm/sys/ntp"
+  json_transform : ".servers"
+  regex          : "[0-9.]+"
+</custom_item>
+
+<custom_item>
+  description    : "1.0007 - F5 - NetF5 - Configuring the BIG-IP system to exclude inode information from Etags"
+  info           : "When connecting to the Configuration utility, responses from the Apache server contain an Etag HTTP header that includes the file's inode information."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^[\s]*FileETag[\s]*MTime[\s]*Size[\s]*$"
+  f5_command     : "/tm/sys/httpd"
+  json_transform : ".include"
+</custom_item>
+
+<custom_item>
+  description    : "1.0008 - F5 - NetF5 - Encryption - Ciphers Configured"
+  info           : "You can configure the SSH service (also known as sshd) to use a desired set of encryption ciphers, KEX algorithms, and MAC algorithms to meet the security policy enforced in your environment."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  f5_command     : "/tm/sys/sshd"
+  json_transform : ".include"
+  regex          : ".*"
+  not_expect     : "^none$"
+</custom_item>
+
+<custom_item>
+  description    : "1.0009 - F5 - NetF5 - Configuring CIDR Network Addresses for the BIG-IP packet filter - Unhandled Packet Action"
+  info           : "You can use the BIG-IP packet filter functionality to enhance network security by enforcing an access policy on traffic ingressing or egressing a VLAN on the BIG-IP system."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "discard"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"packetfilter.defaultaction\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0010 - F5 - NetF5 - Configuring CIDR Network Addresses for the BIG-IP packet filter - Filter established connections"
+  info           : "You can use the BIG-IP packet filter functionality to enhance network security by enforcing an access policy on traffic ingressing or egressing a VLAN on the BIG-IP system."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enable"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"packetfilter.established\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0011 - F5 - NetF5 - Configuring CIDR Network Addresses for the BIG-IP packet filter - Send ICMP error on packet reject"
+  info           : "You can use the BIG-IP packet filter functionality to enhance network security by enforcing an access policy on traffic ingressing or egressing a VLAN on the BIG-IP system."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enable"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"packetfilter.sendicmperrors\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0012 - F5 - NetF5 - Configuring CIDR Network Addresses for the BIG-IP packet filter - Always accept ARP"
+  info           : "You can use the BIG-IP packet filter functionality to enhance network security by enforcing an access policy on traffic ingressing or egressing a VLAN on the BIG-IP system."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enable"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"packetfilter.allow.arp\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0013 - F5 - NetF5 - Configuring CIDR Network Addresses for the BIG-IP packet filter - Always accept important ICMP"
+  info           : "You can use the BIG-IP packet filter functionality to enhance network security by enforcing an access policy on traffic ingressing or egressing a VLAN on the BIG-IP system."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enable"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"packetfilter.allow.important.icmp\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0014 - F5 - NetF5 - Configuring CIDR Network Addresses for the BIG-IP packet filter - Packet filter logging"
+  info           : "You can use the BIG-IP packet filter functionality to enhance network security by enforcing an access policy on traffic ingressing or egressing a VLAN on the BIG-IP system."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enable"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"packetfilter.defaultlog\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0015 - F5 - NetF5 - Authentication - strict passwords"
+  info           : "You can configure the BIG-IP system to use strict password checking for user accounts."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "enable"
+  f5_command     : "/tm/sys/db"
+  json_transform : "[.items.[] | select(.name==\"users.strictpasswords\") |  .]"
+  regex          : "\"value\" :"
+</custom_item>
+
+<custom_item>
+  description    : "1.0016 - F5 - NetF5 - Modifying the list of ciphers and MAC and key exchange algorithms used by the SSH service on the BIG-IP system or BIG-IQ system"
+  info           : "You can configure the SSH service (also known as sshd) to use a desired set of encryption ciphers, KEX algorithms, and MAC algorithms to meet the security policy enforced in your environment."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  f5_command     : "/tm/sys/sshd"
+  json_transform : ".include"
+  regex          : ".*"
+  not_expect     : "^none$"
+</custom_item>
+
+<custom_item>
+  description    : "1.0017 - F5 - NetF5 - Unable to limit Configuration utility access to clients using only TLSv1.1 or TLSv1.2"
+  info           : "You are unable to limit Configuration utility access to clients that are configured to use only TLSv1."
+  reference      : "NIST 800-53r5|AC-10"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^[\s]*SSL[\s]*Protocol:[\s]*all[\s]*-SSLv2[\s]*-SSLv3[\s]*$"
+  f5_command     : "/tm/sys/httpd"
+  json_transform : "\"SSL Protocol: \(.sslProtocol)\""
+  regex          : "^[\s]*SSL[\s]*Protocol:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0018 - F5 - NetF5 - Defining advanced NTP configurations on the BIG-IP system"
+  info           : "NTP is a protocol for synchronizing the clocks of computer systems over the network."
+  reference      : "NIST 800-53r5|SC-45(1)"
+  see_also       : "See HTH Policies and Standards"
+  f5_command     : "/tm/sys/ntp"
+  json_transform : ".servers"
+  regex          : "[0-9.]+"
+</custom_item>
+
+<custom_item>
+  description    : "1.0019 - F5 - NetF5 - Configuring a pre-login or post-login message banner for the BIG-IP or Enterprise Manager system - Banner Text"
+  info           : "The pre-login message banner sends a message to the remote user who attempts to log in to the system using SSH."
+  reference      : "NIST 800-53r5|AC-8a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "!! WARNING !!"
+  f5_command     : "/tm/sys/sshd"
+  json_transform : ".bannerText"
+  regex          : ".*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0020 - F5 - NetF5 - Mitigating risk from SSH brute force login attacks - Monitor login attempts"
+  info           : "Beginning in BIG-IP 10."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  f5_command     : "/tm/auth/login-failures"
+  json_transform : ".entries[] | \"Userame: \(.nestedStats.entries.username.description) - Login Failures: \(.nestedStats.entries.loginAttempts.value) \""
+  not_expect     : ".*Login Failures: [1-9]\d*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0021 - F5 - NetF5 - Overview of port lockdown behavior"
+  info           : "The port lockdown feature allows you to secure the BIG-IP system from unwanted connection attempts by controlling the level of access to each self IP address defined on the system."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "null"
+  f5_command     : "/tm/net/self"
+  json_transform : ".items[] | \"Name: \(.name) - Port Lockdown: \(.allowService) \""
+  regex          : "Port Lockdown: .+"
+</custom_item>
+
+<custom_item>
+  description    : "1.0022 - F5 - NetF5 - Configuring an automatic logout for idle sessions - SSH"
+  info           : "A session lock is a temporary network device- or administrator-initiated action taken when the administrator stops work but does not log out of the SSH session."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^SSH Idle Timeout:[\s]*([1-9]|[1-8][0-9]|9[0-9]|[1-5][0-9]{2}|600)$"
+  f5_command     : "/tm/sys/sshd"
+  json_transform : "\"SSH Idle Timeout: \(.inactivityTimeout)\""
+  regex          : "SSH Idle Timeout:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0023 - F5 - NetF5 - Configuring an automatic logout for idle sessions - Console Sessions"
+  info           : "/tm/sys/global-settings."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^Console Idle Timeout:[\s]*([1-9]|[1-8][0-9]|9[0-9]|[1-5][0-9]{2}|600)$"
+  f5_command     : "/tm/sys/global-settings"
+  json_transform : "\"Console Idle Timeout: \(.consoleInactivityTimeout)\""
+  regex          : "Console Idle Timeout:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0024 - F5 - NetF5 - Configuring an automatic logout for idle sessions - TMSH"
+  info           : "/tm/cli/global-settings."
+  reference      : "NIST 800-53r5|AC-11a"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "^TMSH Timeout:[\s]*15$"
+  f5_command     : "/tm/cli/global-settings"
+  json_transform : "\"TMSH Timeout: \(.idleTimeout)\""
+  regex          : "TMSH Timeout:[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0025 - F5 - NetF5 - Encryption - HTTP profile cookies"
+  info           : "/tm/ltm/profile/http."
+  reference      : "NIST 800-53r5|SC-5"
+  see_also       : "See HTH Policies and Standards"
+  f5_command     : "/tm/ltm/profile/http"
+  json_transform : ".items[] | \"HTTP Profile Name: \(.name) - Encrypted Cookies: \(.encryptCookies)\""
+  regex          : "HTTP[\s]*Profile[\s]*Name:"
+  not_expect     : "HTTP[\s]*Profile[\s]*Name:[\s]*@HTTP_PROFILE_NAME@[\s]*-[\s]*Encrypted[\s]*Cookies:[\s]*null[\s]*"
+</custom_item>
+
+<custom_item>
+  description    : "1.0026 - F5 - NetF5 - Ensure that Remote Syslog Servers are configured"
+  info           : "/tm/sys/syslog."
+  reference      : "NIST 800-53r5|AU-6(3)"
+  see_also       : "See HTH Policies and Standards"
+  expect         : "Remote Syslog Server:[\s]10.*$"
+  f5_command     : "/tm/sys/syslog"
+  json_transform : ".remoteServers[] | \"Remote Syslog Server: \(.host)\""
+  regex          : "Remote Syslog Server:[\s](\.*)"
+</custom_item>
+
+</check_type>

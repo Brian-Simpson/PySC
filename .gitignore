@@ -17,6 +17,7 @@ venv/
 # --- Generated pipeline outputs (reproducible from inputs) ---
 **/Normalized/
 **/For_Gap/
+actual_audit_inputs/Merged/
 Output/
 Production_NIST_Reference_Gap_Analysis_*.xlsx
 NIST_Audit_Batch_Comparison_processed_*.xlsx

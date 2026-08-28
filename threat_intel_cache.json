@@ -1,0 +1,99 @@
+{
+  "control_taxonomy": [
+    {
+      "asset_exposure": 1.2,
+      "attack_prevalence": 1.35,
+      "exploitability_modifier": 1.1,
+      "family": "AUTHENTICATION",
+      "id": "CTRL-WIN-AUTH-LOCKOUT",
+      "match_any": [
+        "LOCKOUT",
+        "LOCKOUT_THRESHOLD",
+        "LOCKOUT_DURATION",
+        "LOCKOUT_RESET"
+      ],
+      "source": "builtin",
+      "threat_weight": 1.05
+    },
+    {
+      "asset_exposure": 1.25,
+      "attack_prevalence": 1.45,
+      "exploitability_modifier": 1.1,
+      "family": "CREDENTIAL_ACCESS",
+      "id": "CTRL-WIN-CRED-NTLM",
+      "match_any": [
+        "NTLM",
+        "MSV1_0",
+        "RESTRICTSENDINGNTLMTRAFFIC"
+      ],
+      "source": "builtin",
+      "threat_weight": 1.1
+    },
+    {
+      "asset_exposure": 1.3,
+      "attack_prevalence": 1.35,
+      "exploitability_modifier": 1.05,
+      "family": "PRIVILEGED_ACCESS",
+      "id": "CTRL-WIN-PRIV-USER-RIGHTS",
+      "match_any": [
+        "USER_RIGHTS",
+        "SEDEBUGPRIVILEGE",
+        "SETAKEOWNERSHIPPRIVILEGE",
+        "ADMINISTRATOR"
+      ],
+      "source": "builtin",
+      "threat_weight": 1.1
+    },
+    {
+      "asset_exposure": 1.3,
+      "attack_prevalence": 1.4,
+      "exploitability_modifier": 1.1,
+      "family": "NETWORK_BOUNDARY",
+      "id": "CTRL-WIN-NET-REMOTE-MGMT",
+      "match_any": [
+        "RDP",
+        "WINRM",
+        "SMB",
+        "REMOTE DESKTOP",
+        "NETWORK ACCESS"
+      ],
+      "source": "builtin",
+      "threat_weight": 1.1
+    },
+    {
+      "asset_exposure": 1.1,
+      "attack_prevalence": 1.2,
+      "exploitability_modifier": 1.0,
+      "family": "LOGGING_DETECTION",
+      "id": "CTRL-WIN-DET-AUDITPOL",
+      "match_any": [
+        "AUDITPOL",
+        "AUDIT POLICY",
+        "EVENT LOG",
+        "POWERSHELL TRANSCRIPTION"
+      ],
+      "source": "builtin",
+      "threat_weight": 1.0
+    },
+    {
+      "asset_exposure": 1.15,
+      "attack_prevalence": 1.35,
+      "exploitability_modifier": 1.05,
+      "family": "CREDENTIAL_ACCESS",
+      "id": "CTRL-WIN-CRED-PASSWORD-POLICY",
+      "match_any": [
+        "PASSWORD_POLICY",
+        "PASSWORD LENGTH",
+        "PASSWORD HISTORY",
+        "PASSWORDCOMPLEXITY",
+        "CLEARTEXTPASSWORD"
+      ],
+      "source": "builtin",
+      "threat_weight": 1.05
+    }
+  ],
+  "source": "builtin",
+  "threat_by_control_id": {},
+  "updated_at": "2026-08-28T15:41:52Z",
+  "version": "1"
+}

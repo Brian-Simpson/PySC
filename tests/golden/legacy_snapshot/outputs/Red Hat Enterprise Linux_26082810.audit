@@ -1,0 +1,392 @@
+
+<check_type:"Unix">
+
+<if>
+  <condition type:"AND">
+<custom_item>
+  type          : FILE_CONTENT_CHECK
+  description   : "1.0000 - RHEL - PASSED - TARGET OS MATCHES BASELINE - RHEL"
+  expect        : "^[\\s]*Red Hat Enterprise Linux.*release"
+  regex         : "^[\\s]*Red Hat Enterprise Linux.*release"
+</custom_item>
+  </condition>
+
+  <then>
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0001 - RHEL - Ensure permissions on /etc/passwd are configured"
+  info          : "The /etc/passwd file contains user account information that is used by many system utilities and therefore must be readable for these utilities to operate."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  system        : "Linux"
+  mask          : "133"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0002 - RHEL - File Permissions - Ensure permissions on /etc/passwd- are configured"
+  info          : "The /etc/passwd- file contains backup user account information."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "133"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0003 - RHEL - File Permissions - Ensure permissions on /etc/group are configured"
+  info          : "The /etc/group file contains a list of all the valid groups defined in the system."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "133"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0004 - RHEL - File Permissions - Ensure permissions on /etc/group- are configured"
+  info          : "The /etc/group- file contains a backup list of all the valid groups defined in the system."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "133"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0005 - RHEL - File Permissions - Ensure permissions on /etc/shadow are configured"
+  info          : "The /etc/shadow file is used to store the information about user accounts that is critical to the security of those accounts, such as the hashed password and other security information."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "777"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0006 - RHEL - File Permissions - Ensure permissions on /etc/shadow- are configured"
+  info          : "The /etc/shadow- file is used to store backup information about user accounts that is critical to the security of those accounts, such as the hashed password and other security information."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "777"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0007 - RHEL - File Permissions - Ensure permissions on /etc/gshadow are configured"
+  info          : "The /etc/gshadow file is used to store the information about groups that is critical to the security of those accounts, such as the hashed password and other security information."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "777"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0008 - RHEL - File Permissions - Ensure permissions on /etc/gshadow- are configured"
+  info          : "The /etc/gshadow- file is used to store backup information about groups that is critical to the security of those accounts, such as the hashed password and other security information."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  mask          : "777"
+</custom_item>
+
+<custom_item>
+  type          : RPM_CHECK
+  description   : "1.0009 - RHEL - Services - Ensure SELinux is installed"
+  info          : "SELinux provides Mandatory Access Control."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  rpm           : "libselinux-0.0.0-0"
+  operator      : "gt"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0010 - RHEL - Services - Ensure SELinux is not disabled in bootloader configuration"
+  info          : "Configure SELINUX to be enabled at boot time and verify that it has not been overwritten by the grub boot parameters."
+  reference     : "NIST 800-53|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "(?i)^[\\s]*\\**[\\s]*pass:?[\\s]*\\**$"
+  cmd           : "/sbin/grubby --info=ALL | /bin/grep -Po '(selinux|enforcing)=0' | /bin/awk '{print} END {if (NR == 0) print \"pass\" ; else print \"fail\"}'"
+</custom_item>
+
+<custom_item>
+  type          : RPM_CHECK
+  description   : "1.0011 - RHEL - Services - Ensure sudo is installed"
+  info          : "sudo allows a permitted user to execute a command as the superuser or another user, as specified by the security policy."
+  reference     : "NIST 800-53|AC-6(2) AC-6(5)"
+  see_also      : "See HTH Policies and Standards"
+  rpm           : "sudo-0.0.0-0"
+  operator      : "gt"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0012 - RHEL - Ensure nodev option set on /var partition"
+  info          : "The nodev mount option specifies that the filesystem cannot contain special devices."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nodev|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0013 - RHEL - Ensure nosuid option set on /var partition"
+  info          : "The nosuid mount option specifies that the filesystem cannot contain setuid files."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nosuid|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0014 - RHEL - Ensure noexec option set on /var/tmp partition"
+  info          : "The noexec mount option specifies that the filesystem cannot contain executable binaries."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?noexec|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/tmp | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0015 - RHEL - Ensure nosuid option set on /var/tmp partition"
+  info          : "The nosuid mount option specifies that the filesystem cannot contain setuid files."
+  solution      : "Edit the /etc/fstab file and add nosuid to the fourth field (mounting options) for the /var/tmp partition."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nosuid|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/tmp | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0016 - RHEL - Ensure nodev option set on /var/tmp partition"
+  info          : "The nodev mount option specifies that the filesystem cannot contain special devices."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nodev|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/tmp | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0017 - RHEL - Ensure nodev option set on /var/log partition"
+  info          : "The nodev mount option specifies that the filesystem cannot contain special devices."
+  solution      : "Edit the /etc/fstab file and add nodev to the fourth field (mounting options) for the /var/log partition."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nodev|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/log | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0018 - RHEL - Ensure noexec option set on /var/log partition"
+  info          : "The noexec mount option specifies that the filesystem cannot contain executable binaries."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?noexec|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/log | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0019 - RHEL - Ensure nosuid option set on /var/log partition"
+  info          : "The nosuid mount option specifies that the filesystem cannot contain setuid files."
+  solution      : "Edit the /etc/fstab file and add nosuid to the fourth field (mounting options) for the /var/log partition."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nosuid|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/log | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0020 - RHEL - Ensure noexec option set on /var/log/audit partition"
+  info          : "The noexec mount option specifies that the filesystem cannot contain executable binaries."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?noexec|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/log/audit | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0021 - RHEL - Ensure nodev option set on /var/log/audit partition"
+  info          : "The nodev mount option specifies that the filesystem cannot contain special devices."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nodev|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/log/audit | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0022 - RHEL - Ensure nosuid option set on /var/log/audit partition"
+  info          : "The nosuid mount option specifies that the filesystem cannot contain setuid files."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nosuid|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /var/log/audit | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0023 - RHEL - Ensure /dev/shm is a separate partition"
+  info          : "The /dev/shm directory is a world-writable directory that can function as shared memory that facilitates inter process communication (IPC)."
+  reference     : "NIST 800-53r5|CM-6 CM-7"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*/dev/shm[\\s]*tmpfs|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /dev/shm | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0024 - RHEL - Ensure nodev option set on /dev/shm partition"
+  info          : "The nodev mount option specifies that the filesystem cannot contain special devices."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nodev|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /dev/shm | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0025 - RHEL - Ensure nosuid option set on /dev/shm partition"
+  info          : "The nosuid mount option specifies that the filesystem cannot contain setuid files."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "([\\s]*[,]?nosuid|not mounted)"
+  system        : "Linux"
+  cmd           : "/usr/bin/findmnt --kernel /dev/shm | /usr/bin/awk '{print} END {if (NR == 0) print \"not mounted\"}'"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CONTENT_CHECK
+  description   : "1.0026 - RHEL - Ensure gpgcheck is globally activated - dnf.conf"
+  info          : "The gpgcheck option, found in the main section of the /etc/dnf/dnf."
+  reference     : "NIST 800-53r5|RA-5SI-2 SI-2(2)"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "^[\\s]*gpgcheck[\\s]*=[\\s]*1[\\s]*$"
+  system        : "Linux"
+  regex         : "^[\\s]*gpgcheck[\\s]*="
+</custom_item>
+
+<custom_item>
+  type          : FILE_CONTENT_CHECK_NOT
+  description   : "1.0027 - RHEL - Ensure gpgcheck is globally activated - /etc/yum.repos.d/*"
+  info          : "The gpgcheck option, found in the main section of the /etc/dnf/dnf."
+  reference     : "NIST 800-53r5|RA-5SI-2 SI-2(2)"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "^\\h*gpgcheck\\h*=\\h*\\b[^1]\\b.*\\h*$"
+  system        : "Linux"
+  regex         : "^\\h*gpgcheck\\h*=\\h*\\b[^1]\\b.*\\h*$"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CONTENT_CHECK
+  description   : "1.0028 - RHEL - Ensure gpgcheck is globally activated - dnf.conf"
+  info          : "The gpgcheck option, found in the main section of the /etc/dnf/dnf."
+  reference     : "NIST 800-53r5|RA-5SI-2 SI-2(2)"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "^[\\s]*gpgcheck[\\s]*=[\\s]*1[\\s]*$"
+  system        : "Linux"
+  regex         : "^[\\s]*gpgcheck[\\s]*="
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0029 - RHEL - Ensure permissions on bootloader config are configured - grub.cfg"
+  info          : "The grub files contain information on boot settings and passwords for unlocking boot options."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  system        : "Linux"
+  mask          : "077"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0030 - RHEL - Ensure permissions on bootloader config are configured - grubenv"
+  info          : "The grub files contain information on boot settings and passwords for unlocking boot options."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  system        : "Linux"
+  mask          : "077"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CHECK
+  description   : "1.0031 - RHEL - Ensure permissions on bootloader config are configured - user.cfg"
+  info          : "The grub files contain information on boot settings and passwords for unlocking boot options."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  system        : "Linux"
+  mask          : "077"
+  file_required : "NO"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CONTENT_CHECK
+  description   : "1.0032 - RHEL - Ensure SELinux policy is configured - /etc/selinux/config"
+  info          : "Configure SELinux to meet or exceed the default targeted policy, which constrains daemons and system software only."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "^[\\s]*[sS][eE][lL][iI][nN][uU][xX][tT][yY][pP][eE][\\s]*=[\\s]*[Tt][Aa][Rr][Gg][Ee][Tt][Ee][Dd][\\s]*$"
+  regex         : "^[\\s]*[sS][eE][lL][iI][nN][uU][xX][tT][yY][pP][eE][\\s]*="
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0033 - RHEL - Ensure SELinux policy is configured - sestatus"
+  info          : "Configure SELinux to meet or exceed the default targeted policy, which constrains daemons and system software only."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "^[\\s]*Loaded policy name:[\\s]+([Tt][Aa][Rr][Gg][Ee][Tt][Ee][Dd]|[Mm][Ll][Ss])$"
+  system        : "Linux"
+  cmd           : "/usr/sbin/sestatus"
+</custom_item>
+
+<custom_item>
+  type          : CMD_EXEC
+  description   : "1.0034 - RHEL - Ensure the SELinux mode is not disabled - getenforce"
+  info          : "SELinux can run in one of three modes: disabled, permissive, or enforcing."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "(Enforcing|Permissive)"
+  system        : "Linux"
+  cmd           : "/usr/sbin/getenforce"
+</custom_item>
+
+<custom_item>
+  type          : FILE_CONTENT_CHECK
+  description   : "1.0035 - RHEL - Ensure the SELinux mode is not disabled - /etc/selinux/config"
+  info          : "SELinux can run in one of three modes: disabled, permissive, or enforcing."
+  reference     : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also      : "See HTH Policies and Standards"
+  expect        : "(^[\\s]*[sS][eE][lL][iI][nN][uU][xX][\\s]*=[\\s]*([eE][nN][fF][oO][rR][cC][iI][nN][gG]|[pP][eE][rR][mM][iI][sS][sS][iI][vV][eE])[\\s]*$)"
+  system        : "Linux"
+  regex         : "^[\\s]*[sS][eE][lL][iI][nN][uU][xX][\\s]*="
+</custom_item>
+  </then>
+
+  <else>
+<report type:"WARNING">
+  description   : "1.0036 - RHEL - WARNING - TARGET OS DOESNT MATCH BASELINE - RHEL"
+  info          : "NOTE: Nessus has not identified that the chosen audit applies to the target device."
+  see_also      : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+</check_type>
