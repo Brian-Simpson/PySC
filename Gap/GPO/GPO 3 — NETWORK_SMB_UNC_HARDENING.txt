@@ -1,0 +1,24 @@
+GPO NAME: WIN11-03-Network-Hardening
+
+SECURITY OPTIONS:
+LAN Manager authentication level        = NTLMv2 only (Level 5)
+Restrict anonymous SAM enumeration      = Enabled
+Let Everyone apply to anonymous         = Disabled
+
+SMB:
+Client signing                          = Required
+Server signing                          = Required
+Allow insecure guest logons             = Disabled
+
+REGISTRY:
+HKLM\SYSTEM\CurrentControlSet\Services\mrxsmb10\Start = 4 (Disable SMBv1)
+
+UNC HARDENED PATHS:
+PATH:
+Admin Templates → Network → Network Provider
+
+\\*\NETLOGON
+RequireMutualAuthentication=1,RequireIntegrity=1,RequirePrivacy=1
+
+\\*\SYSVOL
+RequireMutualAuthentication=1,RequireIntegrity=1,RequirePrivacy=1

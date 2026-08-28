@@ -1,0 +1,768 @@
+===============================================================================
+AUDIT FILE COMPARISON REPORT
+Generated : 2026-04-27 12:57:01
+===============================================================================
+
+SIMILAR ITEMS RELABELLED
+===============================================================================
+
+
+    1.0181 - MSWRK - Ensure Allow Basic authentication is set to Disabled -> Added (Client)
+    1.0184 - MSWRK - Ensure Allow Basic authentication is set to Disabled -> Added (Service)
+
+    1.0182 - MSWRK - Ensure Allow unencrypted traffic is set to Disabled -> Added (Client)
+    1.0185 - MSWRK - Ensure Allow unencrypted traffic is set to Disabled -> Added (Service)
+
+    1.0206 - MSWRK - Ensure Configure SMB v1 client driver is set to Enabled: Disable driver (recommended) -> Added (Mrxsmb10)
+    1.0414 - MSWRK - Ensure Microsoft FTP Service (FTPSVC) is set to Disabled or Not Installed -> Added (Ftpsvc)
+    1.0415 - MSWRK - Ensure OpenSSH SSH Server (sshd) is set to Disabled or Not Installed -> Added (Sshd)
+    1.0416 - MSWRK - Ensure Remote Procedure Call (RPC) Locator (RpcLocator) is set to Disabled -> Added (Rpclocator)
+    1.0417 - MSWRK - Ensure Routing and Remote Access (RemoteAccess) is set to Disabled -> Added (Remoteaccess)
+    1.0418 - MSWRK - Ensure Simple TCP/IP Services (simptcp) is set to Disabled or Not Installed -> Added (Simptcp)
+    1.0419 - MSWRK - Ensure Special Administration Console Helper (sacsvr) is set to Disabled or Not Installed -> Added (Sacsvr)
+    1.0421 - MSWRK - Ensure SSDP Discovery (SSDPSRV) is set to Disabled -> Added (Ssdpsrv)
+    1.0422 - MSWRK - Ensure UPnP Device Host (upnphost) is set to Disabled -> Added (Upnphost)
+    1.0423 - MSWRK - Ensure Web Management Service (WMSvc) is set to Disabled or Not Installed -> Added (Wmsvc)
+    1.0424 - MSWRK - Ensure Windows Media Player Network Sharing Service (WMPNetworkSvc) is set to Disabled or Not Installed -> Added (Wmpnetworksvc)
+    1.0425 - MSWRK - Ensure Windows Mobile Hotspot Service (icssvc) is set to Disabled -> Added (Icssvc)
+    1.0426 - MSWRK - Ensure World Wide Web Publishing Service (W3SVC) is set to Disabled or Not Installed -> Added (W3svc)
+    1.0427 - MSWRK - Ensure Xbox Accessory Management Service (XboxGipSvc) is set to Disabled -> Added (Xboxgipsvc)
+    1.0428 - MSWRK - Ensure Xbox Live Auth Manager (XblAuthManager) is set to Disabled -> Added (Xblauthmanager)
+    1.0429 - MSWRK - Ensure Xbox Live Game Save (XblGameSave) is set to Disabled -> Added (Xblgamesave)
+    1.0430 - MSWRK - Ensure Xbox Live Networking Service (XboxNetApiSvc) is set to Disabled -> Added (Xboxnetapisvc)
+    1.0431 - MSWRK - Ensure IIS Admin Service (IISADMIN) is set to Disabled or Not Installed -> Added (Iisadmin)
+    1.0432 - MSWRK - Ensure Infrared monitor service (irmon) is set to Disabled or Not Installed -> Added (Irmon)
+
+    1.0208 - MSWRK - default -> Added (Config)
+    1.0209 - MSWRK - 32-bit subsystem on 64-bit OS -> Added (Config)
+
+    1.0216 - MSWRK - Ensure MSS: (DisableIPSourceRouting IPv6) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled -> Added (Parameters)
+    1.0217 - MSWRK - Ensure MSS: (DisableIPSourceRouting) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled -> Added (Parameters)
+
+    1.0234 - MSWRK - Ensure Audit insecure guest logon is set to Enabled -> Added (Lanmanserver)
+    1.0239 - MSWRK - Ensure Audit insecure guest logon is set to Enabled -> Added (Lanmanworkstation)
+
+    1.0236 - MSWRK - Ensure Enable remote mailslots is set to Disabled -> Added (Bowser)
+    1.0243 - MSWRK - Ensure Enable remote mailslots is set to Disabled -> Added (Networkprovider)
+
+    1.0237 - MSWRK - Ensure Mandate the minimum version of SMB is set to Enabled: 3.1.1 -> Added (Lanmanserver)
+    1.0244 - MSWRK - Ensure Mandate the minimum version of SMB is set to Enabled: 3.1.1 -> Added (Lanmanworkstation)
+
+    1.0286 - MSWRK - Ensure Allow network connectivity during connected-standby (on battery) is set to Disabled -> Added (F15576e8-98b7-4186-b944-eafa664402d9)
+    1.0288 - MSWRK - Ensure Allow standby states (S1-S3) when sleeping (on battery) is set to Disabled -> Added (Abfc2519-3608-4c2a-94ea-171b0ed546ab)
+    1.0290 - MSWRK - Ensure Require a password when a computer wakes (on battery) is set to Enabled -> Added (0e796bdb-100d-47d6-a2d5-f7d2daa51f51)
+
+    1.0287 - MSWRK - Ensure Allow network connectivity during connected-standby (plugged in) is set to Disabled -> Added (F15576e8-98b7-4186-b944-eafa664402d9)
+    1.0289 - MSWRK - Ensure Allow standby states (S1-S3) when sleeping (plugged in) is set to Disabled -> Added (Abfc2519-3608-4c2a-94ea-171b0ed546ab)
+    1.0291 - MSWRK - Ensure Require a password when a computer wakes (plugged in) is set to Enabled -> Added (0e796bdb-100d-47d6-a2d5-f7d2daa51f51)
+
+    1.0302 - MSWRK - Ensure Enable Windows NTP Client is set to Enabled -> Added (Ntpclient)
+    1.0303 - MSWRK - Ensure Enable Windows NTP Server is set to Disabled -> Added (Ntpserver)
+    1.0305 - MSWRK - (L1) Ensure Configure the behavior of the sudo command is set to Enabled: Disabled -> Added (Sudo)
+
+    1.0408 - MSWRK - Ensure Microsoft network client: Digitally sign communications (always) is set to Enabled -> Added (Parameters)
+    1.0411 - MSWRK - Ensure Microsoft network server: Digitally sign communications (always) is set to Enabled -> Added (Parameters)
+
+    1.0433 - MSWRK - Ensure Windows Firewall: Domain: Firewall state is set to On (recommended) -> Added (Domainprofile)
+    1.0440 - MSWRK - Ensure Windows Firewall: Private: Firewall state is set to On (recommended) -> Added (Privateprofile)
+    1.0447 - MSWRK - Ensure Windows Firewall: Public: Firewall state is set to On (recommended) -> Added (Publicprofile)
+
+    1.0434 - MSWRK - Ensure Windows Firewall: Domain: Inbound connections is set to Block (default) -> Added (Domainprofile)
+    1.0441 - MSWRK - Ensure Windows Firewall: Private: Inbound connections is set to Block (default) -> Added (Privateprofile)
+    1.0448 - MSWRK - Ensure Windows Firewall: Public: Inbound connections is set to Block (default) -> Added (Publicprofile)
+
+    1.0435 - MSWRK - Ensure Windows Firewall: Domain: Settings: Display a notification is set to No -> Added (Domainprofile)
+    1.0442 - MSWRK - Ensure Windows Firewall: Private: Settings: Display a notification is set to No -> Added (Privateprofile)
+    1.0449 - MSWRK - Ensure Windows Firewall: Public: Settings: Display a notification is set to No -> Added (Publicprofile)
+
+
+
+
+
+    AC - MSWRK - Network access: Remotely accessible registry paths is configured -> Added (Allowedexactpaths)
+    AC - MSWRK - Network access: Remotely accessible registry paths and sub-paths is configured -> Added (Allowedpaths)
+
+
+DUPLICATE CHECKS FOUND (140)
+===============================================================================
+   1. OG : "IA - MSWRK - Password History - 24 passwords remembered"
+      New: "1.0001 - MSWRK - Ensure Enforce password history is set to 24 or more password(s)"
+      Key: secedit:passwordhistorysize
+
+   2. OG : "IA - MSWRK - Password Maximum Age - 60 days"
+      New: "1.0002 - MSWRK - Ensure Maximum password age is set to 365 or fewer days, but not 0"
+      Key: secedit:maximumpasswordage
+
+   3. OG : "IA - MSWRK - Password - Password Minimum Age - 1 day"
+      New: "1.0003 - MSWRK - Ensure Minimum password age is set to 1 or more day(s)"
+      Key: secedit:minimumpasswordage
+
+   4. OG : "IA - MSWRK - Password Length - 8 characters"
+      New: "1.0004 - MSWRK - Ensure Minimum password length is set to 14 or more character(s)"
+      Key: secedit:minimumpasswordlength
+
+   5. OG : "IA - MSWRK - Password - Complexity Requirements - Enabled"
+      New: "1.0005 - MSWRK - Ensure Password must meet complexity requirements is set to Enabled"
+      Key: secedit:passwordcomplexity
+
+   6. OG : "IA - MSWRK - Password - Reversible Encryption - Disabled"
+      New: "1.0007 - MSWRK - Ensure Store passwords using reversible encryption is set to Disabled"
+      Key: secedit:cleartextpassword
+
+   7. OG : "AC - MSWRK - Password - Acount Lockout Duration - 60 minutes"
+      New: "1.0008 - MSWRK - Ensure Account lockout duration is set to 15 or more minute(s)"
+      Key: secedit:lockoutduration
+
+   8. OG : "AC - MSWRK - Password - Acount Lockout Threshold - 5 invalid attempts"
+      New: "1.0009 - MSWRK - Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0"
+      Key: secedit:lockoutbadcount
+
+   9. OG : "IA - MSWRK - Password - Lockout Admins - Enabled"
+      New: "1.0010 - MSWRK - Ensure Allow Administrator account lockout is set to Enabled"
+      Key: secedit:allowadministratorlockout
+
+  10. OG : "AC - MSWRK - Password - Acount Lockout Reset - 1 day"
+      New: "1.0011 - MSWRK - Ensure Reset account lockout counter after is set to 15 or more minute(s)"
+      Key: secedit:resetlockoutcount
+
+  11. OG : "AU - MSWRK - Audit Account Lockout is set to include Failure"
+      New: "1.0018 - MSWRK - Ensure Audit Account Lockout is set to include Failure"
+      Key: auditpol:account lockout
+
+  12. OG : "AU - MSWRK - Audit Logoff is set to include Success"
+      New: "1.0020 - MSWRK - Ensure Audit Logoff is set to include Success"
+      Key: auditpol:logoff
+
+  13. OG : "AU - MSWRK - Audit Logon is set to Success and Failure"
+      New: "1.0021 - MSWRK - Ensure Audit Logon is set to Success and Failure"
+      Key: auditpol:logon
+
+  14. OG : "AU - MSWRK - Audit Other Logon/Logoff Events is set to Success and Failure"
+      New: "1.0022 - MSWRK - Ensure Audit Other Logon/Logoff Events is set to Success and Failure"
+      Key: auditpol:other logon/logoff events
+
+  15. OG : "AU - MSWRK - Audit Special Logon is set to include Success"
+      New: "1.0023 - MSWRK - Ensure Audit Special Logon is set to include Success"
+      Key: auditpol:special logon
+
+  16. OG : "AU - MSWRK - Audit Policy Change is set to include Success"
+      New: "1.0028 - MSWRK - Ensure Audit Audit Policy Change is set to include Success"
+      Key: auditpol:audit policy change
+
+  17. OG : "AU - MSWRK - Audit Authentication Policy Change is set to include Success"
+      New: "1.0029 - MSWRK - Ensure Audit Authentication Policy Change is set to include Success"
+      Key: auditpol:authentication policy change
+
+  18. OG : "AU - MSWRK - Audit Other System Events is set to Success and Failure"
+      New: "1.0035 - MSWRK - Ensure Audit Other System Events is set to Success and Failure"
+      Key: auditpol:other system events
+
+  19. OG : "AU - MSWRK - Audit Security State Change is set to include Success"
+      New: "1.0036 - MSWRK - Ensure Audit Security State Change is set to include Success"
+      Key: auditpol:security state change
+
+  20. OG : "AU - MSWRK - Audit Security System Extension is set to include Success"
+      New: "1.0037 - MSWRK - Ensure Audit Security System Extension is set to include Success"
+      Key: auditpol:security system extension
+
+  21. OG : "AU - MSWRK - Audit System Integrity is set to Success and Failure"
+      New: "1.0038 - MSWRK - Ensure Audit System Integrity is set to Success and Failure"
+      Key: auditpol:system integrity
+
+  22. OG : "AC - MSWRK - Enumerate administrator accounts on elevation is set to Disabled"
+      New: "1.0082 - MSWRK - Ensure Enumerate administrator accounts on elevation is set to Disabled"
+      Key: registry:hkey_local_machine\software\microsoft\windows\currentversion\policies\credui|enumerateadministrators
+
+  23. OG : "CM - MSWRK - Prevent the use of security questions for local accounts is set to Enabled"
+      New: "1.0083 - MSWRK - Ensure Prevent the use of security questions for local accounts is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\system|nolocalpasswordresetquestions
+
+  24. OG : "AU - MSWRK - Application: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      New: "1.0093 - MSWRK - Ensure Application: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\application|retention
+
+  25. OG : "AU - MSWRK - Application: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+      New: "1.0094 - MSWRK - Ensure Application: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\application|maxsize
+
+  26. OG : "AU - MSWRK - Security: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      New: "1.0095 - MSWRK - Ensure Security: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\security|retention
+
+  27. OG : "AU - MSWRK - Security: Specify the maximum log file size (KB) is set to Enabled: 196,608 or greater"
+      New: "1.0096 - MSWRK - Ensure Security: Specify the maximum log file size (KB) is set to Enabled: 196,608 or greater"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\security|maxsize
+
+  28. OG : "AU - MSWRK - Setup: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      New: "1.0097 - MSWRK - Ensure Setup: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\setup|retention
+
+  29. OG : "AU - MSWRK - Setup: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+      New: "1.0098 - MSWRK - Ensure Setup: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\setup|maxsize
+
+  30. OG : "AU - MSWRK - System: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      New: "1.0099 - MSWRK - Ensure System: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\system|retention
+
+  31. OG : "AU - MSWRK - System: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+      New: "1.0100 - MSWRK - Ensure System: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\eventlog\system|maxsize
+
+  32. OG : "SI - MSWRK - Ensure 'Scan all downloaded files and attachments' is set to 'Disabled'"
+      New: "1.0108 - MSWRK - Ensure Scan all downloaded files and attachments is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows defender\real-time protection|disableioavprotection
+
+  33. OG : "SI - MSWRK - Ensure 'Turn off real-time protection' is set to 'Disabled'"
+      New: "1.0109 - MSWRK - Ensure Turn off real-time protection is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows defender\real-time protection|disablerealtimemonitoring
+
+  34. OG : "SI - MSWRK - Ensure 'Turn on behavior monitoring' is set to 'Enabled'"
+      New: "1.0110 - MSWRK - Ensure Turn on behavior monitoring is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows defender\real-time protection|disablebehaviormonitoring
+
+  35. OG : "SI - MSWRK - Ensure 'Configure detection for potentially unwanted applications' is set to 'Disabled'"
+      New: "1.0118 - MSWRK - Ensure Configure detection for potentially unwanted applications is set to Enabled: Block"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows defender|puaprotection
+
+  36. OG : "SI - MSWRK - Ensure 'Always prompt for password upon connection' is set to 'Disabled'"
+      New: "1.0150 - MSWRK - Ensure Always prompt for password upon connection is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\terminal services|fpromptforpassword
+
+  37. OG : "AC - MSWRK - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to 'Enabled'"
+      New: "1.0153 - MSWRK - Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\terminal services|userauthentication
+
+  38. OG : "AC - MSWRK - Ensure 'Set client connection encryption level' is set to 'Enabled: High Level'"
+      New: "1.0154 - MSWRK - Ensure Set client connection encryption level is set to Enabled: High Level"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\terminal services|minencryptionlevel
+
+  39. OG : "CM - MSWRK - Ensure 'Allow Cortana' is set to 'Disabled'"
+      New: "1.0156 - MSWRK - Ensure Allow Cortana is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\windows search|allowcortana
+
+  40. OG : "RA - MSWRK - Ensure Turn off Automatic Download and Install of updates is set to Disabled."
+      New: "1.0161 - MSWRK - Ensure Turn off Automatic Download and Install of updates is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windowsstore|autodownload
+
+  41. OG : "CM - MSWRK - Enables or disables Windows Game Recording and Broadcasting is set to Disabled"
+      New: "1.0171 - MSWRK - Ensure Enables or disables Windows Game Recording and Broadcasting is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\gamedvr|allowgamedvr
+
+  42. OG : "AC - MSWRK - Ensure Sign-in and lock last interactive user automatically after a restart is set to Disabled."
+      New: "1.0180 - MSWRK - Ensure Sign-in and lock last interactive user automatically after a restart is set to Disabled"
+      Key: registry:hkey_local_machine\software\microsoft\windows\currentversion\policies\system|disableautomaticrestartsignon
+
+  43. OG : "AC - MSWRK - Ensure 'Allow Basic authentication' is set to 'Enabled'"
+      New: "1.0184 - MSWRK - Ensure Allow Basic authentication is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\winrm\service|allowbasic
+
+  44. OG : "AC - MSWRK - Allow unencrypted traffic is set to Disabled for service"
+      New: "1.0185 - MSWRK - Ensure Allow unencrypted traffic is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\winrm\service|allowunencryptedtraffic
+
+  45. OG : "CM - MSWRK - Ensure 'Allow clipboard sharing with Windows Sandbox' is set to 'Disabled'"
+      New: "1.0188 - MSWRK - Ensure Allow clipboard sharing with Windows Sandbox is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\sandbox|allowclipboardredirection
+
+  46. OG : "CM - MSWRK - Ensure 'Allow networking in Windows Sandbox' is set to 'Disabled'"
+      New: "1.0189 - MSWRK - Ensure Allow networking in Windows Sandbox is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\sandbox|allownetworking
+
+  47. OG : "RA - MSWRK - Ensure 'Configure Automatic Updates' is set to 'Disabled'"
+      New: "1.0192 - MSWRK - Ensure Configure Automatic Updates is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\windowsupdate\au|noautoupdate
+
+  48. OG : "AC - MSWRK - Prevent enabling lock screen slide show is set to Enabled"
+      New: "1.0202 - MSWRK - Ensure Prevent enabling lock screen slide show is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\personalization|nolockscreenslideshow
+
+  49. OG : "CM - MSWRK - Allow users to enable online speech recognition services is set to Disabled"
+      New: "1.0204 - MSWRK - Ensure Allow users to enable online speech recognition services is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\inputpersonalization|allowinputpersonalization
+
+  50. OG : "CM - MSWRK - Configure SMB v1 client driver is set to Enabled: Disable driver (recommended)"
+      New: "1.0206 - MSWRK - Ensure Configure SMB v1 client driver is set to Enabled: Disable driver (recommended)"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\mrxsmb10|start
+
+  51. OG : "CM - MSWRK - Disable SMB v1 client driver."
+      New: "1.0206 - MSWRK - Ensure Configure SMB v1 client driver is set to Enabled: Disable driver (recommended)"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\mrxsmb10|start
+
+  52. OG : "SC - MSWRK - Enable Certificate Padding is set to Enabled"
+      New: "1.0208 - MSWRK - default"
+      Key: registry:hkey_local_machine\software\microsoft\cryptography\wintrust\config|enablecertpaddingcheck
+
+  53. OG : "CM - MSWRK - NetBT NodeType configuration is set to Enabled: P-node (recommended)"
+      New: "1.0211 - MSWRK - Ensure NetBT NodeType configuration is set to Enabled: P-node (recommended)"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netbt\parameters|nodetype
+
+  54. OG : "SC - MSWRK - MSS: (DisableIPSourceRouting IPv6) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled"
+      New: "1.0216 - MSWRK - Ensure MSS: (DisableIPSourceRouting IPv6) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\tcpip6\parameters|disableipsourcerouting
+
+  55. OG : "SC - MSWRK - MSS: (DisableIPSourceRouting) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled"
+      New: "1.0217 - MSWRK - Ensure MSS: (DisableIPSourceRouting) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\tcpip\parameters|disableipsourcerouting
+
+  56. OG : "CM - MSWRK - Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled: 3 = Prevent Wi-Fi when on Ethernet"
+      New: "1.0226 - MSWRK - Ensure Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled: 3 = Prevent Wi-Fi when on Ethernet"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\wcmsvc\grouppolicy|fminimizeconnections
+
+  57. OG : "CM - MSWRK - Allow Windows to automatically connect to suggested open hotspots, to networks shared by contacts, and to hotspots offering paid services is set to Disabled"
+      New: "1.0228 - MSWRK - Ensure Allow Windows to automatically connect to suggested open hotspots, to networks shared by contacts, and to hotspots offering paid services is set to Disabled"
+      Key: registry:hkey_local_machine\software\microsoft\wcmsvc\wifinetworkmanager\config|autoconnectallowedoem
+
+  58. OG : "CM - MSWRK - Turn off multicast name resolution is set to Enabled"
+      New: "1.0231 - MSWRK - Ensure Turn off multicast name resolution is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\dnsclient|enablemulticast
+
+  59. OG : "CM - MSWRK - Turn off multicast name resolution"
+      New: "1.0231 - MSWRK - Ensure Turn off multicast name resolution is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\dnsclient|enablemulticast
+
+  60. OG : "AC - MSWRK - Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt"
+      New: "1.0249 - MSWRK - Ensure Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\printers\pointandprint|nowarningnoelevationoninstall
+
+  61. OG : "CM - MSWRK - Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
+      New: "1.0250 - MSWRK - Ensure Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\printers\pointandprint|updatepromptsettings
+
+  62. OG : "CM - MSWRK - Turn on convenience PIN sign-in is set to Disabled"
+      New: "1.0283 - MSWRK - Ensure Turn on convenience PIN sign-in is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\system|allowdomainpinlogon
+
+  63. OG : "CM - MSWRK - Allow network connectivity during connected-standby (on battery) is set to Disabled"
+      New: "1.0286 - MSWRK - Ensure Allow network connectivity during connected-standby (on battery) is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\power\powersettings\f15576e8-98b7-4186-b944-eafa664402d9|dcsettingindex
+
+  64. OG : "CM - MSWRK - Allow network connectivity during connected-standby (plugged in) is set to Disabled"
+      New: "1.0287 - MSWRK - Ensure Allow network connectivity during connected-standby (plugged in) is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\power\powersettings\f15576e8-98b7-4186-b944-eafa664402d9|acsettingindex
+
+  65. OG : "CM - MSWRK - Configure Solicited Remote Assistance is set to Disabled"
+      New: "1.0293 - MSWRK - Ensure Configure Solicited Remote Assistance is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows nt\terminal services|fallowtogethelp
+
+  66. OG : "SI - MSWRK - Turn On Virtualization Based Security is set to Enabled"
+      New: "1.0299 - MSWRK - Ensure Turn On Virtualization Based Security is set to Enabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\deviceguard|enablevirtualizationbasedsecurity
+
+  67. OG : "SI - MSWRK - Turn On Virtualization Based Security: Select Platform Security Level is set to Secure Boot or higher"
+      New: "1.0300 - MSWRK - Ensure Turn On Virtualization Based Security: Select Platform Security Level is set to Secure Boot or higher"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windows\deviceguard|requireplatformsecurityfeatures
+
+  68. OG : "AC - MSWRK - Access Credential Manager as a trusted caller is set to No One"
+      New: "1.0320 - MSWRK - Ensure Access Credential Manager as a trusted caller is set to No One"
+      Key: userrights:setrustedcredmanaccessprivilege
+
+  69. OG : "AC - MSWRK - Create a token object is set to No One"
+      New: "1.0321 - MSWRK - Ensure Create a token object is set to No One"
+      Key: userrights:secreatetokenprivilege
+
+  70. OG : "AC - MSWRK - Create global objects is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE"
+      New: "1.0322 - MSWRK - Ensure Create global objects is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE"
+      Key: userrights:secreateglobalprivilege
+
+  71. OG : "AC - MSWRK - Create permanent shared objects is set to No One"
+      New: "1.0323 - MSWRK - Ensure Create permanent shared objects is set to No One"
+      Key: userrights:secreatepermanentprivilege
+
+  72. OG : "AC - MSWRK - Configure Create symbolic links"
+      New: "1.0324 - MSWRK - Ensure Create symbolic links is set to Administrators"
+      Key: userrights:secreatesymboliclinkprivilege
+
+  73. OG : "AC - MSWRK - Debug programs is set to Administrators"
+      New: "1.0325 - MSWRK - Ensure Debug programs is set to Administrators"
+      Key: userrights:sedebugprivilege
+
+  74. OG : "AC - MSWRK - Deny log on as a service to include Guests"
+      New: "1.0328 - MSWRK - Ensure Deny log on as a service to include Guests"
+      Key: userrights:sedenyservicelogonright
+
+  75. OG : "AC - MSWRK - Ensure Deny log on locally to include Guests"
+      New: "1.0329 - MSWRK - Ensure Deny log on locally to include Guests"
+      Key: userrights:sedenyinteractivelogonright
+
+  76. OG : "AC - MSWRK - Access this computer from the network is set to Administrators, Remote Desktop Users"
+      New: "1.0331 - MSWRK - Ensure Access this computer from the network is set to Administrators, Remote Desktop Users"
+      Key: userrights:senetworklogonright
+
+  77. OG : "AC - MSWRK - Enable computer and user accounts to be trusted for delegation is set to No One"
+      New: "1.0332 - MSWRK - Ensure Enable computer and user accounts to be trusted for delegation is set to No One"
+      Key: userrights:seenabledelegationprivilege
+
+  78. OG : "AC - MSWRK - Force shutdown from a remote system is set to Administrators"
+      New: "1.0333 - MSWRK - Ensure Force shutdown from a remote system is set to Administrators"
+      Key: userrights:seremoteshutdownprivilege
+
+  79. OG : "AC - MSWRK - Generate security audits is set to LOCAL SERVICE, NETWORK SERVICE"
+      New: "1.0334 - MSWRK - Ensure Generate security audits is set to LOCAL SERVICE, NETWORK SERVICE, RESTRICTED SERVICES\PrintSpoolerService"
+      Key: userrights:seauditprivilege
+
+  80. OG : "AC - MSWRK - Impersonate a client after authentication is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE"
+      New: "1.0335 - MSWRK - Ensure Impersonate a client after authentication is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE, RESTRICTED SERVICES\PrintSpoolerService"
+      Key: userrights:seimpersonateprivilege
+
+  81. OG : "AC - MSWRK - Increase scheduling priority is set to Administrators, Window Manager\Window Manager Group"
+      New: "1.0336 - MSWRK - Ensure Increase scheduling priority is set to Administrators, Window Manager\Window Manager Group"
+      Key: userrights:seincreasebasepriorityprivilege
+
+  82. OG : "AC - MSWRK - Load and unload device drivers is set to Administrators"
+      New: "1.0337 - MSWRK - Ensure Load and unload device drivers is set to Administrators"
+      Key: userrights:seloaddriverprivilege
+
+  83. OG : "AC - MSWRK - Lock pages in memory is set to No One"
+      New: "1.0338 - MSWRK - Ensure Lock pages in memory is set to No One"
+      Key: userrights:selockmemoryprivilege
+
+  84. OG : "AC - MSWRK - Manage auditing and security log is set to Administrators"
+      New: "1.0339 - MSWRK - Ensure Manage auditing and security log is set to Administrators"
+      Key: userrights:sesecurityprivilege
+
+  85. OG : "AC - MSWRK - Act as part of the operating system is set to No One"
+      New: "1.0340 - MSWRK - Ensure Act as part of the operating system is set to No One"
+      Key: userrights:setcbprivilege
+
+  86. OG : "AC - MSWRK - Modify an object label is set to No One"
+      New: "1.0341 - MSWRK - Ensure Modify an object label is set to No One"
+      Key: userrights:serelabelprivilege
+
+  87. OG : "AC - MSWRK - Modify firmware environment values is set to Administrators"
+      New: "1.0342 - MSWRK - Ensure Modify firmware environment values is set to Administrators"
+      Key: userrights:sesystemenvironmentprivilege
+
+  88. OG : "AC - MSWRK - Perform volume maintenance tasks is set to Administrators"
+      New: "1.0343 - MSWRK - Ensure Perform volume maintenance tasks is set to Administrators"
+      Key: userrights:semanagevolumeprivilege
+
+  89. OG : "AC - MSWRK - Profile single process is set to Administrators"
+      New: "1.0344 - MSWRK - Ensure Profile single process is set to Administrators"
+      Key: userrights:seprofilesingleprocessprivilege
+
+  90. OG : "AC - MSWRK - Profile system performance is set to Administrators, NT SERVICE\WdiServiceHost"
+      New: "1.0345 - MSWRK - Ensure Profile system performance is set to Administrators, NT SERVICE\WdiServiceHost"
+      Key: userrights:sesystemprofileprivilege
+
+  91. OG : "AC - MSWRK - Replace a process level token is set to LOCAL SERVICE, NETWORK SERVICE"
+      New: "1.0346 - MSWRK - Ensure Replace a process level token is set to LOCAL SERVICE, NETWORK SERVICE"
+      Key: userrights:seassignprimarytokenprivilege
+
+  92. OG : "AC - MSWRK - Restore files and directories is set to Administrators"
+      New: "1.0347 - MSWRK - Ensure Restore files and directories is set to Administrators"
+      Key: userrights:serestoreprivilege
+
+  93. OG : "AC - MSWRK - Shut down the system is set to Administrators, Users"
+      New: "1.0348 - MSWRK - Ensure Shut down the system is set to Administrators, Users"
+      Key: userrights:seshutdownprivilege
+
+  94. OG : "AC - MSWRK - Take ownership of files or other objects is set to Administrators"
+      New: "1.0349 - MSWRK - Ensure Take ownership of files or other objects is set to Administrators"
+      Key: userrights:setakeownershipprivilege
+
+  95. OG : "AC - MSWRK - Adjust memory quotas for a process is set to Administrators, LOCAL SERVICE, NETWORK SERVICE"
+      New: "1.0350 - MSWRK - Ensure Adjust memory quotas for a process is set to Administrators, LOCAL SERVICE, NETWORK SERVICE"
+      Key: userrights:seincreasequotaprivilege
+
+  96. OG : "AC - MSWRK - Allow log on locally is set to Administrators, Users"
+      New: "1.0351 - MSWRK - Ensure Allow log on locally is set to Administrators, Users"
+      Key: userrights:seinteractivelogonright
+
+  97. OG : "AC - MSWRK - Allow log on through Remote Desktop Services is set to Administrators, Remote Desktop Users"
+      New: "1.0352 - MSWRK - Ensure Allow log on through Remote Desktop Services is set to Administrators, Remote Desktop Users"
+      Key: userrights:seremoteinteractivelogonright
+
+  98. OG : "AC - MSWRK - Back up files and directories is set to Administrators"
+      New: "1.0353 - MSWRK - Ensure Back up files and directories is set to Administrators"
+      Key: userrights:sebackupprivilege
+
+  99. OG : "AC - MSWRK - Ensure Change the system time is set to Administrators, LOCAL SERVICE'"
+      New: "1.0354 - MSWRK - Ensure Change the system time is set to Administrators, LOCAL SERVICE"
+      Key: userrights:sesystemtimeprivilege
+
+ 100. OG : "AC - MSWRK - Ensure Create a pagefile is set to Administrators"
+      New: "1.0355 - MSWRK - Ensure Create a pagefile is set to Administrators"
+      Key: userrights:secreatepagefileprivilege
+
+ 101. OG : "AC - MSWRK - Create a pagefileallowed for Administrators"
+      New: "1.0355 - MSWRK - Ensure Create a pagefile is set to Administrators"
+      Key: userrights:secreatepagefileprivilege
+
+ 102. OG : "CM - MSWRK - Network access: Sharing and security model for local accounts is set to Classic - local users authenticate as themselves"
+      New: "1.0359 - MSWRK - Ensure Network access: Sharing and security model for local accounts is set to Classic - local users authenticate as themselves"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|forceguest
+
+ 103. OG : "AC - MSWRK - Network access: Do not allow anonymous enumeration of SAM accounts is set to Enabled"
+      New: "1.0360 - MSWRK - Ensure Network access: Do not allow anonymous enumeration of SAM accounts is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|restrictanonymoussam
+
+ 104. OG : "AC - MSWRK - Network access: Let Everyone permissions apply to anonymous users is set to Disabled"
+      New: "1.0363 - MSWRK - Ensure Network access: Let Everyone permissions apply to anonymous users is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|everyoneincludesanonymous
+
+ 105. OG : "AC - MSWRK - Network access: Restrict anonymous access to Named Pipes and Shares is set to Enabled"
+      New: "1.0367 - MSWRK - Ensure Network access: Restrict anonymous access to Named Pipes and Shares is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanserver\parameters|restrictnullsessaccess
+
+ 106. OG : "IA - MSWRK - Account - Guest Account Disabled"
+      New: "1.0368 - MSWRK - Ensure Accounts: Guest account status is set to Disabled"
+      Key: account:guest
+
+ 107. OG : "IA - MSWRK - Account - Rename Guest Account"
+      New: "1.0368 - MSWRK - Ensure Accounts: Guest account status is set to Disabled"
+      Key: account:guest
+
+ 108. OG : "AC - MSWRK - Network security: LAN Manager authentication level is set to Send NTLMv2 response only. Refuse LM & NTLM"
+      New: "1.0377 - MSWRK - Ensure Network security: LAN Manager authentication level is set to Send NTLMv2 response only. Refuse LM & NTLM"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|lmcompatibilitylevel
+
+ 109. OG : "AC - MSWRK - Network security: LDAP client signing requirements is set to Negotiate signing or higher"
+      New: "1.0379 - MSWRK - Ensure Network security: LDAP client signing requirements is set to Negotiate signing or higher"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\ldap|ldapclientintegrity
+
+ 110. OG : "IA - MSWRK - Accounts: Limit local account use of blank passwords to console logon only is set to Enabled"
+      New: "1.0381 - MSWRK - Ensure Accounts: Limit local account use of blank passwords to console logon only is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|limitblankpassworduse
+
+ 111. OG : "IA - MSWRK - Account - Local Admin Account Enabled"
+      New: "1.0382 - MSWRK - Configure Accounts: Rename administrator account"
+      Key: account:builtin_administrator
+
+ 112. OG : "IA - MSWRK - Account - Rename Local Admin"
+      New: "1.0382 - MSWRK - Configure Accounts: Rename administrator account"
+      Key: account:builtin_administrator
+
+ 113. OG : "IA - MSWRK - Account - Guest Account Disabled"
+      New: "1.0383 - MSWRK - Configure Accounts: Rename guest account"
+      Key: account:guest
+
+ 114. OG : "IA - MSWRK - Account - Rename Guest Account"
+      New: "1.0383 - MSWRK - Configure Accounts: Rename guest account"
+      Key: account:guest
+
+ 115. OG : "CM - MSWRK - System objects: Require case insensitivity for non-Windows subsystems is set to Enabled"
+      New: "1.0384 - MSWRK - Ensure System objects: Require case insensitivity for non-Windows subsystems is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\session manager\kernel|obcaseinsensitive
+
+ 116. OG : "CM - MSWRK - System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links) is set to Enabled"
+      New: "1.0385 - MSWRK - Ensure System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\session manager|protectionmode
+
+ 117. OG : "AC - MSWRK - User Account Control: Only elevate UIAccess applications that are installed in secure locations is set to Enabled"
+      New: "1.0390 - MSWRK - Ensure User Account Control: Only elevate UIAccess applications that are installed in secure locations is set to Enabled"
+      Key: registry:hkey_local_machine\software\microsoft\windows\currentversion\policies\system|enablesecureuiapaths
+
+ 118. OG : "AC - MSWRK - User Account Control: Run all administrators in Admin Approval Mode is set to Enabled"
+      New: "1.0391 - MSWRK - Ensure User Account Control: Run all administrators in Admin Approval Mode is set to Enabled"
+      Key: registry:hkey_local_machine\software\microsoft\windows\currentversion\policies\system|enablelua
+
+ 119. OG : "SC - MSWRK - User Account Control: Virtualize file and registry write failures to per-user locations is set to Enabled"
+      New: "1.0393 - MSWRK - Ensure User Account Control: Virtualize file and registry write failures to per-user locations is set to Enabled"
+      Key: registry:hkey_local_machine\software\microsoft\windows\currentversion\policies\system|enablevirtualization
+
+ 120. OG : "AU - MSWRK - Audit: Shut down system immediately if unable to log security audits is set to Disabled"
+      New: "1.0395 - MSWRK - Ensure Audit: Shut down system immediately if unable to log security audits is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|crashonauditfail
+
+ 121. OG : "AC - MSWRK - Domain member: Digitally encrypt or sign secure channel data (always) is set to Enabled"
+      New: "1.0396 - MSWRK - Ensure Domain member: Digitally encrypt or sign secure channel data (always) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netlogon\parameters|requiresignorseal
+
+ 122. OG : "AC - MSWRK - Domain member: Digitally encrypt secure channel data (when possible) is set to Enabled"
+      New: "1.0397 - MSWRK - Ensure Domain member: Digitally encrypt secure channel data (when possible) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netlogon\parameters|sealsecurechannel
+
+ 123. OG : "AC - MSWRK - Domain member: Digitally sign secure channel data (when possible) is set to Enabled"
+      New: "1.0398 - MSWRK - Ensure Domain member: Digitally sign secure channel data (when possible) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netlogon\parameters|signsecurechannel
+
+ 124. OG : "AC - MSWRK - Domain member: Disable machine account password changes is set to Disabled"
+      New: "1.0399 - MSWRK - Ensure Domain member: Disable machine account password changes is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netlogon\parameters|disablepasswordchange
+
+ 125. OG : "IA - MSWRK - Domain member: Maximum machine account password age is set to 30 or fewer days, but not 0"
+      New: "1.0400 - MSWRK - Ensure Domain member: Maximum machine account password age is set to 30 or fewer days, but not 0"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netlogon\parameters|maximumpasswordage
+
+ 126. OG : "AC - MSWRK - Domain member: Require strong (Windows 2000 or later) session key is set to Enabled"
+      New: "1.0401 - MSWRK - Ensure Domain member: Require strong (Windows 2000 or later) session key is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\netlogon\parameters|requirestrongkey
+
+ 127. OG : "IA - MSWRK - Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days"
+      New: "1.0406 - MSWRK - Ensure Interactive logon: Prompt user to change password before expiration is set to between 5 and 14 days"
+      Key: registry:hkey_local_machine\software\microsoft\windows nt\currentversion\winlogon|passwordexpirywarning
+
+ 128. OG : "AC - MSWRK - Microsoft network client: Digitally sign communications (always) is set to Enabled"
+      New: "1.0408 - MSWRK - Ensure Microsoft network client: Digitally sign communications (always) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanworkstation\parameters|requiresecuritysignature
+
+ 129. OG : "AC - MSWRK - Microsoft network client: Send unencrypted password to third-party SMB servers is set to Disabled"
+      New: "1.0409 - MSWRK - Ensure Microsoft network client: Send unencrypted password to third-party SMB servers is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanworkstation\parameters|enableplaintextpassword
+
+ 130. OG : "AC - MSWRK - Microsoft network server: Digitally sign communications (always) is set to Enabled"
+      New: "1.0411 - MSWRK - Ensure Microsoft network server: Digitally sign communications (always) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanserver\parameters|requiresecuritysignature
+
+ 131. OG : "AC - MSWRK - Microsoft network server: Disconnect clients when logon hours expire is set to Enabled"
+      New: "1.0412 - MSWRK - Ensure Microsoft network server: Disconnect clients when logon hours expire is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanserver\parameters|enableforcedlogoff
+
+ 132. OG : "CM - MSWRK - Routing and Remote Access (RemoteAccess) is set to Disabled"
+      New: "1.0417 - MSWRK - Ensure Routing and Remote Access (RemoteAccess) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\remoteaccess|start
+
+ 133. OG : "CM - MSWRK - SSDP Discovery (SSDPSRV) is set to Disabled"
+      New: "1.0421 - MSWRK - Ensure SSDP Discovery (SSDPSRV) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\ssdpsrv|start
+
+ 134. OG : "CM - MSWRK - UPnP Device Host (upnphost) is set to Disabled"
+      New: "1.0422 - MSWRK - Ensure UPnP Device Host (upnphost) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\upnphost|start
+
+ 135. OG : "CM - MSWRK - Windows Media Player Network Sharing Service (WMPNetworkSvc) is set to Disabled or Not Installed"
+      New: "1.0424 - MSWRK - Ensure Windows Media Player Network Sharing Service (WMPNetworkSvc) is set to Disabled or Not Installed"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\wmpnetworksvc|start
+
+ 136. OG : "CM - MSWRK - Windows Mobile Hotspot Service (icssvc) is set to Disabled"
+      New: "1.0425 - MSWRK - Ensure Windows Mobile Hotspot Service (icssvc) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\icssvc|start
+
+ 137. OG : "CM - MSWRK - Xbox Accessory Management Service (XboxGipSvc) is set to Disabled"
+      New: "1.0427 - MSWRK - Ensure Xbox Accessory Management Service (XboxGipSvc) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\xboxgipsvc|start
+
+ 138. OG : "CM - MSWRK - Xbox Live Auth Manager (XblAuthManager) is set to Disabled"
+      New: "1.0428 - MSWRK - Ensure Xbox Live Auth Manager (XblAuthManager) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\xblauthmanager|start
+
+ 139. OG : "CM - MSWRK - Xbox Live Game Save (XblGameSave) is set to Disabled"
+      New: "1.0429 - MSWRK - Ensure Xbox Live Game Save (XblGameSave) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\xblgamesave|start
+
+ 140. OG : "CM - MSWRK - Xbox Live Networking Service (XboxNetApiSvc) is set to Disabled"
+      New: "1.0430 - MSWRK - Ensure Xbox Live Networking Service (XboxNetApiSvc) is set to Disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\xboxnetapisvc|start
+
+
+ORPHANED OG ITEMS
+Total : 39
+===============================================================================
+   1. "System/Domain Identification"
+      Key: info:system_identification
+
+   2. "Network Information"
+      Key: info:network_tls_info
+
+   3. "Windows 10 is installed"
+      Key: registry:hkey_local_machine\software\microsoft\windows nt\currentversion|productname
+
+   4. "Windows 11 is installed"
+      Key: registry:hkey_local_machine\software\microsoft\windows nt\currentversion|currentbuildnumber
+
+   5. "CM - MSWRK - Ensure Only display the private store within the Microsoft Store is set to 'Disabled'"
+      Key: registry:hkey_local_machine\software\policies\microsoft\windowsstore|requireprivatestoreonly
+
+   6. "CM - MSWRK - Allow widgets is set to Disabled"
+      Key: registry:hkey_local_machine\software\policies\microsoft\dsh|allownewsandinterests
+
+   7. "AC - MSWRK - MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires is set to Enabled: 5 or fewer seconds"
+      Key: registry:hkey_local_machine\software\microsoft\windows nt\currentversion\winlogon|screensavergraceperiod
+
+   8. "AC - MSWRK - Screensaver - Enabled"
+      Key: registry:hkey_users|screensaveactive
+
+   9. "AC - MSWRK - Screensaver - Password protect the screen saver- Enabled"
+      Key: registry:hkey_users|screensaverissecure
+
+  10. "AC - MSWRK - Ensure Change the time zone is set to Administrators, LOCAL SERVICE'"
+      Key: userrights:setimezoneprivilege
+
+  11. "AC - MSWRK - Network access: Allow anonymous SID/Name translation is set to Disabled"
+      Key: lsa:anonymousnamelookup
+
+  12. "AC - MSWRK - Network access: Shares that can be accessed anonymously is set to None"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanserver\parameters|nullsessionshares
+
+  13. "IA - MSWRK - Network access: Named Pipes that can be accessed anonymously is set to None"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanserver\parameters|nullsessionpipes
+
+  14. "AC - MSWRK - Network access: Remotely accessible registry paths is configured - Allowedexactpaths"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\securepipeservers\winreg\allowedexactpaths|machine
+
+  15. "AC - MSWRK - Network access: Remotely accessible registry paths and sub-paths is configured - Allowedpaths"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\securepipeservers\winreg\allowedpaths|machine
+
+  16. "IA - MSWRK - Network security: Do not store LAN Manager hash value on next password change is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\control\lsa|nolmhash
+
+  17. "CM - MSWRK - Interactive logon: Do not require CTRL+ALT+DEL is set to Disabled"
+      Key: registry:hkey_local_machine\software\microsoft\windows\currentversion\policies\system|disablecad
+
+  18. "AC - MSWRK - Screensaver - Timeout is set to 900 seconds or fewer"
+      Key: None
+
+  19. "AC - MSWRK - Microsoft network client: Digitally sign communications (if server agrees) is set to Enabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\lanmanworkstation\parameters|enablesecuritysignature
+
+  20. "SC - MSWRK - Services - Windows Firewall is enabled"
+      Key: service:mpssvc
+
+  21. "CM - MSWRK - Services - Windows Defender"
+      Key: service:sense
+
+  22. "CM - MSWRK - Services - BitLocker Drive Encryption Service"
+      Key: service:bdesvc
+
+  23. "CM - MSWRK - Services - Security Accounts Manager"
+      Key: service:samss
+
+  24. "CM - MSWRK - Services - Cisco VPN Secure Client"
+      Key: None
+
+  25. "CM - MSWRK - Services - Windows Event Log"
+      Key: None
+
+  26. "CM - MSWRK - TCPIP6 is disabled"
+      Key: registry:hkey_local_machine\system\currentcontrolset\services\tcpip6\parameters|disabledcomponents
+
+  27. "CM - MSWRK - Check if WinRM service is running"
+      Key: service:winrm
+
+  28. "CM - MSWRK - Computer Browser (Browser) is not Installed"
+      Key: None
+
+  29. "CM - MSWRK - Services - BitLocker Drive Encryption Management Service"
+      Key: service:mbamagent
+
+  30. "CM - MSWRK - Services - Rapid7 Insight Agent Service"
+      Key: service:ir_agent
+
+  31. "CM - MSWRK - Sentinel Agent"
+      Key: service:sentinelagent
+
+  32. "CM - MSWRK - Services - Sentinel Helper Service"
+      Key: service:sentinelhelperservice
+
+  33. "CM - MSWRK - Services - SentinelOne Agent Log Processing Service"
+      Key: service:logprocessorservice
+
+  34. "CM - MSWRK - Services - SentinelOne Static Service"
+      Key: service:sentinelstaticengine
+
+  35. "CM - MSWRK - Services - Xbox Live Auth Manager"
+      Key: service:xblauthmanager
+
+  36. "CM - MSWRK - Services - Xbox Live Game Save Service"
+      Key: service:xblgamesave
+
+  37. "CM - MSWRK - Services - Xbox Live Networking Service"
+      Key: service:xboxnetapisvc
+
+  38. "CM - MSWRK - Simple TCP/IP Services (simptcp) is Not Installed"
+      Key: service:simpt*
+
+  39. "CM - MSWRK - SMB v1 server is set to Disabled"
+      Key: None
+

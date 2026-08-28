@@ -1,0 +1,20 @@
+GPO NAME: WIN11-05-BitLocker
+
+PATH:
+Computer Config → Administrative Templates → Windows Components → BitLocker
+
+FIXED DRIVES:
+Require encryption                        = Enabled
+Recovery password required                = Enabled
+Store recovery keys in AD                 = Enabled
+
+OS DRIVES:
+Require additional authentication         = Enabled
+Allow enhanced PIN                        = Enabled
+Minimum PIN length                        = 6+
+
+REMOVABLE:
+Block write without encryption            = Enabled
+
+DISABLE HARDWARE ENCRYPTION:
+Enabled (use software encryption)

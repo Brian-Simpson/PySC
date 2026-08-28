@@ -1,0 +1,8 @@
+GPO NAME: WIN11-11-RDP-Hardening
+
+Require NLA                      = Enabled
+Encryption level                = High
+Prompt for password             = Enabled
+
+Disable drive redirection       = Enabled
+Disable clipboard               = Enabled

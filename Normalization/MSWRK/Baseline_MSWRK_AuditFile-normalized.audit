@@ -1,0 +1,2220 @@
+
+           <check_type:"Windows" version:"2">
+           <group_policy:"HTH Microsoft Windows Enterprise Workstation Baseline">
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "System/Domain Identification"
+  info              : "This obtains specific user and system information that may be used for additional evaluation."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : ".*"
+  powershell_args   : "(Get-ComputerInfo) |Select-Object OSDisplayVersion, CsManufacturer, CsModel, BiosBIOSVersion, BiosSeralNumber, CsUserName, OsName, OsBuildNumber, OsProductType, CsDNSHostName, CsDomain;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "Network Information"
+  info              : "This obtains relevent hosted view network information that may be used for additional evaluation."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : ".*"
+  powershell_args   : "Get-NetIPConfiguration -Detailed ;(Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server');"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+           <if>
+
+           <condition type:"OR">
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "Windows 10 is installed"
+  value_type        : POLICY_TEXT
+  value_data        : "^[Ww][Ii][Nn][Dd][Oo][Ww][Ss] 1[0,1].+$"
+  powershell_args   : "(Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows Nt\Currentversion').ProductName"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "Windows 11 is installed"
+  value_type        : POLICY_TEXT
+  value_data        : "22631"
+  powershell_args   : "(Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows Nt\Currentversion').CurrentBuildNumber"
+  check_type        : CHECK_REGEX
+</custom_item>
+           </condition>
+
+           <then>
+
+<report type:"PASSED">
+  description : "PASSED - TARGET OS MATCHES BASELINE - WINWRK"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0001 - MSWRK - IA - MSWRK - Password History - 24 passwords remembered"
+  info              : "This policy setting determines the number of renewed, unique passwords that have to be associated with a user account before you can reuse an old password."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "24"
+  powershell_args   : "$HisPwdObj = net accounts | Select-string 'password history'; $HisPwdStr = $HisPwdObj.ToString(); $HisPwdStr -match '\d{1,2}' | out-null; $HisPwdStr -match '24' | out-null; $LO_HisPwd = $matches[0]; Write-Output $LO_HisPwd;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0002 - MSWRK - IA - MSWRK - Password Maximum Age - 60 days"
+  info              : "This policy setting defines how long a user can use their password before it expires."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "60"
+  powershell_args   : "$MaxAgeObj = net accounts | Select-string 'Maximum password'; $MaxAgeStr = $MaxAgeObj.ToString(); $MaxAgeStr -match '\d{1,2}' | out-null; $MaxAgeStr -match '60' | out-null; $LO_MaxAge = $matches[0]; Write-Output $LO_MaxAge;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0003 - MSWRK - IA - MSWRK - Password - Password Minimum Age - 1 day"
+  info              : "This policy setting determines the least number of characters that make up a password for a user account."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "$MinAgeObj = net accounts | Select-string 'Minimum password age'; $MinAgeStr = $MinAgeObj.ToString(); $MinAgeStr -match '\d{1,2}' | out-null; $MinAgeStr -match '1' | out-null; $LO_MinAge = $matches[0]; Write-Output $LO_MinAge;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0004 - MSWRK - IA - MSWRK - Password Length - 8 characters"
+  info              : "This policy setting determines the least number of characters that make up a password for a user account."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[8...20]"
+  powershell_args   : "$LngthPwdObj = net accounts | Select-string 'password length'; $LngthPwdStr = $LngthPwdObj.ToString(); $LngthPwdStr -match '\d{1,2}' | out-null; $LngthPwdStr -match '8' | out-null; $LO_LngthPwd = $matches[0]; Write-Output $LO_LngthPwd;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : PASSWORD_POLICY
+  description       : "1.0005 - MSWRK - IA - MSWRK - Password - Complexity Requirements - Enabled"
+  info              : "This policy setting checks all new passwords to ensure that they meet basic requirements for strong passwords."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_SET
+  value_data        : "Enabled"
+  password_policy   : COMPLEXITY_REQUIREMENTS
+</custom_item>
+
+
+<custom_item>
+  type              : PASSWORD_POLICY
+  description       : "1.0006 - MSWRK - IA - MSWRK - Password - Reversible Encryption - Disabled"
+  info              : "This policy setting determines whether the operating system stores passwords in a way that uses reversible encryption."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_SET
+  value_data        : "Disabled"
+  password_policy   : REVERSIBLE_ENCRYPTION
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0007 - MSWRK - AC - MSWRK - Password - Acount Lockout Reset - 1 day"
+  info              : "This policy setting determines the length of time before the Account lockout threshold resets to zero."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : ".*60"
+  powershell_args   : "$LockObsObj = net accounts | Select-string 'Lockout observation'; $LockObsStr = $LockObsObj.ToString(); $LockObsStr -match '\d{1,2}' | out-null; $LockObsStr -match '60' | out-null; $LO_LockObs = $matches[0]; Write-Output $LO_LockObs;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0008 - MSWRK - AC - MSWRK - Password - Acount Lockout Threshold - 5 invalid attempts"
+  info              : "This policy setting determines the number of failed logon attempts before the account is locked."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : ".*5"
+  powershell_args   : "$lockoutObj = net accounts | Select-string threshold; $lockoutStr = $lockoutObj.ToString(); $lockoutStr -match '\d{1,3}' | out-null; $lockoutStr -match 'Never' | out-null; $LO_threshold = $matches[0]; Write-Output $LO_threshold;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : PASSWORD_POLICY
+  description       : "1.0009 - MSWRK - IA - MSWRK - Password - Lockout Admins - Enabled"
+  info              : "This policy setting determines whether the built-in Administrator account is subject to the HTH Account Lockout Policy settings."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_SET
+  value_data        : "Enabled"
+  password_policy   : LOCKOUT_ADMINS
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0010 - MSWRK - AC - MSWRK - Password - Acount Lockout Duration - 60 minutes"
+  info              : "This policy setting determines the length of time that must pass before a locked account is unlocked and a user can try to log on again."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "60"
+  powershell_args   : "$LockDurObj = net accounts | Select-string 'Lockout duration'; $LockDurStr = $LockDurObj.ToString(); $LockDurStr -match '\d{1,2}' | out-null; $LockDurStr -match '60' | out-null; $LO_LockDur = $matches[0]; Write-Output $LO_LockDur;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0011 - MSWRK - AU - MSWRK - Audit Account Lockout is set to include Failure"
+  info              : "This subcategory reports when a users account is locked out as a result of too many failed logon attempts."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success and Failure"
+  powershell_args   : "$AL = auditpol /get /Subcategory:'Account Lockout' |Select-String 'Account Lockout'; $ALStr=$AL.ToString(); $ALStr -match 'Success and Failure' | out-null; $LOAL = $matches[0]; Write-Output $LOAL;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0012 - MSWRK - AU - MSWRK - Audit Logoff is set to include Success"
+  info              : "This subcategory reports when a user logs off from the system."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success"
+  powershell_args   : "$LO = auditpol /get /Subcategory:'LogOff' |Select-String 'LogOff'; $LOStr=$LO.ToString(); $LOStr -match 'Success' | out-null; $LOLO = $matches[0]; Write-Output $LOLO;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0013 - MSWRK - AU - MSWRK - Audit Logon is set to Success and Failure"
+  info              : "This subcategory reports when a user attempts to log on to the system."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success and Failure"
+  powershell_args   : "$LOn = auditpol /get /Subcategory:'LogOn' |Select-String 'LogOn'; $LOnStr=$LOn.ToString(); $LOnStr -match 'Success and Failure' | out-null; $LOLOn = $matches[0]; Write-Output $LOLOn;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0014 - MSWRK - AU - MSWRK - Audit Other Logon/Logoff Events is set to Success and Failure"
+  info              : "This subcategory reports other logon/logoff-related events, such as Remote Desktop Services session disconnects and reconnects, using RunAs to run processes under a different account, and locking and unlocking a workstation."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success and Failure"
+  powershell_args   : "$OLO = auditpol /get /Subcategory:'Other Logon/Logoff Events' |Select-String 'Other Logon/Logoff Events'; $OLOStr=$OLO.ToString(); $OLOStr -match 'Success and Failure' | out-null; $LOOLO = $matches[0]; Write-Output $LOOLO;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0015 - MSWRK - AU - MSWRK - Audit Special Logon is set to include Success"
+  info              : "This subcategory reports when a special logon is used."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success"
+  powershell_args   : "$SLO = auditpol /get /Subcategory:'Special Logon' |Select-String 'Special Logon'; $SLOStr=$SLO.ToString(); $SLOStr -match 'Success' | out-null; $LOSLO = $matches[0]; Write-Output $LOSLO;"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0016 - MSWRK - AU - MSWRK - Audit Policy Change is set to include Success"
+  info              : "This subcategory reports changes in audit policy including SACL changes."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success" || "Success and Failure"
+  powershell_args   : "$APC = auditpol /get /Subcategory:'Audit Policy Change' |Select-String 'Audit Policy Change'; $APCStr=$APC.ToString(); $APCStr -match 'Success and Failure' | out-null; $LOAPC = $matches[0]; Write-Output $LOAPC"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0017 - MSWRK - AU - MSWRK - Audit Authentication Policy Change is set to include Success"
+  info              : "This subcategory reports changes in authentication policy."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success" || "Success and Failure"
+  powershell_args   : "$AuthPC = auditpol /get /Subcategory:'Authentication Policy Change' |Select-String 'Authentication Policy Change'; $AuthPCStr=$AuthPC.ToString(); $AuthPCStr -match 'Success and Failure' | out-null; $LOAuthPC = $matches[0]; Write-Output $LOAuthPC"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0018 - MSWRK - AU - MSWRK - Audit Other System Events is set to Success and Failure"
+  info              : "This subcategory reports on other system events."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success and Failure"
+  powershell_args   : "$OSysEvent = auditpol /get /Subcategory:'Other System Events' |Select-String 'Other System Events'; $OSysEventStr=$OSysEvent.ToString(); $OSysEventStr -match 'Success and Failure' | out-null; $LOOSysEvent = $matches[0]; Write-Output $LOOSysEvent"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0019 - MSWRK - AU - MSWRK - Audit Security State Change is set to include Success"
+  info              : "This subcategory reports changes in security state of the system, such as when the security subsystem starts and stops."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success" || "Success and Failure"
+  powershell_args   : "$SecStCh = auditpol /get /Subcategory:'Security State Change' |Select-String 'Security State Change'; $SecStChStr=$SecStCh.ToString(); $SecStChStr -match 'Success and Failure' | out-null; $LOSecStCh = $matches[0]; Write-Output $LOSecStCh"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0020 - MSWRK - AU - MSWRK - Audit Security System Extension is set to include Success"
+  info              : "This subcategory reports the loading of extension code such as authentication packages by the security subsystem."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success" || "Success and Failure"
+  powershell_args   : "$SecSysExt = auditpol /get /Subcategory:'Security System Extension' |Select-String 'Security System Extension'; $SecSysExtStr=$SecSysExt.ToString(); $SecSysExtStr -match 'Success and Failure' | out-null; $LOSecSysExt = $matches[0]; Write-Output $LOSecSysExt"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0021 - MSWRK - AU - MSWRK - Audit System Integrity is set to Success and Failure"
+  info              : "This subcategory reports on violations of integrity of the security subsystem."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Success and Failure"
+  powershell_args   : "$SysInt = auditpol /get /Subcategory:'System Integrity' |Select-String 'System Integrity'; $SysIntStr=$SysInt.ToString(); $SysIntStr -match 'Success and Failure' | out-null; $LOSysInt = $matches[0]; Write-Output $LOSysInt"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0022 - MSWRK - AC - MSWRK - Enumerate administrator accounts on elevation is set to Disabled"
+  info              : "This policy setting controls whether administrator accounts are displayed when a user attempts to elevate a running application."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\CredUI'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\CredUI').EnumerateAdministrators;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0023 - MSWRK - CM - MSWRK - Prevent the use of security questions for local accounts is set to Enabled"
+  info              : "This policy setting controls whether security questions can be used to reset local account passwords."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\System').NoLocalPasswordResetQuestions;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0024 - MSWRK - AU - MSWRK - Application: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+  info              : "This policy setting controls Event Log behavior when the log file reaches its maximum size."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application').Retention;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0025 - MSWRK - AU - MSWRK - Application: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+  info              : "This policy setting specifies the maximum size of the log file in kilobytes."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[32768..MAX]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application').MaxSize;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0026 - MSWRK - AU - MSWRK - Security: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+  info              : "This policy setting controls Event Log behavior when the log file reaches its maximum size."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security').Retention;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0027 - MSWRK - AU - MSWRK - Security: Specify the maximum log file size (KB) is set to Enabled: 196,608 or greater"
+  info              : "This policy setting specifies the maximum size of the log file in kilobytes."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[196608..MAX]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security').MaxSize;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0028 - MSWRK - AU - MSWRK - Setup: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+  info              : "This policy setting controls Event Log behavior when the log file reaches its maximum size."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Setup'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Setup').Retention;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0029 - MSWRK - AU - MSWRK - Setup: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+  info              : "This policy setting specifies the maximum size of the log file in kilobytes."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[32768..MAX]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Setup'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\Setup').MaxSize;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0030 - MSWRK - AU - MSWRK - System: Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+  info              : "This policy setting controls Event Log behavior when the log file reaches its maximum size."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\System').Retention;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0031 - MSWRK - AU - MSWRK - System: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater"
+  info              : "This policy setting specifies the maximum size of the log file in kilobytes."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[32768..MAX]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\EventLog\System').MaxSize;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0032 - MSWRK - SI - MSWRK - Ensure 'Scan all downloaded files and attachments' is set to 'Disabled'"
+  info              : "This policy setting configures scanning for all downloaded files and attachments."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection').DisableIOAVProtection;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0033 - MSWRK - SI - MSWRK - Ensure 'Turn off real-time protection' is set to 'Disabled'"
+  info              : "This policy setting configures real-time protection prompts for known malware detection."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection').DisableRealtimeMonitoring;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0034 - MSWRK - SI - MSWRK - Ensure 'Turn on behavior monitoring' is set to 'Enabled'"
+  info              : "This policy setting allows you to configure behavior monitoring for Microsoft Defender Antivirus."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection').DisableBehaviorMonitoring;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0035 - MSWRK - SI - MSWRK - Ensure 'Configure detection for potentially unwanted applications' is set to 'Disabled'"
+  info              : "This policy setting controls detection and action for Potentially Unwanted Applications (PUA), that can deliver adware or malware."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows Defender').PUAProtection;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0036 - MSWRK - SI - MSWRK - Ensure 'Always prompt for password upon connection' is set to 'Disabled'"
+  info              : "This policy setting specifies whether Remote Desktop Services always prompts the client computer for a password upon connection."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services').fPromptForPassword;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0037 - MSWRK - AC - MSWRK - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to 'Enabled'"
+  info              : "This policy setting allows you to specify whether to require user authentication for remote connections to the RD Session Host server by using Network Level Authentication."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services').UserAuthentication;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0038 - MSWRK - AC - MSWRK - Ensure 'Set client connection encryption level' is set to 'Enabled: High Level'"
+  info              : "This policy setting specifies whether to require the use of a specific encryption level to secure communications between client computers and RD Session Host servers during Remote Desktop Protocol (RDP) connections."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "3"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services').MinEncryptionLevel;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0039 - MSWRK - CM - MSWRK - Ensure 'Allow Cortana' is set to 'Disabled'"
+  info              : "This policy setting specifies whether Cortana is allowed on the device."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\Windows Search'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\Windows Search').AllowCortana;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0040 - MSWRK - CM - MSWRK - Ensure Only display the private store within the Microsoft Store is set to 'Disabled'"
+  info              : "This policy setting denies access to the retail catalog in the Microsoft Store, but displays the private store."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\WindowsStore'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\WindowsStore').RequirePrivateStoreOnly;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0041 - MSWRK - RA - MSWRK - Ensure Turn off Automatic Download and Install of updates is set to Disabled."
+  info              : "This setting enables or disables the automatic download and installation of Microsoft Store app updates."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "4"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\WindowsStore'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\WindowsStore').AutoDownload;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0042 - MSWRK - CM - MSWRK - Allow widgets is set to Disabled"
+  info              : "This policy setting specifies whether the Widgets feature is allowed on the device."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Dsh'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Dsh').AllowNewsAndInterests;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0043 - MSWRK - CM - MSWRK - Enables or disables Windows Game Recording and Broadcasting is set to Disabled"
+  info              : "This setting enables or disables the Windows Game Recording and Broadcasting features."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\GameDVR'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\GameDVR').AllowGameDVR;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0044 - MSWRK - AC - MSWRK - Ensure Sign-in and lock last interactive user automatically after a restart is set to Disabled."
+  info              : "This policy setting controls whether a device will automatically sign-in the last interactive user after Windows Update restarts the system."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System').DisableAutomaticRestartSignOn;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0045 - MSWRK - AC - MSWRK - Ensure 'Allow Basic authentication' is set to 'Enabled'"
+  info              : "This policy setting allows you to manage whether the Windows Remote Management (WinRM) service accepts Basic authentication from a remote client."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service').AllowBasic;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0046 - MSWRK - AC - MSWRK - Allow unencrypted traffic is set to Disabled for service"
+  info              : "This policy setting allows you to manage whether the Windows Remote Management (WinRM) service sends and receives unencrypted messages over the network."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service'){$noutput = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service').AllowUnencryptedTraffic;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0047 - MSWRK - CM - MSWRK - Ensure 'Allow clipboard sharing with Windows Sandbox' is set to 'Disabled'"
+  info              : "This policy setting enables or disables clipboard sharing with the Windows Sandbox."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\Sandbox'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\Sandbox').AllowClipboardRedirection;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0048 - MSWRK - CM - MSWRK - Ensure 'Allow networking in Windows Sandbox' is set to 'Disabled'"
+  info              : "This policy setting enables or disables networking in the Windows Sandbox."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\Sandbox'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\Sandbox').AllowNetworking;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0049 - MSWRK - RA - MSWRK - Ensure 'Configure Automatic Updates' is set to 'Disabled'"
+  info              : "This policy setting specifies whether computers in your environment will receive security updates from Windows Update or WSUS."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU').NoAutoUpdate;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0050 - MSWRK - AC - MSWRK - Prevent enabling lock screen slide show is set to Enabled"
+  info              : "Disables the lock screen slide show settings in PC Settings and prevents a slide show from playing on the lock screen."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\Personalization'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\Personalization').NoLockScreenSlideshow;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0051 - MSWRK - CM - MSWRK - Allow users to enable online speech recognition services is set to Disabled"
+  info              : "This policy enables the automatic learning component of input personalization that includes speech, inking, and typing."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization'){$noutput = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization').AllowInputPersonalization;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0052 - MSWRK - CM - MSWRK - Configure SMB v1 client driver is set to Enabled: Disable driver (recommended)"
+  info              : "This setting configures the start type for the Server Message Block version 1 (SMBv1) client driver service ( MRxSmb10 ), which is recommended to be disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\mrxsmb10'){$noutput = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\mrxsmb10').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0053 - MSWRK - SC - MSWRK - Enable Certificate Padding is set to Enabled"
+  info              : "This policy setting configures whether the."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Cryptography\Wintrust\Config'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Cryptography\Wintrust\Config').EnableCertPaddingCheck;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0054 - MSWRK - CM - MSWRK - NetBT NodeType configuration is set to Enabled: P-node (recommended)"
+  info              : "This setting determines which method NetBIOS over TCP/IP (NetBT) uses to register and resolve names."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^2$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\NetBT\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\NetBT\Parameters').NodeType;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0055 - MSWRK - AC - MSWRK - MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires is set to Enabled: 5 or fewer seconds"
+  info              : "Windows includes a grace period between when the screen saver is launched and when the console is actually locked automatically when screen saver locking is enabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[0..5]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon').ScreenSaverGracePeriod;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0056 - MSWRK - AC - MSWRK - Screensaver - Enabled"
+  info              : "This ensures that the screen saver is enabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "$noutput = (Get-ItemProperty 'registry::hkey_users\S-1-5-21*\Software\Policies\Microsoft\Windows\Control Panel\Desktop').ScreenSaveActive; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0057 - MSWRK - AC - MSWRK - Screensaver - Password protect the screen saver- Enabled"
+  info              : "This setting ensures that the user is prompteed fror a password whne the screensaver is enabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "1"
+  powershell_args   : "$noutput = (Get-ItemProperty 'registry::hkey_users\S-1-5-21*\Software\Policies\Microsoft\Windows\Control Panel\Desktop').ScreenSaverIsSecure; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0058 - MSWRK - SC - MSWRK - MSS: (DisableIPSourceRouting IPv6) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled"
+  info              : "IP source routing is a mechanism that allows the sender to determine the IP route that a datagram should follow through the network."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^2$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters').DisableIPSourceRouting;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0059 - MSWRK - SC - MSWRK - MSS: (DisableIPSourceRouting) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled"
+  info              : "IP source routing is a mechanism that allows the sender to determine the IP route that a datagram should take through the network."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^2$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters').DisableIPSourceRouting;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0060 - MSWRK - CM - MSWRK - Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled: 3 = Prevent Wi-Fi when on Ethernet"
+  info              : "This policy setting prevents computers from establishing multiple simultaneous connections to either the Internet or to a Windows domain."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^3$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\WcmSvc\GroupPolicy'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\WcmSvc\GroupPolicy').fMinimizeConnections;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0061 - MSWRK - CM - MSWRK - Allow Windows to automatically connect to suggested open hotspots, to networks shared by contacts, and to hotspots offering paid services is set to Disabled"
+  info              : "This policy setting determines whether users can enable the following WLAN settings: Connect to suggested open hotspots, Connect to networks shared by my contacts, and Enable paid services."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\WcmSvc\wifinetworkmanager\config'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\WcmSvc\wifinetworkmanager\config').AutoConnectAllowedOEM;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0062 - MSWRK - CM - MSWRK - Turn off multicast name resolution is set to Enabled"
+  info              : "LLMNR is a secondary name resolution protocol."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient'){$noutput = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient').EnableMulticast;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0063 - MSWRK - AC - MSWRK - Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt"
+  info              : "This policy setting controls whether computers will show a warning and a security elevation prompt when users create a new printer connection using Point and Print."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint').NoWarningNoElevationOnInstall;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0064 - MSWRK - CM - MSWRK - Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
+  info              : "This policy setting controls whether computers will show a warning and a security elevation prompt when users are updating drivers for an existing connection using Point and Print."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint').UpdatePromptSettings;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0065 - MSWRK - CM - MSWRK - Turn on convenience PIN sign-in is set to Disabled"
+  info              : "This policy setting allows you to control whether a domain user can sign in using a convenience PIN."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\System').AllowDomainPINLogon;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0066 - MSWRK - CM - MSWRK - Allow network connectivity during connected-standby (on battery) is set to Disabled"
+  info              : "This policy setting allows you to control the network connectivity state in standby on modern standby-capable systems."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9').DCSettingIndex;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0067 - MSWRK - CM - MSWRK - Allow network connectivity during connected-standby (plugged in) is set to Disabled"
+  info              : "This policy setting allows you to control the network connectivity state in standby on modern standby-capable systems."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9').ACSettingIndex;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0068 - MSWRK - CM - MSWRK - Configure Solicited Remote Assistance is set to Disabled"
+  info              : "This policy setting allows you to turn on or turn off Solicited (Ask for) Remote Assistance on this computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\policies\Microsoft\Windows NT\Terminal Services'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\policies\Microsoft\Windows NT\Terminal Services').fAllowToGetHelp;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0069 - MSWRK - SI - MSWRK - Turn On Virtualization Based Security is set to Enabled"
+  info              : "This policy setting specifies whether Virtualization Based Security is enabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\DeviceGuard'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\DeviceGuard').EnableVirtualizationBasedSecurity;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0070 - MSWRK - SI - MSWRK - Turn On Virtualization Based Security: Select Platform Security Level is set to Secure Boot or higher"
+  info              : "This policy setting specifies whether Virtualization Based Security (VBS) is enabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^3$" || "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Policies\Microsoft\Windows\DeviceGuard'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\DeviceGuard').RequirePlatformSecurityFeatures;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0071 - MSWRK - AC - MSWRK - Access Credential Manager as a trusted caller is set to No One"
+  info              : "This security setting is used by Credential Manager during Backup and Restore."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeTrustedCredManAccessPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0072 - MSWRK - AC - MSWRK - Ensure Create a pagefile is set to Administrators"
+  info              : "This policy setting allows users to change the size of the pagefile."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "administrators"
+  right_type        : SeCreatePagefilePrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0073 - MSWRK - AC - MSWRK - Create a token object is set to No One"
+  info              : "This policy setting allows a process to create an access token, which may provide elevated rights to access sensitive data."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeCreateTokenPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0074 - MSWRK - AC - MSWRK - Create global objects is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE"
+  info              : "This policy setting determines whether users can create global objects that are available to all sessions."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && "LOCAL SERVICE" && "NETWORK SERVICE" && "SERVICE"
+  right_type        : SeCreateGlobalPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0075 - MSWRK - AC - MSWRK - Create permanent shared objects is set to No One"
+  info              : "This user right is useful to kernel-mode components that extend the object namespace."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeCreatePermanentPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0076 - MSWRK - AC - MSWRK - Configure Create symbolic links"
+  info              : "This policy setting determines which users can create symbolic links."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ("Administrators" || ("Administrators" && "Virtual Machines") || ("Administrators" && "NT VIRTUAL MACHINE\Virtual Machines"))
+  right_type        : SeCreateSymbolicLinkPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0077 - MSWRK - AC - MSWRK - Debug programs is set to Administrators"
+  info              : "This policy setting determines which user accounts will have the right to attach a debugger to any process or to the kernel, which provides complete access to sensitive and critical operating system components."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeDebugPrivilege
+</custom_item>
+
+
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0078 - MSWRK - AC - MSWRK - Deny log on as a service to include Guests"
+  info              : "This security setting determines which service accounts are prevented from registering a process as a service."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Guests"
+  right_type        : SeDenyServiceLogonRight
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0079 - MSWRK - AC - MSWRK - Ensure Deny log on locally to include Guests"
+  info              : "This security setting determines which users are prevented from logging on at the computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "domain guests" && "guests"
+  right_type        : SeDenyInteractiveLogonRight
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0080 - MSWRK - AC - MSWRK - Access this computer from the network is set to Administrators, Remote Desktop Users"
+  info              : "This policy setting allows other users on the network to connect to the computer and is required by various network protocols that include Server Message Block (SMB)-based protocols, NetBIOS, Common Internet File System (CIFS), and Component Object Model Plus (COM+)."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && "Remote Desktop Users"
+  right_type        : SeNetworkLogonRight
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0081 - MSWRK - AC - MSWRK - Enable computer and user accounts to be trusted for delegation is set to No One"
+  info              : "This policy setting allows users to change the Trusted for Delegation setting on a computer object in Active Directory."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeEnableDelegationPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0082 - MSWRK - AC - MSWRK - Force shutdown from a remote system is set to Administrators"
+  info              : "This policy setting allows users to shut down Windows Vista-based or newer computers from remote locations on the network."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeRemoteShutdownPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0083 - MSWRK - AC - MSWRK - Generate security audits is set to LOCAL SERVICE, NETWORK SERVICE"
+  info              : "This policy setting determines which users or processes can generate audit records in the Security log."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "LOCAL SERVICE" && "NETWORK SERVICE"
+  right_type        : SeAuditPrivilege
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0084 - MSWRK - AC - MSWRK - Impersonate a client after authentication is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE"
+  info              : "The policy setting allows programs that run on behalf of a user to impersonate that user (or another specified account) so that they can act on behalf of the user."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && "LOCAL SERVICE" && "NETWORK SERVICE" && "SERVICE"
+  right_type        : SeImpersonatePrivilege
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0085 - MSWRK - AC - MSWRK - Increase scheduling priority is set to Administrators, Window Manager\Window Manager Group"
+  info              : "This policy setting determines whether users can increase the base priority class of a process."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ("Administrators" && "Window Manager Group") || ("Administrators" && "Window Manager\Window Manager Group")
+  right_type        : SeIncreaseBasePriorityPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0086 - MSWRK - AC - MSWRK - Load and unload device drivers is set to Administrators"
+  info              : "This policy setting allows users to dynamically load a new device driver on a system."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeLoadDriverPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0087 - MSWRK - AC - MSWRK - Lock pages in memory is set to No One"
+  info              : "This policy setting allows a process to keep data in physical memory, which prevents the system from paging the data to virtual memory on disk."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeLockMemoryPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0088 - MSWRK - AC - MSWRK - Act as part of the operating system is set to No One"
+  info              : "This policy setting allows a process to assume the identity of any user and thus gain access to the resources that the user is authorized to access."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeTcbPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0089 - MSWRK - AC - MSWRK - Manage auditing and security log is set to Administrators"
+  info              : "This policy setting determines which users can change the auditing options for files and directories and clear the Security log."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeSecurityPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0090 - MSWRK - AC - MSWRK - Modify an object label is set to No One"
+  info              : "This privilege determines which user accounts can modify the integrity label of objects, such as files, registry keys, or processes owned by other users."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : ""
+  right_type        : SeReLabelPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0091 - MSWRK - AC - MSWRK - Modify firmware environment values is set to Administrators"
+  info              : "This policy setting allows users to configure the system-wide environment variables that affect hardware configuration."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeSystemEnvironmentPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0092 - MSWRK - AC - MSWRK - Perform volume maintenance tasks is set to Administrators"
+  info              : "This policy setting allows users to manage the systems volume or disk configuration, which could allow a user to delete a volume and cause data loss as well as a denial-of-service condition."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeManageVolumePrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0093 - MSWRK - AC - MSWRK - Profile single process is set to Administrators"
+  info              : "This policy setting determines which users can use tools to monitor the performance of non-system processes."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeProfileSingleProcessPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0094 - MSWRK - AC - MSWRK - Profile system performance is set to Administrators, NT SERVICE\WdiServiceHost"
+  info              : "This policy setting allows users to use tools to view the performance of different system processes, which could be abused to allow attackers to determine a systems active processes and provide insight into the potential attack surface of the computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && ("NT SERVICE\WdiServiceHost" || "WdiServiceHost")
+  right_type        : SeSystemProfilePrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0095 - MSWRK - AC - MSWRK - Replace a process level token is set to LOCAL SERVICE, NETWORK SERVICE"
+  info              : "This policy setting allows one process or service to start another service or process with a different security access token, which can be used to modify the security access token of that sub-process and result in the escalation of privileges."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "LOCAL SERVICE" && "NETWORK SERVICE"
+  right_type        : SeAssignPrimaryTokenPrivilege
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0096 - MSWRK - AC - MSWRK - Restore files and directories is set to Administrators"
+  info              : "This policy setting determines which users can bypass file, directory, registry, and other persistent object permissions when restoring backed up files and directories on computers that run Windows Vista (or newer) in your environment."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeRestorePrivilege
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0097 - MSWRK - AC - MSWRK - Shut down the system is set to Administrators, Users"
+  info              : "This policy setting determines which users who are logged on locally to the computers in your environment can shut down the operating system with the Shut Down command."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Users" && "Administrators"
+  right_type        : SeShutdownPrivilege
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0098 - MSWRK - AC - MSWRK - Take ownership of files or other objects is set to Administrators"
+  info              : "This policy setting allows users to take ownership of files, folders, registry keys, processes, or threads."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeTakeOwnershipPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0099 - MSWRK - AC - MSWRK - Adjust memory quotas for a process is set to Administrators, LOCAL SERVICE, NETWORK SERVICE"
+  info              : "This policy setting allows a user to adjust the maximum amount of memory that is available to a process."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && "LOCAL SERVICE" && "NETWORK SERVICE"
+  right_type        : SeIncreaseQuotaPrivilege
+  check_type        : CHECK_SUPERSET
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0100 - MSWRK - AC - MSWRK - Allow log on locally is set to Administrators, Users"
+  info              : "This policy setting determines which users can interactively log on to computers in your environment."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && "Users"
+  right_type        : SeInteractiveLogonRight
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0101 - MSWRK - AC - MSWRK - Allow log on through Remote Desktop Services is set to Administrators, Remote Desktop Users"
+  info              : "This policy setting determines which users or groups have the right to log on as a Remote Desktop Services client."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators" && "Remote Desktop Users"
+  right_type        : SeRemoteInteractiveLogonRight
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0102 - MSWRK - AC - MSWRK - Back up files and directories is set to Administrators"
+  info              : "This policy setting allows users to circumvent file and directory permissions to back up the system."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeBackupPrivilege
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0103 - MSWRK - AC - MSWRK - Ensure Change the system time is set to Administrators, LOCAL SERVICE'"
+  info              : "This policy setting determines which users and groups can change the time and date on the internal clock of the computers in your environment."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "administrators" && "local service"
+  right_type        : SeSystemTimePrivilege
+  check_type        : CHECK_EQUAL_ANY
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0104 - MSWRK - AC - MSWRK - Ensure Change the time zone is set to Administrators, LOCAL SERVICE'"
+  info              : "This setting determines which users can change the time zone of the computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "administrators" && "local service"
+  right_type        : SeTimeZonePrivilege
+  check_type        : CHECK_EQUAL_ANY
+</custom_item>
+
+<custom_item>
+  type              : ANONYMOUS_SID_SETTING
+  description       : "1.0105 - MSWRK - AC - MSWRK - Network access: Allow anonymous SID/Name translation is set to Disabled"
+  info              : "This policy setting determines whether an anonymous user can request security identifier (SID) attributes for another user, or use a SID to obtain its corresponding user name."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_SET
+  value_data        : "Disabled"
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0106 - MSWRK - AC - MSWRK - Network access: Shares that can be accessed anonymously is set to None"
+  info              : "This policy setting determines which network shares can be accessed by anonymous users."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : ""
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters').NullSessionShares;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+  powershell_option : CAN_BE_NULL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0107 - MSWRK - CM - MSWRK - Network access: Sharing and security model for local accounts is set to Classic - local users authenticate as themselves"
+  info              : "This policy setting determines how network logons that use local accounts are authenticated."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').ForceGuest;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0108 - MSWRK - AC - MSWRK - Network access: Do not allow anonymous enumeration of SAM accounts is set to Enabled"
+  info              : "This policy setting controls the ability of anonymous users to enumerate the accounts in the Security Accounts Manager (SAM)."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').RestrictAnonymousSAM;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0109 - MSWRK - AC - MSWRK - Network access: Let Everyone permissions apply to anonymous users is set to Disabled"
+  info              : "This policy setting determines what additional permissions are assigned for anonymous connections to the computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').EveryoneIncludesAnonymous;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0110 - MSWRK - IA - MSWRK - Network access: Named Pipes that can be accessed anonymously is set to None"
+  info              : "This policy setting determines which communication sessions, or pipes, will have attributes and permissions that allow anonymous access."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : ""
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters').NullSessionPipes;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  powershell_option : CAN_BE_NULL
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0111 - MSWRK - AC - MSWRK - Network access: Remotely accessible registry paths is configured"
+  info              : "This policy setting determines which registry paths will be accessible over the network, regardless of the users or groups listed in the access control list (ACL) of the winreg registry key."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "System\\CurrentControlSet\\Control\\ProductOptions" && "System\\CurrentControlSet\\Control\\Server Applications" && "Software\\Microsoft\\Windows NT\\CurrentVersion"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths').Machine;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0112 - MSWRK - AC - MSWRK - Network access: Remotely accessible registry paths and sub-paths is configured"
+  info              : "This policy setting determines which registry paths and sub-paths will be accessible over the network, regardless of the users or groups listed in the access control list (ACL) of the winreg registry key."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "System\\CurrentControlSet\\Control\\Print\\Printers" && "System\\CurrentControlSet\\Services\\Eventlog" && "Software\\Microsoft\\OLAP Server" && "Software\\Microsoft\\Windows NT\\CurrentVersion\\Print" && "Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows" && "System\\CurrentControlSet\\Control\\ContentIndex" && "System\\CurrentControlSet\\Control\\Terminal Server" && "System\\CurrentControlSet\\Control\\Terminal Server\\UserConfig" && "System\\CurrentControlSet\\Control\\Terminal Server\\DefaultUserConfiguration" && "Software\\Microsoft\\Windows NT\\CurrentVersion\\Perflib" && "System\\CurrentControlSet\\Services\\Sysmonlog"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths').Machine;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0113 - MSWRK - AC - MSWRK - Network access: Restrict anonymous access to Named Pipes and Shares is set to Enabled"
+  info              : "When enabled, this policy setting restricts anonymous access to only those shares and pipes that are named in the Network access: Named pipes that can be accessed anonymously and Network access: Shares that can be accessed anonymously settings."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters').RestrictNullSessAccess;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0114 - MSWRK - IA - MSWRK - Network security: Do not store LAN Manager hash value on next password change is set to Enabled"
+  info              : "This policy setting determines whether the LAN Manager (LM) hash value for the new password is stored when the password is changed."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').NoLMHash;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0115 - MSWRK - AC - MSWRK - Network security: LAN Manager authentication level is set to Send NTLMv2 response only. Refuse LM & NTLM"
+  info              : "LAN Manager (LM) was a family of early Microsoft client/server software (predating Windows NT) that allowed users to link personal computers together on a single network."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^5$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').LMCompatibilityLevel;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0116 - MSWRK - AC - MSWRK - Network security: LDAP client signing requirements is set to Negotiate signing or higher"
+  info              : "This policy setting determines the level of data signing that is requested on behalf of clients that issue LDAP BIND requests."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$" || "^2$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LDAP'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LDAP').LDAPClientIntegrity;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0117 - MSWRK - IA - MSWRK - Account - Guest Account Disabled"
+  info              : "The built-in local guest account should be disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "False"
+  powershell_args   : "$noutput = Get-LocalUser | Where-Object { $_.SID -Match '^S-1-5-21.*-501$' } | Select-Object Name, Enabled; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0118 - MSWRK - IA - MSWRK - Accounts: Limit local account use of blank passwords to console logon only is set to Enabled"
+  info              : "This policy setting determines whether local accounts that are not password protected can be used to log on from locations other than the physical computer console."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').LimitBlankPasswordUse;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0119 - MSWRK - IA - MSWRK - Account - Local Admin Account Enabled"
+  info              : "The built-in local admin account should be disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "False"
+  powershell_args   : "$noutput = Get-LocalUser | Where-Object { $_.SID -Match '^S-1-5-21.*-500$' } | Select-Object Name, Enabled; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0120 - MSWRK - IA - MSWRK - Account - Rename Local Admin"
+  info              : "The built-in local admin account should be renamed."
+  value_type        : POLICY_TEXT
+  value_data        : "Administrator" || "Admin"
+  powershell_args   : "$noutput = Get-LocalUser | Where-Object { $_.SID -Match '^S-1-5-21.*-500$' } | Select-Object Name; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_NOT_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0121 - MSWRK - IA - MSWRK - Account - Rename Guest Account"
+  info              : "The built-in local guest account should be reset."
+  value_type        : POLICY_TEXT
+  value_data        : "Guest"
+  powershell_args   : "$noutput = (Get-LocalUser | Where-Object { $_.SID -Match '^S-1-5-21.*-501$' }).Name; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_NOT_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0122 - MSWRK - CM - MSWRK - System objects: Require case insensitivity for non-Windows subsystems is set to Enabled"
+  info              : "This policy setting determines whether case insensitivity is enforced for all subsystems."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Session Manager\Kernel'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Session Manager\Kernel').ObCaseInsensitive;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0123 - MSWRK - CM - MSWRK - System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links) is set to Enabled"
+  info              : "This policy setting determines the strength of the default discretionary access control list (DACL) for objects."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Session Manager'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Session Manager').ProtectionMode;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0124 - MSWRK - AC - MSWRK - User Account Control: Only elevate UIAccess applications that are installed in secure locations is set to Enabled"
+  info              : "This policy setting controls whether applications that request to run with a User Interface Accessibility (UIAccess) integrity level must reside in a secure location in the file system."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System').EnableSecureUIAPaths;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0125 - MSWRK - AC - MSWRK - User Account Control: Run all administrators in Admin Approval Mode is set to Enabled"
+  info              : "This policy setting controls the behavior of all User Account Control (UAC) policy settings for the computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System').EnableLUA;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0126 - MSWRK - SC - MSWRK - User Account Control: Virtualize file and registry write failures to per-user locations is set to Enabled"
+  info              : "This policy setting controls whether application write failures are redirected to defined registry and file system locations."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System').EnableVirtualization;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0127 - MSWRK - AU - MSWRK - Audit: Shut down system immediately if unable to log security audits is set to Disabled"
+  info              : "This policy setting determines whether the system shuts down if it is unable to log Security events."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Control\Lsa'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa').CrashOnAuditFail;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0128 - MSWRK - AC - MSWRK - Domain member: Digitally encrypt or sign secure channel data (always) is set to Enabled"
+  info              : "This policy setting determines whether all secure channel traffic that is initiated by the domain member must be signed or encrypted."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters').RequireSignOrSeal;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0129 - MSWRK - AC - MSWRK - Domain member: Digitally encrypt secure channel data (when possible) is set to Enabled"
+  info              : "This policy setting determines whether a domain member should attempt to negotiate encryption for all secure channel traffic that it initiates."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters').SealSecureChannel;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0130 - MSWRK - AC - MSWRK - Domain member: Digitally sign secure channel data (when possible) is set to Enabled"
+  info              : "This policy setting determines whether a domain member should attempt to negotiate whether all secure channel traffic that it initiates must be digitally signed."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters').SignSecureChannel;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0131 - MSWRK - AC - MSWRK - Domain member: Disable machine account password changes is set to Disabled"
+  info              : "This policy setting determines whether a domain member can periodically change its computer account password."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters').DisablePasswordChange;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0132 - MSWRK - IA - MSWRK - Domain member: Maximum machine account password age is set to 30 or fewer days, but not 0"
+  info              : "This policy setting determines the maximum allowable age for a computer account password."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[1..30]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters').MaximumPasswordAge;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0133 - MSWRK - AC - MSWRK - Domain member: Require strong (Windows 2000 or later) session key is set to Enabled"
+  info              : "When this policy setting is enabled, a secure channel can only be established with Domain Controllers that are capable of encrypting secure channel data with a strong (128-bit) session key."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters').RequireStrongKey;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0134 - MSWRK - CM - MSWRK - Interactive logon: Do not require CTRL+ALT+DEL is set to Disabled"
+  info              : "This policy setting determines whether users must press CTRL+ALT+DEL before they log on."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System').DisableCAD;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0135 - MSWRK - AC - MSWRK - Screensaver - Timeout is set to 900 seconds or fewer"
+  info              : "This setting ensures that the screensaver will autmatically start after 900 seconds or lesss of inactivity."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "900"
+  powershell_args   : "$noutput = (Get-ItemProperty 'registry::hkey_users\S-1-5-21*\Software\Policies\Microsoft\Windows\Control Panel\Desktop').ScreenSaveTimeOut; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0136 - MSWRK - IA - MSWRK - Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days"
+  info              : "This policy setting determines how far in advance users are warned that their password will expire."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "[5..14]"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'){$noutput = (Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon').PasswordExpiryWarning;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0137 - MSWRK - AC - MSWRK - Microsoft network client: Digitally sign communications (always) is set to Enabled"
+  info              : "This policy setting determines whether packet signing is required by the SMB client component."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters').RequireSecuritySignature;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0138 - MSWRK - AC - MSWRK - Microsoft network client: Digitally sign communications (if server agrees) is set to Enabled"
+  info              : "This policy setting determines whether the SMB client will attempt to negotiate SMB packet signing."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters').EnableSecuritySignature;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0139 - MSWRK - AC - MSWRK - Microsoft network client: Send unencrypted password to third-party SMB servers is set to Disabled"
+  info              : "This policy setting determines whether the SMB redirector will send plaintext passwords during authentication to third-party SMB servers that do not support password encryption."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^0$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters').EnablePlainTextPassword;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0140 - MSWRK - AC - MSWRK - Microsoft network server: Digitally sign communications (always) is set to Enabled"
+  info              : "This policy setting determines whether packet signing is required by the SMB server component."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters').RequireSecuritySignature;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0141 - MSWRK - AC - MSWRK - Microsoft network server: Disconnect clients when logon hours expire is set to Enabled"
+  info              : "This security setting determines whether to disconnect users who are connected to the local computer outside their user accounts valid logon hours and should be implemented in conjunction with Network Security Force Logoff."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^1$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters').EnableForcedLogoff;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0142 - MSWRK - CM - MSWRK - Routing and Remote Access (RemoteAccess) is set to Disabled"
+  info              : "Offers routing services to businesses in local area and wide area network environments."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\RemoteAccess'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\RemoteAccess').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0143 - MSWRK - CM - MSWRK - SSDP Discovery (SSDPSRV) is set to Disabled"
+  info              : "Discovers networked devices and services that use the SSDP discovery protocol, such as UPnP devices."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\SSDPSRV'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\SSDPSRV').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0144 - MSWRK - CM - MSWRK - UPnP Device Host (upnphost) is set to Disabled"
+  info              : "Allows UPnP devices to be hosted on this computer."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\upnphost'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\upnphost').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0145 - MSWRK - CM - MSWRK - Windows Media Player Network Sharing Service (WMPNetworkSvc) is set to Disabled or Not Installed"
+  info              : "Shares Windows Media Player libraries to other networked players and media devices using Universal Plug and Play."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\WMPNetworkSvc'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\WMPNetworkSvc').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0146 - MSWRK - CM - MSWRK - Windows Mobile Hotspot Service (icssvc) is set to Disabled"
+  info              : "Provides the ability to share a cellular data connection with another device."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\icssvc'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\icssvc').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0147 - MSWRK - CM - MSWRK - Xbox Accessory Management Service (XboxGipSvc) is set to Disabled"
+  info              : "This service manages connected Xbox Accessories."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\XboxGipSvc'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\XboxGipSvc').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0148 - MSWRK - CM - MSWRK - Xbox Live Auth Manager (XblAuthManager) is set to Disabled"
+  info              : "Provides authentication and authorization services for interacting with Xbox Live."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\XblAuthManager'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\XblAuthManager').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0149 - MSWRK - CM - MSWRK - Xbox Live Game Save (XblGameSave) is set to Disabled"
+  info              : "This service syncs save data for Xbox Live save enabled games."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\XblGameSave'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\XblGameSave').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0150 - MSWRK - CM - MSWRK - Xbox Live Networking Service (XboxNetApiSvc) is set to Disabled"
+  info              : "This service supports the Windows."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "^4$"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\System\CurrentControlSet\Services\XboxNetApiSvc'){$noutput = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Services\XboxNetApiSvc').Start;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0151 - MSWRK - SC - MSWRK - Services - Windows Firewall is enabled"
+  info              : "The Windows Firewall service should be automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'MpsSvc').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0152 - MSWRK - CM - MSWRK - Services - Windows Defender"
+  info              : "The Windows Defender service should be automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'Sense').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0153 - MSWRK - CM - MSWRK - Services - BitLocker Drive Encryption Service"
+  info              : "The BitLocker Drive Encryption service should be manually enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'BDESVC').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0154 - MSWRK - CM - MSWRK - Services - Security Accounts Manager"
+  info              : "The Security Accounts Manager service should be automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'SamSs').Status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0155 - MSWRK - CM - MSWRK - Services - Cisco VPN Secure Client"
+  info              : "The Cisco VPN Secure Client service should be automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -Name csc_vpnagent).status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0156 - MSWRK - CM - MSWRK - Services - Windows Event Log"
+  info              : "The Windows Event Log service should be automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -Name EventLog).status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : USER_RIGHTS_POLICY
+  description       : "1.0157 - MSWRK - AC - MSWRK - Create a pagefileallowed for Administrators"
+  info              : "This policy setting allows users to change the size of the pagefile."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : USER_RIGHT
+  value_data        : "Administrators"
+  right_type        : SeCreatePagefilePrivilege
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0158 - MSWRK - CM - MSWRK - TCPIP6 is disabled"
+  info              : "This setting determines if TCPIPV6 is disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "255"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters'){$noutput = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters').DisabledComponents;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0159 - MSWRK - CM - MSWRK - Check if WinRM service is running"
+  info              : "Windows Remote Management (WinRM) is the Microsoft implementation of the WS-Management protocol."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'WinRM').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0160 - MSWRK - CM - MSWRK - Computer Browser (Browser) is not Installed"
+  info              : "Maintains an updated list of computers on the network and supplies this list to computers designated as browsers."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Disabled"
+  powershell_args   : "$noutput = (Get-WindowsOptionalFeature -Online -FeatureName SMB1Protocol).State; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0161 - MSWRK - CM - MSWRK - Disable SMB v1 client driver."
+  info              : "This setting configures the start type for the Server Message Block version 1 (SMBv1) client driver service ( MRxSmb10 )."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "4"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\mrxsmb10'){$noutput = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\mrxsmb10').Start; if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0162 - MSWRK - CM - MSWRK - Services - BitLocker Drive Encryption Management Service"
+  info              : "The BitLocker Management Client Service is automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'MBAMAgent').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0163 - MSWRK - CM - MSWRK - Services - Rapid7 Insight Agent Service"
+  info              : "The Rapid7 Insight Agent Service is automatically enabled on startup."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'ir_agent').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0164 - MSWRK - CM - MSWRK - Sentinel Agent"
+  info              : "SentinelOne Endpoint Protection Agent."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'SentinelAgent').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0165 - MSWRK - CM - MSWRK - Services - Sentinel Helper Service"
+  info              : "Helper service for SentinelOne Endpoint Protection Agent."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'SentinelHelperService').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0166 - MSWRK - CM - MSWRK - Services - SentinelOne Agent Log Processing Service"
+  info              : "Manage logs for SentinelOne Endpoint Protection."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'LogProcessorService').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0167 - MSWRK - CM - MSWRK - Services - SentinelOne Static Service"
+  info              : "Manage static engines for SentinelOne Endpoint Protection."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Running"
+  powershell_args   : "$noutput = (Get-Service -name 'SentinelStaticEngine').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0168 - MSWRK - CM - MSWRK - Services - Xbox Live Auth Manager"
+  info              : "The Xbox Live Auth Manager Service is disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Stopped" || "Service Not Found"
+  powershell_args   : "$noutput = (Get-Service -name 'XblAuthManager').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0169 - MSWRK - CM - MSWRK - Services - Xbox Live Game Save Service"
+  info              : "The Xbox Live Game Save Service is disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Stopped" || "Service Not Found"
+  powershell_args   : "$noutput = (Get-Service -name 'XblGameSave').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0170 - MSWRK - CM - MSWRK - Services - Xbox Live Networking Service"
+  info              : "The Xbox Live Networking Service is disabled."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Stopped" || "Service Not Found"
+  powershell_args   : "$noutput = (Get-Service -name 'XboxNetApiSvc').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0171 - MSWRK - CM - MSWRK - Simple TCP/IP Services (simptcp) is Not Installed"
+  info              : "The Simple TCP/IP Services have very little purpose in a modern enterprise environment."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Service Not Found"
+  powershell_args   : "$noutput = (Get-Service -name 'simpt*').status; if ($noutput -eq $Null) {write-host 'Service Not Found'} else {$noutput}"
+  check_type        : CHECK_REGEX
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0172 - MSWRK - CM - MSWRK - SMB v1 server is set to Disabled"
+  info              : "This setting configures the server-side processing of the Server Message Block version 1 (SMBv1) protocol."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "Disabled"
+  powershell_args   : "$noutput = (Get-WindowsOptionalFeature -Online -FeatureName SMB1Protocol).State; if ($noutput -eq $Null) {write-host 'Not Found'} else {$noutput}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+<custom_item>
+  type              : AUDIT_POWERSHELL
+  description       : "1.0173 - MSWRK - CM - MSWRK - Turn off multicast name resolution"
+  info              : "LLMNR is a secondary name resolution protocol."
+  see_also          : "See HTH Policies and Standards"
+  value_type        : POLICY_TEXT
+  value_data        : "0"
+  powershell_args   : "if(Test-Path -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient'){$noutput = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient').EnableMulticast;if($noutput -eq $Null) {write-host 'Value Not Found'} else {$noutput}}else {write-host 'Path Not Found'}"
+  check_type        : CHECK_EQUAL
+</custom_item>
+
+           </then>
+
+           <else>
+
+<report type:"PASSED">
+  description : "MSWRK - WARNING - TARGET OS DOESNT MATCH BASELINE - WINWRK"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+           </else>
+
+           </if>
+
+           </group_policy>
+
+           </check_type>

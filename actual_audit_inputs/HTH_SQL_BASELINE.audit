@@ -1,0 +1,128 @@
+#################################  H T H   S Q L  B A S E L I N E  ###########################
+
+
+<check_type:"MS_SQLDB">
+
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AC - MSSQL - The sa Login Account is set to 'Disabled'"
+               info : "The sa account is a widely known and often widely used SQL Server account with sysadmin privileges."
+          reference : "NIST 800-53r5|AC-2(3)"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "SELECT name, is_disabled FROM sys.server_principals WHERE sid = 0x01 AND is_disabled = 0;"
+          sql_types : NULL, NULL
+         sql_expect : NULL, NULL
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AC - MSSQL - SQL Authentication is not used in contained databases"
+               info : "Contained databases do not enforce password complexity rules for SQL Authenticated users."
+          reference : "NIST 800-53r5|AC-2(1)"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT name AS DBUser FROM sys.database_principals WHERE name NOT IN (''dbo'',''Information_Schema'',''sys'',''guest'') AND type IN (''U'',''S'',''G'') AND authentication_type = 2;'"
+          sql_types : NULL
+         sql_expect : NULL
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AC - MSSQL - Windows BUILTIN groups are not SQL Logins"
+               info : "Prior to SQL Server 2008, the BUILTIN\Administrators group was added as a SQL Server login with sysadmin privileges during installation by default."
+          reference : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "SELECT pr.[name], pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.principal_id = pe.grantee_principal_id WHERE pr.name like 'BUILTIN%';"
+          sql_types : NULL, NULL, NULL
+         sql_expect : NULL, NULL, NULL
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AC - MSSQL - Windows local groups are not SQL Logins"
+               info : "Local Windows groups should not be used as logins for SQL Server instances."
+          reference : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "USE [master] SELECT pr.[name] AS LocalGroupName, pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.[principal_id] = pe.[grantee_principal_id] WHERE pr.[type_desc] = 'WINDOWS_GROUP' AND pr.[name] like CAST(SERVERPROPERTY('MachineName') AS nvarchar) + '%';"
+          sql_types : NULL, NULL, NULL
+         sql_expect : NULL, NULL, NULL
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AC - MSSQL - The public role in the msdb database is not granted access to SQL Agent proxies"
+               info : "The public database role contains every user in the msdb database. SQL Agent proxies define a security context in which a job step can run."
+          reference : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "USE [msdb] SELECT sp.name AS proxyname FROM dbo.sysproxylogin spl JOIN sys.database_principals dp ON dp.sid = spl.sid JOIN sysproxies sp ON sp.proxy_id = spl.proxy_id WHERE principal_id = USER_ID('public');"
+          sql_types : NULL
+         sql_expect : NULL
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AU - MSSQL - Default Trace Enabled Server Configuration Option is set to '1'"
+               info : "The default trace provides audit logging of database activity including account creations, privilege elevation and execution of DBCC commands."
+          reference : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'default trace enabled';"
+          sql_types : STRING, STRING, STRING
+         sql_expect : "default trace enabled", "1", "1"
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "CM - MSSQL - CLR Assembly Permission Set is set to 'SAFE_ACCESS' for All CLR Assemblies"
+               info : "Setting CLR Assembly Permission Sets to SAFE_ACCESS will hinder assemblies from accessing external system resources such as files, the network, environment variables, or the registry."
+          reference : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "SELECT name, permission_set_desc FROM sys.assemblies where is_user_defined = 1 and name <> 'Microsoft.SqlServer.Types';"
+          sql_types : REGEX_OR_NULL, STRING_OR_NULL
+         sql_expect : ".*", "SAFE_ACCESS"
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "CM - MSSQL - AUTO_CLOSE is set to 'OFF' on contained databases"
+               info : "AUTO_CLOSE determines if a given database is closed or not after a connection terminates."
+          reference : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "SELECT name, containment, containment_desc, is_auto_close_on FROM sys.databases WHERE containment <> 0 and is_auto_close_on = 1;"
+          sql_types : NULL, NULL, NULL, NULL
+         sql_expect : NULL, NULL, NULL, NULL
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "AU - MSSQL - Login Auditing is set to 'failed logins'"
+               info : "This setting will record failed authentication attempts for SQL Server logins to the SQL Server Errorlog. This is the default setting for SQL Server."
+          reference : "NIST 800-53r5|AU-1 AU-2"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "EXEC xp_loginconfig 'audit level';"
+          sql_types : STRING, REGEX
+         sql_expect : "audit level", "^(all|failure)$"
+</custom_item>
+
+<custom_item>
+               type : SQL_POLICY
+        description : "CM - MSSQL - Ole Automation Procedures Server Configuration Option is set to '0'"
+               info : "The Ole Automation Procedures option controls whether OLE Automation objects can be instantiated within Transact-SQL batches. "
+          reference : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1)CM-9 SA-3 SA-8 SA-10"
+           see_also : "See HTH Policies and Standards"
+        sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'Ole Automation Procedures';"
+          sql_types : STRING, STRING, STRING
+         sql_expect : "Ole Automation Procedures", "0", "0"
+</custom_item>
+
+<custom_item>
+       type        : SQL_POLICY
+       description : "IA - MSSQL - Ensure CHECK_POLICY Option is set to ON for All SQL Authenticated Logins"
+       info        : "Ensure SQL authenticated login passwords comply with the secure password policy applied by the Windows Server Benchmark so that they cannot be easily compromised via brute force attack."
+       reference   : "800-53r5|IA-5(1)"
+       see_also    : "See HTH Policies and Standards"
+       sql_request : "SELECT name, is_disabled FROM sys.sql_logins WHERE is_policy_checked = 0;"
+       sql_types   : NULL, NULL
+       sql_expect  : NULL, NULL
+</custom_item>
+
+</check_type>

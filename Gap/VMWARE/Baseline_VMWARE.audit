@@ -1,0 +1,952 @@
+# generated_by: for-gap-combined-dedupe
+<check_type:"Windows" version:"2">
+<group_policy:"Windows Security Hardening Through Group Policy and Registry Settings">
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0000 - VMWARE - ESXI-67-000002 - The ESXi host must verify the DCUI.Access list."
+#   info        : "Lockdown mode disables direct host access, requiring that administrators manage hosts from vCenter Server."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'DCUI.Access' value, and configure it to root. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name DCUI.Access | Set-AdvancedSetting -Value 'root"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "DCUI.Access : root$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "DCUI.Access : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0001 - VMWARE - (L1) Ensure unauthorized modification and disconnection of devices is disabled"
+#   info        : "In a virtual machine, users and processes without root or administrator privileges can disconnect devices, such as network adapters and CD-ROM drives, and modify device settings within the guest operating system."
+#   solution    : "To prevent unauthorized device modifications and disconnections, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.device.edit.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.device\.edit\.disable : TRUE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.device\.edit\.disable :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0002 - VMWARE - (L1) Ensure unauthorized connection of devices is disabled"
+#   info        : "In a virtual machine, users and processes without root or administrator privileges can connect devices, such as network adapters and CD-ROM drives."
+#   solution    : "To prevent unauthorized device connections, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.device.connectable.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.device\.connectable\.disable : True$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.device\.connectable\.disable : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0003 - VMWARE - ESXI-67-000079 - The ESXi host must not suppress warnings that the local or remote shell sessions are enabled."
+#   info        : "Warnings that local or remote shell sessions are enabled alert administrators to activity that they may not be aware of and need to investigate."
+#   solution    : "From the vSphere Web Client, select the host and click Configure >> System >> Advanced System Settings. Find the 'UserVars.SuppressShellWarning' value and set it to the following: 0 or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name UserVars.SuppressShellWarning | Set-AdvancedSetting -Value '0"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars.SuppressShellWarning : 0$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars.SuppressShellWarning : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0004 - VMWARE - (L1) Ensure account lockout is set to 15 minutes"
+#   info        : "An account is automatically locked after the maximum number of failed consecutive login attempts is reached."
+#   solution    : "To set the account lockout to 15 minutes, perform the following: - From the vSphere Web Client, select the host. - Click Configure then expand System - Select Advanced System Settings then click Edit - Enter Security.AccountUnlockTime in the filter. - Set the value for this parameter to 900 Alternately, use the following PowerCLI command: Get-VMHost | Get-AdvancedSetting -Name Security.AccountUnlockTime | Set-AdvancedSetting -Value 900"
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security.AccountUnlockTime : \b900\b"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security.AccountUnlockTime : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0005 - VMWARE - ESXI-67-000005 - The ESXi host must enforce the limit of three consecutive invalid logon attempts by a user."
+#   info        : "By limiting the number of failed logon attempts, the risk of unauthorized access via user password guessing, otherwise known as brute forcing, is reduced."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Security.AccountLockFailures' value, and configure it to '3'. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name Security.AccountLockFailures | Set-AdvancedSetting -Value 3"
+#   reference   : "NIST 800-53r5|AC-7a."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security.AccountLockFailures : 3$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security.AccountLockFailures : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0006 - VMWARE - ESXI-67-000006 - The ESXi host must enforce the unlock timeout of 15 minutes after a user account is locked out."
+#   info        : "By enforcing a reasonable unlock timeout after multiple failed logon attempts, the risk of unauthorized access via user password guessing, otherwise known as brute forcing, is reduced."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit' and select the 'Security.AccountUnlockTime' value and configure it to '900'. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name Security.AccountUnlockTime | Set-AdvancedSetting -Value 900"
+#   reference   : "NIST 800-53r5|AC-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security.AccountUnlockTime : 900$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security.AccountUnlockTime : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0007 - VMWARE - (L1) Ensure passwords are required to be complex"
+#   info        : "ESXi uses the pam_passwdqc."
+#   solution    : "To set the password complexity requirements, perform the following: - Login to the ESXi host - Navigate to Host/Manage/System/Advanced settings - Locate the following key: Security.PasswordQualityControl <xhtml:ol start=\"4\"> - Set N0 to disabled - Set N1 to disabled - Set N2 to disabled - Set N3 to disabled - Set N4 to 14 or greater. The string should look like this:retry=3 min=disabled,disabled,disabled,disabled,14"
+#   reference   : "NIST 800-53r5|IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security\.PasswordQualityControl : retry=3 min=disabled,disabled,disabled,disabled,14"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security\.PasswordQualityControl : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0008 - VMWARE - ESXI-67-000031 - The ESXi host must enforce password complexity by requiring that at least one uppercase character be used."
+#   info        : "To enforce the use of complex passwords, minimum numbers of characters of different classes are mandated."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Security.PasswordQualityControl' value, and configure it to 'similar=deny retry=3 min=disabled,disabled,disabled,disabled,15'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Security.PasswordQualityControl | Set-AdvancedSetting -Value 'similar=deny retry=3 min=disabled,disabled,disabled,disabled,15"
+#   reference   : "NIST 800-53r5|IA-5(1)(a) IA-5(1)(b)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security.PasswordQualityControl : similar=deny retry=3 min=disabled,disabled,disabled,disabled,15$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security.PasswordQualityControl : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0009 - VMWARE - ESXI-67-000032 - The ESXi host must prohibit the reuse of passwords within five iterations."
+#   info        : "If a user or root used the same password continuously or was allowed to change it back shortly after being forced to change it to something else, it would provide a potential intruder with the opportunity to keep guessing at one user's password until it was guessed correctly."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Select the 'Security.PasswordHistory' value and configure it to '5'. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name Security.PasswordHistory | Set-AdvancedSetting -Value 5"
+#   reference   : "NIST 800-53r5|IA-5(1)(e)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security.PasswordHistory : 5$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security.PasswordHistory : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0010 - VMWARE - (L1) Ensure previous 5 passwords are prohibited"
+#   info        : "This setting prevents users from utilizing previously used passwords."
+#   solution    : "To set the password history 5, perform the following: - From the vSphere Web Client, select the host. - Click Configure then expand System - Select Advanced System Settings then click Edit - Enter Security.PasswordHistory in the filter. - Set the value for this parameter is set to 5 Alternately, the following PowerCLI command may be used: Get-VMHost | Get-AdvancedSetting Security.PasswordHistory | Set-AdvancedSetting -Value 5"
+#   reference   : "NIST 800-53r5|IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security\.PasswordHistory : \b5\b"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security\.PasswordHistory : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0011 - VMWARE - (L1) Ensure the ESXi host firewall is configured to restrict access to services running on the host"
+#   info        : "The ESXi firewall is enabled by default and allows ping (ICMP) and communication with DHCP/DNS clients."
+#   solution    : "To properly restrict access to services running on an ESXi host, perform the following from the vSphere web client: - Select a host - Click Configure then expand System then select Firewall - Click Edit to view services which are enabled (indicated by a check). - For each enabled service, (e.g., ssh, vSphere Web Access, http client) provide a list of allowed IP addresses. - Click OK"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "^Manual Review Required$"
+#   xsl_stmt    : "</xsl:template>"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0012 - VMWARE - ESXI-67-000057 - The ESXi host must configure the firewall to block network traffic by default - incoming"
+#   info        : "In addition to service-specific firewall rules, ESXi has a default firewall rule policy to allow or deny incoming and outgoing traffic."
+#   solution    : "From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHostFirewallDefaultPolicy | Set-VMHostFirewallDefaultPolicy -AllowIncoming $false -AllowOutgoing $false"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Firewall Default Policy : Incoming Blocked = true"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Firewall Default Policy : Incoming Blocked = "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0013 - VMWARE - ESXI-67-000057 - The ESXi host must configure the firewall to block network traffic by default - outgoing"
+#   info        : "In addition to service-specific firewall rules, ESXi has a default firewall rule policy to allow or deny incoming and outgoing traffic."
+#   solution    : "From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHostFirewallDefaultPolicy | Set-VMHostFirewallDefaultPolicy -AllowIncoming $false -AllowOutgoing $false"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Firewall Default Policy : Outgoing Blocked = true"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Firewall Default Policy : Outgoing Blocked = "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0014 - VMWARE - (L1) Ensure NTP time synchronization is configured properly"
+#   info        : "Network Time Protocol (NTP) synchronization should be configured correctly and enabled on each VMware ESXi host to ensure accurate time for system event logs."
+#   solution    : "To enable and properly configure NTP synchronization, perform the following from the vSphere web client: - Select a host - Click Configure then expand System then select Time Configuration - Select Edit next to Network Time Protocol - Select the Enable box, then fill in the appropriate NTP Servers. - in the NTP Service Startup Policy drop down select Start and stop with host - Click OK To implement the recommended configuration state, run the following PowerCLI command: # Set the NTP Settings for all hosts # If an internal NTP server is used, replace pool.ntp.org with # the IP address or the Fully Qualified Domain Name (FQDN) of the internal NTP server $NTPServers = \"pool.ntp.org\", \"pool2.ntp.org\" Get-VMHost | Add-VmHostNtpServer $NTPServers"
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "NTP Server Pool: 0\.us\.pool\.ntp\.org, 1\.us\.pool\.ntp\.org, 2\.us\.pool\.ntp\.org$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "NTP Server Pool: "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0015 - VMWARE - ESXI-67-000001 - Access to the ESXi host must be limited by enabling Lockdown Mode."
+#   info        : "Enabling Lockdown Mode disables direct access to an ESXi host, requiring the host to be managed remotely from vCenter Server."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Security Profile. Click 'Edit' in 'Lockdown Mode' and enable ('Normal' or 'Strict'). or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: $level = 'lockdownNormal' OR 'lockdownStrict' $vmhost = Get-VMHost -Name <hostname> | Get-View $lockdown = Get-View $vmhost.ConfigManager.HostAccessManager $lockdown.ChangeLockdownMode($level)"
+#   reference   : "NIST 800-53r5|AC-2(2) AC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Lockdown Mode : lockdown(Normal|Strict)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Lockdown Mode : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0016 - VMWARE - ESXI-67-000004 - Remote logging for ESXi hosts must be configured."
+#   info        : "Remote logging to a central log host provides a secure, centralized store for ESXi logs."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Syslog.global.logHost' value, and configure it to a site-specific syslog server. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Syslog.global.logHost | Set-AdvancedSetting -Value '<syslog server hostname>"
+#   reference   : "NIST 800-53r5|AC-17(1) AU-4(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Syslog.global.logHost : 127.0.0.1"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Syslog.global.logHost : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0017 - VMWARE - (L1) Ensure remote logging is configured for ESXi hosts"
+#   info        : "By default, ESXI logs are stored on a local scratch volume or ramdisk."
+#   solution    : "To configure remote logging properly, perform the following from the vSphere web client: - Select the host - Click Configure then expand System then select Advanced System Settings - Select Edit then enter Syslog.global.logHost in the filter. - Set the Syslog.global.logHost to the hostname or IP address of the central log server. - Click OK Alternately, run the following PowerCLI command: # Set Syslog.global.logHost for each host Get-VMHost | Foreach { Set-AdvancedSetting -VMHost $_ -Name Syslog.global.logHost -Value \"<NewLocation>\" }"
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-6(3) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Syslog\.global\.logHost : udp://192\.168\.0\.1:514$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Syslog\.global\.logHost : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0018 - VMWARE - ESXI-67-000036 - The ESXi host must disable ESXi Shell unless needed for diagnostics or troubleshooting."
+#   info        : "The ESXi Shell is an interactive command line environment available locally from the DCUI or remotely via SSH."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Services. Under 'Services', select 'ESXi Shell' service and click the 'Stop' button to stop the service. Use Edit Startup policy to 'Start and stop manually' and click 'OK'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-VMHostService | Where {$_.Label -eq 'ESXi Shell'} | Set-VMHostService -Policy Off Get-VMHost | Get-VMHostService | Where {$_.Label -eq 'ESXi Shell'} | Stop-VMHostService"
+#   reference   : "NIST 800-53r5|CM-7a."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "ESXi Shell : running = false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "ESXi Shell : running ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0019 - VMWARE - (L1) Ensure the ESXi shell is disabled"
+#   info        : "The ESXi shell is an interactive command line environment available from the Direct Console User Interface (DCUI) or remotely via SSH."
+#   solution    : "To disable the ESXi shell, perform the following: - From the vSphere Web Client, select the host. - Select Configure then expand System and select Services - Click on ESXi Shell then click Edit Startup Policy - Set the Startup Policy is set to Start and Stop Manually - Click on OK Alternately, use the following PowerCLI command: # Set the ESXi shell to start manually rather than automatically for all hosts Get-VMHost | Get-VMHostService | Where { $_.key -eq \"TSM\" } | Set-VMHostService -Policy Off"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "ESXi Shell : running = FALSE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "ESXi Shell : running ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0020 - VMWARE - (L1) Ensure SSH is disabled"
+#   info        : "The ESXi shell, when enabled, can be accessed directly from the host console through the DCUI or remotely using SSH."
+#   solution    : "To disable SSH, perform the following: - From the vSphere Web Client, select the host. - Select Configure then expand System and select Services - Click on SSH then click Edit Startup Policy - Set the Startup Policy is set to Start and Stop Manually - Click OK - While ESXi Shell is still selected click Stop Alternately, use the following PowerCLI command: # Set SSH to start manually rather than automatically for all hosts Get-VMHost | Get-VMHostService | Where { $_.key -eq \"TSM-SSH\" } | Set-VMHostService -Policy Off"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "SSH : running = FALSE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "SSH : running = "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0021 - VMWARE - ESXI-67-000041 - The ESXi host must set a timeout to automatically disable idle shell sessions after two minutes."
+#   info        : "If a user forgets to log out of their local or remote ESXi Shell session, the idle connection will remain open indefinitely and increase the likelihood of inappropriate host access via session hijacking."
+#   solution    : "From the vSphere Client, select the ESXi Host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'UserVars.ESXiShellInteractiveTimeOut' value, and configure it to '120'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name UserVars.ESXiShellInteractiveTimeOut | Set-AdvancedSetting -Value 120"
+#   reference   : "NIST 800-53r5|AC-12 SC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars.ESXiShellInteractiveTimeout : 120$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars.ESXiShellInteractiveTimeout : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0022 - VMWARE - (L1) Ensure Normal Lockdown mode is enabled"
+#   info        : "Enabling lockdown mode disables direct local access to an ESXi host, requiring the host be managed remotely from vCenter Server."
+#   solution    : "To enable lockdown mode, perform the following from the vSphere web client: - From the vSphere Web Client, select the host. - Select Configure then expand System and select Security Profile - Across from Lockdown Mode click on Edit - Click the radio button for Normal - Click OK Alternately, run the following PowerCLI command: # Enable lockdown mode for each host (Get-VMHost | Get-View).EnterLockdownMode()"
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Lockdown Mode : (lockdownNormal|lockdownStrict)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Lockdown Mode : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0023 - VMWARE - ESXI-67-000042 - The ESXi host must terminate shell services after 10 minutes."
+#   info        : "When the ESXi Shell or SSH services are enabled on a host, they will run indefinitely."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'UserVars.ESXiShellTimeOut' value, and configure it to '600'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name UserVars.ESXiShellTimeOut | Set-AdvancedSetting -Value 600"
+#   reference   : "NIST 800-53r5|AC-12 SC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars.ESXiShellTimeout : 600$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars.ESXiShellTimeout : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0024 - VMWARE - (L1) Ensure the shell services timeout is set to 1 hour or less"
+#   info        : "When the ESXi shell or SSH services are enabled on a host, they will run indefinitely."
+#   solution    : "To set the timeout to the desired value, perform the following from the vSphere web client: - From the vSphere Web Client, select the host. - Click Configure then expand System - Select Advanced System Settings then click Edit - Enter ESXiShellTimeOut in the filter. - Set the value for this parameter is set to 3600 (1 hour) or less - Click OK"
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars\.ESXiShellTimeout : ([1-9]|[1-9][0-9]{1,2}|[12][0-9]{3}|3[0-5][0-9]{2}|3600)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars\.ESXiShellTimeout : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0025 - VMWARE - (L1) Ensure virtual disk shrinking is disabled"
+#   info        : "If Virtual disk shrinking is done repeatedly it will cause the virtual disk to become unavailable resulting in a denial of service."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input isolation.tools.diskShrink.disable with a value of TRUE - Click OK then OK again. To implement the recommended configuration state, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.tools.diskShrink.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.tools\.diskShrink\.disable : "
+#   not_expect  : "isolation\.tools\.diskShrink\.disable : (FALSE|NOT configured)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0026 - VMWARE - ESXI-67-000008 - The ESXi host must display the Standard Mandatory DoD Notice and Consent Banner before granting access to the system via SSH."
+#   info        : "Failure to display the DoD logon banner prior to a logon attempt will negate legal proceedings resulting from unauthorized access to system resources."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Config.Etc.issue' value, and set it to the following: 'You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions: -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations. -At any time, the USG may inspect and seize data stored on this IS. -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose. -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy. -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.' or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Config.Etc.issue | Set-AdvancedSetting -Value '<insert logon banner>"
+#   reference   : "NIST 800-53r5|AC-8a."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "You are accessing a U.S. Government \(USG\) Information System \(IS\) that is provided for USG-authorized use only. By using this IS \(which includes any device attached to this IS\), you consent to the following conditions: -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct \(PM\), law enforcement \(LE\), and counterintelligence \(CI\) investigations. -At any time, the USG may inspect and seize data stored on this IS. -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose. -This IS includes security measures \(e.g., authentication and access controls\) to protect USG interests--not for your personal benefit or privacy. -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details."
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "[Cc]onfig\.[Ee]tc\.[Ii]ssue : .*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0027 - VMWARE - (L1) Ensure the maximum failed login attempts is set to 5"
+#   info        : "Authentication should be configured so there is a maximum number of consecutive failed login attempts for each account, at which point the account at risk will be locked out."
+#   solution    : "To set the maximum failed login attempts correctly, perform the following steps: - From the vSphere Web Client, select the host. - Click Configure then expand System - Select Advanced System Settings then click Edit - Enter Security.AccountLockFailures in the filter. - Set the value for this parameter to 5 Alternately, use the following PowerCLI command: Get-VMHost | Get-AdvancedSetting -Name Security.AccountLockFailures | Set-AdvancedSetting -Value 5"
+#   reference   : "NIST 800-53r5|AC-1 AC-2 AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Security\.AccountLockFailures : \b[1-5]\b"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Security\.AccountLockFailures : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0028 - VMWARE - (L1) Ensure bidirectional CHAP authentication for iSCSI traffic is enabled"
+#   info        : "vSphere allows for the use of bidirectional authentication of both the iSCSI target and host."
+#   solution    : "To enable bidirectional CHAP authentication for iSCSI traffic, perform the following: - From the vSphere Web Client, select the host. - Click Configure then expand Storage - Select Storage Adapters then select the iSCSI Adapter. - Under Properties click on Edit next to Authentication - Next to Authentication Method select Use bidirectional CHAP from the dropdown. - Specify the outgoing CHAP name. - Make sure that the name you specify matches the name configured on the storage side. - To set the CHAP name to the iSCSI adapter name, select \"Use initiator name\". - To set the CHAP name to anything other than the iSCSI initiator name, deselect \"Use initiator name\" and type a name in the Name text box. <xhtml:ol start=\"8\"> - Enter an outgoing CHAP secret to be used as part of authentication. Use the same secret as your storage side secret. - Specify incoming CHAP credentials. Make sure your outgoing and incoming secrets do not match. - Click OK - Click the second to last symbol labeled Rescan Adapter Alternately, run the following PowerCLI command: # Set the Chap settings for the Iscsi Adapter Get-VMHost | Get-VMHostHba | Where {$_.Type -eq \"Iscsi\"} | Set-VMHostHba # Use desired parameters here"
+#   reference   : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "MutualChapAuthenticationType : "
+#   not_expect  : "MutualChapAuthenticationType : chapProhibited$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0029 - VMWARE - ESXI-67-000054 - The ESXi host must enable bidirectional CHAP authentication for iSCSI traffic."
+#   info        : "When enabled, vSphere performs bidirectional authentication of both the iSCSI target and host."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> Storage >> Storage Adapters. Select the iSCSI adapter >> Properties >> Authentication and click the 'Edit' button. Set Authentication method to 'Use bidirectional CHAP' and enter a unique secret for each traffic flow direction. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-VMHostHba | Where {$_.Type -eq 'iscsi'} | Set-VMHostHba -ChapType Required -ChapName 'chapname' -ChapPassword 'password' -MutualChapEnabled $true -MutualChapName 'mutualchapname' -MutualChapPassword 'mutualpassword"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "chapAuthEnabled : "
+#   not_expect  : "chapAuthEnabled : False$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0030 - VMWARE - (L1) Ensure Managed Object Browser (MOB) is disabled"
+#   info        : "The Managed Object Browser (MOB) is a web-based server application that lets you examine objects that exist on the server side, explore the object model used by the VM kernel to manage the host, and change configurations."
+#   solution    : "To disabled MOB, perform the following from the vSphere Web Client: - Select a host - Click Configure then expand System then select Advanced System Settings - Click Edit then search for Config.HostAgent.plugins.solo.enableMob - Set the value to false - Click OK"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Config.HostAgent.plugins.solo.enableMob : false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Config.HostAgent.plugins.solo.enableMob : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0031 - VMWARE - ESXI-67-000035 - The ESXi host must be configured to disable nonessential capabilities by disabling SSH."
+#   info        : "The ESXi Shell is an interactive command line interface (CLI) available at the ESXi server console."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Services. Under 'Services', select 'SSH' service and click the 'Stop' button to stop the service. Use Edit Startup policy to 'Start and stop manually' and click 'OK'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-VMHostService | Where {$_.Label -eq 'SSH'} | Set-VMHostService -Policy Off Get-VMHost | Get-VMHostService | Where {$_.Label -eq 'SSH'} | Stop-VMHostService"
+#   reference   : "NIST 800-53r5|AC-17(1) AC-17(9) CM-7a."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "SSH : running = false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "SSH : running ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0032 - VMWARE - (L1) Ensure idle ESXi shell and SSH sessions time out after 300 seconds or less"
+#   info        : "The ESXiShellInteractiveTimeOut allows you to automatically terminate idle ESXi shell and SSH sessions."
+#   solution    : "To set the timeout to the desired value, perform the following from the vSphere web client: - From the vSphere Web Client, select the host. - Click Configure then expand System - Select Advanced System Settings then click Edit - Enter ESXiShellInteractiveTimeOut in the filter. - Set the value for this parameter is set to the appropriate value ( 300 seconds or less). - Click OK"
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars\.ESXiShellInteractiveTimeOut : \b([1-9]|[1-9][0-9]|[12][0-9]{2}|300)\b"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars\.ESXiShellInteractiveTimeOut : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0033 - VMWARE - ESXI-67-000074 - The ESXi host must exclusively enable TLS 1.2 for all endpoints."
+#   info        : "TLS 1."
+#   solution    : "From the vSphere Web Client, select the host and click Configure >> System >> Advanced System Settings. Find the 'UserVars.ESXiVPsDisabledProtocols' value and set it to the following: tlsv1,tlsv1.1,sslv3 or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name UserVars.ESXiVPsDisabledProtocols | Set-AdvancedSetting -Value 'tlsv1,tlsv1.1,sslv3' A host reboot is required for changes to take effect."
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars.ESXiVPsDisabledProtocols : sslv3,tlsv1,tlsv1.1$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars.ESXiVPsDisabledProtocols : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0034 - VMWARE - (L1) Ensure persistent logging is configured for all ESXi hosts"
+#   info        : "ESXi can be configured to store log files on an in-memory file system."
+#   solution    : "To configure persistent logging properly, perform the following from the vSphere web client: - Select the host - Click Configure then expand System then select Advanced System Settings - Select Edit then enter Syslog.global.LogDir in the filter. - Set Syslog.global.logDir to a persistent location specified as [datastorename] path_to_file where the path is relative to the datastore. For example, [datastore1] /systemlogs. - Click OK Alternatively, run the following PowerCLI command: # Set Syslog.global.logDir for each host Get-VMHost | Foreach { Set-AdvancedConfiguration -VMHost $_ -Name Syslog.global.logDir -Value \"<NewLocation>\" }"
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Syslog\.global\.logDir : \[datastore1\] systemlogs$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Syslog\.global\.logDir : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0035 - VMWARE - (L1) Ensure the DCUI timeout is set to 600 seconds or less"
+#   info        : "The Direct Console User Interface (DCUI) is used for directly logging into an ESXi host and carrying out host management tasks."
+#   solution    : "To correct the DCUI timeout setting, perform the following steps: - From the vSphere Web Client, select the host. - Click Configure then under System select Advanced System Settings - Select Edit then enter UserVars.DcuiTimeOut in the filter. - Click in the box for the current value, then set the value to 600 seconds or less. Alternately, use the following PowerCLI command: Get-VMHost | Get-AdvancedSetting -Name UserVars.DcuiTimeOut | Set-AdvancedSetting -Value 600"
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars\.DcuiTimeOut : \b([1-9]|[1-9][0-9]|[1-5][0-9]{2}|600)\b"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars\.DcuiTimeOut : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0036 - VMWARE - ESXI-67-000003 - The ESXi host must verify the exception users list for Lockdown Mode."
+#   info        : "In vSphere, users can be added to the Exception Users list from the vSphere Web Client."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Security Profile. Under 'Lockdown Mode', click 'Edit' and remove unnecessary users from the exceptions list."
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "DCUI.Access : root$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "DCUI.Access : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0037 - VMWARE - (L1) Ensure dvfilter API is not configured if not used"
+#   info        : "The dvfilter network API is used by some products (e."
+#   solution    : "To remove the configuration for the dvfilter network API, perform the following from the vSphere web client: - From the vSphere web client, select the host and click Configure then expand System - Click on Advanced System Settings then Edit - Search for Net.DVFilterBindIpAddress in the filter. - Set Net.DVFilterBindIpAddress has an empty value. - If an appliance is being used, make sure the value of this parameter is set to the proper IP address. - Enter the proper IP address. - Click OK To implement the recommended configuration state, run the following PowerCLI command: # Set Net.DVFilterBindIpAddress to null on all hosts Get-VMHost HOST1 | Foreach { Set-AdvancedSetting -VMHost $_ -Name Net.DVFilterBindIpAddress -IPValue \"\" }"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Net\.DVFilterBindIpAddress : NOT configured"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Net\.DVFilterBindIpAddress : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0038 - VMWARE - ESXI-67-000030 - The ESXi host must produce audit records containing information to establish what type of events occurred."
+#   info        : "Without establishing what types of events occurred, it would be difficult to establish, correlate, and investigate the events leading up to an outage or attack."
+#   solution    : "From the vSphere Client, select the ESXi Host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Config.HostAgent.log.level' value, and configure it to 'info'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Config.HostAgent.log.level | Set-AdvancedSetting -Value 'info"
+#   reference   : "NIST 800-53r5|AU-3 AU-12b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Config.HostAgent.log.level : info$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Config.HostAgent.log.level : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0039 - VMWARE - ESXI-67-000034 - The ESXi host must disable the Managed Object Browser (MOB)."
+#   info        : "The MOB provides a way to explore the object model used by the VMkernel to manage the host and enables configurations to be changed as well."
+#   solution    : "From the vSphere Client, select the ESXi Host and go to Configure >> System >> Advanced System Settings. Click 'Edit' and select the 'Config.HostAgent.plugins.solo.enableMob' value and configure it to 'false'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Config.HostAgent.plugins.solo.enableMob | Set-AdvancedSetting -Value false"
+#   reference   : "NIST 800-53r5|CM-7a."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Config.HostAgent.plugins.solo.enableMob : false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Config.HostAgent.plugins.solo.enableMob : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0040 - VMWARE - (L1) Ensure the Exception Users list is properly configured"
+#   info        : "Users who are added to the \"Exception Users\" list do not lose their permissions when the host enters lockdown mode."
+#   solution    : "To correct the membership of the Exception Users list, perform the following in the vSphere Web Client: - Select the host. - Click on Configure then expand System and select Security Profile - Select Edit next to Lockdown Mode - Click on Exception Users - Add or delete users as appropriate. - Click OK"
+#   reference   : "NIST 800-53r5|AC-2 AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "DCUI\.Access : root$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "DCUI\.Access : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0041 - VMWARE - (L1) Ensure DCUI has a trusted users list for lockdown mode"
+#   info        : "Lockdown mode disables direct host access, requiring admins to manage hosts from vCenter."
+#   solution    : "To set a trusted users list for DCUI, perform the following from the vSphere web client: - From the vSphere Web Client, select the host. - Click Configure then expand System - Select Advanced System Settings then click Edit - Enter DCUI.Access in the filter. - Set the DCUI.Access attribute is set to a comma-separated list of the users who are allowed to override lockdown mode."
+#   reference   : "NIST 800-53r5|AC-2"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "DCUI\.Access : root$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "DCUI\.Access : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0042 - VMWARE - ESXI-67-000039 - Active Directory ESX Admin group membership must not be used when adding ESXi hosts to Active Directory."
+#   info        : "When adding ESXi hosts to Active Directory (AD), all user/group accounts assigned to the AD group 'ESX Admins' will have full administrative access to the host."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configuration >> System >> Advanced System Settings. Click 'Edit' and select the 'Config.HostAgent.plugins.hostsvc.esxAdminsGroup' key and configure its value to an appropriate Active Directory group other than 'ESX Admins'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Config.HostAgent.plugins.hostsvc.esxAdminsGroup | Set-AdvancedSetting -Value <AD Group>"
+#   reference   : "NIST 800-53r5|IA-2 IA-2(5) IA-2(8)"
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Config.HostAgent.plugins.hostsvc.esxAdminsGroup : "
+#   not_expect  : "Config.HostAgent.plugins.hostsvc.esxAdminsGroup : .*ESX Admins$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0043 - VMWARE - ESXI-67-000043 - The ESXi host must log out of the console UI after two minutes."
+#   info        : "When the direct console user interface (DCUI) is enabled and logged in, it should be automatically logged out if left logged in to avoid access by unauthorized persons."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'UserVars.DcuiTimeOut' value, and configure it to '120'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name UserVars.DcuiTimeOut | Set-AdvancedSetting -Value 120"
+#   reference   : "NIST 800-53r5|AC-12 SC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "UserVars.DcuiTimeOut : 120$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "UserVars.DcuiTimeOut : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0044 - VMWARE - ESXI-67-000045 - The ESXi host must enable a persistent log location for all locally stored logs."
+#   info        : "ESXi can be configured to store log files on an in-memory file system."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit' and select the 'Syslog.global.logDir' value and set it to a known persistent location. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Syslog.global.logDir | Set-AdvancedSetting -Value 'New Log Location"
+#   reference   : "NIST 800-53r5|AU-4"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "\[datastore1\] logs"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "[Ss]yslog\.[Gg]lobal\.[Ll]og[Dd]ir : .*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0045 - VMWARE - ESXI-67-000046 - The ESXi host must configure NTP time synchronization."
+#   info        : "To ensure the accuracy of the system clock, it must be synchronized with an authoritative time source within DoD."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Time Configuration. Click 'Edit' to configure the NTP service to start and stop with the host and with authoritative DoD time sources. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: $NTPServers = 'ntpserver1','ntpserver2' Get-VMHost | Add-VMHostNTPServer $NTPServers Get-VMHost | Get-VMHostService | Where {$_.Label -eq 'NTP Daemon'} | Set-VMHostService -Policy On Get-VMHost | Get-VMHostService | Where {$_.Label -eq 'NTP Daemon'} | Start-VMHostService"
+#   reference   : "NIST 800-53r5|SC-45(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "NTP Daemon : running = true"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "NTP Daemon : running ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0046 - VMWARE - portgroup - forgedTransmits"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "forgedTransmits ="
+#   not_expect  : "forgedTransmits = TRUE$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0047 - VMWARE - vswitch - forgedTransmits"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "forgedTransmits = FALSE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "forgedTransmits ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0048 - VMWARE - portgroup - macChanges"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "macChanges ="
+#   not_expect  : "macChanges = TRUE$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0049 - VMWARE - ESXI-67-000053 - SNMP must be configured properly on the ESXi host."
+#   info        : "If SNMP is not being used, it must remain disabled."
+#   solution    : "To disable SNMP, run the following command from a PowerCLI command prompt while connected to the ESXi Host: Get-VMHostSnmp | Set-VMHostSnmp -Enabled $false or From a console or ssh session, run the follow command: esxcli system snmp set -e no To configure SNMP for v3 targets, use the 'esxcli system snmp set' command set."
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "SNMP Server : running = false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "SNMP Server : running ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0050 - VMWARE - vswitch - macChanges"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "macChanges = FALSE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "macChanges ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0051 - VMWARE - vswitch - allowPromiscuous"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "allowPromiscuous = FALSE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "allowPromiscuous ="
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0052 - VMWARE - ESXI-67-000055 - The ESXi host must disable Inter-VM transparent page sharing."
+#   info        : "Published academic papers have demonstrated that by forcing a flush and reload of cache memory, it is possible to measure memory timings to try to determine an AES encryption key in use on another virtual machine running on the same physical processor of the host server if Transparent Page Sharing is enabled between the two virtual machines."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Mem.ShareForceSalting' value, and configure it to '2'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Mem.ShareForceSalting | Set-AdvancedSetting -Value 2"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Mem.ShareForceSalting : 2$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Mem.ShareForceSalting : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0053 - VMWARE - portgroup - allowPromiscuous"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "allowPromiscuous ="
+#   not_expect  : "allowPromiscuous = TRUE$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0054 - VMWARE - (L1) Ensure port groups are not configured to the value of the native VLAN"
+#   info        : "This recommendation is intended to address configuring pyrtgroups for a standard switch."
+#   solution    : "To stop using the native VLAN ID for port groups, perform the following: - From the vSphere Web Client, select the host. - Click Configure then expand Networking - Select Virtual switches - Expand the Standard vSwitch. - View the topology diagram of the switch, which shows the various port groups associated with that switch. - For each port group on the vSwitch, verify and record the VLAN IDs used. - If a VLAN ID change is needed, click the name of the port group in the topology diagram of the virtual switch. - Click the Edit settings option. - In the Properties section, enter an appropriate name in the Network label field. - In the VLAN ID dropdown select or type a new VLAN. - Click OK"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0055 - VMWARE - (L1) Ensure port groups are not configured to VLAN values reserved by upstream physical switches"
+#   info        : "This recommendation is intended to address configuring pyrtgroups for a standard switch."
+#   solution    : "To change the VLAN values for port groups to non-reserved values, perform the following: - From the vSphere Web Client, select the host. - Click Configure then expand Networking - Select Virtual switches - Expand the Standard vSwitch. - View the topology diagram of the switch, which shows the various port groups associated with that switch. - For each port group on the vSwitch, verify and record the VLAN IDs used. - If a VLAN ID change is needed, click the name of the port group in the topology diagram of the virtual switch. - Click the Edit settings option. - In the Properties section, enter an appropriate name in the Network label field. - In the VLAN ID dropdown select or type a new VLAN. - Click OK"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0056 - VMWARE - (L1) Ensure port groups are not configured to VLAN 4095 and 0 except for Virtual Guest Tagging (VGT)"
+#   info        : "This recommendation is intended to address configuring pyrtgroups for a standard switch."
+#   solution    : "To set port groups to values other than 4095 and 0 unless VGT is required, perform the following: - From the vSphere Web Client, select the host. - Click Configure then expand Networking - Select Virtual switches - Expand the Standard vSwitch. - View the topology diagram of the switch, which shows the various port groups associated with that switch. - For each port group on the vSwitch, verify and record the VLAN IDs used. - If a VLAN ID change is needed, click the name of the port group in the topology diagram of the virtual switch. - Click the Edit settings option. - In the Properties section, enter an appropriate name in the Network label field. - In the VLAN ID dropdown select or type a new VLAN. - Click OK"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "vlanId ="
+#   not_expect  : "vlanId = (4095|NOT configured)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0057 - VMWARE - ESXI-67-000058 - The ESXi host must enable BPDU filter on the host to prevent being locked out of physical switch ports with Portfast and BPDU Guard enabled."
+#   info        : "BPDU Guard and Portfast are commonly enabled on the physical switch to which the ESXi host is directly connected to reduce the STP convergence delay."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Net.BlockGuestBPDU' value, and configure it to '1'. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VMHost | Get-AdvancedSetting -Name Net.BlockGuestBPDU | Set-AdvancedSetting -Value 1"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Net.BlockGuestBPDU : 1$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Net.BlockGuestBPDU : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0058 - VMWARE - ESXI-67-000059 - The virtual switch Forged Transmits policy must be set to reject on the ESXi host."
+#   info        : "If the virtual machine operating system changes the MAC address, the operating system can send frames with an impersonated source MAC address at any time."
+#   solution    : "From the vSphere Client, go to Configure >> Networking >> Virtual Switches. For each virtual switch and port group, click Edit settings (dots) and change 'Forged Transmits' to reject. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VirtualSwitch | Get-SecurityPolicy | Set-SecurityPolicy -ForgedTransmits $false Get-VirtualPortGroup | Get-SecurityPolicy | Set-SecurityPolicy -ForgedTransmitsInherited $true"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : " - Allow Forged Transmits : false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : " - Allow Forged Transmits : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0059 - VMWARE - (L1) Ensure unnecessary floppy devices are disconnected"
+#   info        : "Ensure that no floppy device is connected to a virtual machine unless required."
+#   solution    : "To disconnect all floppy drives from VMs, run the following PowerCLI command: # Remove all Floppy drives attached to VMs Get-VM | Get-FloppyDrive | Remove-FloppyDrive The VM will need to be powered off for this change to take effect."
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Virtual Floppy : NOT found$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Virtual Floppy :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0060 - VMWARE - ESXI-67-000060 - The virtual switch MAC Address Change policy must be set to reject on the ESXi host."
+#   info        : "If the virtual machine operating system changes the MAC address, it can send frames with an impersonated source MAC address at any time."
+#   solution    : "From the vSphere Client, go to Configure >> Networking >> Virtual Switches. For each virtual switch and port group, click Edit settings (dots) and change 'MAC Address Changes' to reject. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VirtualSwitch | Get-SecurityPolicy | Set-SecurityPolicy -MacChanges $false Get-VirtualPortGroup | Get-SecurityPolicy | Set-SecurityPolicy -MacChangesInherited $true"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : " - Allow MAC Changes : false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : " - Allow MAC Changes : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0061 - VMWARE - (L1) Ensure unnecessary parallel ports are disconnected"
+#   info        : "Ensure that no parallel port is connected to a virtual machine unless required."
+#   solution    : "To disconnect all parallel ports from VMs, run the following PowerCLI command: # In this Example you will need to add the functions from this post: http://blogs.vmware.com/vipowershell/2012/05/working-with-vm-devices-in-powercli.html # Remove all Parallel Ports attached to VMs Get-VM | Get-ParallelPort | Remove-ParallelPort The VM will need to be powered off for this change to take effect."
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Virtual Parallel Port : (False|NOT found)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Virtual Parallel Port :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0062 - VMWARE - ESXI-67-000061 - The virtual switch Promiscuous Mode policy must be set to reject on the ESXi host."
+#   info        : "When Promiscuous Mode is enabled for a virtual switch, all virtual machines connected to the Portgroup have the potential of reading all packets across that network, meaning only the virtual machines connected to that Portgroup."
+#   solution    : "From the vSphere Client go to Configure >> Networking >> Virtual Switches. For each virtual switch and port group, click Edit settings (dots) and change 'Promiscuous Mode' to reject. or From a PowerCLI command prompt while connected to the ESXi host, run the following commands: Get-VirtualSwitch | Get-SecurityPolicy | Set-SecurityPolicy -AllowPromiscuous $false Get-VirtualPortGroup | Get-SecurityPolicy | Set-SecurityPolicy -AllowPromiscuousInherited $true"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : " - Allow Promiscuous : false"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : " - Allow Promiscuous : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0063 - VMWARE - (L1) Ensure unnecessary serial ports are disconnected"
+#   info        : "Ensure that no serial port is connected to a virtual machine unless required."
+#   solution    : "To disconnect all serial ports from VMs, run the following PowerCLI command: # In this Example you will need to add the functions from this post: http://blogs.vmware.com/vipowershell/2012/05/working-with-vm-devices-in-powercli.html # Remove all Serial Ports attached to VMs Get-VM | Get-SerialPort | Remove-SerialPort The VM will need to be powered off for this change to take effect."
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Virtual Serial Port : (False|NOT found)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Virtual Serial Port :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0064 - VMWARE - ESXI-67-000062 - The ESXi host must prevent unintended use of the dvFilter network APIs."
+#   info        : "If the organization is not using products that use the dvfilter network API, the host should not be configured to send network information to a VM."
+#   solution    : "From the vSphere Client, select the ESXi Host and go to Configure >> System >> Advanced System Settings. Click 'Edit', select the 'Net.DVFilterBindIpAddress' value, and remove any incorrect addresses. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VMHost | Get-AdvancedSetting -Name Net.DVFilterBindIpAddress | Set-AdvancedSetting -Value"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Net.DVFilterBindIpAddress : NOT found$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Net.DVFilterBindIpAddress : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0065 - VMWARE - (L1) Ensure unnecessary USB devices are disconnected"
+#   info        : "Ensure that no USB device is connected to a virtual machine unless required."
+#   solution    : "To disconnect all USB devices from VMs, run the following PowerCLI command: # Remove all USB Devices attached to VMs Get-VM | Get-USBDevice | Remove-USBDevice The VM will need to be powered off for this change to take effect."
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Virtual USB : (False|NOT found)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Virtual USB :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0066 - VMWARE - ESXI-67-000063 - For the ESXi host, all port groups must be configured to a value other than that of the native VLAN."
+#   info        : "ESXi does not use the concept of native VLAN."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> Networking >> Virtual switches. Highlight the port group where VLAN ID is set to native VLAN ID and click Edit settings (dots). Change the VLAN ID to a non-native VLAN and click 'OK'. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VirtualPortGroup -Name 'portgroup name' | Set-VirtualPortGroup -VLanId 'New VLAN#"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "- VLAN : .*$"
+#   not_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0067 - VMWARE - ESXI-67-000064 - For the ESXi host, all port groups must not be configured to VLAN 4095 unless Virtual Guest Tagging (VGT) is required - VGT is required."
+#   info        : "When a port group is set to VLAN 4095, this activates VGT mode."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> Networking >> Virtual switches. Highlight a port group where VLAN ID is set to 4095 and click Edit settings (dots). Change the VLAN ID to an appropriate VLAN and click 'OK'. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VirtualPortGroup -Name 'portgroup name' | Set-VirtualPortGroup -VLanId 'New VLAN#"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : " - VLAN :"
+#   not_expect  : " - VLAN : 4095$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_ESX
+#   description : "1.0068 - VMWARE - ESXI-67-000065 - For the ESXi host, all port groups must not be configured to VLAN values reserved by upstream physical switches."
+#   info        : "Certain physical switches reserve certain VLAN IDs for internal purposes and often disallow traffic configured to these values."
+#   solution    : "From the vSphere Client, select the ESXi host and go to Configure >> Networking >> Virtual switches. Highlight a port group where VLAN ID is set to a reserved value and click 'Edit' settings (dots). Change the VLAN ID to an appropriate VLAN and click 'OK'. or From a PowerCLI command prompt while connected to the ESXi host, run the following command: Get-VirtualPortGroup -Name 'portgroup name' | Set-VirtualPortGroup -VLanId 'New VLAN#"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : " - VLAN :"
+#   not_expect  : " - VLAN : (100[1-9]|101[0-9]|102[0-4]|396[8-9]|39[7-9][0-9]|40[0-3][0-9]|404[0-7]|4094)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0069 - VMWARE - (L1) Ensure PCI and PCIe device passthrough is disabled"
+#   info        : "Using the VMware DirectPath I/O feature to pass through a PCI or PCIe device to a virtual machine can result in a potential security vulnerability."
+#   solution    : "The following PowerCLI command can be used: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"pciPassthru*.present\" -value \"\\\"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Virtual PCI Passthrough : (False|NOT found)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Virtual PCI Passthrough :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0070 - VMWARE - (L1) Ensure secure protocols are used for virtual serial port access"
+#   info        : "Serial ports are interfaces for connecting peripherals to the VM."
+#   solution    : "To configure all virtual serial ports to use secure protocols, change any protocols that are not secure to one of the following: - ssl - the equivalent of TCP+SSL - tcp+ssl - SSL over TCP over IPv4 or IPv6 - tcp4+ssl - SSL over TCP over IPv4 - tcp6+ssl - SSL over TCP over IPv6 - telnets - telnet over SSL over TCP"
+#   reference   : "NIST 800-53r5|CM-7 MA-4"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "Virtual Serial Port : (File .*|Remote (ssl|tcp[46]?\+ssl|telnets)://.*|NOT found)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "Virtual Serial Port :"
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0071 - VMWARE - (L1) Ensure access to VMs through the dvfilter network APIs is configured correctly"
+#   info        : "A VM must be configured explicitly to accept access by the dvfilter network API."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Remove the value from ethernet0.filter1.name = dv-filter - Parameters are removed when no value is present <xhtml:ol start=\"5\"> - Click OK You may also configure a VM to allow dvfilter access via the following method in the VMX file: - Configure the following in the VMX file: ethernet0.filter1.name = dv-filter1 where ethernet0 is the network adapter interface of the virtual machine that is to be protected, filter1 is the number of the filter that is being used, and dv-filter1 is the name of the particular data path kernel module that is protecting the VM. - If dvfilter access should not be permitted: Remove the following from its VMX file: ethernet0.filter1.name = dv-filter1 <xhtml:ol start=\"2\"> - Set the name of the data path kernel correctly."
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "^Manual Review Required$"
+#   xsl_stmt    : "</xsl:template>"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0072 - VMWARE - (L1) Ensure VM Console Copy operations are disabled"
+#   info        : "VM console copy operations should be disabled."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input isolation.tools.copy.disable with a value of TRUE - Click OK then OK again. To explicitly disable VM console copy operations, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.tools.copy.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.tools\.copy\.disable : TRUE$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.tools\.copy\.disable : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0073 - VMWARE - (L1) Ensure VM Console Drag and Drop operations is disabled"
+#   info        : "VM console drag and drop operations should be disabled."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input isolation.tools.dnd.disable with a value of TRUE - Click OK then OK again. To explicitly disable VM console drag and drop operations, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.tools.dnd.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.tools\.dnd\.disable : (TRUE|NOT configured)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.tools\.dnd\.disable : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0074 - VMWARE - (L1) Ensure VM Console GUI Options is disabled"
+#   info        : "VM console and paste GUI options should be disabled."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input isolation.tools.setGUIOptions.enable with a value of FALSE - Click OK then OK again. To explicitly disable VM console and paste GUI options, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.tools.setGUIOptions.enable\" -value $false"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.tools\.setGUIOptions\.enable : (FALSE|NOT configured)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.tools\.setGUIOptions\.enable : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0075 - VMWARE - (L1) Ensure VM Console Paste operations are disabled"
+#   info        : "VM console paste operations should be disabled."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input isolation.tools.paste.disable with a value of TRUE - Click OK then OK again. To explicitly disable VM console paste operations, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.tools.paste.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.tools\.paste\.disable : (TRUE|NOT configured)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.tools\.paste\.disable : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0076 - VMWARE - (L1) Ensure virtual disk wiping is disabled"
+#   info        : "Wiping a virtual disk reclaims all unused space in it."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input isolation.tools.diskWiper.disable with a value of TRUE - Click OK then OK again. To disable virtual disk wiping, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"isolation.tools.diskWiper.disable\" -value $true"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "isolation\.tools\.diskWiper\.disable : True$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "isolation\.tools\.diskWiper\.disable : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0077 - VMWARE - (L1) Ensure the number of VM log files is configured properly"
+#   info        : "Normally a new log file is created only when a host is rebooted, so the file can grow to be quite large."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input log.keepOld with a value of 10 - Click OK then OK again. To set the number of log files to be used to 10 run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"log.keepOld\" -value \"10\\\"
+#   reference   : "NIST 800-53r5|AU-4"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "log\.keepOld : (10|NOT found)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "log\.keepOld : "
+# </custom_item>
+
+# <custom_item>
+#   type        : AUDIT_VM
+#   description : "1.0078 - VMWARE - (L1) Ensure VM log file size is limited"
+#   info        : "Normally a new log file is created only when a host is rebooted, so the file can grow to be quite large."
+#   solution    : "To set this configuration utilize the vSphere interface as follows: - Select the VM then select Actions followed by Edit Settings - Click on the VM Options tab then expand Advanced - Click on EDIT CONFIGURATION - Click on ADD CONFIGURATION PARAMS then input log.rotateSize with a value of 1024000 - Click OK then OK again. To properly limit the maximum log file size, run the following PowerCLI command: # Add the setting to all VMs Get-VM | New-AdvancedSetting -Name \"log.rotateSize\" -value \"1024000\\\"
+#   reference   : "NIST 800-53r5|AU-4"
+#   see_also    : "See HTH Policies and Standards"
+#   expect      : "log\.rotateSize : ([0-9]{1,6}|10[0-1][0-9]{4}|10[0-2][0-3][0-9]{3}|1024000)$"
+#   xsl_stmt    : "</xsl:template>"
+#   regex       : "log\.rotateSize : "
+# </custom_item>
+
+</group_policy>
+</check_type>

@@ -1,0 +1,2145 @@
+# generated_by: for-gap-combined-dedupe
+<check_type:"Windows" version:"2">
+<group_policy:"Windows Security Hardening Through Group Policy and Registry Settings">
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0000 - IOS - Set exec-timeout to less than or equal to 10 minutes line vty"
+#   info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+#   solution    : "Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time. hostname(config)#line vty {line_number} [ending_line_number] hostname(config-line)#exec-timeout <<span>timeout_in_minutes> <timeout_in_seconds</span>>"
+#   reference   : "NIST 800-53r5|AC-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "exec-timeout (10|[1-9])$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0001 - IOS - Set exec-timeout to less than or equal to 10 minutes for line aux 0"
+#   info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+#   solution    : "Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time. hostname(config)#line aux 0 hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>"
+#   reference   : "NIST 800-53r5|AC-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "exec-timeout (10|[1-9])$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0002 - IOS - Set exec-timeout to less than or equal to 10 minutes line console 0"
+#   info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+#   solution    : "Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time. hostname(config)#line con 0 hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>"
+#   reference   : "NIST 800-53r5|AC-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "exec-timeout (10|[1-9])$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0003 - IOS - Set exec-timeout less than or equal to 10 minutes line tty"
+#   info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+#   solution    : "Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time. hostname(config)#line tty {line_number} [ending_line_number] hostname(config-line)#exec-timeout <timeout_in_minutes> <timeout_in_seconds>"
+#   reference   : "NIST 800-53r5|AC-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "exec-timeout (10|[1-9])$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0004 - IOS - Set exec-timeout to less than or equal to 10 minutes line vty"
+#   info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+#   solution    : "Configure device timeout (10 minutes or less) to disconnect sessions after a fixed idle time. hostname(config)#line vty {line_number} [ending_line_number] hostname(config-line)#exec-timeout <<span>timeout_in_minutes> <timeout_in_seconds</span>>"
+#   reference   : "NIST 800-53r5|AC-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "exec-timeout (10|[1-9])$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0005 - IOS - Set http Secure-server limit"
+#   info        : "Device management includes the ability to control the number of administrators and management sessions that manage a device."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip http max-connections 2"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0006 - IOS - Set the banner-text for banner exec"
+#   info        : "This command specifies a message to be displayed when an EXEC process is created (a line is activated, or an incoming connection is made to a vty)."
+#   solution    : "Configure the EXEC banner presented to a user when accessing the devices enable prompt. hostname(config)#banner exec c Enter TEXT message. End with the character 'c'. <banner-text> c Default Value: No banner is set by default"
+#   reference   : "NIST 800-53r5|AC-2"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner exec"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0007 - IOS - Set the banner-text for banner login"
+#   info        : "Follow the banner login command with one or more blank spaces and a delimiting character of your choice."
+#   solution    : "Configure the device so a login banner presented to a user attempting to access the device. hostname(config)#banner login c Enter TEXT message. End with the character 'c'. <banner-text> c Default Value: No banner is set by default"
+#   reference   : "NIST 800-53r5|AC-2"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner login"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0008 - IOS - Set the banner-text for banner motd"
+#   info        : "This MOTD banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns)."
+#   solution    : "Configure the message of the day (MOTD) banner presented when a user first connects to the device. hostname(config)#banner motd c Enter TEXT message. End with the character 'c'. <banner-text> c Default Value: No banner is set by default"
+#   reference   : "NIST 800-53r5|AC-2"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner motd"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0009 - IOS - Set seconds for ip ssh timeout"
+#   info        : "The time interval that the router waits for the SSH client to respond before disconnecting an uncompleted login attempt."
+#   solution    : "Configure the SSH timeout hostname(config)#ip ssh time-out [<em>60</em>] Default Value: SSH in not enabled by default."
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show ip ssh"
+#   item        : "Authentication timeout: [1-9][0-9]+ secs; Authentication retries: .*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0010 - IOS - Set maximimum value for ip ssh authentication-retries"
+#   info        : "The number of retries before the SSH login session disconnects."
+#   solution    : "Configure the SSH timeout: hostname(config)#ip ssh authentication-retries [<em>3</em>] Default Value: SSH is not enabled by default. When set, the default value is 3."
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show ip ssh"
+#   item        : "Authentication timeout: .* secs; Authentication retries: [1-9]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0011 - IOS - Set login authentication for line vty'"
+#   info        : "Authenticates users who access the router or switch remotely through the VTY port."
+#   solution    : "Configure management lines to require login using the default or a named AAA authentication list. This configuration must be set individually for all line types. hostname(config)#line vty {line-number} [<em>ending-line-number] hostname(config-line)#login authentication {default | aaa_list_name} Default Value: Login authentication is not enabled. Uses the default set with aaa authentication login."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "login authentication .+"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0012 - IOS - Enable 'service password-encryption"
+  info        : "When password encryption is enabled, the encrypted form of the passwords is displayed when a more system:running-config command is entered."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-5(1) SC-28 SC-28(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "service password-encryption"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0013 - IOS - Enable service password-encryption"
+#   info        : "When password encryption is enabled, the encrypted form of the passwords is displayed when a more system:running-config command is entered."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-5(1) SC-28 SC-28(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service password-encryption"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0014 - IOS - Enable aaa new-model"
+#   info        : "This command enables the AAA access control system."
+#   solution    : "Globally enable authentication, authorization and accounting (AAA) using the new-model command. hostname(config)#aaa new-model Default Value: AAA is not enabled."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa new-model"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0015 - IOS - Enable service password-encryption"
+#   info        : "When password encryption is enabled, the encrypted form of the passwords is displayed when a more system:running-config command is entered."
+#   solution    : "Enable password encryption service to protect sensitive access passwords in the device configuration. hostname(config)#service password-encryption"
+#   reference   : "NIST 800-53r5|IA-5(1)(c)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service password-encryption"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0016 - IOS - Set username secret for all local users"
+#   info        : "Use the username secret command to configure a username and MD5-encrypted user password."
+#   solution    : "Create a local user with an encrypted, complex (not easily guessed) password. hostname(config)#username {{em}LOCAL_USERNAME{/em}} secret {{em}LOCAL_PASSWORD{/em}} Default Value: No passwords are set by default"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "username .+ secret [^ ]+"
+#   item        : "username [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0017 - IOS - Set no snmp-server to disable SNMP when unused"
+#   info        : "If not in use, disable simple network management protocol (SNMP), read and write access."
+#   solution    : "Disable SNMP read and write access if not in used to monitor and/or manage device. hostname(config)#no snmp-server"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0018 - IOS - Set service tcp-keepalives-in"
+#   info        : "Generate keepalive packets on idle incoming network connections."
+#   solution    : "Enable TCP keepalives-in service: hostname(config)#service tcp-keepalives-in Default Value: Disabled by default."
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service tcp-keepalives-in"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0019 - IOS - Set service tcp-keepalives-out"
+#   info        : "Generate keepalive packets on idle outgoing network connections."
+#   solution    : "Enable TCP keepalives-out service: hostname(config)#service tcp-keepalives-out Default Value: Disabled by default."
+#   reference   : "NIST 800-53r5|CM-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service tcp-keepalives-out"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0020 - IOS - Set IP address for logging host"
+#   info        : "Log system messages and debug output to a remote host."
+#   solution    : "Designate one or more syslog servers by IP address. hostname(config)#logging host {syslog_server} Default Value: System logging messages are not sent to any remote host."
+#   reference   : "NIST 800-53r5|AU-6(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging (host )?192\.168\.2\.1"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0021 - IOS - Enable aaa authentication enable default"
+#   info        : "Authenticates users who access privileged EXEC mode when they use the enable command."
+#   solution    : "Configure AAA authentication method(s) for enable authentication. hostname(config)#aaa authentication enable default {method1} enable Default Value: By default, fallback to the local database is disabled."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication enable"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0022 - IOS - Set privilege 1 for local users - All users have encrypted passwords"
+#   info        : "Sets the privilege level for the user."
+#   solution    : "Set the local user to privilege level 1. hostname(config)#username <LOCAL_USERNAME> privilege 1"
+#   reference   : "NIST 800-53r5|AC-6(2) AC-6(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username .+ secret [5|8|9] .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0023 - IOS - Set privilege 1 for local users - No users with privileges 2-15"
+#   info        : "Sets the privilege level for the user."
+#   solution    : "Set the local user to privilege level 1. hostname(config)#username <LOCAL_USERNAME> privilege 1"
+#   reference   : "NIST 800-53r5|AC-6(2) AC-6(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username .+ privilege ([2-9]|1[0-5])"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0024 - IOS - Set password for enable secret"
+#   info        : "Use the enable secret command to provide an additional layer of security over the enable password."
+#   solution    : "Configure a strong, enable secret password. hostname(config)#enable secret {ENABLE_SECRET_PASSWORD} Default Value: No enable secret password setup by default"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "enable secret [^ ]+"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0025 - IOS - Set password for 'enable secret"
+  info        : "Enable secret password type 5 and enable secret password type 5 must be migrated to the stronger password type 8 or 9."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-6(2) AC-6(5)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "enable secret [^ ]+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0026 - IOS - Set username secret for all local users"
+  info        : "Username secret password type 5 and enable secret password type 5 must be migrated to the stronger password type 8 or 9."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-5(1) SC-28 SC-28(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "username [^ ]+"
+  regex       : "username .+ secret [^ ]+"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0027 - IOS - BGP neighbors must not be configured without authentication"
+#   info        : "Ensure BGP peers use authentication to protect routing sessions."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "neighbor [^ ]+(?!.*password)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0028 - IOS - Set password for enable secret"
+#   info        : "Enable secret password type 5 and enable secret password type 5 must be migrated to the stronger password type 8 or 9."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-6(2) AC-6(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "enable secret [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0029 - IOS - Set username secret for all local users"
+#   info        : "Username secret password type 5 and enable secret password type 5 must be migrated to the stronger password type 8 or 9."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-5(1) SC-28 SC-28(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "username .+ secret [^ ]+"
+#   item        : "username [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0030 - IOS - Enable aaa authentication login"
+#   info        : "Sets authentication, authorization and accounting (AAA) authentication at login."
+#   solution    : "Configure AAA authentication method(s) for login authentication. hostname(config)#aaa authentication login {default | aaa_list_name} [passwd-expiry] [method1] [method2] Default Value: AAA authentication at login is disabled."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication login"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0031 - IOS - Set login authentication for line con 0'"
+#   info        : "Authenticates users who access the router or switch using the serial console port."
+#   solution    : "Configure management lines to require login using the default or a named AAA authentication list. This configuration must be set individually for all line types. hostname(config)#line console 0 hostname(config-line)#login authentication {default | _aaa\_list\_name_} Default Value: Login authentication is not enabled. Uses the default set with aaa authentication login."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "login authentication .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0032 - IOS - Set login authentication for line tty'"
+#   info        : "Authenticates users who access the router or switch using the TTY port."
+#   solution    : "Configure management lines to require login using the default or a named AAA authentication list. This configuration must be set individually for all line types. hostname(config)#line tty {line-number} [ending-line-number] hostname(config-line)#login authentication {default | aaa_list_name} Default Value: Login authentication is not enabled. Uses the default set with aaa authentication login."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "login authentication .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0033 - IOS - All users have encrypted passwords"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username .+ secret 5 .+"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0034 - IOS - Set login authentication for line vty"
+  info        : "Authenticates users who access the router or switch remotely through the VTY port."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "login( authentication [A-Za-z0-9_-]+)?|no login"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0035 - IOS - Set login authentication for line tty"
+  info        : "Authenticates users who access the router or switch remotely through the VTY port."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^login authentication .+"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0036 - IOS - Set login authentication for line vty'"
+#   info        : "Authenticates users who access the router or switch remotely through the VTY port."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "login authentication .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0037 - IOS - Set ip address for ntp server"
+#   info        : "Use this command if you want to allow the system to synchronize the system software clock with the specified NTP server."
+#   solution    : "Configure at least one external NTP Server using the following commands hostname(config)#ntp server {ntp-server_ip_address} Default Value: No servers are configured by default."
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "^(sntp|ntp)[\\s]+server([\\s]+vrf[\\s]+[a-zA-Z0-9_\\-]+)?[\\s]*192\.168\.3\.1.*$"
+#   item        : "^(sntp|ntp) server.*192\.168\.3\.1"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0038 - IOS - Set authentication mode md5"
+#   info        : "Configure authentication to prevent unapproved sources from introducing unauthorized or false service messages."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "authentication mode md5"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0039 - IOS - Remote syslog host must be configured"
+#   info        : "Ensures system logs are sent to a remote logging system."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-6(1) AU-7 IR-4(1) SI-4 SI-4(2) SI-4(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^logging host .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0040 - IOS - Set version 2 for ip ssh version"
+#   info        : "Specify the version of Secure Shell (SSH) to be run on a router SSH Version 1 has been subject to a number of serious vulnerabilities and is no longer considered to be a secure protocol, resulting in the adoption of SSH Version 2 as an Internet Standard in 2006."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip ssh version 2"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0041 - IOS - Set IP address for logging host"
+#   info        : "Log system messages and debug output to a remote host."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-6(1) AU-7 IR-4(1) SI-4 SI-4(2) SI-4(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging host 192.168.0.254"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0042 - IOS - Set transport input none for line aux 0"
+#   info        : "When you want to allow only an outgoing connection on a line, use the no exec command."
+#   solution    : "Disable the inbound connections on the auxiliary port. hostname(config)#line aux 0 hostname(config-line)#transport input none"
+#   reference   : "NIST 800-53r5|AC-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input (all|ssh|telnet)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0043 - IOS - Set transport input ssh for line vty connections"
+#   info        : "Selects the Secure Shell (SSH) protocol."
+#   solution    : "Apply SSH to transport input on all VTY management lines hostname(config)#line vty <line-number> <ending-line-number> hostname(config-line)#transport input ssh"
+#   reference   : "NIST 800-53r5|IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input ssh *$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0044 - IOS - Set no exec for line aux 0"
+#   info        : "The 'no exec' command restricts a line to outgoing connections only."
+#   solution    : "Disable the EXEC process on the auxiliary port. hostname(config)#line aux 0 hostname(config-line)#no exec"
+#   reference   : "NIST 800-53r5|SI-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no exec"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0045 - IOS - Set access-class for line vty"
+#   info        : "The 'access-class' setting restricts incoming and outgoing connections between a particular vty (into a Cisco device) and the networking devices associated with addresses in an access list."
+#   solution    : "Configure remote management access control restrictions for all VTY lines. hostname(config)#line vty <line-number> <ending-line-number> hostname(config-line)# access-class <vty_acl_number> in"
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "access-class 100 in"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0046 - IOS - Do not set RW for any snmp-server community"
+#   info        : "Specifies read-write access."
+#   solution    : "Disable SNMP write access. hostname(config)#no snmp-server community {<em>write_community_string</em>}"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+ [Rr][Ww]"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0047 - IOS - Set modulus to greater than or equal to 2048 for crypto key generate rsa"
+#   info        : "Use this command to generate RSA key pairs for your Cisco device."
+#   solution    : "Generate an RSA key pair for the router. hostname(config)#crypto key generate rsa general-keys modulus <em>2048</em> Default Value: RSA key pairs do not exist."
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show crypto key mypubkey rsa"
+#   item        : "Key name:"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0048 - IOS - Set version 2 for ip ssh version"
+#   info        : "Specify the version of Secure Shell (SSH) to be run on a router Rationale: SSH Version 1 has been subject to a number of serious vulnerabilities and is no longer considered to be a secure protocol, resulting in the adoption of SSH Version 2 as an Internet Standard in 2006."
+#   solution    : "Configure the router to use SSH version 2 hostname(config)#ip ssh version 2 Default Value: SSH is not enabled by default. When enabled, SSH operates in compatibility mode (versions 1 and 2 supported)."
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip ssh version 2"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0049 - IOS - Timestamps must be enabled for debug messages"
+#   info        : "Configure the system to apply a time stamp to debugging messages or system logging messages."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service timestamps debug datetime"
+#   regex       : "service timestamps debug datetime( .+)?"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0050 - IOS - Set service timestamps debug datetime"
+#   info        : "Configure the system to apply a time stamp to debugging messages or system logging messages Including timestamps in log messages allows correlating events and tracing network attacks across multiple devices."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service timestamps debug datetime"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0051 - IOS - Set service timestamps debug datetime"
+#   info        : "Configure the system to apply a time stamp to debugging messages or system logging messages."
+#   solution    : "Configure debug messages to include timestamps. hostname(config)#service timestamps debug datetime {msec} show-timezone"
+#   reference   : "NIST 800-53r5|AU-8b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service timestamps debug datetime"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0052 - IOS - Enable 'aaa authentication enable default"
+  info        : "Authenticates users who access privileged EXEC mode when they use the enable command."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^aaa authentication login .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0053 - IOS - Set privilege 1 Local users must not have privileged access"
+  info        : "Local accounts must not be assigned elevated privilege levels."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-2(2) IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^username\s+\S+\s+privilege\s+[2-9][0-9]?\s+secret\s+(5|8|9)\s+"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0054 - IOS - Set login authentication for ip http"
+#   info        : "If account management functions are not automatically enforced, an attacker could gain privileged access to a vital element of the network security architecture."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^[ ]*ip http authentication (local|aaa_list_name)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0055 - IOS - Set aaa accounting to log all privileged use commands using 'commands 15"
+#   info        : "Runs accounting for all commands at the specified privilege level."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa accounting commands 15 [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0056 - IOS - Enable aaa authentication enable default"
+#   info        : "Authenticates users who access privileged EXEC mode when they use the enable command."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication enable default"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0057 - IOS - Set privilege 1 for local users"
+#   info        : "Sets the privilege level for the user."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-2(2) IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username .+ privilege ([2-9]|1[0-5])"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0058 - IOS - No users with privileges 2-15"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username .+ privilege ([2-9]|1[0-5])"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0059 - IOS - DHCP service must be disabled"
+#   info        : "Disable the Dynamic Host Configuration Protocol (DHCP) server and relay agent features on your router."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^service dhcp$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0060 - IOS - Set 'service tcp-keepalives-in"
+#   info        : "Generate keepalive packets on idle incoming network connections."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service tcp-keepalives-in"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0061 - IOS - Set 'service tcp-keepalives-out"
+#   info        : "Generate keepalive packets on idle outgoing network connections."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service tcp-keepalives-out"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0062 - IOS - Set 'no ip bootp server"
+#   info        : "Disable the Bootstrap Protocol (BOOTP) service on your routing device."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no ip bootp server"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0063 - IOS - Set 'no service pad"
+#   info        : "Disable X."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no service pad"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0064 - IOS - Set no cdp run"
+#   info        : "Disable Cisco Discovery Protocol (CDP) service at device level."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no cdp run"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0065 - IOS - Set no ip bootp server"
+#   info        : "Disable the Bootstrap Protocol (BOOTP) service on your routing device."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no ip bootp server"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0066 - IOS - Set no service dhcp"
+#   info        : "Disable the Dynamic Host Configuration Protocol (DHCP) server and relay agent features on your router."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no service dhcp"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0067 - IOS - Set service tcp-keepalives-in"
+#   info        : "Generate keepalive packets on idle incoming network connections."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service tcp-keepalives-in"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0068 - IOS - Set service tcp-keepalives-out"
+#   info        : "Generate keepalive packets on idle outgoing network connections."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service tcp-keepalives-out"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0069 - IOS - Set no service pad"
+#   info        : "Disable X."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no service pad"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0070 - IOS - Set no cdp run"
+#   info        : "Disable Cisco Discovery Protocol (CDP) service at device level."
+#   solution    : "Disable Cisco Discovery Protocol (CDP) service globally. hostname(config)#no cdp run"
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no cdp run"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0071 - IOS - Set no ip bootp server"
+#   info        : "Disable the Bootstrap Protocol (BOOTP) service on your routing device."
+#   solution    : "Disable the bootp server. hostname(config)#no ip bootp server"
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no ip bootp server"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0072 - IOS - Set no service dhcp"
+#   info        : "Disable the Dynamic Host Configuration Protocol (DHCP) server and relay agent features on your router."
+#   solution    : "Disable the DHCP server. hostname(config)#no service dhcp"
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no service dhcp"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0073 - IOS - Set no service dhcp - dhcp pool"
+#   info        : "Disable the Dynamic Host Configuration Protocol (DHCP) server and relay agent features on your router."
+#   solution    : "Disable the DHCP server. hostname(config)#<strong>no service dhcp</strong> Default Value: Enabled by default, but also requires a DHCP pool to be set to activate the DHCP server."
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip dhcp pool.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0074 - IOS - Set no service pad"
+#   info        : "Disable X."
+#   solution    : "Disable the PAD service. hostname(config)#no service pad"
+#   reference   : "NIST 800-53r5|CM-7a."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^service pad"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0075 - IOS - Set no ip source-route"
+#   info        : "Disable the handling of IP datagrams with source routing header options."
+#   solution    : "Disable source routing. hostname(config)#no ip source-route Default Value: Enabled by default"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no ip source-route"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0076 - IOS - Check for service dhcp"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "service dhcp"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0077 - IOS - Enable 'aaa authentication login"
+  info        : "Sets authentication, authorization and accounting (AAA) authentication at login."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^aaa authentication enable .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0078 - IOS - Authentication - line con 0"
+  info        : "Authenticates users who access the router or switch using the serial console port."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^no login$"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0079 - IOS - VTY access must not be unrestricted"
+#   info        : "Fails only if a VTY line allows SSH/Telnet without access-class or AAA authentication."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input (ssh|telnet)(?!.*access-class)(?!.*login authentication)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0080 - IOS - SSH authentication timeout must not exceed 60 seconds"
+#   info        : "Fails only if SSH authentication timeout is configured greater than 60 seconds."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ip ssh time-out ([6-9][1-9]|[7-9][0-9]|[1-9][0-9]{2,})$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0081 - IOS - SSH authentication retries must not exceed 3"
+#   info        : "Fails only if SSH authentication retries are configured above the allowed maximum."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ip ssh authentication-retries ([4-9]|[1-9][0-9]+)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0082 - IOS - EIGRP interfaces must not operate without authentication"
+#   info        : "Fails only if an interface participates in EIGRP without authentication configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip hello-interval eigrp(?!.*ip authentication mode eigrp)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0083 - IOS - Set maximum value for 'ip ssh authentication-retries"
+#   info        : "The number of retries before the SSH login session disconnects."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip ssh authentication-retries ([4-9]|[1-9][0-9]+)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0084 - IOS - NTP must not be enabled without authentication"
+#   info        : "Ensure NTP authentication is enabled when NTP servers are configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ntp server(?!.*ntp authenticate)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0085 - IOS - NTP authentication must not lack authentication keys"
+#   info        : "Ensure at least one NTP authentication key is defined when authentication is enabled."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ntp authenticate(?!.*ntp authentication-key)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0086 - IOS - NTP authentication must not lack a trusted key"
+#   info        : "Ensure NTP uses trusted authentication keys."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ntp authenticate(?!.*ntp trusted-key)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0087 - IOS - EIGRP interfaces must not lack authentication key-chains"
+#   info        : "Ensure all interfaces participating in EIGRP use an authentication key-chain."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip hello-interval eigrp(?!.*ip authentication key-chain eigrp)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0088 - IOS - EIGRP interfaces must not operate without authentication key-chains"
+#   info        : "Ensure EIGRP authentication key-chains are applied at the interface level."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip hello-interval eigrp(?!.*ip authentication key-chain eigrp)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0089 - IOS - EIGRP interfaces must not operate without authentication mode"
+#   info        : "Ensure EIGRP interfaces use authentication to prevent unauthorized routing updates."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip hello-interval eigrp(?!.*ip authentication mode eigrp)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0090 - IOS - OSPF must not operate without authentication"
+#   info        : "Ensure OSPF routing process enables authentication."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^router ospf(?!.*authentication)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0091 - IOS - OSPF interfaces must not lack message-digest authentication"
+#   info        : "Ensure OSPF interfaces use message-digest authentication keys."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip ospf area(?!.*ip ospf message-digest-key)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0092 - IOS - Enable aaa authentication login"
+#   info        : "Sets authentication, authorization and accounting (AAA) authentication at login."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication login"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0093 - IOS - Set maximum value for ip ssh authentication-retries"
+#   info        : "The number of retries before the SSH login session disconnects."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show ip ssh"
+#   item        : "Authentication timeout: .* secs; Authentication retries: [1-3]"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0094 - IOS - Set the ACL for each snmp-server community"
+#   info        : "This feature specifies a list of IP addresses that are allowed to use the community string to gain access to the SNMP agent."
+#   solution    : "Configure authorized SNMP community string and restrict access to authorized management systems. hostname(config)#snmp-server community <<em>community_string</em>> ro {<em>snmp_access-list_number | <span>snmp_access-list_name</span></em><span>}</span> Default Value: No ACL is set for SNMP"
+#   reference   : "NIST 800-53r5|AC-18 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "snmp-server community .+ [Rr][Oo] 1"
+#   item        : "snmp-server community .+ [Rr][Oo]"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0095 - IOS - Check for aaa auth login default"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication login default"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0096 - IOS - Unset public for 'snmp-server community"
+#   info        : "An SNMP community string permits read-only access to all objects."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community public"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0097 - IOS - Unset public for snmp-server community"
+#   info        : "An SNMP community string permits read-only access to all objects."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community public"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0098 - IOS - Unset public for snmp-server community"
+#   info        : "An SNMP community string permits read-only access to all objects."
+#   solution    : "Disable the default SNMP community string 'public' hostname(config)#no snmp-server community {public}"
+#   reference   : "NIST 800-53r5|IA-5e."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community public"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0099 - IOS - Set transport input ssh for line vty connections"
+  info        : "Selects the Secure Shell (SSH) protocol."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "transport input ssh$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0100 - IOS - Set exec-timeout to less than or equal to 10 minutes line console 0"
+  info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "exec-timeout (1[6-9]|[2-9][0-9])"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0101 - IOS - Set exec-timeout to less than or equal to 10 minutes line vty"
+  info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "exec-timeout (1[6-9]|[2-9][0-9])"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0102 - IOS - Set exec-timeout less than or equal to 10 minutes line tty"
+  info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-12 CN-L3(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "exec-timeout (1[6-9]|[2-9][0-9])"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0103 - IOS - Set version 2 for 'ip ssh version"
+#   info        : "Specify the version of Secure Shell (SSH) to be run on a router."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip ssh version 2"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0104 - IOS - Set transport input none for 'line aux 0"
+#   info        : "When you want to allow only an outgoing connection on a line, use the no exec command."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input (all|ssh|telnet)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0105 - IOS - Webauth banner must exist if auth-proxy is enabled"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AT-1 AT-2 PM-13"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip admission auth-proxy http(?!.*auth-proxy-banner)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0106 - IOS - SNMPv3 LogicMon user must be configured"
+#   info        : "Ensure the LogicMon SNMPv3 user exists for monitoring."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server user LogicMonSNMPv3User"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0107 - IOS - SNMPv3 NetBrain user must be configured"
+#   info        : "Ensure the NetBrain SNMPv3 user exists for network analysis."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server user NetbrainSNMPv3User"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0108 - IOS - SNMPv3 CSNTC user must be configured"
+#   info        : "Ensure the CSNTC SNMPv3 user exists for enterprise monitoring."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server user CSNTCSNMPv3User"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0109 - IOS - Set transport input ssh for line vty connections"
+#   info        : "Selects the Secure Shell (SSH) protocol."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input ssh$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0110 - IOS - Set transport input none for line aux 0"
+#   info        : "When you want to allow only an outgoing connection on a line, use the no exec command."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input (all|ssh|telnet)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0111 - IOS - Set the ip domain-name"
+#   info        : "Define a default domain name that the Cisco IOS software uses to complete unqualified hostnames The domain name is a prerequisite for setting up SSH."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip domain(-| )name .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0112 - IOS - Set seconds for ip ssh timeout for 60 seconds or less"
+#   info        : "The time interval that the router waits for the SSH client to respond before disconnecting an uncompleted login attempt."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "ip ssh time-out ([1-9]|[1-5][0-9]|60)$"
+#   item        : "ip ssh time-out"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0113 - IOS - Set transport input none for line aux 0"
+#   info        : "When you want to allow only an outgoing connection on a line, use the no exec command."
+#   solution    : "Disable the inbound connections on the auxiliary port. hostname(config)#line aux 0 hostname(config-line)#transport input none"
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "transport input (all|ssh|telnet)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0114 - IOS - Set the hostname"
+#   info        : "The hostname is used in prompts and default configuration filenames."
+#   solution    : "Configure an appropriate host name for the router. hostname(config)#hostname {<em>router_name</em>} Default Value: The default hostname is Router."
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "hostname (?!Router).+"
+#   item        : "hostname .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0115 - IOS - Set the ip domain-name"
+#   info        : "Define a default domain name that the Cisco IOS software uses to complete unqualified hostnames Rationale: The domain name is a prerequisite for setting up SSH."
+#   solution    : "Configure an appropriate domain name for the router. hostname (config)#ip domain-name {<em>domain-name</em>} Default Value: No domain is set."
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip domain(-| )name .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0116 - IOS - Check for existence of line tty"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "line tty .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0117 - IOS - Console logging must not exceed critical severity level"
+#   info        : "Verify logging to device console is enabled and limited to a rational severity level to avoid impacting system performance and management."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging console (debugging|informational|notifications|warnings)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0118 - IOS - Set 'logging trap informational"
+#   info        : "Limit messages logged to the syslog servers based on severity level informational."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging trap .+"
+#   regex       : "logging trap (debugging|7|informational|6)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0119 - IOS - Set 'logging enable"
+#   info        : "Enable logging of system messages."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging host"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0120 - IOS - Set buffer size for 'logging buffered"
+#   info        : "Enable system message logging to a local buffer."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging buffered"
+#   regex       : "logging buffered 64000( *|$)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0121 - IOS - Syslog must not be configured with an invalid source interface"
+#   info        : "Fails only if logging source-interface is configured incorrectly."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^logging source-interface none$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0122 - IOS - Set 'logging enable"
+#   info        : "Enable logging of system messages."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging enable"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0123 - IOS - Set 'login success/failure logging"
+#   info        : "Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "login on-(failure|success) log"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0124 - IOS - Set logging enable"
+#   info        : "Enable logging of system messages."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging host"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0125 - IOS - Set buffer size for logging buffered"
+#   info        : "Enable system message logging to a local buffer."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "logging buffered 64000( *|$)"
+#   item        : "logging buffered"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0126 - IOS - Set logging console critical"
+#   info        : "Verify logging to device console is enabled and limited to a rational severity level to avoid impacting system performance and management."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging console critical"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0127 - IOS - Set logging trap informational"
+#   info        : "Limit messages logged to the syslog servers based on severity level informational."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "logging trap (debugging|7|informational|6)"
+#   item        : "logging trap .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0128 - IOS - Set logging source interface"
+#   info        : "Specify the source IPv4 or IPv6 address of system logging packets This is required so that the router sends log messages to the logging server from a consistent IP address."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging source-interface .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0129 - IOS - Set logging on"
+#   info        : "Enable logging of system messages."
+#   solution    : "Enable system logging. hostname(config)#logging on"
+#   reference   : "NIST 800-53r5|AU-12c."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no logging on"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0130 - IOS - Set buffer size for logging buffered"
+#   info        : "Enable system message logging to a local buffer."
+#   solution    : "Configure buffered logging (with minimum size). Recommended size is 64000. hostname(config)#logging buffered [log_buffer_size]"
+#   reference   : "NIST 800-53r5|AU-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging buffered ([0-9]+)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0131 - IOS - Set logging console critical"
+#   info        : "Verify logging to device console is enabled and limited to a rational severity level to avoid impacting system performance and management."
+#   solution    : "Configure console logging level. hostname(config)#logging console critical"
+#   reference   : "NIST 800-53r5|AU-12c."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging console critical"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0132 - IOS - Set logging trap informational"
+#   info        : "Limit messages logged to the syslog servers based on severity level informational."
+#   solution    : "Configure SNMP trap and syslog logging level. hostname(config)#logging trap informational"
+#   reference   : "NIST 800-53r5|AU-12c."
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "logging trap (debugging|7|informational|6)"
+#   item        : "logging trap .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0133 - IOS - Set logging source interface"
+#   info        : "Specify the source IPv4 or IPv6 address of system logging packets."
+#   solution    : "Bind logging to the loopback interface. hostname(config)#logging source-interface loopback {loopback_interface_number}"
+#   reference   : "NIST 800-53r5|AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging source-interface [Ll]oopback[0-9]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0134 - IOS - Set the 'ip domain-name"
+#   info        : "Define a default domain name that the Cisco IOS software uses to complete unqualified hostnames."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip domain(-| )name .+"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0135 - IOS - Check if Cisco IOS is installed"
+  info        : "No additional information provided."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : ""
+  see_also    : "See HTH Policies and Standards"
+  item        : "^version"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0136 - IOS - Set access-class for line vty"
+#   info        : "The 'access-class' setting restricts incoming and outgoing connections between a particular vty (into a Cisco device) and the networking devices associated with addresses in an access list."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "access-class 100 in"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0137 - IOS - Set modulus to greater than or equal to 2048 for crypto key generate rsa"
+#   info        : "Use this command to generate RSA key pairs for your Cisco device."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|SA-15"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show crypto key mypubkey rsa"
+#   regex       : "^Manual Review Required$"
+#   item        : ".*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0138 - IOS - Create access-list for use with line vty - ACL deny is configured"
+#   info        : "Access lists control the transmission of packets on an interface, control Virtual Terminal Line (VTY) access, and restrict the contents of routing updates."
+#   solution    : "Configure the VTY ACL that will be used to restrict management access to the device. hostname(config)#access-list <vty_acl_number> permit tcp <vty_acl_block_with_mask> any hostname(config)#access-list <vty_acl_number> permit tcp host <vty_acl_host> any hostname(config)#deny ip any any log"
+#   reference   : "NIST 800-53r5|SC-7(5) SC-7(15)"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "^access-list 100 deny\\s+ip any any log"
+#   item        : "access-list 100 deny"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0139 - IOS - Create access-list for use with line vty - ACL permit tcp is configured"
+#   info        : "Access lists control the transmission of packets on an interface, control Virtual Terminal Line (VTY) access, and restrict the contents of routing updates."
+#   solution    : "Configure the VTY ACL that will be used to restrict management access to the device. hostname(config)#access-list <vty_acl_number> permit tcp <vty_acl_block_with_mask> any hostname(config)#access-list <vty_acl_number> permit tcp host <vty_acl_host> any hostname(config)#deny ip any any log"
+#   reference   : "NIST 800-53r5|SC-7(15)"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "^access-list 100 permit tcp (host )?192\.168\.1\.0 0\.0\.0\.255 any"
+#   item        : "access-list 100 permit tcp (host )?.+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0140 - IOS - Create an access-list for use with SNMP - SNMP deny secured by ACL"
+#   info        : "You can use access lists to control the transmission of packets on an interface, control Simple Network Management Protocol (SNMP) access, and restrict the contents of routing updates."
+#   solution    : "Configure SNMP ACL for restricting access to the device from authorized management stations segmented in a trusted management zone. hostname(config)#access-list <snmp_acl_number> permit <snmp_access-list> hostname(config)#access-list deny any log"
+#   reference   : "NIST 800-53r5|SC-7(5) SC-7(15)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "access-list 1 deny[\\s]*any log"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0141 - IOS - Create an access-list for use with SNMP - SNMP permit secured by ACL"
+#   info        : "You can use access lists to control the transmission of packets on an interface, control Simple Network Management Protocol (SNMP) access, and restrict the contents of routing updates."
+#   solution    : "Configure SNMP ACL for restricting access to the device from authorized management stations segmented in a trusted management zone. hostname(config)#access-list <snmp_acl_number> permit <snmp_access-list> hostname(config)#access-list deny any log"
+#   reference   : "NIST 800-53r5|SC-7(15)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "access-list 1 permit .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0142 - IOS - Set the ip domain name"
+#   info        : "Define a default domain name that the Cisco IOS software uses to complete unqualified hostnames."
+#   solution    : "Configure an appropriate domain name for the router. hostname (config)#ip domain name {domain-name}"
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip domain(-| )name .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0143 - IOS - Check if Cisco IOS 12 is installed"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^version 12"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0144 - IOS - Check if Cisco IOS 15 is installed"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^version 15"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0145 - IOS - Enable 'aaa new-model"
+  info        : "This command enables the AAA access control system."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^aaa new-model$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0146 - IOS - Set exec-timeout to less than or equal to 10 minutes for 'line aux 0"
+  info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "exec-timeout (10|[1-9])$"
+</custom_item>
+
+<custom_item>
+  type         : BANNER_CHECK
+  description  : "1.0147 - IOS - Banner - Enabled"
+  info         : "Follow the banner login command with one or more blank spaces and a delimiting character of your choice."
+  solution     : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference    : "NIST 800-53r5|AC-2"
+  see_also     : "See HTH Policies and Standards"
+  item         : "banner login"
+  is_substring : YES
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0148 - IOS - Ensure NTP Server Configured"
+  info        : "No additional information provided."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|AU-7 AU-8"
+  see_also    : "See HTH Policies and Standards"
+  regex       : "^(sntp|ntp)[\\s]+server([\\s]+vrf[\\s]+[a-zA-Z0-9_\\-]+)?[\\s]*10.248.232.10.*$"
+  item        : "^(sntp|ntp) server.*10.248.232.10"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0149 - IOS - Ensure NTP Server Configured (2nd)"
+  info        : "Check to confirm 10."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|AU-7 AU-8"
+  see_also    : "See HTH Policies and Standards"
+  regex       : "^(sntp|ntp)[\\s]+server([\\s]+vrf[\\s]+[a-zA-Z0-9_\\-]+)?[\\s]*10.248.232.210.*$"
+  item        : "^(sntp|ntp) server.*10.248.232.210"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0150 - IOS - Set no snmp-server to disable SNMP when unused"
+#   info        : "If not in use, disable simple network management protocol (SNMP), read and write access."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0151 - IOS - Unset private for 'snmp-server community"
+#   info        : "An SNMP community string permits read-only access to all objects."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community private"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0152 - IOS - Do not set RW for any 'snmp-server community"
+#   info        : "Specifies read-write access."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+ [Rr][Ww]"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0153 - IOS - SNMP must not be enabled without a configured host"
+#   info        : "Fails only if SNMP is configured but no snmp-server host is defined."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server (community|group|user)(?!.*snmp-server host)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0154 - IOS - SNMP must not be enabled without traps"
+#   info        : "Fails only if SNMP is configured and traps are not enabled."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server (community|group|user)(?![\\s\\S]*snmp-server enable traps)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0155 - IOS - CDP must be disabled globally"
+#   info        : "Fails only if CDP is enabled."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^cdp run$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0156 - IOS - CDP must not be enabled on any interface (interface-level)"
+#   info        : "Fails only if CDP is enabled at the interface level or enabled manually."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^cdp enable$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0157 - IOS - Set 'no ip source-route"
+#   info        : "Disable the handling of IP datagrams with source routing header options."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no ip source-route"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0158 - IOS - HTTP management must not be enabled without connection limits"
+#   info        : "Fails only if HTTP management is enabled and max connections are not restricted."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip http (server|secure-server)(?!.*ip http max-connections)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0159 - IOS - HTTP management must not allow excessive idle timeout"
+#   info        : "Fails only if HTTP management is enabled with an idle timeout greater than 10 minutes or no timeout configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip http (server|secure-server)(?!.*ip http timeout-policy idle (600|[1-5][0-9]{2}|[1-9][0-9]|[1-9]))"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0160 - IOS - Set no exec for 'line aux 0"
+#   info        : "The 'no exec' command restricts a line to outgoing connections only."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no exec"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0161 - IOS - SNMP communities must not be configured without an ACL"
+#   info        : "Fails only if an SNMP community is defined without an access list."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server community [^ ]+ (RO|RW)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0162 - IOS - Set the 'hostname"
+#   info        : "The hostname is used in prompts and default configuration filenames."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "hostname .+"
+#   regex       : "hostname Router$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0163 - IOS - Set 'no interface tunnel"
+#   info        : "Verify no tunnel interfaces are defined."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "interface [Tt]unnel[0-9]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0164 - IOS - uRPF must be enabled on routed interfaces"
+#   info        : "Fails only if a routed interface lacks uRPF."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip address(?!.*ip verify unicast source reachable-via)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0165 - IOS - Set 'aaa accounting system"
+#   info        : "Performs accounting for all system-level events not associated with users, such as reloads."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa accounting system [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0166 - IOS - AAA accounting must be enabled"
+#   info        : "Ensures accountability for user and system actions."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^aaa accounting"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0167 - IOS - Set 'aaa accounting exec"
+#   info        : "Runs accounting for the EXEC shell session."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa accounting exec [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0168 - IOS - AAA accounting must not be absent"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-2 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^(?!.*aaa accounting).*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0169 - IOS - HTTP management must not allow excessive idle timeout"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|SC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip http (server|secure-server)(?!.*ip http timeout-policy idle (600|[1-5][0-9]{2}|[1-9][0-9]))"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0170 - IOS - HTTP management must not be enabled without connection limits"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip http (server|secure-server)(?!.*ip http max-connections)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0171 - IOS - SNMPv3 groups must not operate without privacy"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|IA-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server group .+ v3(?!.* priv)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0172 - IOS - NTP must not use a non-loopback source interface"
+#   info        : "Ensure NTP packets use a stable loopback interface as the source."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ntp source (?![Ll]oopback)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0173 - IOS - TFTP must not be configured with a non-loopback source interface"
+#   info        : "Ensure TFTP packets use a stable loopback interface when TFTP is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ip tftp source-interface (?![Ll]oopback)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0174 - IOS - SNMP host LogicMonitor 55 must be configured"
+#   info        : "Ensure LogicMonitor SNMP server 55 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.55\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0175 - IOS - SNMP host LogicMonitor 56 must be configured"
+#   info        : "Ensure LogicMonitor SNMP server 56 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.56\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0176 - IOS - SNMP host LogicMonitor 57 must be configured"
+#   info        : "Ensure LogicMonitor SNMP server 57 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.57\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0177 - IOS - SNMP host LogicMonitor 48 must be configured"
+#   info        : "Ensure LogicMonitor SNMP server 48 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.248\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0178 - IOS - SNMP host LogicMonitor 55 must be configured"
+#   info        : "Ensure LogicMonitor SNMP server 55 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.255\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0179 - IOS - SNMP host NetBrain 12 must be configured"
+#   info        : "Ensure NetBrain SNMP server 12 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.241\\.12\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0180 - IOS - SNMP host NetBrain 78 must be configured"
+#   info        : "Ensure NetBrain SNMP server 78 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.78\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0181 - IOS - SNMP host CSNTC 17 must be configured"
+#   info        : "Ensure CSNTC SNMP server 17 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.241\\.117\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0182 - IOS - SNMP host CSNTC 78 must be configured"
+#   info        : "Ensure CSNTC SNMP server 78 is configured."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host 10\\.248\\.240\\.78\\b"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0183 - IOS - Enable aaa new-model"
+#   info        : "This command enables the AAA access control system."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa new-model$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0184 - IOS - Set exec-timeout to less than or equal to 10 min on ip http"
+#   info        : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip http timeout-policy idle ([1-9]|[1-9][0-9]|[1-5][0-9]{2}|600) life .+ requests .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0185 - IOS - Set no exec for line aux 0"
+#   info        : "The 'no exec' command restricts a line to outgoing connections only."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no exec"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0186 - IOS - Set the banner-text for banner exec"
+#   info        : "This command specifies a message to be displayed when an EXEC process is created (a line is activated, or an incoming connection is made to a vty)."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AT-1 AT-2 PM-13"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner exec"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0187 - IOS - Set the banner-text for banner login"
+#   info        : "Follow the banner login command with one or more blank spaces and a delimiting character of your choice."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AT-1 AT-2 PM-13"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner login"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0188 - IOS - Set the banner-text for banner motd"
+#   info        : "This MOTD banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns)."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AT-1 AT-2 PM-13"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner motd"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0189 - IOS - Set the banner-text for webauth banner"
+#   info        : "This banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns)."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AT-1 AT-2 PM-13"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip admission auth-proxy-banner http .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0190 - IOS - Set no snmp-server to disable SNMP when unused"
+#   info        : "If not in use, disable simple network management protocol (SNMP), read and write access."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0191 - IOS - Unset private for snmp-server community"
+#   info        : "An SNMP community string permits read-only access to all objects."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community private"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0192 - IOS - Do not set RW for any snmp-server community"
+#   info        : "Specifies read-write access."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+ [Rr][Ww]"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0193 - IOS - Set the ACL for each snmp-server community"
+#   info        : "This feature specifies a list of IP addresses that are allowed to use the community string to gain access to the SNMP agent."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "snmp-server community .+ .+ 1$"
+#   item        : "snmp-server community .+ .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0194 - IOS - Set snmp-server host when using SNMP"
+#   info        : "SNMP notifications can be sent as traps to authorized management systems."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server host 192\.168\.0\.2 .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0195 - IOS - Set snmp-server enable traps snmp"
+#   info        : "SNMP notifications can be sent as traps to authorized management systems."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AC-17(3) SI-7"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "^Manual Review Required$"
+#   item        : "snmp-server enable traps"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0196 - IOS - Set the hostname"
+#   info        : "The hostname is used in prompts and default configuration filenames."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-6b."
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "hostname Router$"
+#   item        : "hostname .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0197 - IOS - Set ip address for ntp server"
+#   info        : "Use this command if you want to allow the system to synchronize the system software clock with the specified NTP server."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ntp server 192.168.0.1"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0198 - IOS - Set no ip source-route"
+#   info        : "Disable the handling of IP datagrams with source routing header options."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no ip source-route"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0199 - IOS - Set no interface tunnel"
+#   info        : "Verify no tunnel interfaces are defined."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "interface [Tt]unnel[0-9]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0200 - IOS - Set ip verify unicast source reachable-via"
+#   info        : "Examines incoming packets to determine whether the source address is in the Forwarding Information Base (FIB) and permits the packet only if the source is reachable through the interface on which the packet was received (sometimes referred to as strict mode)."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "ip verify unicast source reachable-via"
+#   item        : "ip verify unicast"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0201 - IOS - Unset private for snmp-server community"
+#   info        : "An SNMP community string permits read-only access to all objects."
+#   solution    : "Disable the default SNMP community string 'private' hostname(config)#no snmp-server community {private}"
+#   reference   : "NIST 800-53r5|IA-5e."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community private"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0202 - IOS - Set snmp-server host when using SNMP"
+#   info        : "SNMP notifications can be sent as traps to authorized management systems."
+#   solution    : "Configure authorized SNMP trap community string and restrict sending messages to authorized management systems. hostname(config)#snmp-server host {ip_address} {trap_community_string} snmp"
+#   reference   : "NIST 800-53r5|AC-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server host 192\.168\.0\.2 .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0203 - IOS - Set snmp-server enable traps snmp"
+#   info        : "SNMP notifications can be sent as traps to authorized management systems."
+#   solution    : "Enable SNMP traps. hostname(config)#snmp-server enable traps snmp authentication linkup linkdown coldstart"
+#   reference   : "NIST 800-53r5|CM-6"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server enable traps"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0204 - IOS - Set no ip identd"
+#   info        : "Disable the identification (identd) server."
+#   solution    : "Disable the ident server. hostname(config)#no ip identd"
+#   reference   : "NIST 800-53r5|CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip identd"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0205 - IOS - Check for identd supported in config"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : ".*identd.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0206 - IOS - Check for ip dhcp pool"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip dhcp pool.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0207 - IOS - Check for line aux"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0208 - IOS - Check for snmp-server host"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server host"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0209 - IOS - SNMP is enabled"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0210 - IOS - Test for ip-access list extended VTY_ACL"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip access-list extended 100"
+# </custom_item>
+
+</group_policy>
+</check_type>

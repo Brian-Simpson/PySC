@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Normalize_f5",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\Normalize_f5.py",
+            "args": [
+                "--input",
+                "${workspaceFolder}\\Audits\\f5"
+            ],
+            "cwd": "C:\\PySC",
+            "console": "integratedTerminal"
+        }
+    ]
+}

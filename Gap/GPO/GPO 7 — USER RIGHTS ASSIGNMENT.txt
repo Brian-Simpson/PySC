@@ -1,0 +1,22 @@
+GPO NAME: WIN11-07-UserRights
+
+PATH:
+Security Settings → Local Policies → User Rights Assignment
+
+Deny log on locally            = Guests
+Deny log on as service         = Guests
+
+Debug programs                 = Administrators
+Take ownership                 = Administrators
+
+Create token object            = No one
+Act as part of OS              = No one
+Lock pages in memory           = No one
+
+Network logon                  = Administrators, RDP Users
+RDP logon                      = Administrators, RDP Users
+
+Backup                         = Administrators
+Restore                        = Administrators, Backup Operators
+
+Change system time             = Administrators + LOCAL SERVICE

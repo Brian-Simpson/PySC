@@ -1,0 +1,47 @@
+<check_type:"F5">
+
+<custom_item>
+description    : "Check REST API for Service Type"
+info           : ""
+reference      : ""
+see_also       : "See HTH Policies and Standards"
+solution       : ""
+f5_command     : "/tm/auth/radius"
+json_transform : ".items[] | \"Service Type: \(.serviceType) \""
+expect         : "^[\s]*Service Type:[\s]*authenticate-only[\s]*$"
+</custom_item>
+
+<custom_item>
+description    : "Check REST API for redundant remote authentication servers"
+info           : "To specify the authentication mechanism that F5 systems use for external (remote) users"
+reference      : "NIST 800-53r5|AC-2(1)"
+see_also       : "See HTH Policies and Standards"
+solution       : "1-Log in to the Configuration utility using the administrator account."
+f5_command     : "/tm/auth/radius-server"
+json_transform : ".items[] | \"Radius Servers: \(.server) \""
+expect         : "^Manual Review Required$"
+</custom_item>
+
+<custom_item>
+description    : "Check REST API for fallback"
+info           : "Having multiple points of authentication is important in the event that the primary remote authentication source goes down."
+reference      : "NIST 800-53r5|AC-2(1)"
+see_also       : "See HTH Policies and Standards"
+solution       : "1-Log in to the Configuration utility using the administrator account."
+f5_command     : "/tm/auth/source"
+json_transform : ".fallback"
+expect         : "false"
+</custom_item>
+
+<custom_item>
+description    : "Check REST API for default role"
+info           : "To prevent the system from checking local DB for remote users authentication"
+reference      : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+see_also       : "See HTH Policies and Standards"
+solution       : "1. Log in to the Configuration utility."
+f5_command     : "/tm/auth/remote-user"
+json_transform : ".defaultRole"
+expect         : "no-access"
+</custom_item>
+
+</check_type>

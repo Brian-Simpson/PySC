@@ -1,0 +1,403 @@
+#HTH Cisco ASA Baseline
+
+<check_type:"Cisco">
+
+<if>
+  <condition type:"AND">
+    <item>
+      type        : CONFIG_CHECK
+      description : "Check if Cisco ASA is installed"
+      item        : "^ASA"
+    </item>
+  </condition>
+
+  <then>
+    <report type:"PASSED">
+      description : "PASSED - TARGET OS MATCHES BASELINE - ASA"
+      see_also    : "HTH"
+    </report>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "IA - NetASA - Authentication - Ensure Logon Password is set"
+         info : "Changes the default login password."
+    reference : "NIST 800-53r5|IA-5(1)"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "(password|passwd) [^ ]+ encrypted"
+  </item>
+
+    <item>
+      type        : CONFIG_CHECK
+      description : "IA - NetASA - Authentication - Local creds are set"
+      info        : "Sets a local username and password for Emergency purposes."
+      reference   : "NIST 800-53r5|IA-5(1)"
+      see_also    : "HTH"
+      item        : "username [^ ]+ password [^ ]+"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK
+      description : "AC - NetASA - Authentication - AAA authorization exec"
+      info        : "Limits the access to the privileged EXEC mode"
+      reference   : "NIST 800-53r5|AC-2(9)"
+      see_also    : "HTH"
+      item        : "aaa authorization exec authentication-server"
+    </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Access Control - Ensure Domain Name is set"
+         info : "Sets the domain name for the security appliance"
+    reference : "NIST 800-53r5|AC-18 CM-1 CM-2 CM-6 CM-7 CM-9 SA-3 SA-8 SA-10"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "domain-name [^ ]+"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK_NOT
+  description : "AC - NetASA - Access Control - Ensure Host Name is set"
+         info : "Changes the device default hostname"
+    reference : "NIST 800-53r5|AC-18 CM-2 CM-6 CM-7 CM-9"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "hostname (ciscoasa|asa)"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Access Control - Ensure Failover is enabled"
+         info : "Enables failover between the security appliance and another security appliance in order to achieve high availability"
+    reference : "NIST 800-53r5|AC-18 CM-1 CM-2 CM-6 CM-7 CM-9 SA-3 SA-8 SA-10"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "^failover lan unit (primary|secondary)"
+  </item>
+
+    <item>
+      type        : CONFIG_CHECK_NOT
+      description : "CM - NetASA - Services - Telnet is disabled"
+      info        : "Disables the telnet access to the security appliance in the case it has been configured"
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "^telnet [0-9.]+"
+    </item>
+    <item>
+      type        : CONFIG_CHECK
+      description : "CM - NetASA - Timeout - Console is less than 5 minutes"
+      info        : "Sets the idle timeout for a console session before the security appliance terminates it."
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "console timeout [1-5][\\s]*$"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK
+      description : "CM - NetASA -Timeout - SSH is less than 5 minutes"
+      info        : "Sets the idle timeout for an SSH session before the security appliance terminates it."
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "^ssh timeout [1-5][\\s]*$"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK
+      description : "CM - NetASA - Timeout - HTTP is less than 5 minutes"
+      info        : "Sets the timeout for an HTTP session idle before the security appliance terminates it."
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "^http server idle-timeout [1-5][\\s]*$"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK_NOT
+      description : "CM - NetASA - Change Management - Ensure DHCP services are configured as expected"
+      info        : "Disables the DHCP service"
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "dhcpd enable .+"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK_NOT
+      description : "CM - NetASA - Change Management - Ensure DHCP Relay services are configured as expected"
+      info        : "Disables the DHCP service"
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "dhcprelay enable .+"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK
+      description : "CM - NetASA - Services - DNS - domain-lookup"
+      info        : "Sets DNS server(s) to be used by the appliance to perform DNS queries"
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "dns domain-lookup .+"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK
+      description : "CM - NetASA - Services - DNS - name-server"
+      info        : "Sets DNS server(s) to be used by the appliance to perform DNS queries"
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "(dns)?[ ]*name-server .+"
+    </item>
+
+     <item>
+      type        : CONFIG_CHECK
+      description : "AU - NetASA - Logging - Enabled"
+      info        : "Enables logging"
+      reference   : "NIST 800-53|AU-3 AU-12"
+      see_also    : "HTH"
+      item        : "logging enable"
+    </item>
+
+    <item>
+      type        : CONFIG_CHECK_NOT
+      description : "CM - NetASA - Ensure 'SNMP community string' is not the default string"
+      info        : "Sets a SNMP community string different from the default one"
+      reference   : "NIST 800-53|CM-2"
+      see_also    : "HTH"
+      item        : "snmp-server community public"
+    </item>
+
+    <item>
+      type        : BANNER_CHECK
+      description : "CM - NetASA - Ensure 'LOGIN banner' is set"
+      info        : "Sets the LOGIN banner for access to the Command Line Interface (CLI)"
+      reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+      see_also    : "HTH"
+      item        : "banner login"
+      content     : "!! WARNING !!"
+      is_substring: YES
+    </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure 'aaa accounting for SSH' is configured correctly"
+         info : "Enables accounting of administrative access by specifying the start and stop of SSH sessions"
+    reference : "NIST 800-53r5|AC-6(2) AC-18 CM-2 CM-6 CM-7 CM-9"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "aaa accounting ssh console.*"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure 'aaa accounting for EXEC mode' is configured correctly"
+         info : "Enables accounting of administrative access by specifying the start and stop of EXEC sessions"
+    reference : "NIST 800-53r5|AC-6(2) AC-18 CM-1 CM-2 CM-6 CM-7 CM-9 SA-3 SA-8 SA-10"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "aaa accounting enable console.*"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure SSH source restriction is set to an authorized IP address"
+         info : "Determines the client IP addresses that are allowed to connect to the security appliance through SSH"
+    reference : "NIST 800-53r5|AC-2(1) AC-3 AC-17 AC-17(1) SC-7 SI-4"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "ssh [0-9]+.*"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure 'SSH version 2 is enabled"
+         info : "Sets the SSH version to 2"
+    reference : "NIST 800-53r5|AC-17 SC-7 SI-4"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "ssh version 2[\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure console session timeout is less than or equal to 5 minutes"
+         info : "Sets the idle timeout for a console session before the security appliance terminates it."
+    reference : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "console timeout [1-5][\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure SSH session timeout is less than or equal to 5 minutes"
+         info : "Sets the idle timeout for an SSH session before the security appliance terminates it."
+    reference : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "^ssh timeout [1-5][\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AC - NetASA - Ensure HTTP idle timeout is less than or equal to 5 minutes"
+         info : "Sets the timeout for an HTTP session idle before the security appliance terminates it."
+    reference : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "^http server idle-timeout [1-5][\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure logging is enabled"
+         info : "Enables logging"
+    reference : "NIST 800-53r5|AU-2 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging enable"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK_NOT
+  description : "AU - NetASA - Ensure logging to monitor is disabled"
+         info : "Disables the logging to monitor"
+    reference : "NIST 800-53r5|AU-2 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging monitor"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure logging with the device ID is configured correctly"
+         info : "Includes the device ID in the logs generated"
+    reference : "NIST 800-53r5|AU-2 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging device-id .+"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure 'logging history severity level' is set to greater than or equal to 5"
+         info : "Determines which syslog messages should be sent to the SNMP server."
+    reference : "NIST 800-53r5|AU-1 AU-2"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging history ([5-7]|notification(s)?|informational|debugging)[\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure logging with timestamps is enabled"
+         info : "Allows the timestamp to logs generated"
+    reference : "NIST 800-53r5|AU-3 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging timestamp"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure logging buffer size is greater than or equal to 524288 bytes (512kb)"
+         info : "Determines the size of the local buffer in which the logs are stored so that they can be checked by the administrator."
+    reference : "NIST 800-53r5|AU-3 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging buffer-size (52428[8-9]|52429[0-9]|524[3-9][0-9]{2}|52[5-9][0-9]{3}|5[3-9][0-9]{4}|[6-9][0-9]{5})"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure 'logging buffered severity level' is greater than or equal to 3"
+         info : "Determines which syslog messages should be temporary stored in the local buffer so they can be checked by the administrator"
+    reference : "NIST 800-53r5|AU-3 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging buffered ([3-7]|error(s)?|warning|notification(s)?|informational|debugging)[\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "AU - NetASA - Ensure 'logging trap severity level' is greater than or equal to 5"
+         info : "Determines which syslog messages should be sent to the syslog server."
+    reference : "NIST 800-53r5|AU-3 AU-7 AU-12"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "logging trap ([5-7]|notification(s)?|informational|debugging)[\\s]*$"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "CM - NetASA - Ensure 'snmp-server host' is set to version 3"
+         info : "Sets the SNMP notification recipient or the NMS or SNMP manager that can connect to the ASA."
+    reference : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "^snmp-server host [^ ]+ [^ ]+ version 3 [^ ]+"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "CM - NetASA - Ensure SNMP traps is enabled"
+         info : "Enables SNMP traps to be sent to the NMS"
+    reference : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "snmp-server enable traps.*"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK_NOT
+  description : "CM - NetASA - Ensure SNMP community string is not the default string"
+         info : "Sets a SNMP community string different from the default one"
+    reference : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "snmp-server community public"
+  </item>
+
+
+  <item>
+         type : CONFIG_CHECK
+  description : "CM - NetASA - Ensure 'threat-detection statistics' is set to 'tcp-intercept'"
+         info : "Enables threat detection statistics for attacks blocked by the TCP Intercept function"
+    reference : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "threat-detection statistics.*tcp-intercept([ ]|$)"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "CA - NetASA - Ensure explicit deny in access lists is configured correctly"
+         info : "Ensures that each access-list has an explicit deny statement"
+    reference : "NIST 800-53r5|CA-9 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-7(5)"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "^(access-group [^ ]+ [^ ]+ interface [^ ]+|access-list [^ ]+ [^ ]+ deny ip any any [^ ]+)"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK
+  description : "CM - NetASA - Ensure ICMP is restricted for untrusted interfaces"
+         info : "Allows ICMP traffic for specific hosts or subnets and denies ICMP traffic for all other sources"
+    reference : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "icmp deny any .+"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK_NOT
+  description : "CM - NetASA - Ensure intrusion prevention is enabled for untrusted interfaces is configured as CONFIG_CHECK_NOT"
+         info : "Enables the intrusion prevention with the IP audit feature on untrusted interfaces"
+    reference : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SI-4 SI-4(4)"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "^ip audit (name [^ ]+ attack|interface [^ ]+)"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK_NOT
+  description : "CM - NetASA - Ensure packet fragments are restricted for untrusted interfaces is configured as CONFIG_CHECK_NOT"
+         info : "Sets the security appliance to drop fragmented packets received on the untrusted interface."
+    reference : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "fragment chain [^ ]+ [^ ]+"
+  </item>
+
+  <item>
+         type : CONFIG_CHECK_NOT
+  description : "CM - NetASA - Ensure ip verify is set to reverse-path for untrusted interfaces is configured as CONFIG_CHECK_NOT"
+         info : "Enables the unicast Reverse-Path Forwarding (uRPF) on untrusted interfaces."
+    reference : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+     see_also : "See cooresponding  HTH Policies and Standards"
+         item : "ip verify reverse-path interface [^ ]+"
+  </item>
+
+
+  </then>
+
+  <else>
+    <report type:"WARNING">
+      description     : "WARNING - TARGET OS DOESNT MATCH BASELINE - ASA"
+      info            : "NOTE: Nessus has identified that the chosen audit does not apply to the target device."
+      see_also        : "Link to Controls"
+    </report>
+  </else>
+</if>
+
+</check_type>

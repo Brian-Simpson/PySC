@@ -1,0 +1,880 @@
+
+<check_type:"Cisco">
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0001 - CSNXOS - Check for TACACS+ enabled"
+      item                : "feature tacacs\+"
+    </item>
+  </condition>
+
+  <then>
+    <if>
+      <condition auto:"FAILED" type:"AND">
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0002 - CSNXOS - Check for TACACS+ enabled"
+          item            : "feature tacacs\+"
+        </item>
+
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0003 - CSNXOS - TACACS - tacacs-server"
+          item            : "tacacs-server host .+ key .+"
+          min_occurrences : "2"
+        </item>
+
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0004 - CSNXOS - TACACS - aaa group"
+          context         : "aaa group server tacacs\+ .+"
+          item            : "server .+"
+          min_occurrences : "2"
+        </item>
+
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0005 - CSNXOS - TACACS - aaa authentication"
+          item            : "aaa authentication login (default|console) group .+ local"
+          min_occurrences : "2"
+        </item>
+      </condition>
+
+      <then>
+<report type:"PASSED">
+  description             : "1.0006 - CSNXOS - Configure AAA Authentication - TACACS if applicable"
+  info                    : "TACACS+ is an authentication protocol that Cisco NX-OS devices can use for authentication of management users against a remote AAA server."
+  reference               : "NIST 800-53r5|AC-2(1)"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+      </then>
+    </if>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0007 - CSNXOS - Configure AAA Authentication - TACACS if applicable"
+  info                    : "TACACS+ is an authentication protocol that Cisco NX-OS devices can use for authentication of management users against a remote AAA server."
+  reference               : "NIST 800-53r5|AC-2(1)"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0008 - CSNXOS - Configure AAA Authentication - Local SSH keys"
+  info                    : "Using the client's public key to authenticate their SSH sessions circumvents the need for using passwords for an administrative login to the switch."
+  reference               : "NIST 800-53r5|AC-2(1)"
+  see_also                : "See HTH Policies and Standards"
+  regex                   : "^Manual Review Required$"
+  item                    : "username .+ sshkey .+"
+  severity                : MEDIUM
+</item>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0009 - CSNXOS - Check for RADIUS enabled"
+      item                : "radius-server .+"
+    </item>
+  </condition>
+
+  <then>
+    <if>
+      <condition auto:"FAILED" type:"AND">
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0010 - CSNXOS - RADIUS - radius-server host"
+          item            : "radius-server host .+ key .+"
+          min_occurrences : "2"
+        </item>
+
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0011 - CSNXOS - RADIUS - aaa group"
+          context         : "aaa group server radius .+"
+          item            : "server .+"
+          min_occurrences : "2"
+        </item>
+
+        <item>
+          type            : CONFIG_CHECK
+          description     : "1.0012 - CSNXOS - TACACS - aaa authentication"
+          item            : "aaa authentication login (default|console) group .+ local"
+          min_occurrences : "2"
+        </item>
+      </condition>
+
+      <then>
+<report type:"PASSED">
+  description             : "1.0013 - CSNXOS - Configure AAA Authentication - RADIUS if applicable"
+  info                    : "RADIUS is an authentication protocol that Cisco NX-OS devices can use for authentication of management users against a remote AAA server."
+  reference               : "NIST 800-53r5|AC-2(1)"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+      </then>
+    </if>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0014 - CSNXOS - Configure AAA Authentication - RADIUS if applicable"
+  info                    : "RADIUS is an authentication protocol that Cisco NX-OS devices can use for authentication of management users against a remote AAA server."
+  reference               : "NIST 800-53r5|AC-2(1)"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0015 - CSNXOS - vty line authentication"
+  info                    : "Authenticate management access to the network devices."
+  reference               : "NIST 800-53r5|AC-2(1)"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "aaa authentication login default group"
+  item                    : "aaa authentication login default group TACACSGROUP"
+</item>
+
+<if>
+  <condition auto:"WARNING" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0016 - CSNXOS - line vty access-class"
+      context             : "line vty"
+      item                : "access-class ACL-MGT in"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0017 - CSNXOS - VTY ACL"
+      context             : "ip access-list ACL-MGT"
+      item                : "$Manual Review Required^"
+      severity            : MEDIUM
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0018 - CSNXOS - Restrict Access to VTY Sessions"
+  info                    : "Restrict Management Access to trusted management stations and VLANs."
+  reference               : "NIST 800-53r5|AC-17(3) CM-7 MA-4 SI-7"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0019 - CSNXOS - Configure IP Blocking on Failed Logins"
+  info                    : "After a configured number of failed logins in a set window, offending IP addresses should be blocked from login for a configured amount of time."
+  reference               : "NIST 800-53r5|AU-3 AU-3(1) AU-6(3) AU-7 AU-12"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "(^|system )login block-for"
+</item>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0020 - CSNXOS - ssh login-attempts exist"
+      item                : "ssh login-attempts"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0021 - CSNXOS - Limit SSH Login Attempts to 3 or less"
+      info                : "After a configured number of failed password attempts, an SSH session terminate."
+      reference           : "NIST 800-53r5|CM-7 MA-4"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ssh login-attempts 3"
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0022 - CSNXOS - Limit SSH Login Attempts to 3 or less"
+  info                    : "After a configured number of failed password attempts, an SSH session terminate."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0023 - CSNXOS - Ensure Exec Timeout for Console Sessions is set for less than 10"
+  info                    : "Verify device is configured to automatically disconnect console sessions after a defined maximum session time, set in minutes."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "line console"
+  item                    : "exec-timeout 10"
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0024 - CSNXOS - Ensure Exec Timeout for Remote Administrative Sessions (VTY) is set to less than 10"
+  info                    : "This value sets the maximum time of an administrative session that is attached via a VTY line - in most installations this means the maximum time and SSH session can have."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "line vty"
+  item                    : "exec-timeout 10"
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0025 - CSNXOS - Set the Maximum Number of VTY Sessions"
+  info                    : "This sets the maximum number of remote administrative sessions, which in most environments means the maximum number of SSH sessions."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "line vty"
+  item                    : "session-limit 16"
+</item>
+
+<if>
+  <condition auto:"FAILED" type:"OR">
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0026 - CSNXOS - Ensure 'feature telnet' is not found in config"
+      item                : "^feature telnet"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0027 - CSNXOS - Ensure 'no feature telnet' is found in config"
+      item                : "no feature telnet"
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0028 - CSNXOS - Disable the Telnet Feature"
+  info                    : "Telnet is a clear-text administrative protocol."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<item>
+  type                    : BANNER_CHECK
+  description             : "1.0029 - CSNXOS - Pre-authentication Banner"
+  info                    : "A pre-authentication banner is displayed when a terminal connects, before a login occurs."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "banner motd"
+  content                 : "Ensure Legal Compliance and User Awareness Before Login"
+</item>
+
+<item>
+  type                    : BANNER_CHECK
+  description             : "1.0030 - CSNXOS - Post-authentication Banner"
+  info                    : "A post-authentication banner is displayed to the user after a successful login."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "banner exec"
+  content                 : "All use of this device is monitored and logged."
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0031 - CSNXOS - Enable Password Complexity Requirements for Local Credentials"
+  info                    : "While configuring a back-end authentication store is the recommended configuration, at least one local administrative account must be configured."
+  reference               : "NIST 800-53r5|IA-5(1)"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "password strength-check"
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0032 - CSNXOS - Set password lifetime, warning time and grace time for local credentials"
+  info                    : "NX-OS has commands to adjust the permitted lifetime of passphrases for local credentials, as well as the \"warning time\" before expiry and the \"grace time\" after expiry."
+  reference               : "NIST 800-53r5|AC-6(9) AU-2 AU-12 IA-5(1)"
+  see_also                : "See HTH Policies and Standards"
+  regex                   : "$Manual Review Required^"
+  item                    : "(username.*passphrase|userpassphrase.*)"
+  severity                : MEDIUM
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0033 - CSNXOS - Set password length for local credentials"
+  info                    : "Password length should be set to some value that makes compromising any captured hashed difficult."
+  reference               : "NIST 800-53r5|IA-5(1)"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "userpassphrase min-length 20 max-length 127"
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0034 - CSNXOS - Configure Logging Timestamps"
+  info                    : "Timestamps are incredibly important since they drive a number of important activities in our product."
+  reference               : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-8 AU-12"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "logging timestamp .+"
+  required                : NO
+</item>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0035 - CSNXOS - Primary NTP Server"
+      item                : "ntp server 1.2.3.4 .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0036 - CSNXOS - Secondary NTP Server"
+      item                : "ntp server 4.5.6.7 .+"
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0037 - CSNXOS - Configure at least 2 external NTP Servers"
+  info                    : "Accurate time is a critical piece of security infrastructure."
+  reference               : "NIST 800-53r5|AU-7 AU-8"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0038 - CSNXOS - Configure a Time Zone"
+  info                    : "Timezones are a source of contention in larger corporations."
+  reference               : "NIST 800-53r5|AU-7 AU-8"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "clock timezone .+ .+ .+"
+</item>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0039 - CSNXOS - Check if timezone other than UTC in use"
+      item                : "clock timezone .+ .+ .+"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0040 - CSNXOS - If a Local Time Zone is used, Configure Daylight Savings"
+      info                : "If local time zones are configured on network infrastructure, it is important to also configure the time \"shift\" that occurs as a result of Daylight Savings Time."
+      reference           : "NIST 800-53r5|AU-7 AU-8"
+      see_also            : "See HTH Policies and Standards"
+      item                : "clock summer-time .+"
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0041 - CSNXOS - If a Local Time Zone is used, Configure Daylight Savings"
+  info                    : "If local time zones are configured on network infrastructure, it is important to also configure the time \"shift\" that occurs as a result of Daylight Savings Time."
+  reference               : "NIST 800-53r5|AU-7 AU-8"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<if>
+  <condition auto:"WARNING" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0042 - CSNXOS - Ensure that SNMP version 3 is set"
+      item                : "snmp-server host .+ version 3"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0043 - CSNXOS - Ensure that SNMPv3 encryption is enforced globally"
+      item                : "snmp-server globalEnforcePriv"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0044 - CSNXOS - Ensure that SNMP Users have appropriate access levels"
+      regex               : "^Manual Review Required$"
+      item                : "snmp-server user .+"
+      severity            : MEDIUM
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0045 - CSNXOS - SNMP version 2 is NOT set"
+      item                : "snmp-server community .+"
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0046 - CSNXOS - Configure SNMPv3"
+  info                    : "The Simple Network Management Protocol (SNMP) is an application-layer protocol that provides a message format for communication between SNMP managers and agents."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0047 - CSNXOS - Configure SNMP Traps"
+  info                    : "SNMP relies on an architecture which consists of a manager and an agent."
+  reference               : "NIST 800-53r5|SI-4 SI-4(4)"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "snmp-server enable traps .+"
+</item>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0048 - CSNXOS - snmp-server host"
+      item                : "snmp-server host .+ source-interface .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0049 - CSNXOS - snmp-server traps/informs"
+      item                : "snmp-server source-interface (traps|informs) .+"
+      min_occurrences     : "2"
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0050 - CSNXOS - Configure source interface for SNMP Traps"
+  info                    : "The administrator can configure SNMP to the interfaces source IP address for notifications By using a source interface the administrator can ensure that the source IP of SNMP traps does not change as the network topology changes."
+  reference               : "NIST 800-53r5|CM-6b."
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0051 - CSNXOS - Ensure Read Write privileges are not configured for SNMP"
+  info                    : "SNMP RW (Read-Write) access allows stations with Management access to both read and write SNMP MIB objects."
+  reference               : "NIST 800-53r5|CM-7 MA-4"
+  see_also                : "See HTH Policies and Standards"
+  regex                   : "^Manual Review Required$"
+  item                    : "snmp-server community .+"
+  severity                : MEDIUM
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0052 - CSNXOS - Configure Control Plane Policing"
+  info                    : "Control Plane Policing is used to create a set of policies governing specific traffic."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "copp profile strict"
+</item>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0053 - CSNXOS - Check for eigrp"
+      item                : "router eigrp .+"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0054 - CSNXOS - Configure EIGRP Passive interfaces for interfaces that do not have peers"
+      info                : "EIGRP both listens on and advertises on all interfaces that have IPs in subnets that are defined as \"networks\" in the EIGRP configuration."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface .+"
+      regex               : "^Manual Review Required$"
+      item                : "ip passive-interface eigrp .+"
+      severity            : MEDIUM
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0055 - CSNXOS - Configure EIGRP Passive interfaces for interfaces that do not have peers"
+  info                    : "EIGRP both listens on and advertises on all interfaces that have IPs in subnets that are defined as \"networks\" in the EIGRP configuration."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0056 - CSNXOS - Check for eigrp"
+      item                : "router eigrp .+"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0057 - CSNXOS - Configure EIGRP  log-adjacency-changes"
+      info                : "Logging changes to the EIGRP peering relationships is recommended."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) AU-3 AU-3(1) AU-7 AU-12 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-23"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router eigrp .+"
+      item                : "no log-adjacency-changes"
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0058 - CSNXOS - Configure EIGRP  log-adjacency-changes"
+  info                    : "Logging changes to the EIGRP peering relationships is recommended."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) AU-3 AU-3(1) AU-7 AU-12 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-23"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0059 - CSNXOS - Check for BGP"
+      item                : "router bgp"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0060 - CSNXOS - Configure BGP to Log Neighbor Changes"
+      info                : "Logging changes to the BGP peering relationships is recommended."
+      reference           : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router bgp .+"
+      item                : "log-neighbor-changes"
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0061 - CSNXOS - Configure BGP to Log Neighbor Changes"
+  info                    : "Logging changes to the BGP peering relationships is recommended."
+  reference               : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0062 - CSNXOS - Check for OSPF"
+      item                : "router ospf"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0063 - CSNXOS - Set Interfaces with no Peers to Passive-Interface"
+      info                : "By default, OSPF will advertise via multicast to solicit peers, and will listen for neighbor / peer advertisements on all OSPF configured interfaces."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface .+"
+      regex               : "^Manual Review Required$"
+      item                : "ip ospf passive-interface"
+      severity            : MEDIUM
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0064 - CSNXOS - Set Interfaces with no Peers to Passive-Interface"
+  info                    : "By default, OSPF will advertise via multicast to solicit peers, and will listen for neighbor / peer advertisements on all OSPF configured interfaces."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0065 - CSNXOS - Check for OSPF"
+      item                : "router ospf"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0066 - CSNXOS - Log OSPF Adjacency Changes"
+      info                : "Logging changes to the BGP peering relationships is recommended."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) AU-3 AU-3(1) AU-7 AU-12 CM-2 CM-6 CM-7 CM-7(1) CM-9 SI-4 SI-4(4)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router ospf .+"
+      item                : "log-adjacency-changes"
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0067 - CSNXOS - Log OSPF Adjacency Changes"
+  info                    : "Logging changes to the BGP peering relationships is recommended."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) AU-3 AU-3(1) AU-7 AU-12 CM-2 CM-6 CM-7 CM-7(1) CM-9 SI-4 SI-4(4)"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0068 - CSNXOS - If VLAN interfaces have IP addreses, configure anti spoofing / ingress filtering protections"
+  info                    : "If VLAN interfaces have IP addresses, it is important that anti-spoofing protections are in place, to prevent an attacker from spoofing an address that is illegal on that inbound interface."
+  reference               : "NIST 800-53r5|CA-9 SC-7 SI-4 SI-4(4)"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "interface Vlan.+"
+  regex                   : "^Manual Review Required$"
+  item                    : "(ip address .+|ip verify unicast source reachable-via rx)"
+  severity                : MEDIUM
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0069 - CSNXOS - Configure HSRP protections"
+  info                    : "HSRP is a valuable redundancy protocol, but like many protocols discussed in this document can be attacked and compromised."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "interface .+"
+  regex                   : "^Manual Review Required$"
+  item                    : "authentication md5 key-chain .+"
+  severity                : MEDIUM
+</item>
+
+<if>
+  <condition auto:"WARNING" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0070 - CSNXOS - Policy is configured"
+      item                : "ipv6 nd raguard policy .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0071 - CSNXOS - Policy is applied to the appropriate VLANs"
+      context             : "vlan .+"
+      regex               : "^Manual Review Required$"
+      item                : "ipv6 nd raguard attach-policy .+"
+      severity            : MEDIUM
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0072 - CSNXOS - Configure RA Guard"
+  info                    : "The IPv6 RA Guard feature provides support for allowing the network administrator to block or reject unwanted or rogue RA guard messages that arrive at the network device platform."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0073 - CSNXOS - Disable ICMP Redirects on all Layer 3 Interfaces"
+  info                    : "A redirect packet basically informs the host that there is a better way to get to the destination host or network."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "interface .+"
+  regex                   : "^Manual Review Required$"
+  item                    : "^no ip redirects"
+  severity                : MEDIUM
+</item>
+
+<item>
+  type                    : CONFIG_CHECK_NOT
+  description             : "1.0074 - CSNXOS - Disable Proxy ARP on all Layer 3 Interfaces"
+  info                    : "Proxy ARP is the technique in which one host, usually a router, answers ARP requests intended for another machine on a different network segment (vlan or subnet)."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "interface .+"
+  item                    : "ip proxy-arp"
+</item>
+
+<item>
+  type                    : CONFIG_CHECK_NOT
+  description             : "1.0075 - CSNXOS - Disable IP Directed Broadcasts on all Layer 3 Interfaces"
+  info                    : "An IP directed broadcast is an IP packet whose destination address is a valid broadcast address for an IP subnet, but which originates from a node that is not itself a part of that destination subnet."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also                : "See HTH Policies and Standards"
+  context                 : "interface .+"
+  item                    : "ip directed-broadcast"
+</item>
+
+<item>
+  type                    : CONFIG_CHECK
+  description             : "1.0076 - CSNXOS - Disable IP Source-Routing"
+  info                    : "A malicious actor can influence the path that their traffic should take using source-routing."
+  reference               : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 CP-6 CP-7 PL-8 PM-7 SA-3 SA-8 SA-10 SC-7"
+  see_also                : "See HTH Policies and Standards"
+  item                    : "no ip source-route"
+</item>
+
+<if>
+  <condition auto:"WARNING" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0077 - CSNXOS - ip dhcp snooping"
+      item                : "^ip dhcp snooping$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0078 - CSNXOS - ip dhcp snooping vlan"
+      item                : "^ip dhcp snooping vlan .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0079 - CSNXOS - ip dhcp snooping trust"
+      context             : "interface .+"
+      regex               : "^Manual Review Required$"
+      item                : "ip dhcp snooping trust"
+      severity            : MEDIUM
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0080 - CSNXOS - Configure DHCP Trust"
+  info                    : "You can configure whether DHCP snooping trusts traffic sources."
+  reference               : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0081 - CSNXOS - Check for feature lldp"
+      item                : "^feature lldp"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0082 - CSNXOS - Configure LLDP"
+      info                : "LLDP is a discovery protocol that transmits information about the capabilities and current status of a device and its interfaces."
+      reference           : "NIST 800-53r5|CA-9 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SI-4 SI-4(4)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface .+"
+      regex               : "^Manual Review Required$"
+      item                : ".*lldp (transmit|receive).*"
+      severity            : MEDIUM
+    </item>
+  </then>
+
+  <else>
+<report type:"PASSED">
+  description             : "1.0083 - CSNXOS - Configure LLDP"
+  info                    : "LLDP is a discovery protocol that transmits information about the capabilities and current status of a device and its interfaces."
+  reference               : "NIST 800-53r5|CA-9 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SI-4 SI-4(4)"
+  see_also                : "See HTH Policies and Standards"
+</report>
+  </else>
+</if>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0084 - CSNXOS - scheduler job"
+      context             : "scheduler job name LOCAL-BACKUP"
+      item                : "copy running-config startup-config"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0085 - CSNXOS - timetable for this backup"
+      context             : "scheduler schedule name .+"
+      item                : "job name LOCAL-BACKUP"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0086 - CSNXOS - timetable for this backup"
+      context             : "scheduler schedule name .+"
+      item                : "time .+ .+"
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0087 - CSNXOS - Configure Local Configuration Backup Schedule"
+  info                    : "Using the job scheduler function allows the user to automate backups."
+  reference               : "NIST 800-53r5|CP-9 CP-10"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0088 - CSNXOS - scheduler job"
+      context             : "scheduler job name REMOTE-BACKUP"
+      item                : "copy running-config (tftp|ftp|http|https|scp|sftp).+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0089 - CSNXOS - timetable for this backup"
+      context             : "scheduler schedule name .+"
+      item                : "job name REMOTE-BACKUP"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0090 - CSNXOS - timetable for this backup"
+      context             : "scheduler schedule name .+"
+      item                : "time .+ .+"
+    </item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description             : "1.0091 - CSNXOS - Configure a Remote Backup Schedule"
+  info                    : "NX-OS can be configured to initiate remote backups using scheduled jobs."
+  reference               : "NIST 800-53r5|CP-9 CP-10"
+  see_also                : "See HTH Policies and Standards"
+  show_output             : YES
+</report>
+  </then>
+</if>
+
+</check_type>

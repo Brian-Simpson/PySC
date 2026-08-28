@@ -1,0 +1,859 @@
+# generated_by: for-gap-combined-dedupe
+<check_type:"Windows" version:"2">
+<group_policy:"Windows Security Hardening Through Group Policy and Registry Settings">
+
+# <custom_item>
+#   description    : "1.0000 - AZURE - Ensure that no custom subscription administrator roles exist"
+#   info           : "The principle of least privilege should be followed and only necessary privileges should be assigned instead of allowing full administrative access."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu. - Select Subscriptions. - Select a subscription. - Select Access control (IAM). - Select Roles. - Click Type and select Custom role from the drop-down menu. - Check the box next to each role which grants subscription administrator privileges. - Select Delete. - Select Yes. Remediate from Azure CLI List custom roles: az role definition list --custom-role-only True Check for entries with assignableScope of the subscription, and an action of *. To remove a violating role: az role definition delete --name <role name> Note that any role assignments must be removed before a custom role can be deleted.Ensure impact is assessed before deleting a custom role granting subscription administrator privileges."
+#   reference      : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(2) AC-6(5) AC-6(7) AU-9(4)"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listRoleDefinitions"
+#   json_transform : ".[] | .subscriptionId as $subid | [ .value[].properties | select(.type == \"CustomRole\") | (.permissions[].actions[] | select(. == \"*\")) as $action | { \"name\": .roleName, \"action\": $action, \"scope\": .assignableScopes[] } ] | if (.[] | length) == 0 then \"Subscription ID: \($subid) - no custom roles with action = *\" else (.[] | \"Subscription ID: \($subid), Role Name: \(.name), Scope: \(.scope), Action: \(.action)\") end"
+#   regex          : "Subscription ID:"
+#   not_expect     : "Scope: /(subscriptions/[0-9a-f-]+)?,"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0001 - AZURE - Ensure that User consent for applications is set to Do not allow user consent"
+#   info           : "Require administrators to provide consent for applications before use."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Entra ID - Under Manage, select Enterprise applications - Under Security, select Consent and permissions - Under Manage, select User consent settings - Set User consent for applications to Do not allow user consent - Click Save"
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) CM-7(2) CM-8(3) CM-10 CM-11 IA-4 IA-5"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listAuthorizationPolicy"
+#   json_transform : "if (.defaultUserRolePermissions.permissionGrantPoliciesAssigned | length) == 0 then \"No permissionGrantPoliciesAssigned entries found\" else (.defaultUserRolePermissions.permissionGrantPoliciesAssigned[] | \"Permission Grant Policy assigned: \(.)\") end"
+#   regex          : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0002 - AZURE - Ensure that Users can register applications is set to No"
+#   info           : "Require administrators or appropriately delegated users to register third-party applications."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Entra ID - Under Manage, select Users - Under Manage, select User settings - Set Users can register applications to No - Click Save Remediate from PowerShell $param = @{ AllowedToCreateApps = \"$false\" } Update-MgPolicyAuthorizationPolicy -DefaultUserRolePermissions $param"
+#   reference      : "NIST 800-53r5|AC-2(1) AC-3 CM-7(2) CM-8(3) CM-10 CM-11"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Authorization Policy AllowedToCreateApps is set to false"
+#   request        : "listAuthorizationPolicy"
+#   json_transform : "\"Authorization Policy AllowedToCreateApps is set to \(.defaultUserRolePermissions.allowedToCreateApps)\""
+#   regex          : ".+"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0003 - AZURE - Ensure fewer than 5 users have global administrator assignment"
+#   info           : "This recommendation aims to maintain a balance between security and operational efficiency by ensuring that a minimum of 2 and a maximum of 4 users are assigned the Global Administrator role in Microsoft Entra ID."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Entra ID - Under Manage, select Roles and administrators - Under Administrative Roles, select Global Administrator If more than 4 users are assigned: - Remove Global Administrator role for users which do not or no longer require the role. - Assign Global Administrator role via PIM which can be activated when required. - Assign more granular roles to users to conduct their duties. If only one user is assigned: - Provide the Global Administrator role to a trusted user or create a break glass admin account."
+#   reference      : "NIST 800-53r5|AC-2"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Total\s*Count:\s*[2-4]$"
+#   request        : "listDirectoryRoleMembers"
+#   json_transform : ".[] | select(.displayName == \"Global Administrator\") | .value | .[] .displayName, \"\nTotal Count: \(length)\""
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0004 - AZURE - Ensure that use of the User Access Administrator role is restricted"
+#   info           : "The User Access Administrator role grants the ability to view all resources and manage access assignments at any subscription or management group level within the tenant."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu. - Select Subscriptions. - Select a subscription. - Select Access control (IAM). - Look for the following banner at the top of the page: Action required: X users have elevated access in your tenant. You should take immediate action and remove all role assignments with elevated access. - Click View role assignments. - Click Remove. Remediate from Azure CLI Run the following command: az role assignment delete --role \"User Access Administrator\" --scope \"/\\\"
+#   reference      : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listRoleAssignments"
+#   json_transform : ".[]|.value[]|\"Name: \(.name)\"+\" Role Definition ID: \(.properties.roleDefinitionId)\" + \" Principal ID: \(.properties.principalId)\"+\" Principal Type: \(.properties.principalType)\""
+#   regex          : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0005 - AZURE - Ensure that Restrict non-admin users from creating tenants is set to Yes"
+#   info           : "Require administrators or appropriately delegated users to create new tenants."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Entra ID - Under Manage, select Users - Under Manage, select User settings - Set Restrict non-admin users from creating tenants to Yes - Click Save Remediate from PowerShell Import-Module Microsoft.Graph.Identity.SignIns Connect-MgGraph -Scopes 'Policy.ReadWrite.Authorization' Select-MgProfile -Name beta $params = @{ DefaultUserRolePermissions = @{ AllowedToCreateTenants = $false } } Update-MgPolicyAuthorizationPolicy -AuthorizationPolicyId -BodyParameter $params"
+#   reference      : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Authorization Policy allowedToCreateTenants is set to false"
+#   request        : "listAuthorizationPolicy"
+#   json_transform : "\"Authorization Policy allowedToCreateTenants is set to \(.defaultUserRolePermissions.allowedToCreateTenants)\""
+#   regex          : ".+"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0006 - AZURE - Ensure Allow Public Network Access is set to Disabled"
+#   info           : "Disable public network access to prevent exposure to the internet and reduce the risk of unauthorized access."
+#   solution       : "Remediate from Azure Portal - Go to Azure Databricks. - Click the name of a workspace. - Under Settings click Networking. - Under Network access, next to Allow Public Network Access, click the radio button next to Disabled. - Click Save. - Repeat steps 1-5 for each workspace requiring remediation. Remediate from Azure CLI For each workspace requiring remediation, run the following command to set publicNetworkAccess to Disabled : az databricks workspace update --resource-group <resource-group> --name <workspace> --public-network-access Disabled Remediate from PowerShell For each workspace requiring remediation, run the following command to set PublicNetworkAccess to Disabled : Update-AzDatabricksWorkspace -ResourceGroupName <resource-group> -Name <workspace> -PublicNetworkAccess Disabled"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listDatabricks"
+#   json_transform : ".[] | .subscriptionId as $id | .resourceGroups[] | .name as $rgName | .value | select(length >0) | .[] | \"Subscription ID: \($id), Resource Group: \($rgName), Databrick: \(.name), Public Network Access: \(.properties.publicNetworkAccess)\""
+#   not_expect     : "Public Network Access: Enabled"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0007 - AZURE - Ensure that RDP access from the Internet is evaluated and restricted"
+#   info           : "Network security groups should be periodically evaluated for port misconfigurations."
+#   solution       : "Remediate from Azure Portal - Go to Network security groups. - Click the name of a network security group. - Under Settings, click Inbound security rules. - Check the box next to any inbound security rule matching: - Port: 3389 or range including 3389 - Protocol: TCP or Any - Source: 0.0.0.0/0, Internet, or Any - Action: Allow - Click Delete. - Click Yes. - Repeat steps 1-6 for each network security group requiring remediation. Remediate from Azure CLI For each network security group rule requiring remediation, run the following command to delete the rule: az network nsg rule delete --resource-group <resource-group> --nsg-name <network-security-group> --name <rule>"
+#   reference      : "NIST 800-53r5|CA-9 SC-7"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Network Security Group Name: \($name), Rule Name: \(.name), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Direction: \(.properties.direction), Protocol: \(.properties.protocol), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Access: Allow, Destination Port Range: (3389|\*|(([0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[1-2][0-9][0-9][0-9]|3[0-2][0-9][0-9]|33[0-8][0-9])-(3389|339[0-9]|3[4-9][0-9][0-9]|[4-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9]))), Direction: Inbound, Protocol: (TCP|\*), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0008 - AZURE - Ensure Public Network Access is Disabled"
+#   info           : "Disable public network access to prevent exposure to the internet and reduce the risk of unauthorized access."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - Click the name of a key vault. - Under Settings, click Networking. - Under Firewalls and virtual networks, next to Allow access from:, click the radio button next to Disable public access. - Click Apply. - Repeat steps 1-5 for each key vault requiring remediation. Remediate from Azure CLI For each key vault requiring remediation, run the following command to disable public network access: az keyvault update --resource-group <resource-group> --name <key-vault> --public-network-access Disabled Remediate from PowerShell For each key vault requiring remediation, run the following command to disable public network access: Update-AzKeyVault -ResourceGroupName <resource-group> -VaultName <vault-name> -PublicNetworkAccess \"Disabled\\\"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultDetails"
+#   json_transform : ".[] | .subscriptionId as $id | .resourceGroups[] | .name as $rgName | .vaults[] | \"Subscription ID: \($id), Resource Group: \($rgName), Vault Name: \(.name), Public Network Access: \(.properties.publicNetworkAccess)\""
+#   not_expect     : "Public Network Access: Enabled"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0009 - AZURE - Ensure SMB protocol version is set to SMB 3.1.1 or higher for SMB file shares"
+#   info           : "Ensure that SMB file shares are configured to use the latest supported SMB protocol version."
+#   solution       : "Remediate from Azure Portal - Go to Storage accounts. - Click the name of a storage account. - Under Data storage, click File shares. - Under File share settings, click the link next to Security. - If Profile is set to Maximum compatibility, click the drop-down menu and select Maximum security or Custom. - If selecting Custom, under SMB protocol versions, uncheck the boxes next to SMB 2.1 and SMB 3.0. - Click Save. - Repeat steps 1-7 for each storage account requiring remediation. Remediate from Azure CLI For each storage account requiring remediation, run the following command to set the SMB protocol version: az storage account file-service-properties update --resource-group <resource-group> --account-name <storage-account> --versions SMB3.1.1 Remediate from PowerShell For each storage account requiring remediation, run the following command to set the SMB protocol version: Update-AzStorageFileServiceProperty -ResourceGroupName <resource-group> -StorageAccountName <storage-account> -SmbProtocolVersion SMB3.1.1"
+#   reference      : "NIST 800-53r5|AC-18 SC-23"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id|.value[] | \"Subscription ID: \($id), Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0010 - AZURE - Ensure SMB channel encryption is set to AES-256-GCM or higher for SMB file shares"
+#   info           : "Implement SMB channel encryption with AES-256-GCM for SMB file shares to ensure data confidentiality and integrity in transit."
+#   solution       : "Remediate from Azure Portal - Go to Storage accounts. - Click the name of a storage account. - Under Data storage, click File shares. - Under File share settings, click the link next to Security. - If Profile is set to Maximum compatibility, click the drop-down menu and select Maximum security or Custom. - If selecting Custom, under SMB channel encryption, uncheck the boxes next to AES-128-CCM and AES-128-GCM. - Click Save. - Repeat steps 1-7 for each storage account requiring remediation. Remediate from Azure CLI For each storage account requiring remediation, run the following command to set the SMB channel encryption: az storage account file-service-properties update --resource-group <resource-group> --account-name <storage-account> --channel-encryption AES-256-GCM Remediate from PowerShell For each storage account requiring remediation, run the following command to set the SMB channel encryption: Update-AzStorageFileServiceProperty -ResourceGroupName <resource-group> -StorageAccountName <storage-account> -SmbChannelEncryption AES-256-GCM"
+#   reference      : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id|.value[] | \"Subscription ID: \($id), Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0011 - AZURE - Ensure that Public Network Access is Disabled for storage accounts"
+#   info           : "Disable public network access to prevent exposure to the internet and reduce the risk of unauthorized access."
+#   solution       : "Remediate from Azure Portal First, follow Microsoft documentation and create shared access signature tokens for your blob containers. Then, - Go to Storage Accounts. - For each storage account, under the Security + networking section, click Networking. - Set Public network access to Disabled. - Click Save. Remediate from Azure CLI Set 'Public Network Access' to Disabled on the storage account az storage account update --name <storage-account> --resource-group <resource-group> --public-network-access Disabled Remediate from PowerShell For each Storage Account, run the following to set the PublicNetworkAccess setting to Disabled Set-AzStorageAccount -ResourceGroupName <resource group name> -Name <storage account name> -PublicNetworkAccess Disabled"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Public Network Access: Disabled"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id | .value[] | .name as $name |\"Subscription ID: \($id), Storage account: \($name), Public Network Access: \(.properties.publicNetworkAccess)\""
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0012 - AZURE - Ensure default network access rule for storage accounts is set to deny"
+#   info           : "Restricting default network access helps to provide a new layer of security, since storage accounts accept connections from clients on any network."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each storage account, under Security + networking, click Networking. - Click the Firewalls and virtual networks heading. - Set Public network access to Enabled from selected virtual networks and IP addresses. - Add rules to allow traffic from specific networks and IP addresses. - Click Save. Remediate from Azure CLI Use the below command to update default-action to Deny. az storage account update --name <StorageAccountName> --resource-group <resourceGroupName> --default-action Deny"
+#   reference      : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Default Action: \(.properties.networkAcls.defaultAction)\""
+#   not_expect     : "Default Action: Allow"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0013 - AZURE - Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule"
+#   info           : "Create an activity log alert for the Create or Update SQL Server Firewall Rule event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Create/Update server firewall rule (Server Firewall Rule). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Sql/servers/firewallRules/write and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Sql/servers/firewallRules/write -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Sql/servers/firewallRules/write New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Sql/servers/firewallRules/write\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0014 - AZURE - Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule"
+#   info           : "Create an activity log alert for the \"Delete SQL Server Firewall Rule."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Delete server firewall rule (Server Firewall Rule). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Sql/servers/firewallRules/delete and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Sql/servers/firewallRules/delete -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Sql/servers/firewallRules/delete New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Sql/servers/firewallRules/delete\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0015 - AZURE - Ensure that logging for Azure Key Vault is Enabled"
+#   info           : "Enable AuditEvent logging for key vault instances to ensure interactions with key vaults are logged and available."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - Select a Key vault. - Under Monitoring, select Diagnostic settings. - Click Edit setting to update an existing diagnostic setting, or Add diagnostic setting to create a new one. - If creating a new diagnostic setting, provide a name. - Configure an appropriate destination. - Under Category groups, check audit and allLogs. - Click Save. Remediate from Azure CLI To update an existing Diagnostic Settings az monitor diagnostic-settings update --name \"<diagnostic_setting_name>\" --resource <key_vault_id> To create a new Diagnostic Settings az monitor diagnostic-settings create --name \"<diagnostic_setting_name>\" --resource <key_vault_id> --logs \"[{category:audit,enabled:true},{category:allLogs,enabled:true}]\" --metrics \"[{category:AllMetrics,enabled:true}]\" <[--event-hub <event_hub_ID> --event-hub-rule <event_hub_auth_rule_ID> | --storage-account <storage_account_ID> |--workspace <log_analytics_workspace_ID> | --marketplace-partner-id <solution_resource_ID>]> Remediate from PowerShell Create the Log settings object $logSettings = @() $logSettings += New-AzDiagnosticSettingLogSettingsObject -Enabled $true -Category audit $logSettings += New-AzDiagnosticSettingLogSettingsObject -Enabled $true -Category allLogs Create the Metric settings object $metricSettings = @() $metricSettings += New-AzDiagnosticSettingMetricSettingsObject -Enabled $true -Category AllMetrics Create the Diagnostic Settings for each Key Vault New-AzDiagnosticSetting -Name \"<diagnostic_setting_name>\" -ResourceId <key_vault_id> -Log $logSettings -Metric $metricSettings [-StorageAccountId <storage_account_ID> | -EventHubName <event_hub_name> -EventHubAuthorizationRuleId <event_hub_auth_rule_ID> | -WorkSpaceId <log analytics workspace ID> | -MarketPlacePartnerId <full resource ID for third-party solution>]"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Audit: true, All Logs: true"
+#   request        : "listVaultDiagnosticSetting"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgn|.vaults[] | (if (.value | length) > 0 then [.value[].properties.logs[]] else [] end) as $logs | (if ($logs | length) > 0 then ($logs[] | select(.categoryGroup == \"audit\" and .enabled == true) | length > 0) else false end) as $audit | (if ($logs | length) > 0 then ($logs[] | select(.categoryGroup == \"allLogs\" and .enabled == true) | length > 0) else false end) as $allLogs |\"Subscription ID: \($subid), Resource Group: \($rgn), Vault Name: \(.name), Audit: \($audit), All Logs: \($allLogs)\""
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0016 - AZURE - Ensure the SSL policys Min protocol version is set to TLSv1_2' or higher on Azure Application Gateway"
+#   info           : "The TLS (Transport Layer Security) protocol secures the transmission of data over the internet using standard encryption technology."
+#   solution       : "Remediate from Azure Portal - Go to Application gateways. - Click the name of an application gateway. - Under Settings, click Listeners. - Under SSL Policy, next to the Selected SSL Policy name, click change. - Select an appropriate SSL policy with a Min protocol version of TLSv1_2 or higher. - Click Save. - Repeat steps 1-6 for each application gateway requiring remediation. Remediate from Azure CLI Run the following command to list available SSL policy options: az network application-gateway ssl-policy list-options Run the following command to list available predefined SSL policies: az network application-gateway ssl-policy predefined list For each application gateway requiring remediation, run the following command to set a predefined SSL policy: az network application-gateway ssl-policy set --resource-group <resource-group> --gateway-name <application-gateway> --name <ssl-policy> --policy-type Predefined Alternatively, run the following command to set a custom SSL policy: az network application-gateway ssl-policy set --resource-group <resource-group> --gateway-name <application-gateway> --policy-type Custom --min-protocol-version <min-protocol-version> --cipher-suites <cipher-suites>"
+#   reference      : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listApplicationGateways"
+#   json_transform : ".[] | .subscriptionId as $id | .value[] | .name as $appGw | \"Subscription ID: \($id), Application Gateway: \($appGw)\""
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0017 - AZURE - Ensure that SSH access from the Internet is evaluated and restricted"
+#   info           : "Network security groups should be periodically evaluated for port misconfigurations."
+#   solution       : "Remediate from Azure Portal - Go to Network security groups. - Click the name of a network security group. - Under Settings, click Inbound security rules. - Check the box next to any inbound security rule matching: - Port: 22 or range including 22 - Protocol: TCP or Any - Source: 0.0.0.0/0, Internet, or Any - Action: Allow - Click Delete. - Click Yes. - Repeat steps 1-6 for each network security group requiring remediation. Remediate from Azure CLI For each network security group rule requiring remediation, run the following command to delete the rule: az network nsg rule delete --resource-group <resource-group> --nsg-name <network-security-group> --name <rule>"
+#   reference      : "NIST 800-53r5|CA-9 SC-7"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Network Security Group Name: \($name), Rule Name: \(.name), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Direction: \(.properties.direction), Protocol: \(.properties.protocol), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Access: Allow, Destination Port Range: (22|\*|(([0-9]|1[0-9]|2[0-2])-(2[2-9][3-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-6][0-9][0-9][0-9][0-9]))), Direction: Inbound, Protocol: (TCP|\*), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0018 - AZURE - Ensure that Activity Log Alert exists for Delete Public IP Address rule"
+#   info           : "Create an activity log alert for the Delete Public IP Address rule."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Delete Public Ip Address (Public Ip Address). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Network/publicIPAddresses/delete and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Network/publicIPAddresses/delete -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Network/publicIPAddresses/delete New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Network/publicIPAddresses/delete\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0019 - AZURE - Ensure that Activity Log Alert exists for Create or Update Public IP Address rule"
+#   info           : "Create an activity log alert for the Create or Update Public IP Addresses rule."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Create or Update Public Ip Address (Public Ip Address). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Network/publicIPAddresses/write and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Network/publicIPAddresses/write -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Network/publicIPAddresses/write New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Network/publicIPAddresses/write\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0020 - AZURE - Ensure that Azure Monitor Resource Logging is Enabled for All Services that Support it"
+#   info           : "Resource Logs capture activity to the data access plane while the Activity log is a subscription-level log for the control plane."
+#   solution       : "Azure Subscriptions should log every access and operation for all resources.Logs should be sent to Storage and a Log Analytics Workspace or equivalent third-party system. Logs should be kept in readily-accessible storage for a minimum of one year, and then moved to inexpensive cold storage for a duration of time as necessary. If retention policies are set but storing logs in a Storage Account is disabled (for example, if only Event Hubs or Log Analytics options are selected), the retention policies have no effect. Enable all monitoring at first, and then be more aggressive moving data to cold storage if the volume of data becomes a cost concern. Remediate from Azure Portal The specific steps for configuring resources within the Azure console vary depending on resource, but typically the steps are: - Go to the resource - Click on Diagnostic settings - In the blade that appears, click \"Add diagnostic setting\" - Configure the diagnostic settings - Click on Save Remediate from Azure CLI For each resource, run the following making sure to use a resource appropriate JSON encoded category for the --logs option. az monitor diagnostic-settings create --name <diagnostic settings name> --resource <resource ID> --logs \"[{category:<resource specific category>,enabled:true,rentention-policy:{enabled:true,days:180}}]\" --metrics \"[{category:AllMetrics,enabled:true,retention-policy:{enabled:true,days:180}}]\" <[--event-hub <event hub ID> --event-hub-rule <event hub auth rule ID> | --storage-account <storage account ID> |--workspace <log analytics workspace ID> | --marketplace-partner-id <full resource ID of third-party solution>]> Remediate from PowerShell Create the log settings object $logSettings = @() $logSettings += New-AzDiagnosticSettingLogSettingsObject -Enabled $true -RetentionPolicyDay 180 -RetentionPolicyEnabled $true -Category <resource specific category> $logSettings += New-AzDiagnosticSettingLogSettingsObject -Enabled $true -RetentionPolicyDay 180 -RetentionPolicyEnabled $true -Category <resource specific category number 2> Create the metric settings object $metricSettings = @() $metricSettings += New-AzDiagnosticSettingMetricSettingsObject -Enabled $true -RetentionPolicyDay 180 -RetentionPolicyEnabled $true -Category AllMetrics Create the diagnostic setting for a specific resource New-AzDiagnosticSetting -Name \"<diagnostic settings name>\" -ResourceId <resource ID> -Log $logSettings -Metric $metricSettings"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-6(3) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listResourceDiagnosticSettings"
+#   json_transform : ".[] | .subscriptionId as $id | .value[] | if (has(\"error\") | not) and (.value | length == 0) then \"\(.type) - \(.name) - diagnostic settings not configured\" else \"\" end"
+#   regex          : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0021 - AZURE - Ensure that an Activity Log Alert exists for Service Health"
+#   info           : "Create an activity log alert for Service Health."
+#   solution       : "Remediate from Azure Portal - Go to Monitor. - Click Alerts. - Click + Create. - Select Alert rule from the drop-down menu. - Choose a subscription. - Click Apply. - Select the Condition tab. - Click See all signals. - Select Service health. - Click Apply. - Open the drop-down menu next to Event types. - Check the box next to Select all. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. - Repeat steps 1-19 for each subscription requiring remediation. Remediate from Azure CLI For each subscription requiring remediation, run the following command to create a ServiceHealth alert rule for a subscription: az monitor activity-log alert create --subscription <subscription-id> --resource-group <resource-group> --name <alert-rule> --condition category=ServiceHealth and properties.incidentType=Incident --scope /subscriptions/<subscription-id> --action-group <action-group> Remediate from PowerShell Create the Conditions object: $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Field category -Equal ServiceHealth $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Field properties.incidentType -Equal Incident Retrieve the Action Group information and store in a variable: $actionGroup = Get-AzActionGroup -ResourceGroupName <resource-group> -Name <action-group> Create the Actions object: $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object: $scope = \"/subscriptions/<subscription-id>\" Create the activity log alert rule: New-AzActivityLogAlert -Name <alert-rule> -ResourceGroupName <resource-group> -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription-id> -Enabled $true Repeat for each subscription requiring remediation."
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"ServiceHealth\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0022 - AZURE - Ensure No Public IP is set to Enabled"
+#   info           : "Enable secure cluster connectivity (also known as no public IP) on Azure Databricks workspaces to ensure that clusters do not have public IP addresses and communicate with the control plane over a secure connection."
+#   solution       : "Remediate from Azure Portal - Go to Azure Databricks. - Click the name of a workspace. - Under Settings, click Networking. - Under Network access, next to Deploy Azure Databricks workspace with Secure Cluster Connectivity (No Public IP), click the radio button next to Enabled. - Click Save. - Repeat steps 1-5 for each workspace requiring remediation. Remediate from Azure CLI For each workspace requiring remediation, run the following command to set enableNoPublicIp to true : az databricks workspace update --resource-group <resource-group> --name <workspace> --enable-no-public-ip true Remediate from PowerShell For each workspace requiring remediation, run the following command to set EnableNoPublicIP to True : Update-AzDatabricksWorkspace -ResourceGroupName <resource-group> -Name <workspace> -EnableNoPublicIP"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listDatabricks"
+#   json_transform : ".[] | .subscriptionId as $id | .resourceGroups[] | .name as $rgName | .value[] | \"Subscription ID: \($id), Resource Group: \($rgName), Workspace: \(.name), Enable No Public IP: \(.properties.parameters.enableNoPublicIp.value)\""
+#   not_expect     : "Enable No Public IP: false"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0023 - AZURE - Ensure that HTTP(S) access from the Internet is evaluated and restricted"
+#   info           : "Network security groups should be periodically evaluated for port misconfigurations."
+#   solution       : "Remediate from Azure Portal - Go to Network security groups. - Click the name of a network security group. - Under Settings, click Inbound security rules. - Check the box next to any inbound security rule matching: - Port: 80, 443, or range including 80 or 443 - Protocol: TCP or Any - Source: 0.0.0.0/0, Internet, or Any - Action: Allow - Click Delete. - Click Yes. - Repeat steps 1-6 for each network security group requiring remediation. Remediate from Azure CLI For each network security group rule requiring remediation, run the following command to delete the rule: az network nsg rule delete --resource-group <resource-group> --nsg-name <network-security-group> --name <rule>"
+#   reference      : "NIST 800-53r5|CA-9 SC-7"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Network Security Group Name: \($name), Rule Name: \(.name), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Direction: \(.properties.direction), Protocol: \(.properties.protocol), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Access: Allow, Destination Port Range: (80|443|\*|(([0-9]|1[0-9]|80)-([8-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-6][0-9][0-9][0-9][0-9]))|(([0-9]|[1-9][0-9]|[1-3][0-9][0-9]|4[0-3][0-9]|44[0-3])-(44[3-9]|4[5-9][0-9]|[5-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-6][0-9][0-9][0-9][0-9]))), Direction: Inbound, Protocol: (TCP|\*), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0024 - AZURE - Ensure that Allow Blob Anonymous Access is set to Disabled"
+#   info           : "The Azure Storage setting 'Allow Blob Anonymous Access' (aka \"allowBlobPublicAccess\") controls whether anonymous access is allowed for blob data in a storage account."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each storage account, under Settings, click Configuration. - Set Allow Blob Anonymous Access to Disabled. - Click Save. Remediate from Powershell For every storage account in scope, run the following: $storageAccount = Get-AzStorageAccount -ResourceGroupName \"<yourResourceGroup>\" -Name \"<yourStorageAccountName>\" $storageAccount.AllowBlobPublicAccess = $false Set-AzStorageAccount -InputObject $storageAccount"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Allow Blob Anonymous Access: false"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Allow Blob Anonymous Access: \(.properties.allowBlobPublicAccess)\""
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0025 - AZURE - Ensure that a Diagnostic Setting exists for Subscription Activity Logs"
+#   info           : "Enable Diagnostic settings for exporting activity logs."
+#   solution       : "Remediate from Azure Portal To enable Diagnostic Settings on a Subscription: - Go to Monitor - Click on Activity log - Click on Export Activity Logs - Click + Add diagnostic setting - Enter a Diagnostic setting name - Select Categories for the diagnostic setting - Select the appropriate Destination details (this may be Log Analytics, Storage Account, Event Hub, or Partner solution) - Click Save To enable Diagnostic Settings on a specific resource: - Go to Monitoring - Click Diagnostic settings - Select Add diagnostic setting - Enter a Diagnostic setting name - Select the appropriate log, metric, and destination (this may be Log Analytics, Storage Account, Event Hub, or Partner solution) - Click Save Repeat these step for all resources as needed. Remediate from Azure CLI To configure Diagnostic Settings on a Subscription: az monitor diagnostic-settings subscription create --subscription <subscription id> --name <diagnostic settings name> --location <location> <[--event-hub <event hub ID> --event-hub-auth-rule <event hub auth rule ID>] [--storage-account <storage account ID>] [--workspace <log analytics workspace ID>] --logs \"<JSON encoded categories>\" (e.g. [{category:Security,enabled:true},{category:Administrative,enabled:true},{category:Alert,enabled:true},{category:Policy,enabled:true}]) To configure Diagnostic Settings on a specific resource: az monitor diagnostic-settings create --subscription <subscription ID> --resource <resource ID> --name <diagnostic settings name> <[--event-hub <event hub ID> --event-hub-rule <event hub auth rule ID>] [--storage-account <storage account ID>] [--workspace <log analytics workspace ID>] --logs <resource specific JSON encoded log settings> --metrics <metric settings (shorthand|json-file|yaml-file)> Remediate from PowerShell To configure Diagnostic Settings on a subscription: $logCategories = @(); $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Administrative -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Security -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category ServiceHealth -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Alert -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Recommendation -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Policy -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Autoscale -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category ResourceHealth -Enabled $true New-AzSubscriptionDiagnosticSetting -SubscriptionId <subscription ID> -Name <Diagnostic settings name> <[-EventHubAuthorizationRule <event hub auth rule ID> -EventHubName <event hub name>] [-StorageAccountId <storage account ID>] [-WorkSpaceId <log analytics workspace ID>] [-MarketplacePartner ID <full ARM Marketplace resource ID>]> -Log $logCategories To configure Diagnostic Settings on a specific resource: $logCategories = @() $logCategories += New-AzDiagnosticSettingLogSettingsObject -Category <resource specific log category> -Enabled $true Repeat command and variable assignment for each Log category specific to the resource where this Diagnostic Setting will get configured. $metricCategories = @() $metricCategories += New-AzDiagnosticSettingMetricSettingsObject -Enabled $true [-Category <resource specific metric category | AllMetrics>] [-RetentionPolicyDay <Integer>] [-RetentionPolicyEnabled $true] Repeat command and variable assignment for each Metric category or use the 'AllMetrics' category. New-AzDiagnosticSetting -ResourceId <resource ID> -Name <Diagnostic settings name> -Log $logCategories -Metric $metricCategories [-EventHubAuthorizationRuleId <event hub auth rule ID> -EventHubName <event hub name>] [-StorageAccountId <storage account ID>] [-WorkspaceId <log analytics workspace ID>] [-MarketplacePartnerId <full ARM marketplace resource ID>]>"
+#   reference      : "NIST 800-53r5|AU-6(3)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listDiagnosticSetting"
+#   json_transform : ".[] | .subscriptionId as $id | if ((.value | length) == 0) then \"Subscription ID: \($id) - no diagnostic settings\" else ( .value[] | .name as $name | \"Subscription ID: \($id), Diagnostic Settings: \($name), Administrative: \(.properties.logs[] | select(.category == \"Administrative\").enabled ), Alert: \(.properties.logs[] | select(.category == \"Alert\").enabled ), Policy: \(.properties.logs[] | select(.category == \"Policy\").enabled ), Security: \(.properties.logs[] | select(.category == \"Security\").enabled ), ServiceHealth: \(.properties.logs[] | select(.category == \"ServiceHealth\").enabled ), Recommendation: \(.properties.logs[] | select(.category == \"Recommendation\").enabled ), Autoscale: \(.properties.logs[] | select(.category == \"Autoscale\").enabled ), ResourceHealth: \(.properties.logs[] | select(.category == \"ResourceHealth\").enabled )\" ) end"
+#   regex          : "Subscription ID:"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0026 - AZURE - Ensure Diagnostic Setting captures appropriate categories"
+#   info           : "Prerequisite : A Diagnostic Setting must exist."
+#   solution       : "Remediate from Azure Portal - Go to Monitor. - Click Activity log. - Click on Export Activity Logs. - Select the Subscription from the drop down menu. - Click Edit setting next to a diagnostic setting. - Check the following categories: Administrative, Alert, Policy, and Security. - Choose the destination details according to your organization's needs. - Click Save. Remediate from Azure CLI az monitor diagnostic-settings subscription create --subscription <subscription id> --name <diagnostic settings name> --location <location> <[--event-hub <event hub ID> --event-hub-auth-rule <event hub auth rule ID>] [--storage-account <storage account ID>] [--workspace <log analytics workspace ID>] --logs \"[{category:Security,enabled:true},{category:Administrative,enabled:true},{category:Alert,enabled:true},{category:Policy,enabled:true}]\" Remediate from PowerShell $logCategories = @(); $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Administrative -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Security -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Alert -Enabled $true $logCategories += New-AzDiagnosticSettingSubscriptionLogSettingsObject -Category Policy -Enabled $true New-AzSubscriptionDiagnosticSetting -SubscriptionId <subscription ID> -Name <Diagnostic settings name> <[-EventHubAuthorizationRule <event hub auth rule ID> -EventHubName <event hub name>] [-StorageAccountId <storage account ID>] [-WorkSpaceId <log analytics workspace ID>] [-MarketplacePartner ID <full ARM Marketplace resource ID>]> -Log $logCategories"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Administrative: true, Alert: true, Policy: true, Security: true"
+#   request        : "listDiagnosticSetting"
+#   json_transform : ".[] | .subscriptionId as $id | if ((.value | length) == 0) then \"Subscription ID: \($id) - no diagnostic settings\" else ( .value[] | .name as $name | \"Subscription ID: \($id), Diagnostic Settings: \($name), Administrative: \(.properties.logs[] | select(.category == \"Administrative\").enabled ), Alert: \(.properties.logs[] | select(.category == \"Alert\").enabled ), Policy: \(.properties.logs[] | select(.category == \"Policy\").enabled ), Security: \(.properties.logs[] | select(.category == \"Security\").enabled )\" ) end"
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0027 - AZURE - Ensure that Activity Log Alert exists for Create Policy Assignment"
+#   info           : "Create an activity log alert for the Create Policy Assignment event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Create policy assignment (Policy assignment). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Authorization/policyAssignments/write> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription ID> --action-group <action group ID> Remediate from PowerShell Create the conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Authorization/policyAssignments/write -Field operationName Get the Action Group information and store it in a variable, then create a new Action object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope variable. $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Authorization/policyAssignments/write New-AzActivityLogAlert -Name \"<activity alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Authorization/policyAssignments/write\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0028 - AZURE - Ensure that Activity Log Alert exists for Delete Policy Assignment"
+#   info           : "Create an activity log alert for the Delete Policy Assignment event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Delete policy assignment (Policy assignment). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Authorization/policyAssignments/delete and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the conditions object $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Authorization/policyAssignments/delete -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Action object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope variable. $scope = \"/subscriptions/<subscription id>\" Create the Activity Log Alert Rule for Microsoft.Authorization/policyAssignments/delete. New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Authorization/policyAssignments/delete\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0029 - AZURE - Ensure that Activity Log Alert exists for Create or Update Network Security Group"
+#   info           : "Create an Activity Log Alert for the Create or Update Network Security Group event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Create or Update Network Security Group (Network Security Group). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Network/networkSecurityGroups/write and level=verbose --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Network/networkSecurityGroups/write -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription id>\" Create the Activity Log Alert Rule for Microsoft.Network/networkSecurityGroups/write New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Network/networkSecurityGroups/write\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0030 - AZURE - Ensure that Activity Log Alert exists for Delete Network Security Group"
+#   info           : "Create an activity log alert for the Delete Network Security Group event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Delete Network Security Group (Network Security Group). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Network/networkSecurityGroups/delete and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Network/networkSecurityGroups/delete -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription id>\" Create the Activity Log Alert Rule for Microsoft.Network/networkSecurityGroups/delete New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Network/networkSecurityGroups/delete\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0031 - AZURE - Ensure that Activity Log Alert exists for Create or Update Security Solution"
+#   info           : "Create an activity log alert for the Create or Update Security Solution event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Create or Update Security Solutions (Security Solutions). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Security/securitySolutions/write and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Security/securitySolutions/write -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Security/securitySolutions/write New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Security/securitySolutions/write\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0032 - AZURE - Ensure that Activity Log Alert exists for Delete Security Solution"
+#   info           : "Create an activity log alert for the Delete Security Solution event."
+#   solution       : "Remediate from Azure Portal - Navigate to the Monitor blade. - Select Alerts. - Select Create. - Select Alert rule. - Choose a subscription. - Select Apply. - Select the Condition tab. - Click See all signals. - Select Delete Security Solutions (Security Solutions). - Click Apply. - Select the Actions tab. - Click Select action groups to select an existing action group, or Create action group to create a new action group. - Follow the prompts to choose or create an action group. - Select the Details tab. - Select a Resource group, provide an Alert rule name and an optional Alert rule description. - Click Review + create. - Click Create. Remediate from Azure CLI az monitor activity-log alert create --resource-group \"<resource group name>\" --condition category=Administrative and operationName=Microsoft.Security/securitySolutions/delete and level=<verbose | information | warning | error | critical> --scope \"/subscriptions/<subscription ID>\" --name \"<activity log rule name>\" --subscription <subscription id> --action-group <action group ID> Remediate from PowerShell Create the Conditions object. $conditions = @() $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Administrative -Field category $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Microsoft.Security/securitySolutions/delete -Field operationName $conditions += New-AzActivityLogAlertAlertRuleAnyOfOrLeafConditionObject -Equal Verbose -Field level Retrieve the Action Group information and store in a variable, then create the Actions object. $actionGroup = Get-AzActionGroup -ResourceGroupName <resource group name> -Name <action group name> $actionObject = New-AzActivityLogAlertActionGroupObject -Id $actionGroup.Id Create the Scope object $scope = \"/subscriptions/<subscription ID>\" Create the Activity Log Alert Rule for Microsoft.Security/securitySolutions/delete New-AzActivityLogAlert -Name \"<activity log alert rule name>\" -ResourceGroupName \"<resource group name>\" -Condition $conditions -Scope $scope -Location global -Action $actionObject -Subscription <subscription ID> -Enabled $true"
+#   reference      : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Names: \[.+\]"
+#   request        : "listActivityLogAlertBySubscription"
+#   json_transform : ".[] | .subscriptionId as $id | [ .value[] | .name as $name | select(.properties.enabled == true) | .properties.condition.allOf[] | select(.equals == \"Microsoft.Security/securitySolutions/delete\") | $name ] as $names | \"Subscription ID: \($id), Names: \($names)\""
+#   regex          : "Subscription ID:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0033 - AZURE - Ensure the Minimum TLS version for storage accounts is set to Version 1.2"
+#   info           : "In some cases, Azure Storage sets the minimum TLS version to be version 1."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each storage account, under Settings, click Configuration. - Set the Minimum TLS version to Version 1.2. - Click Save. Remediate from Azure CLI az storage account update \\ --name <storage-account> \\ --resource-group <resource-group> \\ --min-tls-version TLS1_2 Remediate from PowerShell To set the minimum TLS version, run the following command: Set-AzStorageAccount -AccountName <STORAGEACCOUNTNAME> ` -ResourceGroupName <RESOURCEGROUPNAME> ` -MinimumTlsVersion TLS1_2"
+#   reference      : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Minimum TLS Version: TLS1_2"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Minimum TLS Version: \(.properties.minimumTlsVersion)\""
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0034 - AZURE - Ensure that diagnostic log delivery is configured for Azure Databricks"
+#   info           : "Azure Databricks Diagnostic Logging provides insights into system operations, user activities, and security events within a Databricks workspace."
+#   solution       : "Remediate from Azure Portal Enable diagnostic logging for Azure Databricks: - Navigate to your Azure Databricks workspace. - In the left-hand menu, select Monitoring > Diagnostic settings. - Click + Add diagnostic setting. - Under Category details, select the log categories you wish to capture, such as AuditLogs, Clusters, Notebooks, and Jobs. - Choose a destination for the logs: - Log Analytics workspace : For advanced querying and monitoring. - Storage account : For long-term retention. - Event Hub : For integration with third-party systems. - Provide a Name for the diagnostic setting. - Click Save. Implement log retention policies: - Navigate to your Log Analytics workspace. - Under General, select Usage and estimated costs. - Click Data Retention. - Adjust the retention period slider to the desired number of days (up to 730 days). - Click OK. Monitor logs for anomalies: - Navigate to Azure Monitor. - Select Alerts > + New alert rule. - Under Scope, specify the Databricks resource. - Define Condition based on log queries that identify anomalies (e.g. unauthorized access attempts). - Configure Actions to notify stakeholders or trigger automated responses. - Provide an Alert rule name and description. - Click Create alert rule. Remediate from Azure CLI Enable diagnostic logging for Azure Databricks: az monitor diagnostic-settings create --name \"DatabricksLogging\" --resource <databricks-resource-id> --logs '[{\"category\": \"accounts\", \"enabled\": true}, {\"category\": \"Clusters\", \"enabled\": true}, {\"category\": \"Notebooks\", \"enabled\": true}, {\"category\": \"Jobs\", \"enabled\": true}]' --workspace <log-analytics-id> Implement log retention policies: az monitor log-analytics workspace update --resource-group <resource-group> --name <log-analytics-name> --retention-time 365 Monitor logs for anomalies: az monitor activity-log alert create --name \"DatabricksAnomalyAlert\" --resource-group <resource-group> --scopes <databricks-resource-id> --condition \"contains 'UnauthorizedAccess'\\\"
+#   reference      : "NIST 800-53r5|AU-2 AU-7 AU-12"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Enabled - Filesystem: true, Accounts: true, Clusters: true, Notebook: true, Jobs: true, Destination Set: true"
+#   request        : "listDatabrickDetails"
+#   json_transform : ".[] | .subscriptionId as $id | .resourceGroups[] | .name as $rgName | .value[] | .name as $databrick | if (.value | length) == 0 then \"Subscription ID: \($id), Resource Group: \($rgName), Databrick: \($databrick), No diagnostics found\" else (.value[] | .name as $settings | .properties as $properties | (if ($properties.storageAccountId != null) or ($properties.eventHubAuthorizationRuleId != null) or ($properties.workspaceId != null) then \"true\" else \"false\" end) as $dest_set | $properties.logs | \"Subscription ID: \($id), Resource Group: \($rgName), Databrick: \($databrick), Diagnostic Settings: \($settings), Enabled - Filesystem: \(map(select(.category == \"Filesystem\"))[0].enabled), Accounts: \(map(select(.category == \"accounts\"))[0].enabled), Clusters: \(map(select(.category == \"clusters\"))[0].enabled), Notebook: \(map(select(.category == \"notebook\"))[0].enabled), Jobs: \(map(select(.category == \"jobs\"))[0].enabled), Destination Set: \($dest_set)\") end"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0035 - AZURE - Ensure Additional email addresses is Configured with a Security Contact Email"
+#   info           : "Microsoft Defender for Cloud emails the subscription owners whenever a high-severity alert is triggered for their subscription."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu. - Select Microsoft Defender for Cloud. - Under Management, select Environment Settings. - Click on the appropriate Management Group, Subscription, or Workspace. - Click on Email notifications. - Enter a valid security contact email address (or multiple addresses separated by commas) in the Additional email addresses field. - Click Save. Remediate from Azure CLI Use the below command to set Security contact emails to On. az account get-access-token --query \"{subscription:subscription,accessToken:accessToken}\" --out tsv | xargs -L1 bash -c 'curl -X PUT -H \"Authorization: Bearer $1\" -H \"Content-Type: application/json\" https://management.azure.com/subscriptions/$0/providers/Microsoft.Security/securityContacts/default?api-version=2020-01-01-preview -d@\"input.json\"' Where input.json contains the data below, replacing validEmailAddress with a single email address or multiple comma-separated email addresses: { \"id\": \"/subscriptions/<Your_Subscription_Id>/providers/Microsoft.Security/securityContacts/default\", \"name\": \"default\", \"type\": \"Microsoft.Security/securityContacts\", \"properties\": { \"email\": \"<validEmailAddress>\", \"alertNotifications\": \"On\", \"alertsToAdmins\": \"On\" } }"
+#   reference      : "NIST 800-53r5|IR-6 IR-6(3)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listSecurityContacts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Email: \(.properties.emails)\""
+#   regex          : "Email:"
+#   match_all      : YES
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0036 - AZURE - Ensure that Azure Databricks is deployed in a customer-managed virtual network (VNet)"
+#   info           : "Networking for Azure Databricks can be set up in a few different ways."
+#   solution       : "Remediate from Azure Portal - Delete the existing Databricks workspace (migration required). - Create a new Databricks workspace with VNet Injection: - Go to Azure Portal -> Create Databricks Workspace. - Select Advanced Networking. - Choose Deploy into your own Virtual Network. - Specify a customer-managed VNet and associated subnets. - Enable Private Link for secure API access. Remediate from Azure CLI Deploy a new Databricks workspace in a custom VNet: az databricks workspace create --name <databricks-workspace-name> \\ --resource-group <resource-group-name> \\ --location <region> \\ --managed-resource-group <managed-rg-name> \\ --enable-no-public-ip true \\ --network-security-group-rule \"NoAzureServices\" \\ --public-network-access Disabled \\ --custom-virtual-network-id /subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/virtualNetworks/<vnet-name> Ensure NSG Rules are correctly configured: az network nsg rule create --resource-group <resource-group-name> \\ --nsg-name <nsg-name> \\ --name \"DenyAllOutbound\" \\ --direction Outbound \\ --access Deny \\ --priority 4096 Remediate from PowerShell New-AzDatabricksWorkspace -ResourceGroupName <resource-group-name> -Name <databricks-workspace-name> -Location <region> -ManagedResourceGroupName <managed-rg-name> -CustomVirtualNetworkId \"/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/virtualNetworks/<vnet-name>\\\"
+#   reference      : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listDatabricks"
+#   json_transform : ".[] | .subscriptionId as $subid | [ .resourceGroups[].value[] | select(.properties.parameters.customVirtualNetworkId == null) | { \"name\": .name } ] | if (.[] | length) == 0 then \"Subscription ID: \($subid) - no Databricks Workspaces or Workspaces missing a custom virtual network\" else (.[] | \"Subscription ID: \($subid), Workspace: \(.name) is missing a custom virtual network\") end"
+#   regex          : ".+"
+#   not_expect     : "is missing a custom virtual network"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0037 - AZURE - Ensure that network security groups are configured for Databricks subnets"
+#   info           : "Network Security Groups (NSGs) should be implemented to control inbound and outbound traffic to Azure Databricks subnets, ensuring only authorized communication."
+#   solution       : "Remediate from Azure Portal - Assign NSG to Databricks subnets under Networking > NSG Settings."
+#   reference      : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Network Security Group Name: \($name), Rule Name: \(.name), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Direction: \(.properties.direction), Protocol: \(.properties.protocol), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   regex          : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0038 - AZURE - Ensure that security defaults is enabled in Microsoft Entra ID"
+#   info           : "[ IMPORTANT - Please read the section overview: If your organization pays for Microsoft Entra ID licensing (included in Microsoft 365 E3, E5, F5, or Business Premium, and EM&amp;S E3 or E5 licenses) and CAN use Conditional Access, ignore the recommendations in this section and proceed to the Conditional Access section."
+#   solution       : "Remediate from Azure Portal To enable security defaults in your directory: - From Azure Home select the Portal Menu. - Browse to Microsoft Entra ID > Properties. - Select Manage security defaults. - Under Security defaults, select Enabled (recommended). - Select Save. Remediate from Powershell Connect-MgGraph -Scopes \"Policy.ReadWrite.ApplicationConfiguration\" Update-MgPolicyIdentitySecurityDefaultEnforcementPolicy -IsEnabled $true (Get-MgPolicyIdentitySecurityDefaultEnforcementPolicy).IsEnabled Remediate from Azure CLI az rest --method patch --url 'https://graph.microsoft.com/v1.0/policies/identitySecurityDefaultsEnforcementPolicy' --body '{\"isEnabled\":true}' az rest --method get --url 'https://graph.microsoft.com/v1.0/policies/identitySecurityDefaultsEnforcementPolicy' --query \"isEnabled\\\"
+#   reference      : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Security Defaults Enabled: true"
+#   request        : "listIdentitySecurityDefaultsEnforcementPolicy"
+#   json_transform : "\"Security Defaults Enabled: \(.isEnabled)\""
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0039 - AZURE - Ensure that Guest users access restrictions is set to Guest user access is restricted to properties and memberships of their own directory objects"
+#   info           : "Limit guest user permissions."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Entra ID - Under Manage, select External Identities - Select External collaboration settings - Under Guest user access, set Guest user access restrictions to Guest user access is restricted to properties and memberships of their own directory objects - Click Save Remediate from PowerShell - Enter the following to update the policy ID: Update-MgPolicyAuthorizationPolicy -GuestUserRoleId \"2af84b1e-32c8-42b7-82bc-daa82404023b\" - Check the GuestUserRoleId again: (Get-MgPolicyAuthorizationPolicy).GuestUserRoleId - Ensure that the GuestUserRoleId is equal to the earlier entered value of 2af84b1e-32c8-42b7-82bc-daa82404023b."
+#   reference      : "NIST 800-53r5|AC-2 AC-3 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4) MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Authorization Policy GuestUserRoleId is set to 2af84b1e-32c8-42b7-82bc-daa82404023b"
+#   request        : "listAuthorizationPolicy"
+#   json_transform : "\"Authorization Policy GuestUserRoleId is set to \(.guestUserRoleId)\""
+#   regex          : ".+"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0040 - AZURE - Ensure that guest users are reviewed on a regular basis"
+#   info           : "Microsoft Entra ID has native and extended identity functionality allowing you to invite people from outside your organization to be guest users in your cloud account and sign in with their own work, school, or social identities."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Entra ID - Under Manage, select Users - Click on Add filter - Select User type - Select Guest from the Value dropdown - Click Apply - Check the box next to all Guest users that are no longer required or are inactive - Click Delete - Click OK Remediate from Azure CLI Before deleting the user, set it to inactive using the ID from the Audit Procedure to determine if there are any dependent systems. az ad user update --id <exampleaccountid@domain.com> --account-enabled {false} After determining that there are no dependent systems, delete the user. Remove-AzureADUser -ObjectId <exampleaccountid@domain.com> Remediate from Azure PowerShell Before deleting the user, set it to inactive using the ID from the Audit Procedure to determine if there are any dependent systems. Set-AzureADUser -ObjectId \"<exampleaccountid@domain.com>\" -AccountEnabled false After determining that there are no dependent systems, delete the user. PS C:\\>Remove-AzureADUser -ObjectId <exampleaccountid@domain.com>"
+#   reference      : "NIST 800-53r5|AC-2 AC-2(3)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "No Guest Users Found"
+#   request        : "listGuestUsers"
+#   json_transform : "if (.[] | length) == 0 then \"No Guest Users Found\" else (.[] | \"DisplayName: \(.displayName), UserPrincipalName: \(.userPrincipalName), UserType: \(.userType)\") end"
+#   regex          : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0041 - AZURE - Ensure disabled user accounts do not have read, write, or owner permissions"
+#   info           : "Ensure that any roles granting read, write, or owner permissions are removed from disabled Azure user accounts."
+#   solution       : "Remediate from Azure Portal - Go to Microsoft Entra ID. - Under Manage, click Users. - Click Add filter. - Click Account enabled. - Click the toggle switch to set the value to No. - Click Apply. - Click the Display name of a disabled user account with read, write, or owner roles assigned. - Click Azure role assignments. - Click the name of a read, write, or owner role. - Click Assignments. - Click Remove in the row for the disabled user account. - Click Yes. - Repeat steps 7-12 for disabled user accounts requiring remediation. Remediate from PowerShell For each account requiring remediation, run the following command to remove an assigned role: Remove-AzRoleAssignment -ObjectId $user.ObjectId -RoleDefinitionName <role-definition-name>"
+#   reference      : "NIST 800-53r5|AC-2"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listDisabledUserAccounts"
+#   json_transform : ".[] | \"Disabled User Account Name: \(.displayName), ID: \(.id)\""
+#   not_expect     : "Disabled User Account Name"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0042 - AZURE - Ensure Tenant Creator role assignments are periodically reviewed"
+#   info           : "Perform a periodic review of the Tenant Creator role assignment to ensure that the assignments are accurate and appropriate."
+#   solution       : "Remediate from Azure Portal - Go to Microsoft Entra ID. - Under Manage, click Roles and administrators. - In the search bar, type Tenant Creator. - Click the role. - Click the name of an assignment. - Check the box next to the Tenant Creator role. - Click X Remove assignments. - Click Yes. - Repeat steps 1-8 for each assignment requiring remediation."
+#   reference      : "NIST 800-53r5|AC-6(2) AC-6(5)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "^Manual Review Required$"
+#   request        : "listDirectoryRoleMembers"
+#   json_transform : ".[] | select(.displayName == \"Tenant Creator\") | .value[] | .displayName"
+#   regex          : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0043 - AZURE - Ensure subnets are associated with network security groups"
+#   info           : "Protect subnet resources by ensuring subnets are associated with network security groups, which can filter inbound and outbound traffic using security rules."
+#   solution       : "Remediate from Azure Portal - Go to Virtual networks. - Click the name of a virtual network. - Under Settings, click Subnets. - Click the name of a subnet. - Under Security, next to Network security group, click None to display the drop-down menu. - Select a network security group. - Click Save. - Repeat steps 1-7 for each virtual network and subnet requiring remediation. Remediate from Azure CLI For each subnet requiring remediation, run the following command to associate it with a network security group: az network vnet subnet update --resource-group <resource-group> --vnet-name <virtual-network> --name <subnet> --network-security-group <network-security-group>"
+#   reference      : "NIST 800-53r5|CA-9 SC-7"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVirtualNetworks"
+#   json_transform : "[.[] | .subscriptionId as $id | .value[] | .name as $virtualNetwork | .properties.subnets[] | .name as $subnet | .properties | if (has(\"networkSecurityGroup\") | not) and ($subnet != \"GatewaySubnet\") and ($subnet != \"AzureFirewallSubnet\") then \"Subscription ID: \($id), Virtual Network \($virtualNetwork), Subnet: \($subnet) - does not have a Network Security Group attached\" else empty end] | unique| .[]"
+#   not_expect     : "does not have a Network Security Group attached$"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0044 - AZURE - Ensure HTTP2 is set to Enabled on Azure Application Gateway"
+#   info           : "Enable HTTP/2 for improved performance, efficiency, and security."
+#   solution       : "Remediate from Azure Portal - Go to Application gateways. - Click the name of an application gateway. - Under Settings, click Configuration. - Under HTTP2, click Enabled. - Click Save. - Repeat steps 1-5 for each application gateway requiring remediation. Remediate from Azure CLI For each application gateway requiring remediation, run the following command to enable HTTP2: az network application-gateway update --resource-group <resource-group> --name <application-gateway> --http2 Enabled Remediate from PowerShell Run the following command to get the application gateway in a resource group with a given name: $gateway = Get-AzApplicationGateway -ResourceGroupName <resource-group> -Name <application-gateway> Run the following command to enable HTTP2: $gateway.EnableHttp2 = $true Run the following command to apply the update: Set-AzApplicationGateway -ApplicationGateway $gateway Repeat for each application gateway requiring remediation."
+#   reference      : "NIST 800-53r5|SA-22"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listApplicationGateways"
+#   json_transform : ".[] | .subscriptionId as $id | .value[] | .name as $appGw | \"Subscription ID: \($id), Application Gateway: \($appGw), enableHttp2: \(.properties.enableHttp2)\""
+#   not_expect     : "enableHttp2: false$"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0045 - AZURE - port 53"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Name: \(.name), Protocol: \(.properties.protocol), Direction: \(.properties.direction), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Protocol: (UDP|\*), Direction: Inbound, Access: Allow, Destination Port Range: (53|([0-4]?[0-9]|5[0-3])-(5[3-9]|[6-9][0-9]|[1-9][0-9]{2,})), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0046 - AZURE - port 123"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Name: \(.name), Protocol: \(.properties.protocol), Direction: \(.properties.direction), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Protocol: (UDP|\*), Direction: Inbound, Access: Allow, Destination Port Range: (123|([0-9]{1,2}|1[0-1][0-9]|12[0-3])-(12[3-9]|1[3-9][0-9]|[2-9][0-9]{2,})), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0047 - AZURE - port 161"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Name: \(.name), Protocol: \(.properties.protocol), Direction: \(.properties.direction), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Protocol: (UDP|\*), Direction: Inbound, Access: Allow, Destination Port Range: (161|([0-9]{1,2}|1[0-5][0-9]|16[0-1])-(16[1-9]|1[7-9][0-9]|[2-9][0-9]{2,})), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0048 - AZURE - port 389"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Name: \(.name), Protocol: \(.properties.protocol), Direction: \(.properties.direction), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Protocol: (UDP|\*), Direction: Inbound, Access: Allow, Destination Port Range: (389|([0-9]{1,2}|[1-2][0-9]{2}|3[0-7][0-9]|38[0-9])-(389|39[0-9]|[4-9][0-9]{2,})), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0049 - AZURE - port 1900"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Name: \(.name), Protocol: \(.properties.protocol), Direction: \(.properties.direction), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Protocol: (UDP|\*), Direction: Inbound, Access: Allow, Destination Port Range: (1900|([0-9]{1,3}|1[0-8][0-9]{2}|1900)-(1900|190[1-9]|19[1-9][0-9]|[2-9][0-9]{3,})), Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0050 - AZURE - any port"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listNetworkSecurityGroups"
+#   json_transform : ".[]|.subscriptionId as $id|.value[]|.name as $name| .properties.securityRules[]|\"Subscription ID: \($id), Name: \(.name), Protocol: \(.properties.protocol), Direction: \(.properties.direction), Access: \(.properties.access), Destination Port Range: \(.properties.destinationPortRange), Source Address Prefix: \(.properties.sourceAddressPrefix)\""
+#   not_expect     : "Protocol: (UDP|\*), Direction: Inbound, Access: Allow, Destination Port Range: \*, Source Address Prefix: (\*|0\.0\.0\.0|<nw>/0|/0|internet|any)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0051 - AZURE - Ensure That All users with the following roles is set to Owner"
+#   info           : "Enable security alert emails to subscription owners."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu - Select Microsoft Defender for Cloud - Under Management, select Environment Settings - Click on the appropriate Management Group, Subscription, or Workspace - Click on Email notifications - In the drop down of the All users with the following roles field select Owner - Click Save Remediate from Azure CLI Use the below command to set Send email also to subscription owners to On. az account get-access-token --query \"{subscription:subscription,accessToken:accessToken}\" --out tsv | xargs -L1 bash -c 'curl -X PUT -H \"Authorization: Bearer $1\" -H \"Content-Type: application/json\" https://management.azure.com/subscriptions/$0/providers/Microsoft.Security/securityContacts/default1?api-version=2017-08-01-preview -d@\"input.json\"' Where input.json contains the data below, replacing validEmailAddress with a single email address or multiple comma-separated email addresses: { \"id\": \"/subscriptions/<Your_Subscription_Id>/providers/Microsoft.Security/securityContacts/default1\", \"name\": \"default1\", \"type\": \"Microsoft.Security/securityContacts\", \"properties\": { \"email\": \"<validEmailAddress>\", \"alertNotifications\": \"On\", \"alertsToAdmins\": \"On\", \"notificationsByRole\": \"Owner\" } }"
+#   reference      : "NIST 800-53r5|IR-6 IR-6(3)"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "State: On, Roles: .*Owner"
+#   request        : "listSecurityContacts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), State: \(.properties.notificationsByRole.state), Roles: \(.properties.notificationsByRole.roles)\""
+#   regex          : "State:"
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0052 - AZURE - Ensure that Notify about alerts with the following severity (or higher) is enabled"
+#   info           : "Enables emailing security alerts to the subscription owner or other designated security contact."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu. - Select Microsoft Defender for Cloud. - Under Management, select Environment settings. - Click on the appropriate Subscription. - Click on Email notifications. - Under Notification types, check box next to Notify about alerts with the following severity (or higher) and select an appropriate severity level from the drop-down menu. - Click Save. - Repeat steps 1-7 for each Subscription requiring remediation. Remediate from Azure CLI Use the below command to enable Send email notification for high severity alerts : az account get-access-token --query \"{subscription:subscription,accessToken:accessToken}\" --out tsv | xargs -L1 bash -c 'curl -X PUT -H \"Authorization: Bearer $1\" -H \"Content-Type: application/json\" https://management.azure.com/subscriptions/<$0>/providers/Microsoft.Security/securityContacts/default1?api-version=2017-08-01-preview -d@\"input.json\"' Where input.json contains the data below, replacing validEmailAddress with a single email address or multiple comma-separated email addresses: { \"id\": \"/subscriptions/<subscriptionId>/providers/Microsoft.Security/securityContacts/default\", \"name\": \"default\", \"type\": \"Microsoft.Security/securityContacts\", \"properties\": { \"email\": \"<validEmailAddress>\", \"alertNotifications\": \"On\", \"alertsToAdmins\": \"On\" } }"
+#   reference      : "NIST 800-53r5|SI-4"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listSecurityContactSources"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name | .properties.isEnabled as $isEnabled | [ .properties.notificationsSources[] | select(.sourceType == \"Alert\") | {\"sourceType\": .sourceType, \"minimalSeverity\": .minimalSeverity} ] | if (.[] | length) == 0 then \"Subscription ID: \($id) does not have this setting enabled\" else (.[] | \"Subscription ID: \($id), Name: \($name), IsEnabled: \($isEnabled), Source: \(.sourceType), Minimal Severity: \(.minimalSeverity)\") end"
+#   regex          : ".+"
+#   not_expect     : "does not have this setting enabled"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0053 - AZURE - Ensure that Notify about attack paths with the following risk level (or higher) is enabled"
+#   info           : "Enables emailing attack paths to the subscription owner or other designated security contact."
+#   solution       : "Remediate from Azure Portal - From Azure Home select the Portal Menu. - Select Microsoft Defender for Cloud. - Under Management, select Environment settings. - Click on the appropriate Subscription. - Click on Email notifications. - Under Notification types, check the box next to Notify about attack paths with the following risk level (or higher), and select an appropriate risk level from the drop-down menu. - Repeat steps 1-6 for each Subscription."
+#   reference      : "NIST 800-53r5|SI-4"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listSecurityContactSources"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name | .properties.isEnabled as $isEnabled | [ .properties.notificationsSources[] | select(.sourceType == \"AttackPath\") | {\"sourceType\": .sourceType, \"minimalRiskLevel\": .minimalRiskLevel} ] | if (.[] | length) == 0 then \"Subscription ID: \($id) does not have this setting enabled\" else (.[] | \"Subscription ID: \($id), Name: \($name), IsEnabled: \($isEnabled), Source: \(.sourceType), Minimal Risk Level: \(.minimalRiskLevel)\") end"
+#   regex          : ".+"
+#   not_expect     : "does not have this setting enabled"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0054 - AZURE - Ensure that the Expiration Date is set for all Keys in RBAC Key Vaults"
+#   info           : "Ensure that all Keys in Role Based Access Control (RBAC) Azure Key Vaults have an expiration date set."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - For each Key vault, click on Keys. - In the main pane, ensure that an appropriate Expiration date is set for any keys that are Enabled. Remediate from Azure CLI Update the Expiration date for the key using the below command: az keyvault key set-attributes --name <keyName> --vault-name <vaultName> --expires Y-m-d'T'H:M:S'Z"
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) AU-11 CM-12 SI-12"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultsByResourceGroup"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgn|.vaults[]|\"Subscription ID: \($subid), Resource Group: \($rgn), Vault Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0055 - AZURE - Ensure certificate Validity Period (in months) is less than or equal to 12"
+#   info           : "Restrict the validity period of certificates stored in Azure Key Vault to 12 months or less."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - Click the name of a key vault. - Under Objects, click Certificates. - Click the name of a certificate. - Click Issuance Policy. - Set Validity Period (in months) to an integer between 1 and 12, inclusive. - Click Save. - Repeat steps 1-7 for each key vault and certificate requiring remediation. Remediate from PowerShell For each certificate requiring remediation, run the following command to set ValidityInMonths to an integer between 1 and 12, inclusive: Set-AzKeyVaultCertificatePolicy -VaultName $vault.VaultName -Name <certificate-name> -ValidityInMonths <validity-in-months>"
+#   reference      : "NIST 800-53r5|CM-7 MA-4"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultsByResourceGroup"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgn|.vaults[]|\"Subscription ID: \($subid), Resource Group: \($rgn), Vault Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0056 - AZURE - Ensure that the Expiration Date is set for all Keys in Non-RBAC Key Vaults."
+#   info           : "Ensure that all Keys in Non Role Based Access Control (RBAC) Azure Key Vaults have an expiration date set."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - For each Key vault, click on Keys. - In the main pane, ensure that the status of the key is Enabled. - For each enabled key, ensure that an appropriate Expiration date is set. Remediate from Azure CLI Update the Expiration date for the key using the below command: az keyvault key set-attributes --name <keyName> --vault-name <vaultName> --expires Y-m-d'T'H:M:S'Z"
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) AU-11 CM-12 SI-12"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultsByResourceGroup"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgn|.vaults[]|\"Subscription ID: \($subid), Resource Group: \($rgn), Vault Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0057 - AZURE - Ensure that the Expiration Date is set for all Secrets in RBAC Key Vaults"
+#   info           : "Ensure that all Secrets in Role Based Access Control (RBAC) Azure Key Vaults have an expiration date set."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - For each Key vault, click on Secrets. - In the main pane, ensure that the status of the secret is Enabled. - For each enabled secret, ensure that an appropriate Expiration date is set. Remediate from Azure CLI Update the Expiration date for the secret using the below command: az keyvault secret set-attributes --name <secret_name> --vault-name <vault_name> --expires Y-m-d'T'H:M:S'Z"
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) AU-11 CM-12 SI-12"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultsByResourceGroup"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgn|.vaults[]|\"Subscription ID: \($subid), Resource Group: \($rgn), Vault Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0058 - AZURE - Ensure that the Expiration Date is set for all Secrets in Non-RBAC Key Vaults"
+#   info           : "Ensure that all Secrets in Non Role Based Access Control (RBAC) Azure Key Vaults have an expiration date set."
+#   solution       : "Remediate from Azure Portal - Go to Key vaults. - For each Key vault, click on Secrets. - In the main pane, ensure that the status of the secret is Enabled. - Set an appropriate Expiration date on all secrets. Remediate from Azure CLI Update the Expiration date for the secret using the below command: az keyvault secret set-attributes --name <secret_name> --vault-name <vault_name> --expires Y-m-d'T'H:M:S'Z"
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) AU-11 CM-12 SI-12"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultsByResourceGroup"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgn|.vaults[]|\"Subscription ID: \($subid), Resource Group: \($rgn), Vault Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0059 - AZURE - Ensure Purge protection is set to Enabled"
+#   info           : "Key vaults contain object keys, secrets, and certificates."
+#   solution       : "Note: Once enabled, purge protection cannot be disabled. Remediate from Azure Portal - Go to Key Vaults. - Click the name of a key vault. - Under Settings, click Properties. - Select the radio button next to Enable purge protection (enforce a mandatory retention period for deleted vaults and vault objects). - Click Save. - Repeat steps 1-5 for each key vault requiring remediation. Remediate from Azure CLI For each key vault requiring remediation, run the following command to enable purge protection: az resource update --resource-group <resource-group> --name <key-vault> --resource-type \"Microsoft.KeyVault/vaults\" --set properties.enablePurgeProtection=true Remediate from PowerShell For each key vault requiring remediation, run the following command to enable purge protection: Update-AzKeyVault -ResourceGroupName <resource-group> -VaultName <key-vault> -EnablePurgeProtection"
+#   reference      : "NIST 800-53r5|CP-2 CP-10"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listVaultDetails"
+#   json_transform : ".[] | .subscriptionId as $id | .resourceGroups[] | .name as $rgName | .vaults[] | \"Subscription ID \($id), Resource Group: \($rgName), Key Vault: \(.name), Purge Protection Enabled: \(.properties.enablePurgeProtection)\""
+#   not_expect     : "Purge Protection Enabled: (false|null)"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0060 - AZURE - Ensure soft delete for Azure File Shares is Enabled"
+#   info           : "Azure Files offers soft delete for file shares, allowing you to easily recover your data when it is mistakenly deleted by an application or another storage account user."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each storage account with file shares, under Data storage, click File shares. - Under File share settings, click the value next to Soft delete. - Under Soft delete for all file shares, click the toggle to set it to Enabled. - Under Retention policies, set an appropriate number of days to retain soft deleted data between 1 and 365, inclusive. - Click Save. Remediate from Azure CLI For each storage account requiring remediation, run the following command to enable soft delete for file shares and set an appropriate number of days for deleted data to be retained, between 1 and 365, inclusive: az storage account file-service-properties update --account-name <storage-account> --enable-delete-retention true --delete-retention-days <retention-days> Remediate from PowerShell For each storage account requiring remediation, run the following command to enable soft delete for file shares and set an appropriate number of days for deleted data to be retained, between 1 and 365, inclusive: Update-AzStorageFileServiceProperty -ResourceGroupName <resource-group> -AccountName <storage-account> -EnableShareDeleteRetentionPolicy $true -ShareRetentionDays <retention-days>"
+#   reference      : "NIST 800-53r5|CP-2 CP-10"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id|.value[] | \"Subscription ID: \($id), Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0061 - AZURE - Ensure that soft delete for blobs on Azure Blob Storage storage accounts is Enabled"
+#   info           : "Blobs in Azure storage accounts may contain sensitive or personal data, such as ePHI or financial information."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each Storage Account with blob storage, under Data management, go to Data protection. - Check the box next to Enable soft delete for blobs. - Set the retention period to a sufficient length for your organization. - Click Save. Remediate from Azure CLI For each storage account requiring remediation, run the following command to enable soft delete for blobs: az storage blob service-properties delete-policy update --days-retained <retention-days> --account-name <storage-account> --enable true"
+#   reference      : "NIST 800-53r5|CP-2 CP-10"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id|.value[] | \"Subscription ID: \($id), Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0062 - AZURE - Ensure that soft delete for containers on Azure Blob Storage storage accounts is Enabled"
+#   info           : "Containers in Azure storage accounts may contain sensitive or personal data, such as ePHI or financial information."
+#   solution       : "Remediate from Azure Portal - Go to Storage accounts. - For each Storage Account with blob storage, under Data management, go to Data protection. - Check the box next to Enable soft delete for containers. - Set the retention period to a sufficient length for your organization. - Click Save. Remediate from Azure CLI Run the following command to update container retention: az storage account blob-service-properties update --resource-group <resource-group> --account-name <storage-account> --enable-container-delete-retention true --container-delete-retention-days <retention-days>"
+#   reference      : "NIST 800-53r5|CP-2 CP-10"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id|.value[] | \"Subscription ID: \($id), Name: \(.name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0063 - AZURE - Ensure that Enable key rotation reminders is enabled for each Storage Account"
+#   info           : "Access Keys authenticate application access requests to data contained in Storage Accounts."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts - For each Storage Account that is not compliant, under Security + networking, go to Access keys - Click Set rotation reminder - Check Enable key rotation reminders - In the Send reminders field select Custom, then set the Remind me every field to 90 and the period drop down to Days - Click Save Remediate from Powershell $rgName = <resource group name for the storage> $accountName = <storage account name> $account = Get-AzStorageAccount -ResourceGroupName $rgName -Name $accountName if ($account.KeyCreationTime.Key1 -eq $null -or $account.KeyCreationTime.Key2 -eq $null){ Write-output (\"You must regenerate both keys at least once before setting expiration policy\") } else { $account = Set-AzStorageAccount -ResourceGroupName $rgName -Name $accountName -KeyExpirationPeriodInDay 90 } $account.KeyPolicy.KeyExpirationPeriodInDays"
+#   reference      : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Key Creation Time: \(.properties.keyCreationTime)\""
+#   not_expect     : "Key Creation Time: .+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0064 - AZURE - Ensure that Storage Account access keys are periodically regenerated"
+#   info           : "For increased security, regenerate storage account access keys periodically."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each Storage Account with outdated keys, under Security + networking, go to Access keys. - Click Rotate key next to the outdated key, then click Yes to the prompt confirming that you want to regenerate the access key. After Azure regenerates the Access Key, you can confirm that Access keys reflects a Last rotated date of (0 days ago)."
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) CM-7 MA-4"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| if ((.properties.keyCreationTime.key1 | iso_8601_days_ago) > 90) or ((.properties.keyCreationTime.key1 | iso_8601_days_ago) > 90) then \"Subscription ID: \($id), Name: \($name), Key Creation Time: key1: \(.properties.keyCreationTime.key1) key2: \(.properties.keyCreationTime.key2)\" else null end"
+#   not_expect     : "Key Creation Time: .+"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0065 - AZURE - Ensure Allow storage account key access for Azure Storage Accounts is Disabled"
+#   info           : "Every secure request to an Azure Storage account must be authorized."
+#   solution       : "Remediate from Azure Portal - Go to Storage accounts. - Click on a storage account. - Under Settings, click Configuration. - Under Allow storage account key access, click the radio button next to Disabled. - Click Save. - Repeat steps 1-5 for each storage account requiring remediation. Remediate from Azure CLI For each storage account requiring remediation, run the following command to disallow shared key authorization: az storage account update --resource-group <resource-group> --name <storage-account> --allow-shared-key-access false Remediate from PowerShell For each storage account requiring remediation, run the following command to disallow shared key authorization: Set-AzStorageAccount -ResourceGroupName <resource-group> -Name <storage-account> -AllowSharedKeyAccess $false"
+#   reference      : "NIST 800-53r5|AC-1 AC-2 AC-2(1) AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Allow Shared Key Access: false\""
+#   not_expect     : "Allow Shared Key Access: true"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0066 - AZURE - Ensure that Default to Microsoft Entra authorization in the Azure portal is set to Enabled"
+#   info           : "When this property is enabled, the Azure portal authorizes requests to blobs, files, queues, and tables with Microsoft Entra ID by default."
+#   solution       : "Remediate from Azure Portal - Go to Storage accounts. - Click the name of a storage account. - Under Settings, click Configuration. - Under Default to Microsoft Entra authorization in the Azure portal, click the radio button next to Enabled. - Click Save. - Repeat steps 1-5 for each storage account requiring remediation. Remediate from Azure CLI For each storage account requiring remediation, run the following command to enable defaultToOAuthAuthentication : az storage account update --resource-group <resource-group> --name <storage-account> --set defaultToOAuthAuthentication=true"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Default to Entra Authentication: true"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Default to Entra Authentication: \(.properties.defaultToOAuthAuthentication)\""
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0067 - AZURE - Ensure that Secure transfer required is set to Enabled"
+#   info           : "Enable data encryption in transit."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each storage account, under Settings, click Configuration. - Set Secure transfer required to Enabled. - Click Save. Remediate from Azure CLI Use the below command to enable Secure transfer required for a Storage Account az storage account update --name <storageAccountName> --resource-group <resourceGroupName> --https-only true"
+#   reference      : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Secure Transfer Required: \(.properties.supportsHttpsTrafficOnly)\""
+#   not_expect     : "Secure Transfer Required: false"
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0068 - AZURE - Ensure Cross Tenant Replication is not enabled"
+#   info           : "Cross Tenant Replication in Azure allows data to be replicated across multiple Azure tenants."
+#   solution       : "Remediate from Azure Portal - Go to Storage Accounts. - For each storage account, under Data management, click Object replication. - Click Advanced settings. - Uncheck Allow cross-tenant replication. - Click OK. Remediate from Azure CLI Replace the information within <> with appropriate values: az storage account update --name <storageAccountName> --resource-group <resourceGroupName> --allow-cross-tenant-replication false"
+#   reference      : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also       : "See HTH Policies and Standards"
+#   expect         : "Cross Tenant Replication: false"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name), Cross Tenant Replication: \(.properties.allowCrossTenantReplication)\""
+#   match_all      : YES
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0069 - AZURE - locks"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listManagementLocksByResourceGroup"
+#   json_transform : ".[]|.subscriptionId as $subid|.resourceGroups[]|.name as $rgname|.value[]|\"Subscription ID: \($subid), Resource Group: \($rgname), Lock Name: \(.name), Lock Level: \(.properties.level)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   description    : "1.0070 - AZURE - storage accounts"
+#   info           : "No additional information provided."
+#   solution       : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference      : ""
+#   see_also       : "See HTH Policies and Standards"
+#   request        : "listStorageAccounts"
+#   json_transform : ".[]|.subscriptionId as $id| .value[]| .name as $name| \"Subscription ID: \($id), Name: \($name)\""
+#   not_expect     : ".+"
+#   severity       : MEDIUM
+# </custom_item>
+
+</group_policy>
+</check_type>

@@ -1,0 +1,1431 @@
+# generated_by: for-gap-combined-dedupe
+<check_type:"Windows" version:"2">
+<group_policy:"Windows Security Hardening Through Group Policy and Registry Settings">
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0000 - SQL - MSSQL - Windows BUILTIN groups are not SQL Logins"
+  info        : "Prior to SQL Server 2008, the BUILTIN\Administrators group was added as a SQL Server login with sysadmin privileges during installation by default."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT pr.[name], pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.principal_id = pe.grantee_principal_id WHERE pr.name like 'BUILTIN%';"
+  sql_types   : NULL, NULL, NULL
+  sql_expect  : "NULL, NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0001 - SQL - MSSQL - Windows BUILTIN groups are not SQL Logins"
+  info        : "Prior to SQL Server 2008, the BUILTIN\Administrators group was added as a SQL Server login with sysadmin privileges during installation by default."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT pr.[name], pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.principal_id = pe.grantee_principal_id WHERE pr.name like 'BUILTIN%';"
+  sql_types   : NULL, NULL, NULL
+  sql_expect  : "NULL, NULL, NULL"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0002 - SQL - Ensure Remote Admin Connections Server Configuration Option is set to 0"
+#   info        : "The remote admin connections option controls whether a client application on a remote computer can use the Dedicated Administrator Connection (DAC)."
+#   solution    : "Run the following T-SQL command on non-clustered installations: EXECUTE sp_configure 'remote admin connections', 0; RECONFIGURE; GO"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'remote admin connections' AND SERVERPROPERTY('IsClustered') = 0;"
+#   sql_types   : STRING_OR_NULL, INTEGER_OR_NULL, INTEGER_OR_NULL
+#   sql_expect  : "\"remote admin connections\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0003 - SQL - Ensure Windows BUILTIN groups are not SQL Logins"
+#   info        : "Prior to SQL Server 2008, the BUILTIN\\Administrators group was added as a SQL Server login with sysadmin privileges during installation by default."
+#   solution    : "- For each BUILTIN login, if needed create a more restrictive AD group containing only the required user accounts. - Add the AD group or individual Windows accounts as a SQL Server login and grant it the permissions required. - Drop the BUILTIN login using the syntax below after replacing <name> in [BUILTIN\\ <name> ] . USE [master]GODROP LOGIN [BUILTIN\\<name>]GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT pr.[name], pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.principal_id = pe.grantee_principal_id WHERE pr.name like 'BUILTIN%';"
+#   sql_types   : NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0004 - SQL - Ensure Windows BUILTIN groups are not SQL Logins"
+#   info        : "Prior to SQL Server 2008, the BUILTIN\\Administrators group was added as a SQL Server login with sysadmin privileges during installation by default."
+#   solution    : "- For each BUILTIN login, if needed create a more restrictive AD group containing only the required user accounts. - Add the AD group or individual Windows accounts as a SQL Server login and grant it the permissions required. - Drop the BUILTIN login using the syntax below after replacing <name> in [BUILTIN\\ <name> ] . USE [master]GODROP LOGIN [BUILTIN\\<name>]GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT pr.[name], pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.principal_id = pe.grantee_principal_id WHERE pr.name like 'BUILTIN%';"
+#   sql_types   : STRING_OR_NULL, REGEX_OR_NULL, REGEX_OR_NULL
+#   sql_expect  : "BUILTIN\Administrators\", \".*\",\".*"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0005 - SQL - Ensure Windows BUILTIN groups are not SQL Logins"
+#   info        : "Prior to SQL Server 2008, the BUILTIN\\Administrators group was added as a SQL Server login with sysadmin privileges during installation by default."
+#   solution    : "- For each BUILTIN login, if needed create a more restrictive AD group containing only the required user accounts. - Add the AD group or individual Windows accounts as a SQL Server login and grant it the permissions required. - Drop the BUILTIN login using the syntax below after replacing <name> in [BUILTIN\\ <name> ] . USE [master]GODROP LOGIN [BUILTIN\\<name>]GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT pr.[name], pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.principal_id = pe.grantee_principal_id WHERE pr.name like 'BUILTIN%';"
+#   sql_types   : STRING_OR_NULL, REGEX_OR_NULL, REGEX_OR_NULL
+#   sql_expect  : "BUILTIN\Administrators\", \".*\",\".*"
+# </custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0006 - SQL - MSSQL - SQL Authentication is not used in contained databases"
+  info        : "Contained databases do not enforce password complexity rules for SQL Authenticated users."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT name AS DBUser FROM sys.database_principals WHERE name NOT IN (''dbo'',''Information_Schema'',''sys'',''guest'') AND type IN (''U'',''S'',''G'') AND authentication_type = 2;'"
+  sql_types   : NULL
+  sql_expect  : "NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0007 - SQL - MSSQL - Ensure CHECK_POLICY Option is set to ON for All SQL Authenticated Logins"
+  info        : "Ensure SQL authenticated login passwords comply with the secure password policy applied by the Windows Server Benchmark so that they cannot be easily compromised via brute force attack."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, is_disabled FROM sys.sql_logins WHERE is_policy_checked = 0;"
+  sql_types   : NULL, NULL
+  sql_expect  : "NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0008 - SQL - MSSQL - Ensure CHECK_POLICY Option is set to ON for All SQL Authenticated Logins"
+  info        : "Ensure SQL authenticated login passwords comply with the secure password policy applied by the Windows Server Benchmark so that they cannot be easily compromised via brute force attack."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, is_disabled FROM sys.sql_logins WHERE is_policy_checked = 0;"
+  sql_types   : NULL, NULL
+  sql_expect  : "NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0009 - SQL - MSSQL - SQL Authentication is not used in contained databases"
+  info        : "Contained databases do not enforce password complexity rules for SQL Authenticated users."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT name AS DBUser FROM sys.database_principals WHERE name NOT IN (''dbo'',''Information_Schema'',''sys'',''guest'') AND type IN (''U'',''S'',''G'') AND authentication_type = 2;'"
+  sql_types   : NULL
+  sql_expect  : "NULL"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0010 - SQL - Ensure SQL Authentication is not used in contained databases"
+#   info        : "Contained databases do not enforce password complexity rules for SQL Authenticated users."
+#   solution    : "Leverage Windows Authenticated users in contained databases."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT name AS DBUser FROM sys.database_principals WHERE name NOT IN (''dbo'',''Information_Schema'',''sys'',''guest'') AND type IN (''U'',''S'',''G'') AND authentication_type = 2;'"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0011 - SQL - Ensure SQL Authentication is not used in contained databases"
+#   info        : "Contained databases do not enforce password complexity rules for SQL Authenticated users."
+#   solution    : "Leverage Windows Authenticated users in contained databases."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT name AS DBUser FROM sys.database_principals WHERE name NOT IN (''dbo'',''Information_Schema'',''sys'',''guest'') AND type IN (''U'',''S'',''G'') AND authentication_type = 2;'"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0012 - SQL - Ensure CHECK_EXPIRATION Option is set to ON for All SQL Authenticated Logins Within the Sysadmin Role"
+#   info        : "Applies the same password expiration policy used in Windows to passwords used inside SQL Server."
+#   solution    : "For each <login_name> found by the Audit Procedure, execute the following T-SQL statement: ALTER LOGIN [<login_name>] WITH CHECK_EXPIRATION = ON;"
+#   reference   : "NIST 800-53r5|AC-2(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT l.[name], 'sysadmin membership' AS 'Access_Method' FROM sys.sql_logins AS l WHERE IS_SRVROLEMEMBER('sysadmin',name) = 1 AND l.is_expiration_checked <> 1 UNION ALL SELECT l.[name], 'CONTROL SERVER' AS 'Access_Method' FROM sys.sql_logins AS l JOIN sys.server_permissions AS p ON l.principal_id = p.grantee_principal_id WHERE p.type = 'CL' AND p.state IN ('G', 'W') AND l.is_expiration_checked <> 1;"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0013 - SQL - Ensure CHECK_EXPIRATION Option is set to ON for All SQL Authenticated Logins Within the Sysadmin Role"
+#   info        : "Applies the same password expiration policy used in Windows to passwords used inside SQL Server."
+#   solution    : "For each <login_name> found by the Audit Procedure, execute the following T-SQL statement: ALTER LOGIN [<login_name>] WITH CHECK_EXPIRATION = ON;"
+#   reference   : "NIST 800-53r5|AC-2(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT l.[name], 'sysadmin membership' AS 'Access_Method' FROM sys.sql_logins AS l WHERE IS_SRVROLEMEMBER('sysadmin',name) = 1 AND l.is_expiration_checked <> 1 UNION ALL SELECT l.[name], 'CONTROL SERVER' AS 'Access_Method' FROM sys.sql_logins AS l JOIN sys.server_permissions AS p ON l.principal_id = p.grantee_principal_id WHERE p.type = 'CL' AND p.state IN ('G', 'W') AND l.is_expiration_checked <> 1;"
+#   sql_types   : STRING_OR_NULL, REGEX_OR_NULL
+#   sql_expect  : "rdsa\", \".*"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0014 - SQL - Ensure CHECK_EXPIRATION Option is set to ON for All SQL Authenticated Logins Within the Sysadmin Role"
+#   info        : "Applies the same password expiration policy used in Windows to passwords used inside SQL Server."
+#   solution    : "For each <login_name> found by the Audit Procedure, execute the following T-SQL statement: ALTER LOGIN [<login_name>] WITH CHECK_EXPIRATION = ON;"
+#   reference   : "NIST 800-53r5|AC-2(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT l.[name], 'sysadmin membership' AS 'Access_Method' FROM sys.sql_logins AS l WHERE IS_SRVROLEMEMBER('sysadmin',name) = 1 AND l.is_expiration_checked <> 1 AND l.is_disabled = 0 AND l.[name] <> 'rdsa' UNION ALL SELECT l.[name], 'CONTROL SERVER' AS 'Access_Method' FROM sys.sql_logins AS l JOIN sys.server_permissions AS p ON l.principal_id = p.grantee_principal_id WHERE p.type = 'CL' AND p.state IN ('G', 'W') AND l.is_expiration_checked <> 1 AND l.is_disabled = 0 AND l.[name] <> 'rdsa';"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0015 - SQL - Ensure CHECK_POLICY Option is set to ON for All SQL Authenticated Logins"
+#   info        : "Applies the same password complexity policy used in Windows to passwords used inside SQL Server."
+#   solution    : "For each <login_name> found by the Audit Procedure, execute the following T-SQL statement: ALTER LOGIN [<login_name>] WITH CHECK_POLICY = ON;"
+#   reference   : "NIST 800-53r5|IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, is_disabled FROM sys.sql_logins WHERE is_policy_checked = 0;"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0016 - SQL - Ensure CHECK_POLICY Option is set to ON for All SQL Authenticated Logins"
+#   info        : "Applies the same password complexity policy used in Windows to passwords used inside SQL Server."
+#   solution    : "For each <login_name> found by the Audit Procedure, execute the following T-SQL statement: ALTER LOGIN [<login_name>] WITH CHECK_POLICY = ON;"
+#   reference   : "NIST 800-53r5|IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, is_disabled FROM sys.sql_logins WHERE is_policy_checked = 0;"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0017 - SQL - Ensure Remote Access Server Configuration Option is set to 0"
+#   info        : "The remote access option controls the execution of local stored procedures on remote servers or remote stored procedures on local server."
+#   solution    : "For AWS RDS Instances, please refer to the documentation for using Parameter Groups here: Working with parameter groups https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html Otherwise, run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'remote access', 0; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE; Restart the Database Engine."
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'remote access';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"remote access\", 0, 0"
+# </custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0018 - SQL - MSSQL - CLR Assembly Permission Set is set to SAFE_ACCESS for All CLR Assemblies"
+  info        : "Setting CLR Assembly Permission Sets to SAFE_ACCESS will hinder assemblies from accessing external system resources such as files, the network, environment variables, or the registry."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, permission_set_desc FROM sys.assemblies where is_user_defined = 1 and name <> 'Microsoft.SqlServer.Types';"
+  sql_types   : REGEX_OR_NULL, STRING_OR_NULL
+  sql_expect  : ".*\", \"SAFE_ACCESS"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0019 - SQL - MSSQL - CLR Assembly Permission Set is set to SAFE_ACCESS for All CLR Assemblies"
+  info        : "Setting CLR Assembly Permission Sets to SAFE_ACCESS will hinder assemblies from accessing external system resources such as files, the network, environment variables, or the registry."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, permission_set_desc FROM sys.assemblies where is_user_defined = 1 and name <> 'Microsoft.SqlServer.Types';"
+  sql_types   : REGEX_OR_NULL, STRING_OR_NULL
+  sql_expect  : ".*\", \"SAFE_ACCESS"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0020 - SQL - Ensure CLR Assembly Permission Set is set to SAFE_ACCESS for All CLR Assemblies"
+#   info        : "Setting CLR Assembly Permission Sets to SAFE_ACCESS will hinder assemblies from accessing external system resources such as files, the network, environment variables, or the registry."
+#   solution    : "USE <database_name>; GO ALTER ASSEMBLY <assembly_name> WITH PERMISSION_SET = SAFE;"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT name, permission_set_desc FROM sys.assemblies where is_user_defined = 1 AND name <> ''Microsoft.SqlServer.Types'';'"
+#   sql_types   : REGEX_OR_NULL, STRING_OR_NULL
+#   sql_expect  : ".*\", \"SAFE_ACCESS"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0021 - SQL - Ensure CLR Assembly Permission Set is set to SAFE_ACCESS for All CLR Assemblies"
+#   info        : "Setting CLR Assembly Permission Sets to SAFE_ACCESS will hinder assemblies from accessing external system resources such as files, the network, environment variables, or the registry."
+#   solution    : "USE <database_name>; GO ALTER ASSEMBLY <assembly_name> WITH PERMISSION_SET = SAFE;"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?]; SELECT name, permission_set_desc FROM sys.assemblies WHERE is_user_defined = 1;'"
+#   sql_types   : REGEX_OR_NULL, STRING_OR_NULL
+#   sql_expect  : ".*\", \"SAFE_ACCESS"
+# </custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0022 - SQL - MSSQL - The sa Login Account is set to Disabled"
+  info        : "The sa account is a widely known and often widely used SQL Server account with sysadmin privileges."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(3)"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, is_disabled FROM sys.server_principals WHERE sid = 0x01 AND is_disabled = 0;"
+  sql_types   : NULL, NULL
+  sql_expect  : "NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0023 - SQL - MSSQL - Default Trace Enabled Server Configuration Option is set to 1"
+  info        : "The default trace provides audit logging of database activity including account creations, privilege elevation and execution of DBCC commands."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'default trace enabled';"
+  sql_types   : STRING, STRING, STRING
+  sql_expect  : "default trace enabled\", \"1\", \"1"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0024 - SQL - MSSQL - Default Trace Enabled Server Configuration Option is set to 1"
+  info        : "The default trace provides audit logging of database activity including account creations, privilege elevation and execution of DBCC commands."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'default trace enabled';"
+  sql_types   : STRING, STRING, STRING
+  sql_expect  : "default trace enabled\", \"1\", \"1"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0025 - SQL - MSSQL - The sa Login Account is set to Disabled"
+  info        : "The sa account is a widely known and often widely used SQL Server account with sysadmin privileges."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(3)"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, is_disabled FROM sys.server_principals WHERE sid = 0x01 AND is_disabled = 0;"
+  sql_types   : NULL, NULL
+  sql_expect  : "NULL, NULL"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0026 - SQL - Ensure the sa Login Account is set to Disabled"
+#   info        : "The sa account is a widely known and often widely used SQL Server account with sysadmin privileges."
+#   solution    : "Execute the following T-SQL query: USE [master] GO DECLARE @tsql nvarchar(max) SET @tsql = 'ALTER LOGIN ' + SUSER_NAME(0x01) + ' DISABLE' EXEC (@tsql) GO"
+#   reference   : "NIST 800-53r5|AC-2(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, is_disabled FROM sys.server_principals WHERE sid = 0x01 AND is_disabled = 0;"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0027 - SQL - Ensure the sa Login Account has been renamed"
+#   info        : "The sa account is a widely known and often widely used SQL Server login with sysadmin privileges."
+#   solution    : "Replace the <different_user> value within the below syntax and execute to rename the sa login. ALTER LOGIN sa WITH NAME = <different_user>;"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name FROM sys.server_principals WHERE sid = 0x01 and name = 'sa';"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0028 - SQL - Ensure Control Server permission is not granted"
+#   info        : "The Control Server permission is a highly privileged server-level permission in SQL Server database engine."
+#   solution    : "Remove any un-allowed SQL Server accounts which are granted Control Server using this query: use [master] GO REVOKE CONTROL SERVER FROM [%login%]"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT sys.server_permissions.type, sys.server_permissions.permission_name, sys.server_permissions.state, sys.server_permissions.state_desc, granteeserverprincipal.name AS grantee_principal_name, granteeserverprincipal.type_desc AS grantee_principal_type_desc, grantorserverprinicipal.name AS grantor_name, CASE WHEN sys.server_permissions.state = N'W' THEN N'GRANT' ELSE sys.server_permissions.state_desc END + N' ' + sys.server_permissions.permission_name COLLATE SQL_Latin1_General_CP1_CI_AS + N' TO ' + QUOTENAME(granteeserverprincipal.name) AS permissionstatement FROM sys.server_principals AS granteeserverprincipal INNER JOIN sys.server_permissions ON sys.server_permissions.grantee_principal_id = granteeserverprincipal.principal_id INNER JOIN sys.server_principals AS grantorserverprinicipal ON grantorserverprinicipal.principal_id = sys.server_permissions.grantor_principal_id WHERE sys.server_permissions.permission_name='CONTROL SERVER' AND granteeserverprincipal.name <> '##MS_PolicySigningCertificate##'"
+#   sql_types   : NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0029 - SQL - Ensure Default Trace Enabled Server Configuration Option is set to 1"
+#   info        : "The default trace provides audit logging of database activity including account creations, privilege elevation and execution of DBCC commands."
+#   solution    : "Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'default trace enabled', 1; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'default trace enabled';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"default trace enabled\", 1, 1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0030 - SQL - Ensure Default Trace Enabled Server Configuration Option is set to 1"
+#   info        : "The default trace provides audit logging of database activity including account creations, privilege elevation and execution of DBCC commands."
+#   solution    : "Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'default trace enabled', 1; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'default trace enabled';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"default trace enabled\", 1, 1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0031 - SQL - Ensure Hide Instance option is set to Yes for Production SQL Server instances"
+#   info        : "Non-clustered SQL Server instances within production environments should be designated as hidden to prevent advertisement by the SQL Server Browser service."
+#   solution    : "Perform either the GUI or T-SQL method shown: GUI Method - In SQL Server Configuration Manager, expand SQL Server Network Configuration, right-click Protocols for <InstanceName>, and then select Properties. - On the Flags tab, in the Hide Instance box, select Yes, and then click OK to close the dialog box. The change takes effect immediately for new connections. T-SQL Method Execute the following T-SQL to remediate: EXEC master.sys.xp_instance_regwrite @rootkey = N'HKEY_LOCAL_MACHINE', @key = N'SOFTWARE\\Microsoft\\Microsoft SQL Server\\MSSQLServer\\SuperSocketNetLib', @value_name = N'HideInstance', @type = N'REG_DWORD', @value = 1;"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "DECLARE @getValue INT; EXEC master.sys.xp_instance_regread @rootkey = N'HKEY_LOCAL_MACHINE', @key = N'SOFTWARE\Microsoft\Microsoft SQL Server\MSSQLServer\SuperSocketNetLib', @value_name = N'HideInstance', @value = @getValue OUTPUT; SELECT @getValue;"
+#   sql_types   : STRING
+#   sql_expect  : "1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0032 - SQL - Ensure Scan For Startup Procs Server Configuration Option is set to 0"
+#   info        : "The scan for startup procs option, if enabled, causes SQL Server to scan for and automatically run all stored procedures that are set to execute upon service startup."
+#   solution    : "Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'scan for startup procs', 0; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE; Restart the Database Engine."
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'scan for startup procs';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"scan for startup procs\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0033 - SQL - service accounts"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT distinct(name),type_desc FROM master.sys.server_principals a, sys.dm_server_services b WHERE IS_SRVROLEMEMBER ('sysadmin',name) = 1 and a.name=b.service_account;"
+#   sql_types   : REGEX
+#   sql_expect  : ".+"
+#   severity    : MEDIUM
+# </custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0034 - SQL - MSSQL - Login Auditing is set to failed logins"
+  info        : "This setting will record failed authentication attempts for SQL Server logins to the SQL Server Errorlog."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-1 AU-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "EXEC xp_loginconfig 'audit level';"
+  sql_types   : STRING, REGEX
+  sql_expect  : "audit level\", \"^(all|failure)$"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0035 - SQL - MSSQL - Login Auditing is set to failed logins"
+  info        : "This setting will record failed authentication attempts for SQL Server logins to the SQL Server Errorlog."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-1 AU-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "EXEC xp_loginconfig 'audit level';"
+  sql_types   : STRING, REGEX
+  sql_expect  : "audit level\", \"^(all|failure)$"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0036 - SQL - Ensure Server Authentication Property is set to Windows Authentication Mode"
+#   info        : "Uses Windows Authentication to validate attempted connections."
+#   solution    : "Perform either the GUI or T-SQL method shown: GUI Method - Open SQL Server Management Studio. - Open the Object Explorer tab and connect to the target SQL Server instance. - Right click the instance name and select Properties. - Select the Security page from the left menu. - Set the Server authentication setting to Windows Authentication Mode. T-SQL Method Run the following T-SQL in a Query Window: USE [master] GO EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\\Microsoft\\MSSQLServer\\MSSQLServer', N'LoginMode', REG_DWORD, 1 GO Restart the SQL Server service for the change to take effect."
+#   reference   : "NIST 800-53r5|AC-2(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT SERVERPROPERTY('IsIntegratedSecurityOnly') as [login_mode];"
+#   sql_types   : STRING
+#   sql_expect  : "1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0037 - SQL - Ensure Login Auditing is set to failed logins"
+#   info        : "This setting will record failed authentication attempts for SQL Server logins to the SQL Server Errorlog."
+#   solution    : "Perform either the GUI or T-SQL method shown: GUI Method - Open SQL Server Management Studio. - Right click the target instance and select Properties and navigate to the Security tab. - Select the option Failed logins only under the Login Auditing section and click OK. - Restart the SQL Server instance. T-SQL Method - Run: EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\\Microsoft\\MSSQLServer\\MSSQLServer', N'AuditLevel', REG_DWORD, 2 - Restart the SQL Server instance."
+#   reference   : "NIST 800-53r5|AU-1 AU-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC xp_loginconfig 'audit level';"
+#   sql_types   : STRING, REGEX
+#   sql_expect  : "audit level\", \"^(all|failure)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0038 - SQL - Ensure Login Auditing is set to failed logins"
+#   info        : "This setting will record failed authentication attempts for SQL Server logins to the SQL Server Errorlog."
+#   solution    : "Perform either the GUI or T-SQL method shown: GUI Method - Open SQL Server Management Studio. - Right click the target instance and select Properties and navigate to the Security tab. - Select the option Failed logins only under the Login Auditing section and click OK. - Restart the SQL Server instance. T-SQL Method - Run: EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\\Microsoft\\MSSQLServer\\MSSQLServer', N'AuditLevel', REG_DWORD, 2 - Restart the SQL Server instance."
+#   reference   : "NIST 800-53r5|AU-1 AU-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC xp_loginconfig 'audit level';"
+#   sql_types   : STRING, REGEX
+#   sql_expect  : "audit level\", \"^(all|failure)$"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0039 - SQL - SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0040 - SQL - SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0041 - SQL - FAILED_DATABASE_AUTHENTICATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"FAILED_DATABASE_AUTHENTICATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0042 - SQL - FAILED_DATABASE_AUTHENTICATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"FAILED_DATABASE_AUTHENTICATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0043 - SQL - MSSQL - The public role in the msdb database is not granted access to SQL Agent proxies"
+  info        : "The public database role contains every user in the msdb database."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "USE [msdb] SELECT sp.name AS proxyname FROM dbo.sysproxylogin spl JOIN sys.database_principals dp ON dp.sid = spl.sid JOIN sysproxies sp ON sp.proxy_id = spl.proxy_id WHERE principal_id = USER_ID('public');"
+  sql_types   : NULL
+  sql_expect  : "NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0044 - SQL - MSSQL - The public role in the msdb database is not granted access to SQL Agent proxies"
+  info        : "The public database role contains every user in the msdb database."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "USE [msdb] SELECT sp.name AS proxyname FROM dbo.sysproxylogin spl JOIN sys.database_principals dp ON dp.sid = spl.sid JOIN sysproxies sp ON sp.proxy_id = spl.proxy_id WHERE principal_id = USER_ID('public');"
+  sql_types   : NULL
+  sql_expect  : "NULL"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0045 - SQL - Ensure Ad Hoc Distributed Queries Server Configuration Option is set to 0"
+#   info        : "Enabling Ad Hoc Distributed Queries allows users to query data and execute statements on external data sources."
+#   solution    : "For AWS RDS Instances, please refer to the documentation for using Parameter Groups here: Working with parameter groups https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'Ad Hoc Distributed Queries', 0; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'Ad Hoc Distributed Queries';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"Ad Hoc Distributed Queries\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0046 - SQL - Ensure the public role in the msdb database is not granted access to SQL Agent proxies"
+#   info        : "The public database role contains every user in the msdb database."
+#   solution    : "- Ensure the required security principals are explicitly granted access to the proxy (use sp_grant_login_to_proxy ). - Revoke access to the <proxyname> from the public role. USE [msdb]GOEXEC dbo.sp_revoke_login_from_proxy @name = N'public', @proxy_name = N'<proxyname>';GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "USE [msdb] SELECT sp.name AS proxyname FROM dbo.sysproxylogin spl JOIN sys.database_principals dp ON dp.sid = spl.sid JOIN sysproxies sp ON sp.proxy_id = spl.proxy_id WHERE principal_id = USER_ID('public');"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0047 - SQL - Ensure access to sp_invoke_external_rest_endpoint is limited to trusted accounts only"
+#   info        : "Limit the access to the invocation of the sp_invoke_external_rest_endpoint stored procedure."
+#   solution    : "Remove any un-allowed accounts which are granted the privilege to execute the stored procedure by using this query: REVOKE EXECUTE ON OBJECT::sys.sp_invoke_external_rest_endpoint FROM [%accountName%];"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT dp.name, dp.type_desc, perm.permission_name, perm.state_desc, OBJECT_SCHEMA_NAME(perm.major_id) + '.' + OBJECT_NAME(perm.major_id) FROM sys.database_permissions perm INNER JOIN sys.database_principals dp ON perm.grantee_principal_id = dp.principal_id WHERE perm.major_id = OBJECT_ID('sys.sp_invoke_external_rest_endpoint') AND perm.permission_name = 'EXECUTE' UNION ALL SELECT dp.name, dp.type_desc, perm.permission_name, perm.state_desc + ' (on sys schema)', 'sys (schema)' FROM sys.database_permissions perm INNER JOIN sys.database_principals dp ON perm.grantee_principal_id = dp.principal_id INNER JOIN sys.schemas s ON perm.major_id = s.schema_id WHERE s.name = 'sys' AND perm.permission_name = 'EXECUTE' AND perm.class_desc = 'SCHEMA' ORDER BY dp.name;"
+#   sql_types   : NULL, NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL, NULL"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0048 - SQL - Ensure only the default permissions specified by Microsoft are granted to the public server role"
+#   info        : "public is a special fixed server role containing all logins."
+#   solution    : "- Add the extraneous permissions found in the Audit query results to the specific logins to user-defined server roles which require the access. - Revoke the <permission_name> from the public role as shown below USE [master]GOREVOKE <permission_name> FROM public;GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT * FROM master.sys.server_permissions WHERE (grantee_principal_id = SUSER_SID(N'public') and state_desc LIKE 'GRANT%') AND NOT (state_desc = 'GRANT' and [permission_name] = 'VIEW ANY DATABASE' and class_desc = 'SERVER') AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 2) AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 3) AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 4) AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 5);"
+#   sql_types   : NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0049 - SQL - Ensure only the default permissions specified by Microsoft are granted to the public server role"
+#   info        : "public is a special fixed server role containing all logins."
+#   solution    : "- Add the extraneous permissions found in the Audit query results to the specific logins to user-defined server roles which require the access. - Revoke the <permission_name> from the public role as shown below USE [master]GOREVOKE <permission_name> FROM public;GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT * FROM master.sys.server_permissions WHERE (grantee_principal_id = SUSER_SID(N'public') and state_desc LIKE 'GRANT%') AND NOT (state_desc = 'GRANT' and [permission_name] = 'VIEW ANY DATABASE' and class_desc = 'SERVER') AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 2) AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 3) AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 4) AND NOT (state_desc = 'GRANT' and [permission_name] = 'CONNECT' and class_desc = 'ENDPOINT' and major_id = 5);"
+#   sql_types   : NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0050 - SQL - Ensure no login exists with the name sa"
+#   info        : "The sa login (e."
+#   solution    : "Execute the appropriate ALTER statement below based on the principal_id returned for the login named sa . Replace the <different_name> value within the below syntax and execute to rename the sa login. USE [master] GO -- If principal_id = 1 or the login owns database objects, rename the sa login ALTER LOGIN [sa] WITH NAME = <different_name>; GO"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT principal_id, name FROM sys.server_principals WHERE name = 'sa';"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0051 - SQL - Ensure Latest SQL Server Cumulative and Security Updates are Installed"
+#   info        : "SQL Server patches contain program updates that fix security and product functionality issues found in the software."
+#   solution    : "Identify the current version and patch level of your SQL Server instances and ensure they contain the latest security fixes. Make sure to test these fixes in your test environments before updating production instances. The most recent SQL Server patches can be found here:"
+#   reference   : "NIST 800-53r5|SA-22"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CAST(SERVERPROPERTY('ProductLevel') AS VARCHAR) as SP_installed, CAST(SERVERPROPERTY('ProductVersion') AS VARCHAR) as Version, CAST(SERVERPROPERTY('ProductUpdateLevel') AS VARCHAR) as 'ProductUpdate_Level', CAST(SERVERPROPERTY('ProductUpdateReference') AS VARCHAR) as 'KB_Number';"
+#   sql_types   : STRING
+#   sql_expect  : "^Manual Review Required$"
+#   severity    : MEDIUM
+# </custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0052 - SQL - MSSQL - Windows local groups are not SQL Logins"
+  info        : "Local Windows groups should not be used as logins for SQL Server instances."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "USE [master] SELECT pr.[name] AS LocalGroupName, pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.[principal_id] = pe.[grantee_principal_id] WHERE pr.[type_desc] = 'WINDOWS_GROUP' AND pr.[name] like CAST(SERVERPROPERTY('MachineName') AS nvarchar) + '%';"
+  sql_types   : NULL, NULL, NULL
+  sql_expect  : "NULL, NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0053 - SQL - MSSQL - AUTO_CLOSE is set to OFF on contained databases"
+  info        : "AUTO_CLOSE determines if a given database is closed or not after a connection terminates."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, containment, containment_desc, is_auto_close_on FROM sys.databases WHERE containment <> 0 and is_auto_close_on = 1;"
+  sql_types   : NULL, NULL, NULL, NULL
+  sql_expect  : "NULL, NULL, NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0054 - SQL - MSSQL - Ole Automation Procedures Server Configuration Option is set to 0"
+  info        : "The Ole Automation Procedures option controls whether OLE Automation objects can be instantiated within Transact-SQL batches."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1)CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'Ole Automation Procedures';"
+  sql_types   : STRING, STRING, STRING
+  sql_expect  : "Ole Automation Procedures\", \"0\", \"0"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0055 - SQL - MSSQL - AUTO_CLOSE is set to OFF on contained databases"
+  info        : "AUTO_CLOSE determines if a given database is closed or not after a connection terminates."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, containment, containment_desc, is_auto_close_on FROM sys.databases WHERE containment <> 0 and is_auto_close_on = 1;"
+  sql_types   : NULL, NULL, NULL, NULL
+  sql_expect  : "NULL, NULL, NULL, NULL"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0056 - SQL - MSSQL - Ole Automation Procedures Server Configuration Option is set to 0"
+  info        : "The Ole Automation Procedures option controls whether OLE Automation objects can be instantiated within Transact-SQL batches."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1)CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'Ole Automation Procedures';"
+  sql_types   : STRING, STRING, STRING
+  sql_expect  : "Ole Automation Procedures\", \"0\", \"0"
+</custom_item>
+
+<custom_item>
+  type        : SQL_POLICY
+  description : "1.0057 - SQL - MSSQL - Windows local groups are not SQL Logins"
+  info        : "Local Windows groups should not be used as logins for SQL Server instances."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  sql_request : "USE [master] SELECT pr.[name] AS LocalGroupName, pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.[principal_id] = pe.[grantee_principal_id] WHERE pr.[type_desc] = 'WINDOWS_GROUP' AND pr.[name] like CAST(SERVERPROPERTY('MachineName') AS nvarchar) + '%';"
+  sql_types   : NULL, NULL, NULL
+  sql_expect  : "NULL, NULL, NULL"
+</custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0058 - SQL - Ensure SQL Server is configured to use non-standard ports"
+#   info        : "If installed, a default SQL Server instance will be assigned a default port of TCP:1433 for TCP/IP communication."
+#   solution    : "- In SQL Server Configuration Manager, in the console pane, expand SQL Server Network Configuration, expand Protocols for <InstanceName>, and then double-click the TCP/IP protocol - In the TCP/IP Properties dialog box, on the IP Addresses tab, several IP addresses appear in the format IP1, IP2, up to IPAll . One of these is for the IP address of the loopback adapter, 127.0.0.1 . Additional IP addresses appear for each IP Address on the computer. - Under IPAll, change the TCP Port field from 1433 to a non-standard port or leave the TCP Port field empty and set the TCP Dynamic Ports value to 0 to enable dynamic port assignment and then click OK. - In the console pane, click SQL Server Services. - In the details pane, right-click SQL Server ( <InstanceName> ) and then click Restart, to stop and restart SQL Server."
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "IF (select value_data from sys.dm_server_registry where value_name = 'ListenOnAllIPs') = 1 SELECT count(*) FROM sys.dm_server_registry WHERE registry_key like '%IPAll%' and value_name like '%Tcp%' and value_data='1433' ELSE SELECT count(*) FROM sys.dm_server_registry WHERE value_name like '%Tcp%' and value_data='1433';"
+#   sql_types   : STRING
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0059 - SQL - Ensure AUTO_CLOSE is set to OFF on contained databases"
+#   info        : "AUTO_CLOSE determines if a given database is closed or not after a connection terminates."
+#   solution    : "Execute the following T-SQL, replacing <database_name> with each database name found by the Audit Procedure: ALTER DATABASE <database_name> SET AUTO_CLOSE OFF;"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, containment, containment_desc, is_auto_close_on FROM sys.databases WHERE containment <> 0 and is_auto_close_on = 1;"
+#   sql_types   : NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0060 - SQL - Ensure clr strict security Server Configuration Option is set to 1"
+#   info        : "The clr strict security option specifies whether the engine applies the PERMISSION_SET on the assemblies."
+#   solution    : "Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'clr strict security', 1; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'clr strict security';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"clr strict security\", 1, 1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0061 - SQL - check for CLR strict security"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'clr strict security';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"CLR Strict Security\", 1, 1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0062 - SQL - Ensure CLR Enabled Server Configuration Option is set to 0"
+#   info        : "The clr enabled option specifies whether user assemblies can be run by SQL Server."
+#   solution    : "For AWS RDS Instances, please refer to the documentation for using Parameter Groups here: Working with parameter groups https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html Run the following T-SQL command: EXECUTE sp_configure 'clr enabled', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|CM-6 CM-7"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'clr enabled';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"CLR Enabled\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0063 - SQL - Ensure Cross DB Ownership Chaining Server Configuration Option is set to 0"
+#   info        : "The cross db ownership chaining option controls cross-database ownership chaining across all databases at the instance (or server) level."
+#   solution    : "For AWS RDS Instances, please refer to the documentation for using Parameter Groups here: Working with parameter groups https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html Run the following T-SQL command: EXECUTE sp_configure 'cross db ownership chaining', 0; RECONFIGURE; GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'cross db ownership chaining';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"cross db ownership chaining\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0064 - SQL - Ensure Database Mail XPs Server Configuration Option is set to 0"
+#   info        : "The Database Mail XPs option controls the ability to generate and transmit email messages from SQL Server."
+#   solution    : "Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'Database Mail XPs', 0; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'Database Mail XPs';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"Database Mail XPs\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0065 - SQL - Ensure Ole Automation Procedures Server Configuration Option is set to 0"
+#   info        : "The Ole Automation Procedures option controls whether OLE Automation objects can be instantiated within Transact-SQL batches."
+#   solution    : "Run the following T-SQL command: EXECUTE sp_configure 'show advanced options', 1; RECONFIGURE; EXECUTE sp_configure 'Ole Automation Procedures', 0; RECONFIGURE; GO EXECUTE sp_configure 'show advanced options', 0; RECONFIGURE;"
+#   reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name, CAST(value as int) as value_configured, CAST(value_in_use as int) as value_in_use FROM sys.configurations WHERE name = 'Ole Automation Procedures';"
+#   sql_types   : STRING, INTEGER, INTEGER
+#   sql_expect  : "\"Ole Automation Procedures\", 0, 0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0066 - SQL - Ensure Trustworthy Database Property is set to Off"
+#   info        : "The TRUSTWORTHY database option allows database objects to access objects in other databases under certain circumstances."
+#   solution    : "Execute the following T-SQL statement against the databases (replace <database_name> below) returned by the Audit Procedure: ALTER DATABASE [<database_name>] SET TRUSTWORTHY OFF;"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT name FROM sys.databases WHERE is_trustworthy_on = 1 AND name != 'msdb';"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0067 - SQL - Ensure Windows local groups are not SQL Logins"
+#   info        : "Local Windows groups should not be used as logins for SQL Server instances."
+#   solution    : "- For each LocalGroupName login, if needed create an equivalent AD group containing only the required user accounts. - Add the AD group or individual Windows accounts as a SQL Server login and grant it the permissions required. - Drop the LocalGroupName login using the syntax below after replacing <name> . USE [master]GODROP LOGIN [<name>]GO"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "USE [master] SELECT pr.[name] AS LocalGroupName, pe.[permission_name], pe.[state_desc] FROM sys.server_principals pr JOIN sys.server_permissions pe ON pr.[principal_id] = pe.[grantee_principal_id] WHERE pr.[type_desc] = 'WINDOWS_GROUP' AND pr.[name] like CAST(SERVERPROPERTY('MachineName') AS nvarchar) + '%';"
+#   sql_types   : NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0068 - SQL - sysadmin users"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT distinct(name),type_desc FROM master.sys.server_principals WHERE IS_SRVROLEMEMBER ('sysadmin',name) = 1 AND name not in ('NT SERVICE\SQLWriter','NT SERVICE\Winmgmt','NT SERVICE\MSSQLSERVER','NT SERVICE\SQLSERVERAGENT');"
+#   sql_types   : REGEX
+#   sql_expect  : ".+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0069 - SQL - Ensure no admin role membership in MSDB database"
+#   info        : "Based on Microsoft design an account with DB_OWNER can elevate permissions to SYSADMIN MSDB must be configured with the TRUSTWORTHY flag ON to work properly."
+#   solution    : "USE [msdb] GO ALTER ROLE [db_owner] DROP MEMBER <username>;"
+#   reference   : "NIST 800-53r5|AC-6(2) AC-6(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "USE [msdb] SELECT m.name FROM sys.database_role_members AS drm INNER JOIN sys.database_principals AS r ON drm.role_principal_id = r.principal_id INNER JOIN sys.database_principals AS m ON drm.member_principal_id = m.principal_id WHERE r.name IN ('db_owner', 'db_securityadmin', 'db_ddladmin', 'db_datawriter') AND m.name <> 'dbo';"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0070 - SQL - check for AWS RDS"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CASE WHEN db_id('rdsadmin') IS NULL THEN 0 ELSE 1 END AS RDS_DATABASE;"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0071 - SQL - Ensure CONNECT permissions on the guest user is Revoked within all SQL Server databases"
+#   info        : "Remove the right of the guest user to connect to SQL Server databases, except for master, msdb, tempdb, and, on AWS RDS instances, rdsadmin."
+#   solution    : "The following code snippet revokes CONNECT permissions from the guest user in a database. Replace <database_name> as appropriate: USE <database_name>; GO REVOKE CONNECT FROM guest;"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT DB_NAME() AS DatabaseName, ''guest'' AS Database_User, [permission_name], [state_desc] FROM sys.database_permissions WHERE [grantee_principal_id] = DATABASE_PRINCIPAL_ID(''guest'') AND [state_desc] LIKE ''GRANT%'' AND [permission_name] = ''CONNECT'' AND DB_NAME() NOT IN (''master'',''tempdb'',''msdb'');'"
+#   sql_types   : NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0072 - SQL - check for AWS RDS"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CASE WHEN db_id('rdsadmin') IS NULL THEN 0 ELSE 1 END AS RDS_DATABASE;"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0073 - SQL - Ensure CONNECT permissions on the guest user is Revoked within all SQL Server databases"
+#   info        : "Remove the right of the guest user to connect to SQL Server databases, except for master, msdb, tempdb, and, on AWS RDS instances, rdsadmin."
+#   solution    : "The following code snippet revokes CONNECT permissions from the guest user in a database. Replace <database_name> as appropriate: USE <database_name>; GO REVOKE CONNECT FROM guest;"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT DB_NAME() AS DatabaseName, ''guest'' AS Database_User, [permission_name], [state_desc] FROM sys.database_permissions WHERE [grantee_principal_id] = DATABASE_PRINCIPAL_ID(''guest'') AND [state_desc] LIKE ''GRANT%'' AND [permission_name] = ''CONNECT'' AND DB_NAME() NOT IN (''master'',''tempdb'',''msdb'');'"
+#   sql_types   : STRING_OR_NULL, STRING_OR_NULL, STRING_OR_NULL, REGEX_OR_NULL
+#   sql_expect  : "rdsadmin\", \"guest\", \"CONNECT\", \".*"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0074 - SQL - Ensure CONNECT permissions on the guest user is Revoked within all SQL Server databases"
+#   info        : "Remove the right of the guest user to connect to SQL Server databases, except for master, msdb, tempdb, and, on AWS RDS instances, rdsadmin."
+#   solution    : "The following code snippet revokes CONNECT permissions from the guest user in a database. Replace <database_name> as appropriate: USE <database_name>; GO REVOKE CONNECT FROM guest;"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT DB_NAME() AS DatabaseName, ''guest'' AS Database_User, [permission_name], [state_desc] FROM sys.database_permissions WHERE [grantee_principal_id] = DATABASE_PRINCIPAL_ID(''guest'') AND [state_desc] LIKE ''GRANT%'' AND [permission_name] = ''CONNECT'' AND DB_NAME() NOT IN (''master'',''tempdb'',''msdb'');'"
+#   sql_types   : NULL, NULL, NULL, NULL
+#   sql_expect  : "NULL, NULL, NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0075 - SQL - Ensure Orphaned Users are Dropped From SQL Server Databases"
+#   info        : "A database user for which the corresponding SQL Server login is undefined or is incorrectly defined on a server instance cannot log in to the instance and is referred to as orphaned and should be removed."
+#   solution    : "If the orphaned user cannot or should not be matched to an existing or new login using the Microsoft documented process referenced below, run the following T-SQL query in the appropriate database to remove an orphan user: USE <database_name>; GO DROP USER <username>;"
+#   reference   : "NIST 800-53r5|AC-2(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT DP.name as orphan_user_name FROM sys.database_principals DP WHERE DP.sid NOT IN (SELECT L.sid FROM sys.syslogins L WHERE L.sid = DP.sid) AND (SELECT containment FROM sys.databases WHERE name = DB_NAME()) = 0 AND DP.type_desc NOT IN (''DATABASE_ROLE'', ''APPLICATION_ROLE'') AND DP.principal_id > 4 AND DP.name NOT IN (''dbo'',''guest'',''INFORMATION_SCHEMA'',''sys'',''MS_DataCollectorInternalUser'')'"
+#   sql_types   : NULL
+#   sql_expect  : "NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0076 - SQL - Ensure CONNECT permissions on the guest user is Revoked within all SQL Server databases"
+#   info        : "Remove the right of the guest user to connect to SQL Server databases, except for master, msdb, tempdb, and, on AWS RDS instances, rdsadmin."
+#   solution    : "The following code snippet revokes CONNECT permissions from the guest user in a database. Replace <database_name> as appropriate: USE <database_name>; GO REVOKE CONNECT FROM guest;"
+#   reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?] SELECT DB_NAME() AS DatabaseName, ''guest'' AS Database_User, [permission_name], [state_desc] FROM sys.database_permissions WHERE [grantee_principal_id] = DATABASE_PRINCIPAL_ID(''guest'') AND [state_desc] LIKE ''GRANT%'' AND [permission_name] = ''CONNECT'' AND DB_NAME() NOT IN (''master'',''tempdb'',''msdb'');'"
+#   sql_types   : STRING_OR_NULL, STRING_OR_NULL, STRING_OR_NULL, REGEX_OR_NULL
+#   sql_expect  : "rdsadmin\", \"guest\", \"CONNECT\", \".*"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0077 - SQL - Ensure Orphaned Users are Dropped From SQL Server Databases"
+#   info        : "A database user for which the corresponding SQL Server login is undefined or is incorrectly defined on a server instance cannot log in to the instance and is referred to as orphaned and should be removed."
+#   solution    : "If the orphaned user cannot or should not be matched to an existing or new login using the Microsoft documented process referenced below, run the following T-SQL query in the appropriate database to remove an orphan user: USE <database_name>; GO DROP USER <username>;"
+#   reference   : "NIST 800-53r5|AC-2(3)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'USE [?]; SELECT DB_NAME() AS db_name, dp.name FROM sys.database_principals dp WHERE dp.sid NOT IN (SELECT sid FROM sys.syslogins) AND (SELECT containment FROM sys.databases WHERE name = DB_NAME()) = 0 AND dp.type_desc NOT IN (''DATABASE_ROLE'',''APPLICATION_ROLE'') AND dp.name NOT IN (''dbo'',''guest'',''INFORMATION_SCHEMA'',''sys'',''MS_DataCollectorInternalUser'') AND NOT (dp.name = ''cdc'' AND (SELECT is_cdc_enabled FROM sys.databases WHERE name = DB_NAME()) = 1)'"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0078 - SQL - check for AWS RDS"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CASE WHEN db_id('rdsadmin') IS NULL THEN 0 ELSE 1 END AS RDS_DATABASE;"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0079 - SQL - check for AWS RDS"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CASE WHEN db_id('rdsadmin') IS NULL THEN 0 ELSE 1 END AS RDS_DATABASE;"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0080 - SQL - check for AWS RDS"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CASE WHEN db_id('rdsadmin') IS NULL THEN 0 ELSE 1 END AS RDS_DATABASE;"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0081 - SQL - check for AWS RDS"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT CASE WHEN db_id('rdsadmin') IS NULL THEN 0 ELSE 1 END AS RDS_DATABASE;"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0082 - SQL - check for no limit on number of log files"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "DECLARE @NumErrorLogs int; EXEC master.sys.xp_instance_regread N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'NumErrorLogs', @NumErrorLogs OUTPUT; SELECT ISNULL(@NumErrorLogs, -1) AS [NumberOfLogFiles];"
+#   sql_types   : STRING
+#   sql_expect  : "-1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0083 - SQL - check for log file number > 12"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "DECLARE @NumErrorLogs int; EXEC master.sys.xp_instance_regread N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'NumErrorLogs', @NumErrorLogs OUTPUT; SELECT ISNULL(@NumErrorLogs, -1) AS [NumberOfLogFiles];"
+#   sql_types   : INTEGER
+#   sql_expect  : "[12..429496729]"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0084 - SQL - check for no limit on number of log files"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "DECLARE @NumErrorLogs int; EXEC master.sys.xp_instance_regread N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'NumErrorLogs', @NumErrorLogs OUTPUT; SELECT ISNULL(@NumErrorLogs, -1) AS [NumberOfLogFiles];"
+#   sql_types   : STRING
+#   sql_expect  : "-1"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0085 - SQL - check for log file number > 12"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "DECLARE @NumErrorLogs int; EXEC master.sys.xp_instance_regread N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'NumErrorLogs', @NumErrorLogs OUTPUT; SELECT ISNULL(@NumErrorLogs, -1) AS [NumberOfLogFiles];"
+#   sql_types   : INTEGER
+#   sql_expect  : "[12..429496729]"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0086 - SQL - db in containment"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "select count(*) as count from sys.databases where containment=1"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0087 - SQL - AUDIT_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"AUDIT_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0088 - SQL - db in containment"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "select count(*) as count from sys.databases where containment=1"
+#   sql_types   : INTEGER
+#   sql_expect  : "0"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0089 - SQL - AUDIT_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"AUDIT_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0090 - SQL - DATABASE_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"DATABASE_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0091 - SQL - DATABASE_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"DATABASE_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0092 - SQL - SERVER_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0093 - SQL - FAILED_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"FAILED_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0094 - SQL - SERVER_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0095 - SQL - FAILED_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"FAILED_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0096 - SQL - SUCCESSFUL_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SUCCESSFUL_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0097 - SQL - SERVER_OPERATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_OPERATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0098 - SQL - SUCCESSFUL_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SUCCESSFUL_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0099 - SQL - AUDIT_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"AUDIT_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0100 - SQL - SERVER_OPERATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_OPERATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0101 - SQL - AUDIT_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"AUDIT_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0102 - SQL - DATABASE_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"DATABASE_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0103 - SQL - DATABASE_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"DATABASE_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0104 - SQL - SERVER_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0105 - SQL - FAILED_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"FAILED_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0106 - SQL - SERVER_ROLE_MEMBER_CHANGE_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_ROLE_MEMBER_CHANGE_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0107 - SQL - FAILED_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"FAILED_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0108 - SQL - SUCCESSFUL_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SUCCESSFUL_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0109 - SQL - SUCCESSFUL_LOGIN_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SUCCESSFUL_LOGIN_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0110 - SQL - SERVER_OPERATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_OPERATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0111 - SQL - SERVER_OPERATION_GROUP"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "SELECT S.name AS 'Audit Name' , CASE S.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Enabled' , S.type_desc AS 'Write Location' , SA.name AS 'Audit Specification Name' , CASE SA.is_state_enabled WHEN 1 THEN 'Y' WHEN 0 THEN 'N' END AS 'Audit Specification Enabled' , SAD.audit_action_name , SAD.audited_result FROM sys.server_audit_specification_details AS SAD JOIN sys.server_audit_specifications AS SA ON SAD.server_specification_id = SA.server_specification_id JOIN sys.server_audits AS S ON SA.audit_guid = S.audit_guid WHERE SAD.audit_action_id IN ('CNAU', 'LGFL', 'LGSD', 'ADDP', 'ADSP', 'OPSV') or (SAD.audit_action_id IN ('DAGS', 'DAGF') and (select count(*) from sys.databases where containment=1) > 0);"
+#   sql_types   : REGEX, STRING, REGEX, REGEX, STRING, STRING, STRING
+#   sql_expect  : ".+\", \"Y\", \".+\", \".+\", \"Y\", \"SERVER_OPERATION_GROUP\", \"SUCCESS AND FAILURE"
+#   match_all   : NO
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0112 - SQL - Ensure Symmetric Key encryption algorithm is set to AES_128 or higher in non-system databases"
+#   info        : "Per the Microsoft Best Practices, only the SQL Server AES algorithm options, AES_128, AES_192, and AES_256, should be used for a symmetric key encryption algorithm."
+#   solution    : "Refer to Microsoft SQL Server Books Online ALTER SYMMETRIC KEY entry: https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-symmetric-key-transact-sql"
+#   reference   : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'use [?] SELECT db_name() AS Database_Name, name AS Key_Name FROM sys.symmetric_keys WHERE algorithm_desc NOT IN (''AES_128'',''AES_192'',''AES_256'') AND db_id() > 4';"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0113 - SQL - Ensure Asymmetric Key Size is set to greater than or equal to 2048 in non-system databases"
+#   info        : "Microsoft Best Practices recommend to use at least a 2048-bit encryption algorithm for asymmetric keys."
+#   solution    : "Refer to Microsoft SQL Server Books Online ALTER ASYMMETRIC KEY entry: https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-asymmetric-key-transact-sql"
+#   reference   : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'use [?] SELECT db_name() AS Database_Name, name AS Key_Name FROM sys.asymmetric_keys WHERE key_length < 2048 AND db_id() > 4';"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0114 - SQL - Ensure Symmetric Key encryption algorithm is set to AES_128 or higher in non-system databases"
+#   info        : "Per the Microsoft Best Practices, only the SQL Server AES algorithm options, AES_128, AES_192, and AES_256, should be used for a symmetric key encryption algorithm."
+#   solution    : "Refer to Microsoft SQL Server Books Online ALTER SYMMETRIC KEY entry: https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-symmetric-key-transact-sql"
+#   reference   : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'use [?] SELECT db_name() AS Database_Name, name AS Key_Name FROM sys.symmetric_keys WHERE algorithm_desc NOT IN (''AES_128'',''AES_192'',''AES_256'') AND db_id() > 4';"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+# <custom_item>
+#   type        : SQL_POLICY
+#   description : "1.0115 - SQL - Ensure Asymmetric Key Size is set to greater than or equal to 2048 in non-system databases"
+#   info        : "Microsoft Best Practices recommend to use at least a 2048-bit encryption algorithm for asymmetric keys."
+#   solution    : "Refer to Microsoft SQL Server Books Online ALTER ASYMMETRIC KEY entry: https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-asymmetric-key-transact-sql"
+#   reference   : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   sql_request : "EXEC sp_MSforeachdb 'use [?] SELECT db_name() AS Database_Name, name AS Key_Name FROM sys.asymmetric_keys WHERE key_length < 2048 AND db_id() > 4';"
+#   sql_types   : NULL, NULL
+#   sql_expect  : "NULL, NULL"
+# </custom_item>
+
+</group_policy>
+</check_type>

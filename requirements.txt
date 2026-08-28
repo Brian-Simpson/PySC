@@ -1,0 +1,6 @@
+# Python 3.9 compatible pins (system interpreter: C:\Program Files\Python39)
+openpyxl==3.1.5
+pandas>=1.3,<2.1
+tomli>=2.0            # tomllib backport; stdlib tomllib requires 3.11+
+pytest>=7,<9
+matplotlib>=3.5,<3.10 # 3.10+ drops Python 3.9 support

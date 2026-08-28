@@ -1,0 +1,16 @@
+StepID	ReportsTo	ShapeType	Label
+1		Terminator	Start Script
+2	1	Process	Check & Load ConfigurationManager Module
+3	2	Decision	Module Loaded?
+4	3	Process	Initialize Variables ($SiteCode $BatchSize $DelaySeconds)
+5	4	Process	Retrieve Source & Target Collections
+6	5	Decision	Both Collections Exist?
+7	6	Process	Query Source Collection Members
+8	7	Decision	Source Member Count > 0?
+9	8	Process	Select Random Batch (Max 20 Devices)
+10	9	Process	Loop: Add Batch to Target Collection
+11	10	Process	Delay (Pause execution for $DelaySeconds)
+12	11	Process	Loop: Remove Batch from Source Collection
+13	8	Terminator	End: Script Finished
+14	3	Terminator	End: Terminate with Error (No Module)
+15	6	Terminator	End: Terminate with Error (Missing Collection)

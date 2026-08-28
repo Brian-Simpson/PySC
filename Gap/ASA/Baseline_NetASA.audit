@@ -1,0 +1,1373 @@
+# generated_by: for-gap-combined-dedupe
+<check_type:"Windows" version:"2">
+<group_policy:"Windows Security Hardening Through Group Policy and Registry Settings">
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0000 - ASA - Ensure SNMP traps is enabled"
+#   info        : "Enables SNMP traps to be sent to the NMS Rationale: The purpose of the SNMP service is to monitor in real time the events occurring on systems in order to meet the security requirement of availability of systems and services."
+#   solution    : "Run the following command to enable SNMP traps hostname(config)# snmp-server enable traps snmp authentication hostname(config)# snmp-server enable traps snmp coldstart hostname(config)# snmp-server enable traps snmp linkdown hostname(config)# snmp-server enable traps snmp linkup Default Value: By default, only syslog traps are enabled"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server enable traps.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0001 - ASA - Ensure Emergency account is set"
+#   info        : "Sets a local username and password for 'Emergency' purposes."
+#   solution    : "Run the following to set a local username and password. hostname(config)#username <local_username> password <local_password> privilege <level> The privilege level is chosen between 0 and 15. If the privilege is not configured, the default one is 2. Default Value: The default username used for the first SSH connection or aaa authentication telnet console is asa but for versions from 8.4(2) and above, there is no default username"
+#   reference   : "NIST 800-53r5|AC-2 IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username [^ ]+ password [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0002 - ASA - Ensure Password Recovery is disabled"
+#   info        : "Disables the password recovery Rationale: Disabling the password recovery is an additional physical control."
+#   solution    : "Run the following to disable the password recovery: hostname (config)# no service password-recovery Default Value: The password recovery is enabled by default"
+#   reference   : "NIST 800-53r5|CP-6 CP-6(1) CP-9 SC-28"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no service password-recovery"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0003 - ASA - Ensure known default accounts do not exist"
+#   info        : "Deletes the known default accounts configured Rationale: In order to attempt access to known devices' platforms, attackers use the available database of the known default accounts for each platform or Operating System."
+#   solution    : "Step 1: Acquire the Enterprise customized administrative account <customized\_admin\_account> and password <admin\_password> Step 2: Run the following to create the customized administrative account as well as the required privilege level <privilege\_level> hostname(config)#username <customized_admin_account> password <admin_password> privilege <privilege_level> Step 3: Run the following to delete the known default accounts identified during the audit hostname(config)# no username <known_default_account> Default Value: The default username used for the first SSH connection or aaa authentication telnet console is asa but for versions from 8.4(2) and above, there is no default username"
+#   reference   : "NIST 800-53r5|AC-2(3) IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "username (admin|asa|cisco|pix|root) password [^ ]+"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0004 - ASA - NetASA - Ensure logging buffered severity level is greater than or equal to 3"
+  info        : "Determines which syslog messages should be temporary stored in the local buffer so they can be checked by the administrator."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-3 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging buffered ([3-7]|error(s)?|warning|notification(s)?|informational|debugging)[\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0005 - ASA - NetASA - Ensure logging buffer size is greater than or equal to 524288 bytes (512kb)"
+  info        : "Determines the size of the local buffer in which the logs are stored so that they can be checked by the administrator."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-3 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging buffer-size (52428[8-9]|52429[0-9]|524[3-9][0-9]{2}|52[5-9][0-9]{3}|5[3-9][0-9]{4}|[6-9][0-9]{5})"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0006 - ASA - Ensure email logging is configured for critical to emergency"
+#   info        : "Enables logs to be sent to an email recipient for critical to emergency logs' severity levels Rationale: In some cases, the notifications of the Syslog server or the NMS system can be delayed by the time taken to process the logs and build the reports."
+#   solution    : "Step 1: Run the following to enable email logging for logs with severity level from critical and above (critical, alert and emergency) hostname(config)#logging mail critical Step 2: Obtain from the mail server administrator to create an firewall email account <firewall_email_account> and run the following to enable the account as email source address in the firewall hostname(config)#logging from-address <firewall_email_account> Step 3: Acquire the firewall administrator email account <firewall_admin_email> and run the following for the security appliance to send logs to its administrator email account hostname(config)#logging recipient-address <firewall_admin_email> Step 4: Obtain from the mail server administrator the mail server IP address <mail_server_ip> and run the following to configure it in the firewall hostname(config)#smtp-server <mail_server_ip>"
+#   reference   : "NIST 800-53r5|AU-6(3) AU-11"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging mail (critical|alert|emergency)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0007 - ASA - Ensure logging buffer size is greater than or equal to 524288 bytes (512kb)"
+#   info        : "Determines the size of the local buffer in which the logs are stored so that they can be checked by the administrator."
+#   solution    : "Step 1: Run the following command to set the logging buffer-size to 524288 The size is in bytes and is to be chosen between 4096 and 1048576 bytes hostname(config)# logging buffer-size 524288 Default Value: The default size is 4kB."
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging buffer-size (52428[8-9]|52429[0-9]|524[3-9][0-9]{2}|52[5-9][0-9]{3}|5[3-9][0-9]{4}|[6-9][0-9]{5})"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0008 - ASA - Ensure logging buffered severity level is greater than or equal to 3"
+#   info        : "Determines which syslog messages should be temporary stored in the local buffer so they can be checked by the administrator Rationale: The internal log buffer serves as a temporary storage location, thus allowing the administrator performing a health check on the system to locally have the last logs generated."
+#   solution    : "Step 1: Run the following command to set the Logging Buffered to greater than or equal to 3: hostname(config)# logging buffered 3 The severity level can be chosen between 0 through 7"
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging buffered ([3-7]|error(s)?|warning|notification(s)?|informational|debugging)[\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0009 - ASA - Ensure aaa authentication http console is configured correctly"
+#   info        : "Authenticates ASDM users who access the security appliance over HTTP Rationale: By default, the enable password is used in combination with no username for http access."
+#   solution    : "Configure the aaa authentication for http using the TACACS+ server-group as primary method and the local database as backup method. hostname(config)#aaa authentication http console <server-group_name> local Default Value: The http aaa authentication is disabled by default."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication http console.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0010 - ASA - Ensure aaa command authorization is configured correctly"
+#   info        : "Defines the source of authorization for the commands entered by an administrator/user Rationale: Requiring authorization for commands enforces separation of duties and provides least privilege access for specific job roles."
+#   solution    : "Run the following to determine the remote the TACACS+/RADIUS servers (server_group_name) as source of authorization and the local database (LOCAL) as fallback method if the remote servers are not available. hostname(config)# aaa authorization command <server-group_name> LOCAL This implies that locally, each privilege has its sets of commands configured and username associated just in accordance with the privilege and command definition in the remote servers."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authorization command.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0011 - ASA - Ensure aaa accounting command is configured correctly"
+#   info        : "Enables accounting of administrative access by specifying that each command, or commands of a specified privilege level or higher, entered by an administrator/user is recorded and sent to the accounting server or servers."
+#   solution    : "Run the following in order to record all the commands entered at all the privilege levels and to send them to the AAA servers hostname(config)# aaa accounting command <server-group_name> Default Value: By default, AAA accounting for administrative access is disabled."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9 IA-5"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa accounting command.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0012 - ASA - Ensure Telnet is disabled"
+#   info        : "Disables the telnet access to the security appliance in the case it has been configured Rationale: Telnet is an unsecure protocol as username and password are conveyed in clear text during the administrator authentication and can be retrieved through network sniffing."
+#   solution    : "Run the following to remove the telnet access hostname(config)#no telnet 0.0.0.0 0.0.0.0 <interface_name>"
+#   reference   : "NIST 800-53r5|CM-7 MA-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^telnet [0-9.]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0013 - ASA - Ensure Enable Password is set"
+#   info        : "Sets the password for users accessing privileged EXEC mode when they run the enable command."
+#   solution    : "Run the following to set the enable password. hostname(config)#enable password <enable_password> level <privilege_level> The enable_password parameter should be the plain-text password used to log into the enable mode If the privilege level is not configured, the default one is 15 Default Value: By default, the enable password is blank."
+#   reference   : "NIST 800-53r5|IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "enable password [^ ]+ (encrypted|pbkdf2)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0014 - ASA - Ensure aaa authentication enable console is configured correctly"
+#   info        : "Authenticates users trying to access the Enable mode (privileged EXEC mode) through the 'enable' command."
+#   solution    : "Configure the aaa authentication for enable access using the TACACS+ server-group as primary method and the local database as backup method hostname(config)# aaa authentication enable console <server-group_name> local Default Value: The aaa authentication is disabled by default for the enable mode"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication enable console.*"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0015 - ASA - NetASA - Authentication - Ensure Logon Password is set"
+  info        : "Changes the default login password."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "(password|passwd) [^ ]+ encrypted"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0016 - ASA - NetASA - Authentication - Local creds are set"
+  info        : "Sets a local username and password for Emergency purposes."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "username [^ ]+ password [^ ]+"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0017 - ASA - Ensure Logon Password is set"
+#   info        : "Changes the default login password."
+#   solution    : "Run the following to set the login password. hostname(config)#passwd <login_password> The login_password parameter should be the plain-text password used to log into the system Default Value: The default password is 'cisco'. 9.x The default password, 'cisco,' has been removed; you must actively set a login password. Using the no passwd or clear configure passwd command removes the password; formerly, it reset it to the default of 'cisco."
+#   reference   : "NIST 800-53r5|IA-5(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "(password|passwd) [^ ]+ encrypted"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0018 - ASA - Ensure Master Key Passphrase is set"
+#   info        : "Defines the master key passphrase used to encrypt the application secret-keys contained in the configuration file for software releases from 8."
+#   solution    : "Step 1: Set the master key passphrase with the following command: hostname (config)# key config-key password-encryption <passphrase> The passphrase is between 8 and 128 characters long Step 2: Enable the AES encryption of existing keys of the running-configuration hostname(config)# password encryption aes Step 3: Run the following for the encryption of keys in the startup-configuration hostname(config)# write memory"
+#   reference   : "NIST 800-53r5|CP-9 IA-5(1) SC-28 SC-28(1)"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "^key[ ]+"
+#   item        : "^key 6 .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0019 - ASA - Ensure snmp-server user is set to v3 auth SHA"
+#   info        : "Sets the SNMP v3 user with SHA authentication and AES-256 encryption Rationale: SNMP users have a specified username, a group to which the user belongs, authentication password, encryption password, and authentication and encryption algorithms to use."
+#   solution    : "Run the following: hostname(config)#snmp-server user <snmp_username> <group-name> v3 auth SHA <authentication_password> priv AES 256 <encryption_password>"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server user [^ ]+ [^ ]+ v3 (engineID [^ ]+ )?(encrypted )?auth [Ss][Hh][Aa] [^ ]+ priv [Aa][Ee][Ss] 256 [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0020 - ASA - Ensure aaa local authentication max failed attempts is set to less than or equal to 3"
+#   info        : "Limits the maximum number of times a local user can enter a wrong password before being locked out Rationale: Limiting the number of failed authentication attempts is a prevention and safeguard against brute force and dictionary attacks on systems."
+#   solution    : "Run the following to configure the maximum number of consecutive local login failures to be less than or equal to 3 hostname(config)# aaa local authentication attempts max-fail 3 Default Value: The aaa local authentication max login attempts is disabled by default"
+#   reference   : "NIST 800-53r5|AC-1 AC-2 IA-4 IA-5"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa local authentication attempts max-fail [1-3][\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0021 - ASA - Ensure aaa authentication secure-http-client is configured correctly"
+#   info        : "Provides a secure method, SSL, to protect username and password to be sent in clear text Rationale: If HTTP authentication is used without the command aaa authentication secure-http-client, the username and password are sent from the client to the security appliance in clear text."
+#   solution    : "Configure the secure aaa authentication for http hostname(config)#aaa authentication secure-http-client Default Value: The secure aaa authentication for http is disabled by default"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication secure-http-client"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0022 - ASA - Ensure aaa authentication ssh console is configured correctly"
+#   info        : "Authenticates users who access the device using SSH."
+#   solution    : "Configure the aaa authentication ssh using the TACACS+ server-group as primary method and the local database as backup method. hostname(config)#aaa authentication ssh console <server-group_name> local Default Value: The aaa authentication ssh console is disabled by default."
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authentication ssh console.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0023 - ASA - lifetime"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy lifetime ([1-9]|[1-8][0-9]|9[0-9]|1[0-7][0-9]|180)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0024 - ASA - minimum-changes"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy minimum-changes (1[4-9]|[2-9][0-9])"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0025 - ASA - minimum-length"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy minimum-length (1[4-9]|[2-9][0-9])"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0026 - ASA - minimum-lowercase"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy minimum-lowercase [1-9][0-9]*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0027 - ASA - minimum-numeric"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy minimum-numeric [1-9][0-9]*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0028 - ASA - minimum-special"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy minimum-special [1-9][0-9]*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0029 - ASA - minimum-uppercase"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "password-policy minimum-uppercase [1-9][0-9]*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0030 - ASA - Ensure Failover is enabled"
+#   info        : "Enables failover between the security appliance and another security appliance in order to achieve high availability Rationale: Enabling failover helps to meet the availability requirement of the security CIA (Confidentiality - Integrity - Availability) triad, ensuring a physical and logical redundancy of firewalls in order to avoid service disruption should the security appliance or its component fails."
+#   solution    : "Follow the steps below to enable active/standby failover. The commands are run in the system execution space Step 1: For each appliance, identify the failover link physical interface <failover_interface_physical> and assign it a name <failover_interface_name> and IP address <failover_interface_ip> and subnet mask <failover_interface_mask>. Identify the other device IP address for each appliance as <peer_failover_ip> Step 2: For each appliance, identify the state link physical interface <state_interface_physical> and assign it a name <state_interface_name> and IP address <state_interface_ip> and subnet mask <state_interface_mask>. Identify the other device IP address for each appliance as <peer_state_ip> Step 3: Run the following on the Active device to set it as primary node hostname(config)#failover lan unit primary Step 4: Run the following on the Standby device to set it as secondary node hostname(config)#failover lan unit secondary Step 5: Run the following on both security appliances hostname(config)#failover lan interface <failover_interface_name> <failover_interface_physical> hostname(config)#failover interface ip <failover_interface_name> <failover_interface_ip> <failover_interface_mask> standby <peer_failover_ip> hostname(config)#interface <failover_interface_physical> hostname(config-if)#no shutdown hostname(config)#failover link <state_interface_name> <state_interface_physical> hostname(config)#failover interface ip <state_interface_name> <state_interface_ip> <state_interface_mask> standby <peer_state_ip> hostname(config)#interface <state_interface_physical> hostname(config-if)#no shutdown hostname(config)#failover hostname(config)#write memory Step 6: Set up IPSEC preshared key hostname(config)#failover ipsec pre-shared-key *********** Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^failover lan unit (primary|secondary)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0031 - ASA - Ensure BGP authentication is enabled"
+#   info        : "BGP is an inter and intra autonomous system routing protocol."
+#   solution    : "Step 1 Enable BGP. Step 2 Define the Best Path for a BGP Routing Process. Step 3 Configure Policy Lists. Step 4 Configure AS Path Filters. Step 5 Configure Community Rules. Step 6 Configure IPv4 Address Family Settings. Step 7 Configure IPv6 Address Family Settings. ciscoasa#(config)router bgp 2 ciscoasa(config-router)# bgp default local-preference 500 ciscoasa(config)# policy-list Example-policy-list1 permit ciscoasa(config)# as-path access-list 35 permit testaspath ciscoasa(config)# community-list standard excomm1 permit 100 internet no-advertise no-export ciscoasa(config-router-af)# bgp router-id 10.86.118.3 ciscoasa(config-router-af) aggregate-address 10.86.118.0 255.255.255.0 as-set summary-only suppress-map example1 advertise-map example1 attribute-map example1 Default Value: not enabled"
+#   reference   : "NIST 800-53r5|AC-2(1) CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "router bgp .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0032 - ASA - Ensure trusted NTP server exists"
+#   info        : "Sets a NTP server for which authentication is enabled in order to receive time information Rationale: When authentication is not enabled, attackers can disguise as NTP servers and broadcast wrong time and it will be difficult to correlate events upon an incident."
+#   solution    : "Step 1: Acquire the authentication key ID <key_id>, the IP address of the NTP server <ip_address> and the interface <interface_name> used by the appliance to communicate with the NTP server. Step 2: Run the following to configure the trusted NTP server hostname(config)# ntp server <ip_address> key <key_id> source <interface_name> Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ntp server 192\.168\.0\.1 key [0-9]+ source [^ ]+"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0033 - ASA - NetASA - Authentication - AAA authorization exec"
+  info        : "Limits the access to the privileged EXEC mode."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(9)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "aaa authorization exec authentication-server"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0034 - ASA - Ensure aaa authorization exec is configured correctly"
+#   info        : "Limits the access to the privileged EXEC mode Rationale: When a user is placed in the privileged EXEC mode, valuable information can be obtained."
+#   solution    : "Run the following to enable the AAA authorization exec hostname(config)# aaa authorization exec authentication-server auto-enable Default Value: Not enabled"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa authorization exec authentication-server.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0035 - ASA - Ensure aaa accounting for SSH is configured correctly"
+#   info        : "Enables accounting of administrative access by specifying the start and stop of SSH sessions Rationale: The AAA accounting feature enables to track the actions performed by users and to store the data collected into AAA serves for further audit or further analysis."
+#   solution    : "Run the following in order to record ssh session start and stop and to send them to the AAA servers hostname(config)#aaa accounting ssh console <server-group_name> Default Value: By default, AAA accounting for administrative access is disabled."
+#   reference   : "NIST 800-53r5|AC-6(2) AC-6(5) AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa accounting ssh console.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0036 - ASA - Ensure aaa accounting for EXEC mode is configured correctly"
+#   info        : "Enables accounting of administrative access by specifying the start and stop of EXEC sessions Rationale: The AAA accounting feature enables to track the actions performed by users and to store the data collected into AAA serves for further audit or further analysis."
+#   solution    : "Run the following in order to record exec mode session start and stop and to send them to the AAA servers hostname(config)# aaa accounting enable console <server-group_name> Default Value: By default, AAA accounting for administrative access is disabled."
+#   reference   : "NIST 800-53r5|AC-6(2) AC-6(5) AC-18 AC-18(1) AC-18(3) CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa accounting enable console.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0037 - ASA - Ensure EXEC banner is set"
+#   info        : "Sets the banner message for the access to the privileged EXEC mode Rationale: Configuring banner is an additional security safeguard to protect the device."
+#   solution    : "Run the following command to set the EXEC banner where <line_of_message> is a line of the banner text. hostname(config)#banner exec <line_of_message> Repeat the command for each line if the banner text has several lines. Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner exec"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0038 - ASA - Ensure packet fragments are restricted for untrusted interfaces"
+#   info        : "Sets the security appliance to drop fragmented packets received on the untrusted interface."
+#   solution    : "Step 1: Acquire the name of the untrusted interface <interface_name> Step 2: Run the following command to deny fragments on the interface. hostname(config)#fragment chain 1 <interface_name> Default Value: The default value for the fragment chain is 24."
+#   reference   : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "fragment chain [^ ]+ [^ ]+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0039 - ASA - Ensure threat-detection statistics is set to tcp-intercept"
+#   info        : "Enables threat detection statistics for attacks blocked by the TCP Intercept function Rationale: The TCP Intercept function helps protecting the network and particularly servers against DOS attacks."
+#   solution    : "Run the following to enable threat detection statistics for TCP Intercept hostname(config)# threat-detection statistics tcp-intercept Default Value: Not enable by default"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "threat-detection statistics.*tcp-intercept([ ]|$)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0040 - ASA - Ensure SSH version 2 is enabled"
+#   info        : "Sets the SSH version to 2 Rationale: SSH is an application running on top of a reliable transport layer, such as TCP/IP, that provides strong authentication and encryption capabilities."
+#   solution    : "Run the following to enable SSH version 2 hostname(config)# ssh version 2 Default Value: By default, the security appliance allows both SSH Version 1 and Version 2"
+#   reference   : "NIST 800-53r5|AC-17 AC-17(1) AC-17(3) SC-7 SI-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ssh version 2[\\s]*$"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0041 - ASA - NetASA - Change Management - Ensure DHCP Relay services are configured as expected"
+  info        : "Disables the DHCP service."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "dhcprelay enable .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0042 - ASA - NetASA - Change Management - Ensure DHCP services are configured as expected"
+  info        : "Disables the DHCP service."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "dhcpd enable .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0043 - ASA - NetASA - Services - DNS - domain-lookup"
+  info        : "Sets DNS server(s) to be used by the appliance to perform DNS queries."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "dns domain-lookup .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0044 - ASA - NetASA - Services - DNS - name-server"
+  info        : "Sets DNS server(s) to be used by the appliance to perform DNS queries."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "(dns)?[ ]*name-server .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0045 - ASA - NetASA - Services - Telnet is disabled"
+  info        : "Disables the telnet access to the security appliance in the case it has been configured."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^telnet [0-9.]+"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0046 - ASA - Ensure snmp-server group is set to v3 priv"
+#   info        : "Sets the SNMP v3 group with authentication and privacy Rationale: SNMP Version 3 provides security enhancements that are not available in SNMP Version 1 or SNMP Version 2c."
+#   solution    : "Run the following to configure the SNMP v3 group. hostname(config)# snmp-server group <group_name> v3 priv"
+#   reference   : "NIST 800-53r5|AC-2(1) CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server group .+ v3 priv"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0047 - ASA - Ensure NTP authentication is enabled"
+#   info        : "Enables NTP authentication in order to receive time information only from trusted sources Rationale: When authentication is not enabled, attackers can disguise as NTP servers and broadcast wrong time and it will be difficult to correlate events upon an incident."
+#   solution    : "Run the following command to enable NTP authentication hostname(config)#ntp authenticate Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|AC-18 AU-7 AU-8 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ntp authenticate[\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0048 - ASA - Ensure NTP authentication key is configured correctly"
+#   info        : "Sets the key used to authenticate NTP servers Rationale: When authentication is not enabled, attackers can disguise as NTP servers and broadcast wrong time and it will be difficult to correlate events upon an incident."
+#   solution    : "Step 1: Run the following to set the authentication key ID <key_id> hostname(config)# ntp trusted-key <key_id> Step 2: Run the following to configure the authentication key <authentication_key> hostname(config)# ntp authentication-key <key_id> md5 <authentication_key> Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|AC-18 AU-7 AU-8 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ntp authentication-key.*md5.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0049 - ASA - Ensure OSPF authentication is enabled"
+#   info        : "Enables the authentication of OSPF neighbor before routing information is received from the neighbor Rationale: Enabling the routing protocol authentication prevents against attackers who can send wrong routing information in order to redirect traffic to their network or send malformed packets in order to saturate and to exhaust the control plane."
+#   solution    : "Step 1: Acquire the interface <interface_name> used by the firewall to receive OSPF routing updates and the area ID <area_id> Step 2: Agree with the neighbor device on the authencation key <key_value> and determine an authentication key ID <key_id> Step 3: Run the following to enable OSPF authentication hostname(config)#interface <interface_name> hostname(config-if)#ospf authentication message-digest hostname(config-if)#ospf message-digest-key <key_id> md5 <key_value> hostname(config-if)#exit hostname(config)#area <area_id> authentication message-digest Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|AC-2(1) CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ospf message-digest-key .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0050 - ASA - Ensure EIGRP authentication is enabled"
+#   info        : "Enables the authentication of EIGRP neighbor before routing information is received from the neighbor Rationale: Enabling the routing protocol authentication prevents against attackers who can send wrong routing information in order to redirect traffic to their network or send malformed packets in order to saturate and to exhaust the control plane."
+#   solution    : "Step 1: Acquire the interface <interface_name> used by the firewall to receive EIGRP routing updates and the EIGRP Autonomous System number <as_number> Step 2: Agree with the neighbor device on the authencation key <key_value> and determine an authentication key ID <key_id> Step 3: Run the following to enable RIP authentication hostname(config)#interface <interface_name> hostname(config-if)#authentication mode eigrp <as_number> md5 hostname(config-if)#authentication key eigrp <as_number> <key_value> key-id <key_id> Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|AC-2(1) CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "authentication key eigrp .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0051 - ASA - Ensure RSA key pair is greater than or equal to 2048 bits"
+#   info        : "Generates an RSA key pair used by SSH protocol of at least 2048 bits Rationale: Secure Shell (SSH) is a secure remote-login protocol."
+#   solution    : "Step 1: Acquire the enterprise standard RSA key size greater or equal than 2048 bits Step 2: If the audit procedure revealed existing non-compliant key pairs, run the following to remove them: hostname(config)#crypto key zeroize rsa Step 3: Run the following to generate compliant RSA key pair: hostname(config)# crypto key generate rsa modulus <enterprise_RSA_key_size> Step 4: Run the following to save the RSA keys to persistent Flash memory hostname(config)#write memory"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show crypto key mypubkey rsa | include _Modulus_Size_.bits"
+#   item        : "Modulus Size \\(bits\\): 2048"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0052 - ASA - Ensure VPN traffic goes through the relevant ACL"
+#   info        : "By default, the traffic going through IPSEC tunnel (policy-based) bypasses the ACL of the interface the VPN terminates on, often the outside ACL."
+#   solution    : "Summary Step 1: determine on which interface(s) the IPSEC tunnel ends Step 2: determine the ACL applied to the interface Step 3: add an ACE to the ACL to permit the traffic temporarily Step 4: disable the bypass Step 1 hostname# show run full | grep crypto.map..*.interface. crypto map my_remote_sites interface outside In this example, the crypto map my_remote_sites is applied to the interface outside: the IPSEC tunnel terminates on the interface outside. Step 2 hostname# sh run access-group | grep interface.outside access-group outside_acl in interface outside The ACL outside_acl is applied to the interface outside. Step 3 Note: this considers that the remote site networks are defined in an object called obj-remote-site and the local site networks in an object called obj-local-site. The ACE is added as the first entry in this case but could be after an initial series of denies to known 'bad' destinations. hostname(config)# access-list outside_acl line 1 permit ip object obj-remote-site object obj-local-site log notifications hostname(config)# access-list outside_acl line 2 remark Temporary permit from remote site. Restrict as soon as possible. Step 4 hostname(config)# no sysopt connection permit-vpn Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|CA-3 CA-9 CM-2 CM-7b."
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "no sysopt connection permit-vpn"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0053 - ASA - NetASA - Ensure aaa accounting for SSH is configured correctly"
+  info        : "Enables accounting of administrative access by specifying the start and stop of SSH sessions."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-6(2) AC-18 CM-2 CM-6 CM-7 CM-9"
+  see_also    : "See HTH Policies and Standards"
+  item        : "aaa accounting ssh console.*"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0054 - ASA - NetASA - Ensure 'SSH version 2 is enabled"
+  info        : "Sets the SSH version to 2."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-17 SC-7 SI-4"
+  see_also    : "See HTH Policies and Standards"
+  item        : "ssh version 2[\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0055 - ASA - NetASA - Ensure SSH session timeout is less than or equal to 5 minutes"
+  info        : "Sets the idle timeout for an SSH session before the security appliance terminates it."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^ssh timeout [1-5][\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0056 - ASA - NetASA - Ensure SSH source restriction is set to an authorized IP address"
+  info        : "Determines the client IP addresses that are allowed to connect to the security appliance through SSH."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(1) AC-3 AC-17 AC-17(1) SC-7 SI-4"
+  see_also    : "See HTH Policies and Standards"
+  item        : "ssh [0-9]+.*"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0057 - ASA - NetASA -Timeout - SSH is less than 5 minutes"
+  info        : "Sets the idle timeout for an SSH session before the security appliance terminates it."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^ssh timeout [1-5][\\s]*$"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0058 - ASA - Ensure logging to monitor is disabled"
+#   info        : "Disables the logging to monitor Rationale: The ASA by default send logs to monitor for Telnet and SSH sessions."
+#   solution    : "Run the following command to disable the logging monitor hostname(config)#no logging monitor Default Value: The logging monitor is disabled by default"
+#   reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging monitor"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0059 - ASA - Ensure SSH source restriction is set to an authorized IP address"
+#   info        : "Determines the client IP addresses that are allowed to connect to the security appliance through SSH Rationale: One key element of securing the network is the security of management access to the infrastructure devices."
+#   solution    : "Run the following to enable SSH access source restriction hostname(config)#ssh <source_ip> <source_netmask> <interface_name>"
+#   reference   : "NIST 800-53r5|AC-2(1) AC-3 AC-17 AC-17(1) SC-7 SI-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ssh [0-9]+.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0060 - ASA - Ensure SCP protocol is set to Enable for files transfers"
+#   info        : "Enables Secure Copy protocol Rationale: FTP and TFTP are protocols that transfer data in clear text across the network and thus are vulnerable to packet sniffing."
+#   solution    : "Run the following command to enable secure copy hostname(config)# ssh scopy enable"
+#   reference   : "NIST 800-53r5|CM-7 MA-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ssh scopy enable"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0061 - ASA - Ensure SSL AES 256 encryption is set for HTTPS access"
+#   info        : "Sets the SSL encryption algorithm to AES 256 Rationale: Given that the network may be prone to sniffing, the HTTP access to the security appliance must be secured with SSL or TLS protocols."
+#   solution    : "For version 9.x, run the following command to enable AES 256 algorithm hostname(config)# ssl cipher tlsv1.2 custom AES256-SHA"
+#   reference   : "NIST 800-53r5|CM-7 MA-4"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "ssl cipher tlsv1.[2-9] custom \"[Aa][Ee][Ss]256-[Ss][Hh][Aa]\""
+#   item        : "ssl cipher tlsv1.[2-9] custom"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0062 - ASA - Ensure SSH session timeout is less than or equal to 5 minutes"
+#   info        : "Sets the idle timeout for an SSH session before the security appliance terminates it."
+#   solution    : "Step 1: Run the following to set the SSH timeout to 5 minutes hostname(config)# ssh timeout 5 Default Value: The default session timeout value is 5 minutes."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ssh timeout [1-5][\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0063 - ASA - verison 9.x"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "ssl cipher tlsv1.[2-9] custom \"[Aa][Ee][Ss]256-[Ss][Hh][Aa]\""
+#   item        : "ssl cipher tlsv1.[2-9] custom"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0064 - ASA - NetASA - Ensure logging history severity level is set to greater than or equal to 5"
+  info        : "Determines which syslog messages should be sent to the SNMP server."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-1 AU-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging history ([5-7]|notification(s)?|informational|debugging)[\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0065 - ASA - NetASA - Ensure logging trap severity level is greater than or equal to 5"
+  info        : "Determines which syslog messages should be sent to the syslog server."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-3 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging trap ([5-7]|notification(s)?|informational|debugging)[\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0066 - ASA - NetASA - Ensure threat-detection statistics is set to tcp-intercept"
+  info        : "Enables threat detection statistics for attacks blocked by the TCP Intercept function."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also    : "See HTH Policies and Standards"
+  item        : "threat-detection statistics.*tcp-intercept([ ]|$)"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0067 - ASA - NetASA - Ensure logging is enabled"
+  info        : "Enables logging."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging enable"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0068 - ASA - NetASA - Ensure logging to monitor is disabled"
+  info        : "Disables the logging to monitor."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging monitor"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0069 - ASA - NetASA - Ensure logging with the device ID is configured correctly"
+  info        : "Includes the device ID in the logs generated."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging device-id .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0070 - ASA - NetASA - Ensure logging with timestamps is enabled"
+  info        : "Allows the timestamp to logs generated."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AU-3 AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging timestamp"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0071 - ASA - NetASA - Logging - Enabled"
+  info        : "Enables logging."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|AU-3 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "logging enable"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0072 - ASA - Ensure logging is enabled"
+#   info        : "Enables logging Rationale: Logging is fundamental for audit requirements and incident management and should be enabled on any business critical system storing or conveying information."
+#   solution    : "Run the following to enable logging hostname(config)#logging enable>"
+#   reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging enable"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0073 - ASA - Ensure syslog hosts is configured correctly"
+#   info        : "Sets the SNMP notification recipient or the NMS or SNMP manager that can connect to the ASA."
+#   solution    : "Run the following to configure the Syslog server hostname(config)# logging host <interface_name> <host_ip_address> Default Value: The syslog server is not configured by default."
+#   reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging host [^ ]+ 192\.168\.2\.1"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0074 - ASA - Ensure logging with the device ID is configured correctly"
+#   info        : "Includes the device ID in the logs generated Rationale: In an environment where logs are collected from many different sources, identifying the logs from a specific device is alleviated by doing a query including the device's hostname included in the logs and helps to quickly gather the expected results."
+#   solution    : "Run the following to enable logging with the device hostname: hostname(config)#logging device-id hostname In a multi-context security appliance, run the following command: hostname(config)#logging device-id context-name"
+#   reference   : "NIST 800-53r5|AU-2 AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging device-id .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0075 - ASA - Ensure logging history severity level is set to greater than or equal to 5"
+#   info        : "Determines which syslog messages should be sent to the SNMP server."
+#   solution    : "Step 1: Run the following command to set the logging level to 5: hostname(config)# logging history 5 The severity level can be chosen between 0 and 7 Default Value: The device does not log to simple network management protocol (SNMP) servers by default."
+#   reference   : "NIST 800-53r5|AU-1 AU-2"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging history ([5-7]|notification(s)?|informational|debugging)[\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0076 - ASA - Ensure logging with timestamps is enabled"
+#   info        : "Allows the timestamp to logs generated Rationale: Enabling timestamps, to mark the generation time of log messages, reduces the complexity of correlating events and tracing network attacks across multiple devices by providing a holistic view of events thus enabling faster troubleshooting of issues and analysis of incidents."
+#   solution    : "Run the following command to enable the logging timestamp hostname(config)#logging timestamp Default Value: By default, syslog messages do not include timestamp"
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging timestamp"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0077 - ASA - Ensure logging trap severity level is greater than or equal to 5"
+#   info        : "Determines which syslog messages should be sent to the syslog server."
+#   solution    : "Step 1: Run the following command to verify logging trap is equal to 5: hostname(config)# logging trap 5 The severity level can be chosen between 0 and 7"
+#   reference   : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "logging trap ([5-7]|notification(s)?|informational|debugging)[\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0078 - ASA - Ensure local timezone is properly configured"
+#   info        : "Sets the local time zone information so that the time displayed by the ASA is more relevant to those who are viewing it."
+#   solution    : "Step 1: Acquire standard zone name (enterprise_zone_name) used by the enterprise (GMT, UTC, EDT, PST) Step 2: Run the following to configure the required value hostname(config)# clock timezone <enterprise_zone_name> <local_offset> Default Value: By default, the time zone is UTC"
+#   reference   : "NIST 800-53r5|AU-7 AU-8"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "clock timezone ([A-Za-z0-9]+) (-[0-9]+|[0-9]+)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0079 - ASA - Ensure explicit deny in access lists is configured correctly"
+#   info        : "Ensures that each access-list has an explicit deny statement Rationale: Configuring an explicit deny entry, with log option, at the end of access control lists enables monitoring and troubleshooting traffic flows that have been denied."
+#   solution    : "Step 1: Acquire the name <access-list_name> of the access-list that is not compliant from the audit procedure Step 2: Run the following to configure the explicit deny. hostname(config)#<access-list_name> extended deny ip any any log The statement will be placed at the end of the access-list Default Value: Disabled by default."
+#   reference   : "NIST 800-53r5|CA-9 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-7(5)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^(access-group [^ ]+ [^ ]+ interface [^ ]+|access-list [^ ]+ [^ ]+ deny ip any any [^ ]+)"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0080 - ASA - Ensure Host Name is set"
+#   info        : "Changes the device default hostname Rationale: The device hostname plays an important role in asset inventory and identification as a security requirement, but also in the public keys and certificate deployments as well as when correlating logs from different systems during an incident handling."
+#   solution    : "Step 1: Acquire the enterprise naming convention to build the name_of_device Step 2: Run the following to configure the device hostname hostname(config)#hostname <name_of_device> Default Value: The default value depends on the platform, but generally is ciscoasa"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "hostname (ciscoasa|asa)"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0081 - ASA - Check if Cisco ASA is installed"
+  info        : "No additional information provided."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : ""
+  see_also    : "See HTH Policies and Standards"
+  item        : "^ASA"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0082 - ASA - NetASA - Access Control - Ensure Host Name is set"
+  info        : "Changes the device default hostname."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-18 CM-2 CM-6 CM-7 CM-9"
+  see_also    : "See HTH Policies and Standards"
+  item        : "hostname (ciscoasa|asa)"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0083 - ASA - Ensure Image Authenticity is correct"
+#   info        : "Verifies for digitally signed images that the running image is from a trusted source Rationale: The software image being a code can be vulnerable to many attacks such as malicious code injection in the software, the modification of the code installed in the ROM."
+#   solution    : "Step 1: Correct the errors on the hardware and software Step 2: Run the audit procedure until the system is compliant Step 3: Implement secure delivery of hardware and harden the software distribution server"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show software authenticity running | include CiscoSystems"
+#   item        : "^.*Organization Name.*CiscoSystems$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0084 - ASA - Check if Cisco ASA 9 is installed"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ASA Version 9"
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0085 - ASA - NetASA - Ensure SNMP community string is not the default string"
+  info        : "Sets a SNMP community string different from the default one."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "snmp-server community public"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0086 - ASA - NetASA - Ensure SNMP community string is not the default string"
+  info        : "Sets a SNMP community string different from the default one."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also    : "See HTH Policies and Standards"
+  item        : "snmp-server community public"
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0087 - ASA - Ensure SNMP community string is not the default string"
+#   info        : "Sets a SNMP community string different from the default one Rationale: The SNMP community string is a key used both by the security appliance and the NMS server."
+#   solution    : "Run the following command to configure the SNMP community string hostname(config)#snmp-server community <snmp_community_string> In a multi-context environment, run the same command in the context. Default Value: The default community string is public."
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "snmp-server community public"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0088 - ASA - Ensure security-level is set to 0 for Internet-facing interface"
+#   info        : "Sets the security level of the Internet facing interface to 0 Rationale: Where security zones are not configured, the Internet facing interface is the most untrusted interface and must have the lowest security-level that is 0."
+#   solution    : "Step 1: Acquire the physical name of the Internet facing interface <interface_physical_name> Step 2: Run the following command assigned the security-level 0 hostname(config)#interface <interface_physical_name> hostname(config-if)#security-level 0 Default Value: Security level is not assigned by default"
+#   reference   : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "interface"
+#   severity    : MEDIUM
+# </custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0089 - ASA - NetASA - Access Control - Ensure Domain Name is set"
+  info        : "Sets the domain name for the security appliance."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-18 CM-1 CM-2 CM-6 CM-7 CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  item        : "domain-name [^ ]+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0090 - ASA - NetASA - Access Control - Ensure Failover is enabled"
+  info        : "Enables failover between the security appliance and another security appliance in order to achieve high availability."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-18 CM-1 CM-2 CM-6 CM-7 CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^failover lan unit (primary|secondary)"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0091 - ASA - NetASA - Ensure aaa accounting for EXEC mode is configured correctly"
+  info        : "Enables accounting of administrative access by specifying the start and stop of EXEC sessions."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-6(2) AC-18 CM-1 CM-2 CM-6 CM-7 CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  item        : "aaa accounting enable console.*"
+</custom_item>
+
+<custom_item>
+  type         : BANNER_CHECK
+  description  : "1.0092 - ASA - NetASA - Ensure LOGIN banner is set"
+  info         : "Sets the LOGIN banner for access to the Command Line Interface (CLI)."
+  solution     : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference    : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also     : "See HTH Policies and Standards"
+  item         : "banner login"
+  is_substring : YES
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0093 - ASA - NetASA - Ensure snmp-server host is set to version 3"
+  info        : "Sets the SNMP notification recipient or the NMS or SNMP manager that can connect to the ASA."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^snmp-server host [^ ]+ [^ ]+ version 3 [^ ]+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0094 - ASA - NetASA - Ensure console session timeout is less than or equal to 5 minutes"
+  info        : "Sets the idle timeout for a console session before the security appliance terminates it."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "console timeout [1-5][\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0095 - ASA - NetASA - Ensure explicit deny in access lists is configured correctly"
+  info        : "Ensures that each access-list has an explicit deny statement."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CA-9 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^(access-group [^ ]+ [^ ]+ interface [^ ]+|access-list [^ ]+ [^ ]+ deny ip any any [^ ]+)"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0096 - ASA - NetASA - Ensure HTTP idle timeout is less than or equal to 5 minutes"
+  info        : "Sets the timeout for an HTTP session idle before the security appliance terminates it."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-12"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^http server idle-timeout [1-5][\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0097 - ASA - NetASA - Ensure ICMP is restricted for untrusted interfaces"
+  info        : "Allows ICMP traffic for specific hosts or subnets and denies ICMP traffic for all other sources."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+  see_also    : "See HTH Policies and Standards"
+  item        : "icmp deny any .+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0098 - ASA - NetASA - Ensure intrusion prevention is enabled for untrusted interfaces is configured as CONFIG_CHECK_NOT"
+  info        : "Enables the intrusion prevention with the IP audit feature on untrusted interfaces."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SI-4 SI-4(4)"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^ip audit (name [^ ]+ attack|interface [^ ]+)"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0099 - ASA - NetASA - Ensure ip verify is set to reverse-path for untrusted interfaces is configured as CONFIG_CHECK_NOT"
+  info        : "Enables the unicast Reverse-Path Forwarding (uRPF) on untrusted interfaces."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also    : "See HTH Policies and Standards"
+  item        : "ip verify reverse-path interface [^ ]+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK_NOT
+  description : "1.0100 - ASA - NetASA - Ensure packet fragments are restricted for untrusted interfaces is configured as CONFIG_CHECK_NOT"
+  info        : "Sets the security appliance to drop fragmented packets received on the untrusted interface."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+  see_also    : "See HTH Policies and Standards"
+  item        : "fragment chain [^ ]+ [^ ]+"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0101 - ASA - NetASA - Ensure SNMP traps is enabled"
+  info        : "Enables SNMP traps to be sent to the NMS."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+  see_also    : "See HTH Policies and Standards"
+  item        : "snmp-server enable traps.*"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0102 - ASA - NetASA - Timeout - Console is less than 5 minutes"
+  info        : "Sets the idle timeout for a console session before the security appliance terminates it."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "console timeout [1-5][\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : CONFIG_CHECK
+  description : "1.0103 - ASA - NetASA - Timeout - HTTP is less than 5 minutes"
+  info        : "Sets the timeout for an HTTP session idle before the security appliance terminates it."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : "NIST 800-53|CM-2"
+  see_also    : "See HTH Policies and Standards"
+  item        : "^http server idle-timeout [1-5][\\s]*$"
+</custom_item>
+
+<custom_item>
+  type        : FILE_CONTENT_CHECK
+  description : "PASSED - TARGET OS MATCHES BASELINE - ASA"
+  info        : "No additional information provided."
+  solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+  reference   : ""
+  see_also    : "See HTH Policies and Standards"
+  item        : ""
+</custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0105 - ASA - Ensure snmp-server host is set to version 3"
+#   info        : "Sets the SNMP notification recipient or the NMS or SNMP manager that can connect to the ASA."
+#   solution    : "Run the following to configure the SNMP v3 host hostname(config)# snmp-server host <interface_name> <host_ip_address> version 3 <snmp_user>"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^snmp-server host [^ ]+ [^ ]+ version 3 [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0106 - ASA - Ensure Domain Name is set"
+#   info        : "Sets the domain name for the security appliance Rationale: The domain name is important during the deployment of RSA keys and certificates used by the appliance."
+#   solution    : "Step 1: Acquire the enterprise domain name (enterprise_domain) Step 2: Run the following to configure the domain name hostname(config)#domain-name <enterprise_domain>"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "domain-name [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0107 - ASA - Ensure Unused Interfaces is disable"
+#   info        : "Disables the unused interfaces Rationale: Shutting down the unused interfaces is a complement to physical security."
+#   solution    : "Step 1: Identify the physical name <interface_physical_name> of the unused interfaces that are not disabled Step 2: For each of the identified interfaces, run the following command Hostname(config)#interface <interface_physical_name> Hostname(config-if)#shutdown"
+#   reference   : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+#   see_also    : "See HTH Policies and Standards"
+#   cmd         : "show int ip bri | inc __down"
+#   item        : ".*"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0108 - ASA - Ensure ASDM banner is set"
+#   info        : "Sets the banner message for the ASDM access Rationale: Configuring banner is an additional security safeguard to protect the device."
+#   solution    : "Run the following command to set the ASDM banner where <line_of_message> is a line of the banner text. hostname(config)#banner asdm <line_of_message> Repeat the command for each line if the banner text has several lines. Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner asdm"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0109 - ASA - Ensure LOGIN banner is set"
+#   info        : "Sets the LOGIN banner for access to the Command Line Interface (CLI) Rationale: Configuring banner is an additional security safeguard to protect the device."
+#   solution    : "Run the following command to set the LOGIN banner where <line_of_message> is a line of the banner text. hostname(config)#banner login <line_of_message> Repeat the command for each line if the banner text has several lines. Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner login"
+# </custom_item>
+
+# <custom_item>
+#   type        : BANNER_CHECK
+#   description : "1.0110 - ASA - Ensure MOTD banner is set"
+#   info        : "Sets the message-of-the-day (MOTD) banner for first access to the Command Line Interface (CLI)."
+#   solution    : "Run the following command to set the MOTD banner where <line_of_message> is a line of the banner text. hostname(config)#banner motd <line_of_message> Repeat the command for each line if the banner text has several lines. Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "banner motd"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0111 - ASA - Ensure HTTP source restriction is set to an authorized IP address"
+#   info        : "Determines the client IP addresses that are allowed to connect to the security appliance through HTTP Rationale: One key element of securing the network is the security of management access to the infrastructure devices."
+#   solution    : "Run the following to enable HTTP access source restriction hostname(config)#http <source_ip> <source_netmask> <interface_name>"
+#   reference   : "NIST 800-53r5|CM-7 MA-4"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "http [0-9]+.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0112 - ASA - Ensure console session timeout is less than or equal to 5 minutes"
+#   info        : "Sets the idle timeout for a console session before the security appliance terminates it."
+#   solution    : "Step 1: Run the following command to set the console timeout to less than or equal to 5 minutes hostname(config)# console timeout 5 Default Value: The default timeout is 0, which means the console session will not time out."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "console timeout [1-5][\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0113 - ASA - Ensure HTTP idle timeout is less than or equal to 5 minutes"
+#   info        : "Sets the timeout for an HTTP session idle before the security appliance terminates it."
+#   solution    : "Step 1: Run the following to set the HTTP timeout to less than or equal to 5 minutes hostname(config)# http server idle-timeout 5 Default Value: The default session timeout value is 20 minutes."
+#   reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^http server idle-timeout [1-5][\\s]*$"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0114 - ASA - Ensure noproxyarp is enabled for untrusted interfaces"
+#   info        : "Disables the Proxy-ARP function on untrusted interfaces Rationale: The ASA replies to ARP requests performed to IP addresses belonging to its interfaces' subnets and also to global IP addresses in some NAT configurations."
+#   solution    : "Step 1: Acquire the name of the untrusted interface <untrusted_interface_name> Step 2: Run the following command to disable the Proxy-ARP on the untrusted interface. hostname(config)# sysopt noproxyarp <untrusted_interface_name> Default Value: Proxy-ARP is enabled by default"
+#   reference   : "NIST 800-53r5|AC-2(1) CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "sysopt noproxyarp .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0115 - ASA - Ensure DNS Guard is enabled"
+#   info        : "Enables the protection against DNS cache poisoning attacks Rationale: A DNS cache is poisoned when it contains incorrect entries that redirect traffic to an attacker website."
+#   solution    : "Run the following command to enable the DNS Guard function. hostname(config)# dns-guard Default Value: The function is disabled for the related software versions"
+#   reference   : "NIST 800-53r5|AC-2(1) CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "dns-guard"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0116 - ASA - Ensure ICMP is restricted for untrusted interfaces"
+#   info        : "Allows ICMP traffic for specific hosts or subnets and denies ICMP traffic for all other sources Rationale: ICMP is an important troubleshooting tool that can also be used to perform ICMP attacks on untrusted interfaces."
+#   solution    : "Step 1: Acquire the untrusted interface name <untrusted_interface_name>, the trusted subnet and corresponding subnet mask Step 2: Run the following command to allow ICMP from the trusted subnet to the untrusted interface. Repeat the command if there are more than one trusted subnets identified. hostname(config)# icmp permit <subnet> <mask> <untrusted_interface_name> Step 3: Run the following command to deny ICMP from all other sources to the untrusted interface. hostname(config)# icmp deny any<untrusted_interface_name> Default Value: ICMP is enabled by default."
+#   reference   : "NIST 800-53r5|CM-6 CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SC-23"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "icmp deny any .+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0117 - ASA - Ensure ActiveX filtering is enabled"
+#   info        : "Removes ActiveX controls from the HTTP reply traffic received on the security appliance."
+#   solution    : "Step 1: Acquire the TCP port used for the HTTP traffic containing ActiveX objects, the IP address <internal_users_ip> and mask <internal_users_mask> of internal users generating the HTTP traffic, and the IP address <external_servers_ip> and mask <external_servers_mask> of the external servers to which the internal users connect and that are source of ActiveX objects. Step 2: Run the following command to filter ActiveX applets. hostname(config)# filter activex <port> <internal_users_ip> <internal_users_mask> <external_servers_ip> <external_servers_mask> Default Value: ActiveX control filtering is disabled by default."
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^filter activex.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0118 - ASA - Ensure Java applet filtering is enabled"
+#   info        : "Removes Java applets from the HTTP reply traffic crossing the security appliance."
+#   solution    : "Step 1: Acquire the TCP port used for the HTTP traffic containing Java objects, the IP address <internal_users_ip> and mask <internal_users_mask> of internal users generating the HTTP traffic, and the IP address <external_servers_ip> and mask <external_servers_mask> of the external servers to which the internal users connect and that are source of Java objects. Step 2: Run the following command to filter Java applets. hostname(config)# filter java <port> <internal_users_ip> <internal_users_mask> <external_servers_ip> <external_servers_mask> Default Value: Java applet filtering is disabled by default."
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^filter java.*"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0119 - ASA - Ensure intrusion prevention is enabled for untrusted interfaces"
+#   info        : "Enables the intrusion prevention with the IP audit feature on untrusted interfaces Rationale: The intrusion prevention is an additional feature for which the security appliance audits the traffic in order to identify vulnerability exploits."
+#   solution    : "Step 1: Acquire the Enterprise standard action <prevention_action> to be performed when an attack signature is matched. It is to be chosen between 'drop' (The packet is dropped) and 'reset' (The packet is dropped and the connection closed) Step 2: Run the following to enable the audit policy against the attack signatures with the Enterprise standard action hostname(config)# ip audit name <audit_name> attack action alarm <prevention_action> Step 3: Identify the untrusted interface <interface_name> Step 4: Run the following to enable the intrusion prevention on the untrusted interface hostname(config)# ip audit interface <interface_name> <audit_name> Default Value: Disabled"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7 SI-4 SI-4(4)"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ip audit (name [^ ]+ attack|interface [^ ]+)"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0120 - ASA - Ensure non-default application inspection is configured correctly"
+#   info        : "Enables the inspection of an application that is not in the default global policy application inspection Rationale: By default, the ASA configuration includes a policy that matches all default application inspection traffic and applies certain inspections to the traffic on all interfaces (global policy)."
+#   solution    : "Run the following to enable the inspection of the protocol: hostname(config)# policy-map global_policy hostname(config-pmap)# class inspection_default hostname(config-pmap-c)# inspect <protocol_name> hostname(config-pmap-c)# exit hostname(config-pmap)# exit hostname(config)#service-policy global_policy global Default Value: The default policy configuration includes the following commands to inspect applications: class-map inspection_default match default-inspection-traffic policy-map type inspect dns preset_dns_map parameters message-length maximum 512 policy-map global_policy class inspection_default inspect dns preset_dns_map inspect ftp inspect h323 h225 inspect h323 ras inspect ip-options inspect rsh inspect rtsp inspect esmtp inspect sqlnet inspect skinny inspect sunrpc inspect xdmcp inspect sip inspect netbios inspect tftp service-policy global_policy global"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 MA-4 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   regex       : "Manual Review Required"
+#   item        : "policy-map type inspect .+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0121 - ASA - Ensure ip verify is set to reverse-path for untrusted interfaces"
+#   info        : "Enables the unicast Reverse-Path Forwarding (uRPF) on untrusted interfaces."
+#   solution    : "Step 1: Acquire the name of the untrusted interface <interface_name> Step 2: Run the following command to enable protection against IP spoofing hostname(config)# ip verify reverse-path interface <interface_name> Default Value: Disabled by default"
+#   reference   : "NIST 800-53r5|CM-7 CP-6 CP-7 PL-8 PM-7 SA-8 SC-7"
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip verify reverse-path interface [^ ]+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0122 - ASA - Check if ip verify is set to reverse-path for untrusted interfaces"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ip verify reverse-path interface [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0123 - ASA - Check if EIGRP is enabled"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "router eigrp"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0124 - ASA - Check if ICMP is restricted for untrusted interfaces"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "icmp deny any .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0125 - ASA - Check if intrusion prevention is enabled for untrusted interfaces"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "^ip audit (name [^ ]+ attack|interface [^ ]+)"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0126 - ASA - Check if OSPF is enabled"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "router ospf"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0127 - ASA - Check if packet fragments are restricted for untrusted interfaces"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "fragment chain [^ ]+ [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0128 - ASA - dhcpd"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "dhcpd enable .+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK_NOT
+#   description : "1.0129 - ASA - dhcprelay"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "dhcprelay enable .+"
+#   severity    : MEDIUM
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0130 - ASA - domain-lookup"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "dns domain-lookup .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0131 - ASA - host"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa-server [^ ]+ host [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0132 - ASA - name-server"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "(dns)?[ ]*name-server .+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0133 - ASA - protocol"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "aaa-server [^ ]+ protocol [^ ]+"
+# </custom_item>
+
+# <custom_item>
+#   type        : CONFIG_CHECK
+#   description : "1.0134 - ASA - verison 8.x"
+#   info        : "No additional information provided."
+#   solution    : "Configure this setting to the expected baseline value shown in the control description and value_data."
+#   reference   : ""
+#   see_also    : "See HTH Policies and Standards"
+#   item        : "ssl encryption aes256-sha1"
+# </custom_item>
+
+</group_policy>
+</check_type>

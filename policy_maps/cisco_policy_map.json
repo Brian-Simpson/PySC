@@ -1,0 +1,104 @@
+{
+  "vendor": "cisco",
+  "total_controls": 241,
+  "matched_controls": 16,
+  "match_percentage": 6.639004149377594,
+  "mappings": {
+    "0": {
+      "vendor_control_id": "CIS_Cisco_IOS_12_v4.0.0_Level_1.audit_28",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "1": {
+      "vendor_control_id": "CIS_Cisco_IOS_12_v4.0.0_Level_1.audit_52",
+      "vendor_control_desc": "2.2.1 Set 'logging on'",
+      "matched_secccon_policy": "Log dropped packets",
+      "match_score": 0.35011848341232227
+    },
+    "2": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_43",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "3": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_45",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "4": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_47",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "5": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_49",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "6": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_51",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "7": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_53",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "8": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_56",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "9": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_59",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "10": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_61",
+      "vendor_control_desc": "SNMP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.39253731343283577
+    },
+    "11": {
+      "vendor_control_id": "CIS_Cisco_IOS_XE_17.x_v2.2.1_L1.audit_108",
+      "vendor_control_desc": "BGP is enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.3757575757575757
+    },
+    "12": {
+      "vendor_control_id": "CIS_Cisco_NX-OS_v1.2.0_L1.audit_0",
+      "vendor_control_desc": "Check for TACACS+ enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.3690909090909091
+    },
+    "13": {
+      "vendor_control_id": "CIS_Cisco_NX-OS_v1.2.0_L1.audit_1",
+      "vendor_control_desc": "Check for TACACS+ enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.3690909090909091
+    },
+    "14": {
+      "vendor_control_id": "CIS_Cisco_NX-OS_v1.2.0_L1.audit_6",
+      "vendor_control_desc": "Check for RADIUS enabled",
+      "matched_secccon_policy": "",
+      "match_score": 0.3731578947368421
+    },
+    "15": {
+      "vendor_control_id": "CIS_Cisco_NX-OS_v1.2.0_L1.audit_53",
+      "vendor_control_desc": "Policy is configured",
+      "matched_secccon_policy": "Policy Setting",
+      "match_score": 0.36
+    }
+  }
+}

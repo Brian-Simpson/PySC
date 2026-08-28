@@ -1,0 +1,46 @@
+GPO NAME: WIN11-02-Audit-Policy
+
+PATH:
+Computer Config → Policies → Windows Settings → Security Settings → Advanced Audit Policy
+
+ENABLED:
+Force audit policy subcategory settings = Enabled
+
+ACCOUNT LOGON:
+Credential Validation                    = Success, Failure
+
+ACCOUNT MANAGEMENT:
+User Account Management                 = Success, Failure
+Security Group Management               = Success, Failure
+
+LOGON/LOGOFF:
+Logon                                  = Success, Failure
+Logoff                                 = Success
+Account Lockout                        = Failure
+Special Logon                          = Success
+Other Logon/Logoff Events              = Success, Failure
+
+OBJECT ACCESS:
+File Share                             = Success, Failure
+Removable Storage                      = Success, Failure
+
+POLICY CHANGE:
+Audit Policy Change                    = Success
+Authentication Policy Change           = Success
+Authorization Policy Change            = Success, Failure
+
+PRIVILEGE USE:
+Sensitive Privilege Use                = Success, Failure
+
+SYSTEM:
+Security State Change                  = Success
+System Integrity                       = Success, Failure
+IPsec Driver                           = Success, Failure
+
+DETAILED TRACKING:
+Process Creation                       = Success, Failure
+Include command line                   = Enabled
+
+NTLM AUDITING:
+Incoming NTLM traffic                  = Audit All
+Outgoing NTLM traffic                  = Audit

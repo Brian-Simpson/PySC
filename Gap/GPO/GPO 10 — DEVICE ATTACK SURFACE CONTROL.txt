@@ -1,0 +1,11 @@
+GPO NAME: WIN11-10-Device-Control
+
+DEVICE INSTALLATION:
+Prevent installation of devices not described = Enabled
+Apply retroactively = Enabled
+
+DMA PROTECTION:
+Block when not protected = Enabled
+
+BLOCK IEEE 1394:
+Enabled

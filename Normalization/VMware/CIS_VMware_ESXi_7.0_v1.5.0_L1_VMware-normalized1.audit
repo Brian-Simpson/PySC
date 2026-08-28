@@ -1,0 +1,1197 @@
+
+<check_type:"VMware">
+
+<report type:"WARNING">
+  description : "1.001 - ESXi - Ensure ESXi is properly patched"
+  info        : "VMware Lifecycle Manager is a tool which may be utilized to automate patch management for vSphere hosts and virtual machines."
+  reference   : "NIST 800-53r5|RA-5 RA-7 SI-2 SI-2(2)"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.002 - ESXi - Ensure NTP time synchronization is configured properly"
+  info        : "Network Time Protocol (NTP) synchronization should be configured correctly and enabled on each VMware ESXi host to ensure accurate time for system event logs."
+  reference   : "NIST 800-53r5|AU-7 AU-8"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"//audit:propSet/audit:val/audit:dateTimeInfo/audit:ntpConfig\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - NTP Server Pool: </xsl:text>"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:propSet/audit:val/audit:dateTimeInfo/audit:ntpConfig/audit:server\">"
+  xsl_stmt    : "<xsl:value-of select=\"current()\"></xsl:value-of><xsl:if test=\"following::audit:server\"><xsl:text>, </xsl:text></xsl:if>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - NTP Server Pool: NOT found&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "NTP Server Pool: "
+  expect      : "NTP Server Pool: 0\.us\.pool\.ntp\.org, 1\.us\.pool\.ntp\.org, 2\.us\.pool\.ntp\.org$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.003 - ESXi - Ensure the ESXi host firewall is configured to restrict access to services running on the host"
+  info        : "The ESXi firewall is enabled by default and allows ping (ICMP) and communication with DHCP/DNS clients."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:firewall\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:ruleset\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:enabled='true'\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:label\"/> (Port <xsl:value-of select=\"audit:rule/audit:port\"/>)<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "- Available to all IPs: <xsl:value-of select=\"audit:allowedHosts/audit:allIp\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  expect      : "^Manual Review Required$"
+  severity    : MEDIUM
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.004 - ESXi - Ensure Managed Object Browser (MOB) is disabled"
+  info        : "The Managed Object Browser (MOB) is a web-based server application that lets you examine objects that exist on the server side, explore the object model used by the VM kernel to manage the host, and change configurations."
+  reference   : "NIST 800-53r5|AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Config.HostAgent.plugins.solo.enableMob']\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Config.HostAgent.plugins.solo.enableMob']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Config.HostAgent.plugins.solo.enableMob']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Config.HostAgent.plugins.solo.enableMob : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Config.HostAgent.plugins.solo.enableMob : "
+  expect      : "Config.HostAgent.plugins.solo.enableMob : false"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.005 - ESXi - Ensure dvfilter API is not configured if not used"
+  info        : "The dvfilter network API is used by some products (e."
+  reference   : "NIST 800-53r5|CM-6 CM-7 SC-23"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Net.DVFilterBindIpAddress']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Net.DVFilterBindIpAddress']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Net.DVFilterBindIpAddress']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Net.DVFilterBindIpAddress : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Net\.DVFilterBindIpAddress : "
+  expect      : "Net\.DVFilterBindIpAddress : NOT configured"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.006 - ESXi - Ensure vSphere Authentication Proxy is used when adding hosts to Active Directory"
+  info        : "vSphere Authentication Proxy enables ESXi hosts to join a domain without using Active Directory credentials."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.007 - ESXi - Ensure persistent logging is configured for all ESXi hosts"
+  info        : "ESXi can be configured to store log files on an in-memory file system."
+  reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Syslog.global.logDir']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Syslog.global.logDir']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Syslog.global.logDir']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Syslog.global.logDir : NOT found</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Syslog\.global\.logDir : "
+  expect      : "Syslog\.global\.logDir : \[datastore1\] systemlogs$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.008 - ESXi - Ensure remote logging is configured for ESXi hosts"
+  info        : "By default, ESXI logs are stored on a local scratch volume or ramdisk."
+  reference   : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-6(3) AU-7 AU-12"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Syslog.global.logHost']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Syslog.global.logHost']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Syslog.global.logHost']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Syslog.global.logHost : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Syslog\.global\.logHost : "
+  expect      : "Syslog\.global\.logHost : udp://192\.168\.0\.1:514$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.009 - ESXi - Ensure passwords are required to be complex"
+  info        : "ESXi uses the pam_passwdqc."
+  reference   : "NIST 800-53r5|IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Security.PasswordQualityControl']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.PasswordQualityControl']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.PasswordQualityControl']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Security.PasswordQualityControl : NOT found</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Security\.PasswordQualityControl : "
+  expect      : "Security\.PasswordQualityControl : retry=3 min=disabled,disabled,disabled,disabled,14"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.010 - ESXi - Ensure the maximum failed login attempts is set to 5"
+  info        : "Authentication should be configured so there is a maximum number of consecutive failed login attempts for each account, at which point the account at risk will be locked out."
+  reference   : "NIST 800-53r5|AC-1 AC-2 AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Security.AccountLockFailures']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.AccountLockFailures']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.AccountLockFailures']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Security.AccountLockFailures : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Security\.AccountLockFailures : "
+  expect      : "Security\.AccountLockFailures : \b[1-5]\b"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.011 - ESXi - Ensure account lockout is set to 15 minutes"
+  info        : "An account is automatically locked after the maximum number of failed consecutive login attempts is reached."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Security.AccountUnlockTime']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.AccountUnlockTime']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.AccountUnlockTime']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Security.AccountUnlockTime : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Security.AccountUnlockTime : "
+  expect      : "Security.AccountUnlockTime : \b900\b"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.012 - ESXi - Ensure previous 5 passwords are prohibited"
+  info        : "This setting prevents users from utilizing previously used passwords."
+  reference   : "NIST 800-53r5|IA-5(1)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='Security.PasswordHistory']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.PasswordHistory']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='Security.PasswordHistory']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>Security.PasswordHistory : NOT found</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Security\.PasswordHistory : "
+  expect      : "Security\.PasswordHistory : \b5\b"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.013 - ESXi - Ensure only authorized users and groups belong to the esxAdminsGroup group"
+  info        : "The AD group used by vSphere is defined by the esxAdminsGroup attribute."
+  reference   : "NIST 800-53r5|AC-2 AC-6(2) AC-6(5)"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.014 - ESXi - Ensure the Exception Users list is properly configured"
+  info        : "Users who are added to the \"Exception Users\" list do not lose their permissions when the host enters lockdown mode."
+  reference   : "NIST 800-53r5|AC-2 AC-3 AC-5 AC-6 MP-2"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key=\'DCUI.Access\']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name=\'name\']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key=\'DCUI.Access\']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key=\'DCUI.Access\']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name=\'name\']/audit:val\"/> - <xsl:text>DCUI.Access : NOT found</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "DCUI\.Access : "
+  expect      : "DCUI\.Access : root$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.015 - ESXi - Ensure the DCUI timeout is set to 600 seconds or less"
+  info        : "The Direct Console User Interface (DCUI) is used for directly logging into an ESXi host and carrying out host management tasks."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.DcuiTimeOut']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.DcuiTimeOut']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.DcuiTimeOut']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>UserVars.DcuiTimeOut : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "UserVars\.DcuiTimeOut : "
+  expect      : "UserVars\.DcuiTimeOut : \b([1-9]|[1-9][0-9]|[1-5][0-9]{2}|600)\b"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.016 - ESXi - Ensure DCUI has a trusted users list for lockdown mode"
+  info        : "Lockdown mode disables direct host access, requiring admins to manage hosts from vCenter."
+  reference   : "NIST 800-53r5|AC-2"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key=\'DCUI.Access\']/audit:value/text()\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name=\'name\']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key=\'DCUI.Access\']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key=\'DCUI.Access\']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name=\'name\']/audit:val\"/> - <xsl:text>DCUI.Access : NOT found</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "DCUI\.Access : "
+  expect      : "DCUI\.Access : root$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.017 - ESXi - Ensure the ESXi shell is disabled"
+  info        : "The ESXi shell is an interactive command line environment available from the Direct Console User Interface (DCUI) or remotely via SSH."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:service/audit:service[audit:key='TSM']\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:service/audit:service[audit:key='TSM']/audit:label\"/> : running = <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:service/audit:service[audit:key='TSM']/audit:running\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>ESXi Shell : running = NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "ESXi Shell : running ="
+  expect      : "ESXi Shell : running = FALSE$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.018 - ESXi - Ensure SSH is disabled"
+  info        : "The ESXi shell, when enabled, can be accessed directly from the host console through the DCUI or remotely using SSH."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:service/audit:service[audit:key='TSM-SSH']\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:service/audit:service[audit:key='TSM-SSH']/audit:label\"/> : running = <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:service/audit:service[audit:key='TSM-SSH']/audit:running\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>SSH : running = NOT found</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "SSH : running = "
+  expect      : "SSH : running = FALSE$"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.019 - ESXi - Ensure CIM access is limited"
+  info        : "The Common Information Model (CIM) system provides an interface that enables hardware-level management from remote applications using a set of standard APIs."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.020 - ESXi - Ensure Normal Lockdown mode is enabled"
+  info        : "Enabling lockdown mode disables direct local access to an ESXi host, requiring the host be managed remotely from vCenter Server."
+  reference   : "NIST 800-53r5|AC-2(1)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name=\'name\']/audit:val\"/> - Lockdown Mode : <xsl:value-of select=\"audit:propSet/audit:val/audit:lockdownMode\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Lockdown Mode : "
+  expect      : "Lockdown Mode : (lockdownNormal|lockdownStrict)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.021 - ESXi - Ensure idle ESXi shell and SSH sessions time out after 300 seconds or less"
+  info        : "The ESXiShellInteractiveTimeOut allows you to automatically terminate idle ESXi shell and SSH sessions."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.ESXiShellInteractiveTimeOut']\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.ESXiShellInteractiveTimeOut']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.ESXiShellInteractiveTimeOut']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>UserVars.ESXiShellInteractiveTimeOut : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "UserVars\.ESXiShellInteractiveTimeOut : "
+  expect      : "UserVars\.ESXiShellInteractiveTimeOut : \b([1-9]|[1-9][0-9]|[12][0-9]{2}|300)\b"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.022 - ESXi - Ensure the shell services timeout is set to 1 hour or less"
+  info        : "When the ESXi shell or SSH services are enabled on a host, they will run indefinitely."
+  reference   : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.ESXiShellTimeOut']\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.ESXiShellTimeOut']/audit:key\"/> : <xsl:value-of select=\"audit:propSet/audit:val/audit:option[audit:key='UserVars.ESXiShellTimeOut']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>UserVars.ESXiShellTimeout : NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "UserVars\.ESXiShellTimeout : "
+  expect      : "UserVars\.ESXiShellTimeout : ([1-9]|[1-9][0-9]{1,2}|[12][0-9]{3}|3[0-5][0-9]{2}|3600)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.023 - ESXi - Ensure bidirectional CHAP authentication for iSCSI traffic is enabled"
+  info        : "vSphere allows for the use of bidirectional authentication of both the iSCSI target and host."
+  reference   : "NIST 800-53r5|AC-17(2) IA-5 IA-5(1) SC-8 SC-8(1)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:storageDevice/audit:hostBusAdapter[contains (@xsi:type,'HostInternetScsiHba')]\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:storageDevice/audit:hostBusAdapter[contains (@xsi:type,'HostInternetScsiHba')]\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:device\"/>) - MutualChapAuthenticationType : <xsl:value-of select=\"audit:authenticationProperties/audit:mutualChapAuthenticationType\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"//audit:propSet[audit:name='name']/audit:val\"/> - <xsl:text>MutualChapAuthenticationType : No iSCSI devices found</xsl:text><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "MutualChapAuthenticationType : "
+  not_expect  : "MutualChapAuthenticationType : chapProhibited$"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.024 - ESXi - Ensure storage area network (SAN) resources are segregated properly"
+  info        : "Use zoning and logical unit number (LUN) masking to segregate storage area network (SAN) activity."
+  reference   : "NIST 800-53r5|SC-4"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.025 - ESXi - portgroup - forgedTransmits"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:key\"/>) - forgedTransmits = <xsl:value-of select=\"audit:spec/audit:policy/audit:security/audit:forgedTransmits\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - forgedTransmits = FALSE</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "forgedTransmits ="
+  not_expect  : "forgedTransmits = TRUE$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.026 - ESXi - vswitch - forgedTransmits"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:vswitch\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:vswitch\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:key\"/>) - forgedTransmits = <xsl:value-of select=\"audit:spec/audit:policy/audit:security/audit:forgedTransmits\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - forgedTransmits = FALSE</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "forgedTransmits ="
+  expect      : "forgedTransmits = FALSE$"
+</custom_item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description : "1.027 - ESXi - Ensure the vSwitch Forged Transmits policy is set to reject"
+  info        : "This recommendation is intended to address configuring a standard switch."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  show_output : YES
+</report>
+  </then>
+</if>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.028 - ESXi - portgroup - macChanges"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:key\"/>) - macChanges = <xsl:value-of select=\"audit:spec/audit:policy/audit:security/audit:macChanges\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - macChanges = FALSE</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "macChanges ="
+  not_expect  : "macChanges = TRUE$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.029 - ESXi - vswitch - macChanges"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:vswitch\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:vswitch\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:key\"/>) - macChanges = <xsl:value-of select=\"audit:spec/audit:policy/audit:security/audit:macChanges\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - macChanges = FALSE</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "macChanges ="
+  expect      : "macChanges = FALSE$"
+</custom_item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description : "1.030 - ESXi - Ensure the vSwitch MAC Address Change policy is set to reject"
+  info        : "This recommendation is intended to address configuring a standard switch."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  show_output : YES
+</report>
+  </then>
+</if>
+
+<if>
+  <condition auto:"FAILED" type:"AND">
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.031 - ESXi - vswitch - allowPromiscuous"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:vswitch\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:vswitch\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:key\"/>) - allowPromiscuous = <xsl:value-of select=\"audit:spec/audit:policy/audit:security/audit:allowPromiscuous\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - allowPromiscuous = FALSE</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "allowPromiscuous ="
+  expect      : "allowPromiscuous = FALSE$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.032 - ESXi - portgroup - allowPromiscuous"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:key\"/>) - allowPromiscuous = <xsl:value-of select=\"audit:spec/audit:policy/audit:security/audit:allowPromiscuous\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - allowPromiscuous = FALSE</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "allowPromiscuous ="
+  not_expect  : "allowPromiscuous = TRUE$"
+</custom_item>
+  </condition>
+
+  <then>
+<report type:"PASSED">
+  description : "1.033 - ESXi - Ensure the vSwitch Promiscuous Mode policy is set to reject"
+  info        : "This recommendation is intended to address configuring a standard switch."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  show_output : YES
+</report>
+  </then>
+</if>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.034 - ESXi - Ensure port groups are not configured to the value of the native VLAN"
+  info        : "This recommendation is intended to address configuring pyrtgroups for a standard switch."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:spec/audit:name\"/>) - vlanId = <xsl:value-of select=\"audit:spec/audit:vlanId\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - vlanId = NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  severity    : MEDIUM
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.035 - ESXi - Ensure port groups are not configured to VLAN values reserved by upstream physical switches"
+  info        : "This recommendation is intended to address configuring pyrtgroups for a standard switch."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:spec/audit:name\"/>) - vlanId = <xsl:value-of select=\"audit:spec/audit:vlanId\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - vlanId = NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  severity    : MEDIUM
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_ESX
+  description : "1.036 - ESXi - Ensure port groups are not configured to VLAN 4095 and 0 except for Virtual Guest Tagging (VGT)"
+  info        : "This recommendation is intended to address configuring pyrtgroups for a standard switch."
+  reference   : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='HostConfigInfo']/audit:network/audit:portgroup\">"
+  xsl_stmt    : "<xsl:value-of select=\"../../../../audit:propSet[audit:name='name']/audit:val\"/> (<xsl:value-of select=\"audit:spec/audit:name\"/>) - vlanId = <xsl:value-of select=\"audit:spec/audit:vlanId\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet[audit:name='name']/audit:val\"/><xsl:text> - vlanId = NOT configured</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "vlanId ="
+  not_expect  : "vlanId = (4095|NOT configured)$"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.037 - ESXi - Ensure Virtual Distributed Switch Netflow traffic is sent to an authorized collector"
+  info        : "The vSphere VDS can export Netflow information about traffic crossing the VDS."
+  reference   : "NIST 800-53r5|SI-4 SI-4(4)"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.038 - ESXi - Ensure unnecessary floppy devices are disconnected"
+  info        : "Ensure that no floppy device is connected to a virtual machine unless required."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware/audit:device[@xsi:type='VirtualFloppy']\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - Virtual Floppy : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware/audit:device[@xsi:type='VirtualFloppy']/audit:deviceInfo/audit:label\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - Virtual Floppy : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware/audit:device[@xsi:type='VirtualFloppy']/audit:deviceInfo/audit:label\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - Virtual Floppy : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - Virtual Floppy : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Virtual Floppy :"
+  expect      : "Virtual Floppy : NOT found$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.039 - ESXi - Ensure unnecessary parallel ports are disconnected"
+  info        : "Ensure that no parallel port is connected to a virtual machine unless required."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:device[@xsi:type='VirtualParallelPort']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual Parallel Port : <xsl:value-of select=\"audit:device[@xsi:type='VirtualParallelPort' ]/audit:deviceInfo/audit:label\" /><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual Parallel Port : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Virtual Parallel Port :"
+  expect      : "Virtual Parallel Port : (False|NOT found)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.040 - ESXi - Ensure unnecessary serial ports are disconnected"
+  info        : "Ensure that no serial port is connected to a virtual machine unless required."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:device[@xsi:type='VirtualSerialPort']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual Serial Port : <xsl:value-of select=\"audit:device[@xsi:type='VirtualSerialPort' ]/audit:deviceInfo/audit:label\" /><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual Serial Port : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Virtual Serial Port :"
+  expect      : "Virtual Serial Port : (False|NOT found)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.041 - ESXi - Ensure unnecessary USB devices are disconnected"
+  info        : "Ensure that no USB device is connected to a virtual machine unless required."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:device[@xsi:type='VirtualUSBController']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual USB : <xsl:value-of select=\"audit:device[@xsi:type='VirtualUSBController']/audit:deviceInfo/audit:label\" /><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual USB : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Virtual USB :"
+  expect      : "Virtual USB : (False|NOT found)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.042 - ESXi - Ensure unauthorized modification and disconnection of devices is disabled"
+  info        : "In a virtual machine, users and processes without root or administrator privileges can disconnect devices, such as network adapters and CD-ROM drives, and modify device settings within the guest operating system."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\"/> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - <xsl:value-of select=\"audit:key\"/> : <xsl:value-of select=\"audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.device\.edit\.disable :"
+  expect      : "isolation\.device\.edit\.disable : TRUE$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.043 - ESXi - Ensure unauthorized connection of devices is disabled"
+  info        : "In a virtual machine, users and processes without root or administrator privileges can connect devices, such as network adapters and CD-ROM drives."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.device.connectable.disable']\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - isolation.device.connectable.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.device.connectable.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - isolation.device.connectable.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.device.connectable.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - isolation.device.connectable.disable : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - isolation.device.connectable.disable : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.device\.connectable\.disable : "
+  expect      : "isolation\.device\.connectable\.disable : True$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.044 - ESXi - Ensure PCI and PCIe device passthrough is disabled"
+  info        : "Using the VMware DirectPath I/O feature to pass through a PCI or PCIe device to a virtual machine can result in a potential security vulnerability."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:device[@xsi:type='VirtualPCIPassthrough']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual PCI Passthrough : <xsl:value-of select=\"audit:device[@xsi:type='VirtualPCIPassthrough']/audit:deviceInfo/audit:label\" /><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual PCI Passthrough : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Virtual PCI Passthrough :"
+  expect      : "Virtual PCI Passthrough : (False|NOT found)$"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.045 - ESXi - Ensure unnecessary or superfluous functions inside VMs are disabled"
+  info        : "Disable all system components that are not needed to support the application or service running on the VM."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<report type:"WARNING">
+  description : "1.046 - ESXi - Ensure use of the VM console is limited"
+  info        : "The VM console enables you to connect to the console of a VM, in effect seeing what a monitor on a physical server would show."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.047 - ESXi - Ensure secure protocols are used for virtual serial port access"
+  info        : "Serial ports are interfaces for connecting peripherals to the VM."
+  reference   : "NIST 800-53r5|CM-7 MA-4"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:hardware\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:device[@xsi:type='VirtualSerialPort']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual Serial Port : <xsl:value-of select=\"audit:device[@xsi:type='VirtualSerialPort']/audit:deviceInfo/audit:summary\" /><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - Virtual Serial Port : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "Virtual Serial Port :"
+  expect      : "Virtual Serial Port : (File .*|Remote (ssl|tcp[46]?\+ssl|telnets)://.*|NOT found)$"
+</custom_item>
+
+<report type:"WARNING">
+  description : "1.048 - ESXi - Ensure standard processes are used for VM deployment"
+  info        : "Have a standard process for VM deployment whether this is a VMware template or another means to ensure Operating Systems have the appropriate security controls."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+</report>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.049 - ESXi - Ensure access to VMs through the dvfilter network APIs is configured correctly"
+  info        : "A VM must be configured explicitly to accept access by the dvfilter network API."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[contains (audit:key,'ethernet') and contains (audit:key,'.filter') and contains (audit:key,'.name')]\">"
+  xsl_stmt    : "<xsl:for-each select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[contains (audit:key,'ethernet') and contains (audit:key,'.filter') and contains (audit:key,'.name')]\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - dvfilter access : <xsl:value-of select=\"audit:key\"/> / <xsl:value-of select=\"audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - dvfilter access : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:template>"
+  expect      : "^Manual Review Required$"
+  severity    : MEDIUM
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.050 - ESXi - Ensure VM Console Copy operations are disabled"
+  info        : "VM console copy operations should be disabled."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.copy.disable']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.copy.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.copy.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.copy.disable : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.tools\.copy\.disable : "
+  expect      : "isolation\.tools\.copy\.disable : TRUE$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.051 - ESXi - Ensure VM Console Drag and Drop operations is disabled"
+  info        : "VM console drag and drop operations should be disabled."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.dnd.disable']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.dnd.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.dnd.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.dnd.disable : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.tools\.dnd\.disable : "
+  expect      : "isolation\.tools\.dnd\.disable : (TRUE|NOT configured)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.052 - ESXi - Ensure VM Console GUI Options is disabled"
+  info        : "VM console and paste GUI options should be disabled."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.setGUIOptions.enable']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.setGUIOptions.enable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.setGUIOptions.enable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.setGUIOptions.enable : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.tools\.setGUIOptions\.enable : "
+  expect      : "isolation\.tools\.setGUIOptions\.enable : (FALSE|NOT configured)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.053 - ESXi - Ensure VM Console Paste operations are disabled"
+  info        : "VM console paste operations should be disabled."
+  reference   : "NIST 800-53r5|CM-6 CM-7"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:variable name=\"ipaddress\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmtools\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>"
+  xsl_stmt    : "<xsl:variable name=\"vmname\" select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.paste.disable']\">"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.paste.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.paste.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"$vmname\" /> (<xsl:value-of select=\"$vmtools\" /> <xsl:value-of select=\"$ipaddress\" />) - isolation.tools.paste.disable : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.tools\.paste\.disable : "
+  expect      : "isolation\.tools\.paste\.disable : (TRUE|NOT configured)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.054 - ESXi - Ensure virtual disk shrinking is disabled"
+  info        : "If Virtual disk shrinking is done repeatedly it will cause the virtual disk to become unavailable resulting in a denial of service."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.diskShrink.disable']\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - isolation.tools.diskShrink.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.diskShrink.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - isolation.tools.diskShrink.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.diskShrink.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - isolation.tools.diskShrink.disable : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - isolation.tools.diskShrink.disable : NOT configured<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.tools\.diskShrink\.disable : "
+  not_expect  : "isolation\.tools\.diskShrink\.disable : (FALSE|NOT configured)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.055 - ESXi - Ensure virtual disk wiping is disabled"
+  info        : "Wiping a virtual disk reclaims all unused space in it."
+  reference   : "NIST 800-53r5|CM-1 CM-2 CM-6 CM-7 CM-7(1) CM-9 SA-3 SA-8 SA-10"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.diskWiper.disable']\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - isolation.tools.diskWiper.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.diskWiper.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - isolation.tools.diskWiper.disable : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='isolation.tools.diskWiper.disable']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - isolation.tools.diskWiper.disable : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - isolation.tools.diskWiper.disable : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "isolation\.tools\.diskWiper\.disable : "
+  expect      : "isolation\.tools\.diskWiper\.disable : True$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.056 - ESXi - Ensure the number of VM log files is configured properly"
+  info        : "Normally a new log file is created only when a host is rebooted, so the file can grow to be quite large."
+  reference   : "NIST 800-53r5|AU-4"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='log.keepOld']\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - log.keepOld : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='log.keepOld']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - log.keepOld : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='log.keepOld']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - log.keepOld : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - log.keepOld : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "log\.keepOld : "
+  expect      : "log\.keepOld : (10|NOT found)$"
+</custom_item>
+
+<custom_item>
+  type        : AUDIT_VM
+  description : "1.057 - ESXi - Ensure VM log file size is limited"
+  info        : "Normally a new log file is created only when a host is rebooted, so the file can grow to be quite large."
+  reference   : "NIST 800-53r5|AU-4"
+  see_also    : "See HTH Policies and Standards"
+  xsl_stmt    : "<xsl:template match=\"/\">"
+  xsl_stmt    : "<xsl:for-each select=\"//audit:returnval\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='log.rotateSize']\">"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - log.rotateSize : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='log.rotateSize']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - log.rotateSize : <xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:extraConfig[audit:key='log.rotateSize']/audit:value\"/><xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:choose>"
+  xsl_stmt    : "<xsl:when test=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\">"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:ipAddress\"/>) - log.rotateSize : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:when>"
+  xsl_stmt    : "<xsl:otherwise>"
+  xsl_stmt    : "<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineConfigInfo']/audit:name\"/> (<xsl:value-of select=\"audit:propSet/audit:val[@xsi:type='VirtualMachineSummary']/audit:guest/audit:toolsStatus\"/>) - log.rotateSize : NOT found<xsl:text>&#10;</xsl:text>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:otherwise>"
+  xsl_stmt    : "</xsl:choose>"
+  xsl_stmt    : "</xsl:for-each>"
+  xsl_stmt    : "</xsl:template>"
+  regex       : "log\.rotateSize : "
+  expect      : "log\.rotateSize : ([0-9]{1,6}|10[0-1][0-9]{4}|10[0-2][0-3][0-9]{3}|1024000)$"
+</custom_item>
+
+</check_type>

@@ -1,0 +1,8 @@
+{
+  "vendor": "cisco_nxos",
+  "audit_files": [
+    "CIS_Cisco_NX-OS_v1.2.0_L1.audit"
+  ],
+  "description": "Placeholder policy map for vendor-specific security controls.",
+  "mappings": {}
+}

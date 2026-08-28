@@ -1,0 +1,525 @@
+#HTH Cisco IOS  Baseline
+
+<check_type:"Cisco">
+
+<if>
+  <condition type:"AND">
+    <item>
+      type                : CONFIG_CHECK
+      description         : "Check if Cisco IOS is installed"
+      item                : "^version"
+    </item>
+  </condition>
+
+  <then>
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0025 - NETIOS - Enable 'aaa authentication enable default"
+      info                : "Authenticates users who access privileged EXEC mode when they use the enable command."
+      reference           : "NIST 800-53r5|AC-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "aaa authentication enable default"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0026 - NETIOS - Set 'privilege 1' for local users"
+      info                : "Sets the privilege level for the user."
+      reference           : "NIST 800-53r5|IA-2(2) IA-5(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "username .+ privilege ([2-9]|1[0-5])"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0027 - NETIOS - Set 'http Secure-server' limit"
+      info                : "Device management includes the ability to control the number of administrators and management sessions that manage a device."
+      reference           : "NIST 800-53r5|AC-10"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ip http max-connections 2"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0028 - NETIOS - Set 'exec-timeout' to less than or equal to 10 min on 'ip http"
+      info                : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+      reference           : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ip http timeout-policy idle ([1-9]|[1-9][0-9]|[1-5][0-9]{2}|600) life .+ requests .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0029 - NETIOS - Set 'no exec' for 'line aux 0"
+      info                : "The 'no exec' command restricts a line to outgoing connections only."
+      reference           : "NIST 800-53r5|CM-7"
+      see_also            : "See HTH Policies and Standards"
+      context             : "line aux .+"
+      item                : "no exec"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0030 - NETIOS - Set 'access-class' for 'line vty"
+      info                : "The 'access-class' setting restricts incoming and outgoing connections between a particular vty (into a Cisco device) and the networking devices associated with addresses in an access list."
+      reference           : "NIST 800-53r5|AC-17(3) SI-7"
+      see_also            : "See HTH Policies and Standards"
+      context             : "line vty .+"
+      item                : "access-class 100 in"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0031 - NETIOS - Set 'transport input none' for 'line aux 0"
+      info                : "When you want to allow only an outgoing connection on a line, use the no exec command."
+      reference           : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+      see_also            : "See HTH Policies and Standards"
+      context             : "line aux .+"
+      item                : "transport input (all|ssh|telnet)$"
+    </item>
+
+    <item>
+      type                : BANNER_CHECK
+      description         : "1.0032 - NETIOS - Set the 'banner-text' for 'banner exec"
+      info                : "This command specifies a message to be displayed when an EXEC process is created (a line is activated, or an incoming connection is made to a vty)."
+      reference           : "NIST 800-53r5|AT-1 AT-2 PM-13"
+      see_also            : "See HTH Policies and Standards"
+      item                : "banner exec"
+      content             : "All unauthorized activity is monitored and logged."
+    </item>
+
+    <item>
+      type                : BANNER_CHECK
+      description         : "1.0033 - NETIOS - Set the 'banner-text' for 'banner login"
+      info                : "Follow the banner login command with one or more blank spaces and a delimiting character of your choice."
+      reference           : "NIST 800-53r5|AT-1 AT-2 PM-13"
+      see_also            : "See HTH Policies and Standards"
+      item                : "banner login"
+      content             : "All unauthorized activity is monitored and logged."
+    </item>
+
+    <item>
+      type                : BANNER_CHECK
+      description         : "1.0034 - NETIOS - Set the 'banner-text' for 'banner motd"
+      info                : "This MOTD banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns)."
+      reference           : "NIST 800-53r5|AT-1 AT-2 PM-13"
+      see_also            : "See HTH Policies and Standards"
+      item                : "banner motd"
+      content             : "All unauthorized activity is monitored and logged."
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0035 - NETIOS - Set the 'banner-text' for 'webauth banner"
+      info                : "This banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns)."
+      reference           : "NIST 800-53r5|AT-1 AT-2 PM-13"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ip admission auth-proxy-banner http .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0036 - NETIOS - Set the ACL for each 'snmp-server community"
+      info                : "This feature specifies a list of IP addresses that are allowed to use the community string to gain access to the SNMP agent."
+      reference           : "NIST 800-53r5|AC-17(3) SI-7"
+      see_also            : "See HTH Policies and Standards"
+      item                : "snmp-server community .+ .+"
+      regex               : "snmp-server community .+ .+ 1$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0037 - NETIOS - Set the 'hostname"
+      info                : "The hostname is used in prompts and default configuration filenames."
+      reference           : "NIST 800-53r5|CM-6"
+      see_also            : "See HTH Policies and Standards"
+      item                : "hostname .+"
+      regex               : "hostname Router$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0038 - NETIOS - Set 'modulus' to greater than or equal to 2048 for 'crypto key generate rsa"
+      info                : "Use this command to generate RSA key pairs for your Cisco device."
+      reference           : "NIST 800-53r5|SA-15"
+      see_also            : "See HTH Policies and Standards"
+      item                : ".*"
+      regex               : "^Manual Review Required$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0039 - NETIOS - Set 'seconds' for 'ip ssh timeout' for 60 seconds or less"
+      info                : "The time interval that the router waits for the SSH client to respond before disconnecting an uncompleted login attempt."
+      reference           : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ip ssh time-out"
+      regex               : "ip ssh time-out ([1-9]|[1-5][0-9]|60)$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0040 - NETIOS - Set maximum value for 'ip ssh authentication-retries"
+      info                : "The number of retries before the SSH login session disconnects."
+      reference           : "NIST 800-53r5|IA-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "Authentication timeout: .* secs; Authentication retries: [1-3]"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0041 - NETIOS - Set 'no ip bootp server"
+      info                : "Disable the Bootstrap Protocol (BOOTP) service on your routing device."
+      reference           : "NIST 800-53r5|CM-7"
+      see_also            : "See HTH Policies and Standards"
+      item                : "no ip bootp server"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0042 - NETIOS - Set 'no service pad"
+      info                : "Disable X."
+      reference           : "NIST 800-53r5|CM-7"
+      see_also            : "See HTH Policies and Standards"
+      item                : "no service pad"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0043 - NETIOS - Set 'logging enable"
+      info                : "Enable logging of system messages."
+      reference           : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "logging host"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0044 - NETIOS - Set 'buffer size' for 'logging buffered"
+      info                : "Enable system message logging to a local buffer."
+      reference           : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "logging buffered"
+      regex               : "logging buffered 64000( *|$)"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0045 - NETIOS - Set IP address for 'logging host"
+      info                : "Log system messages and debug output to a remote host."
+      reference           : "NIST 800-53r5|AU-6(1) AU-7 IR-4(1) SI-4 SI-4(2) SI-4(5)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "logging host 192\.168\.2\.1"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0046 - NETIOS - Set 'logging source interface"
+      info                : "Specify the source IPv4 or IPv6 address of system logging packets"
+      reference           : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "logging source-interface .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0047 - NETIOS - Set 'ip address' for 'ntp server"
+      info                : "Use this command if you want to allow the system to synchronize the system software clock with the specified NTP server."
+      reference           : "NIST 800-53r5|AU-7 AU-8"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ntp server 192\.168\.3\.1"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0048 - NETIOS - Set 'no interface tunnel"
+      info                : "Verify no tunnel interfaces are defined."
+      reference           : "NIST 800-53r5|CM-7"
+      see_also            : "See HTH Policies and Standards"
+      item                : "interface [Tt]unnel[0-9]+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0049 - NETIOS - Set 'ip verify unicast source reachable-via"
+      info                : "Examines incoming packets to determine whether the source address is in the Forwarding Information Base (FIB) and permits the packet only if the source is reachable through the interface on which the packet was received (sometimes referred to as strict mode)."
+      reference           : "NIST 800-53r5|CM-7"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface .+"
+      item                : "ip verify unicast"
+      regex               : "ip verify unicast source reachable-via"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0050 - NETIOS - Set 'authentication mode md5"
+      info                : "Configure authentication to prevent unapproved sources from introducing unauthorized or false service messages."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router eigrp .+"
+      item                : "authentication mode md5"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0051 - NETIOS - Set 'aaa accounting system"
+      info                : "Performs accounting for all system-level events not associated with users, such as reloads."
+      reference           : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "aaa accounting system [^ ]+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0052 - NETIOS - Set 'login authentication for 'ip http"
+      info                : "If account management functions are not automatically enforced, an attacker could gain privileged access to a vital element of the network security architecture"
+      reference           : "NIST 800-53r5|AC-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "^[ ]*ip http authentication (local|aaa_list_name)"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0053 - NETIOS - Set 'aaa accounting' to log all privileged use commands using 'commands 15"
+      info                : "Runs accounting for all commands at the specified privilege level."
+      reference           : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "aaa accounting commands 15 [^ ]+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0054 - NETIOS - Set 'aaa accounting connection"
+      info                : "Provides information about all outbound connections made from the network access server."
+      reference           : "NIST 800-53r5|AC-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "aaa accounting connection [^ ]+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0055 - NETIOS - Set 'aaa accounting exec"
+      info                : "Runs accounting for the EXEC shell session."
+      reference           : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "aaa accounting exec [^ ]+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0056 - NETIOS - Set 'aaa accounting network"
+      info                : "Runs accounting for all network-related service requests."
+      reference           : "NIST 800-53r5|AU-2 AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "aaa accounting network [^ ]+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0057 - NETIOS - Set 'exec-timeout' to less than or equal to 10 min on 'ip http"
+      info                : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+      reference           : "NIST 800-53r5|SC-10"
+      see_also            : "See HTH Policies and Standards"
+      item                : "^[ ]*ip http timeout-policy"
+      regex               : "^[ ]*ip http timeout-policy idle ([1-9]|[1-9][0-9]|[1-5][0-9]{2}|600) life .+ requests .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0058 - NETIOS - Set 'exec-timeout' to less than or equal to 10 minutes for 'line aux 0"
+      info                : "If no input is detected during the interval, the EXEC facility resumes the current connection."
+      reference           : "NIST 800-53r5|AC-2(5) AC-11 AC-11(1) AC-12"
+      see_also            : "See HTH Policies and Standards"
+      context             : "line aux 0"
+      item                : "exec-timeout (1[1-9]|[2-9][0-9]|[0-9]{3,}) [0-9]+$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0059 - NETIOS - Set 'http Secure-server' limit"
+      info                : "Device management includes the ability to control the number of administrators and management sessions that manage a device."
+      reference           : "NIST 800-53r5|AC-10"
+      see_also            : "See HTH Policies and Standards"
+      item                : "^[ ]*ip http max-connections 2"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0060 - NETIOS - Set the 'banner-text' for 'webauth banner"
+      info                : "This banner is displayed to all terminals connected and is useful for sending messages that affect all users (such as impending system shutdowns)."
+      reference           : "NIST 800-53r5|AT-1 AT-2 PM-13"
+      see_also            : "See HTH Policies and Standards"
+      item                : "^[ ]*ip admission auth-proxy-banner http .+"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0061 - NETIOS - Require 'aes 128' as minimum for 'snmp-server user' when using SNMPv3"
+      info                : "Specify the use of a minimum of 128-bit AES algorithm for encryption when using SNMPv3."
+      reference           : "NIST 800-53r5|IA-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "Privacy Protocol: AES128"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0062 - NETIOS - Set 'priv' for each 'snmp-server group' using SNMPv3"
+      info                : "Specifies authentication of a packet with encryption when using SNMPv3"
+      reference           : "NIST 800-53r5|IA-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "snmp-server group .+ v3"
+      regex               : "snmp-server group .+ v3 priv"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK_NOT
+      description         : "1.0063 - NETIOS - Set maximum value for 'ip ssh authentication-retries"
+      info                : "The number of retries before the SSH login session disconnects."
+      reference           : "NIST 800-53r5|IA-2(1)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ip ssh authentication-retries ([4-9]|[1-9][0-9]+)$"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0064 - NETIOS - Set 'logging enable"
+      info                : "Enable logging of system messages."
+      reference           : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      context             : "archive"
+      item                : "logging enable"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0065 - NETIOS - Set 'login success/failure logging"
+      info                : "Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one."
+      reference           : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"
+      see_also            : "See HTH Policies and Standards"
+      item                : "login on-(failure|success) log"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0066 - NETIOS - Set 'ntp authenticate"
+      info                : "Enable NTP authentication."
+      reference           : "NIST 800-53r5|AU-7 AU-8"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ntp authenticate"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0067 - NETIOS - Set 'ntp authentication-key"
+      info                : "Define an authentication key for Network Time Protocol (NTP)."
+      reference           : "NIST 800-53r5|AU-7 AU-8"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ntp authentication-key"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0068 - NETIOS - Set the 'ntp trusted-key"
+      info                : "Ensure you authenticate the identity of a system to which Network Time Protocol (NTP) will synchronize"
+      reference           : "NIST 800-53r5|AU-7 AU-8"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ntp trusted-key .+"
+      regex               : "ntp trusted-key 1"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0069 - NETIOS - Set 'ntp source' to Loopback Interface"
+      info                : "Use a particular source address in Network Time Protocol (NTP) packets."
+      reference           : "NIST 800-53r5|AU-7 AU-8"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ntp source [Ll]oopback"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0070 - NETIOS - Set 'ip tftp source-interface' to the Loopback Interface"
+      info                : "Specify the IP address of an interface as the source address for TFTP connections."
+      reference           : "NIST 800-53r5|CA-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      item                : "ip tftp source-interface [Ll]oopback"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0071 - NETIOS - Set 'authentication key-chain"
+      info                : "Configure the EIGRP address family key chain."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CA-9 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router eigrp .+"
+      item                : "authentication key-chain .+"
+      regex               : "authentication key-chain CIS-KEY-CHAIN"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0072 - NETIOS - Set 'ip authentication key-chain eigrp"
+      info                : "Specify the type of authentication used in Enhanced Interior Gateway Routing Protocol (EIGRP) packets per interface."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CA-9 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface GigabitEthernet2"
+      item                : "ip authentication key-chain eigrp"
+      regex               : "ip authentication key-chain eigrp 100 CIS-KEY-CHAIN"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0073 - NETIOS - Set 'ip authentication mode eigrp"
+      info                : "Configure authentication to prevent unapproved sources from introducing unauthorized or false routing messages."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CA-9 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface GigabitEthernet2"
+      item                : "ip authentication mode eigrp"
+      regex               : "ip authentication mode eigrp 100 md5"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0074 - NETIOS - Set 'authentication message-digest' for OSPF area"
+      info                : "Enable MD5 authentication for OSPF."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CA-9 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router ospf .+"
+      item                : "area [^ ]+ authentication message-digest"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0075 - NETIOS - Set 'ip ospf message-digest-key md5"
+      info                : "Enable Open Shortest Path First (OSPF) Message Digest 5 (MD5) authentication."
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CA-9 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "interface GigabitEthernet2"
+      item                : "ip ospf message-digest-key 1"
+      regex               : "ip ospf message-digest-key 1 md5 [0-7] ([A-Za-z0-9]+)"
+    </item>
+
+    <item>
+      type                : CONFIG_CHECK
+      description         : "1.0076 - NETIOS - Set 'neighbor password"
+      info                : "Enable message digest5 (MD5) authentication on a TCP connection between two BGP peers"
+      reference           : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CA-9 CM-2 CM-6 CM-7 CM-7(1) CM-9 SC-7 SC-7(5)"
+      see_also            : "See HTH Policies and Standards"
+      context             : "router [Bb][Gg][Pp] .+"
+      item                : "neighbor [^ ]+ password .+"
+      regex               : "neighbor [^ ]+ password ([A-Za-z0-9\\/\\$]+)"
+    </item>
+
+
+  </then>
+
+  <else>
+    <report type:"WARNING">
+      description         : "WARNING - TARGET OS DOESNT MATCH BASELINE - IOS"
+      info                : "NOTE: Nessus has identified that the chosen audit does not apply to the target device."
+      see_also            : "See HTH Policies and Standards"
+    </report>
+  </else>
+</if>
+
+</check_type>
