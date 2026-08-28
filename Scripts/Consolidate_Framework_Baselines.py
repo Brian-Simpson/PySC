@@ -19,6 +19,10 @@ POTENTIAL_AUDIT_PATH = BASE_DIR / "Master_Baselines.xlsx"
 ACTUAL_AUDIT_DIR = BASE_DIR / "actual_audit_inputs"
 FINAL_OUTPUT_PATH = BASE_DIR / "Unified_Compliance_Matrix.xlsx"
 
+# Duplicate-property tracker used by extract_control_key; the pipeline prepass
+# resets it, but standalone callers (tests) need it defined at module level.
+GLOBAL_PROPERTY_COUNTS = {}
+
 # Mapping dictionary: PowerShell description patterns → canonical control identifiers
 PS_DESCRIPTION_TO_CONTROL = {
     "Length of password history": "ENFORCE_PASSWORD_HISTORY",

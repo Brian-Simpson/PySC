@@ -28,6 +28,8 @@ Parsing Results_*.xlsx
 duplicate_report.json
 *_extracted_ids_summary.txt
 *.nessus
+/threat_intel_cache.json
+pysc/_legacy/threat_intel_cache.json
 
 # --- Excel/Office lock files ---
 ~$*
