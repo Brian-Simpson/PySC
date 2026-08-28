@@ -36,16 +36,64 @@ def _run_legacy_main(cfg, argv):
 
 
 def cmd_normalize(cfg, args):
-    argv = [args.input]
-    if args.out_xlsx:
-        argv.append(args.out_xlsx)
-    if args.catalog:
-        argv.append("--catalog")
-    if args.export_duplicates:
-        argv.append("--export-duplicates")
-    if args.strict:
-        argv.append("--strict")
-    _run_legacy_main(cfg, argv)
+    if args.engine == "legacy":
+        argv = [args.input]
+        if args.out_xlsx:
+            argv.append(args.out_xlsx)
+        if args.catalog:
+            argv.append("--catalog")
+        if args.export_duplicates:
+            argv.append("--export-duplicates")
+        if args.strict:
+            argv.append("--strict")
+        _run_legacy_main(cfg, argv)
+        return
+
+    # New engine: pysc.normalize core for parse/normalize/validate; catalog and
+    # merged-audit generation still delegate to the legacy module (Phase 3
+    # extracts them). Flow mirrors legacy main() so outputs are identical.
+    import os
+
+    from pysc import normalize
+
+    legacy = _legacy_session(cfg)
+    normalize.reset_validation_summary()
+    try:
+        target = args.input.strip().strip('"').strip("'")
+        if os.path.isdir(target):
+            ok = normalize.process_folder(target, strict_mode=args.strict)
+            print("\nGenerating controls catalog...")
+            outp = legacy.generate_catalog(
+                target, args.out_xlsx, os.path.join(target, "Normalized")
+            )
+            if args.export_duplicates:
+                for p in legacy.export_duplicates_csvs(outp):
+                    print(f"Wrote {p}")
+            legacy._run_merged_audit_generation()
+            normalize.write_parsing_results(target)
+            if args.strict and not ok:
+                raise RuntimeError(
+                    "Strict mode: one or more files failed preflight/normalization."
+                )
+        elif os.path.isfile(target):
+            ok = normalize.process_file(target, strict_mode=args.strict)
+            if args.catalog:
+                folder = os.path.dirname(target)
+                print("\nGenerating controls catalog...")
+                outp = legacy.generate_catalog(
+                    folder, args.out_xlsx, os.path.join(folder, "Normalized")
+                )
+                if args.export_duplicates:
+                    for p in legacy.export_duplicates_csvs(outp):
+                        print(f"Wrote {p}")
+            legacy._run_merged_audit_generation()
+            normalize.write_parsing_results(os.path.dirname(target))
+            if args.strict and not ok:
+                raise RuntimeError("Strict mode: file failed preflight/normalization.")
+        else:
+            raise SystemExit(f"ERROR: Path does not exist: {target}")
+    finally:
+        normalize.print_validation_summary()
 
 
 def cmd_run(cfg, args):
@@ -141,6 +189,12 @@ def build_parser():
     p.add_argument("--catalog", action="store_true", help="Also generate controls catalog (file mode)")
     p.add_argument("--export-duplicates", action="store_true")
     p.add_argument("--strict", action="store_true", help="Fail on any preflight/normalization error")
+    p.add_argument(
+        "--engine",
+        choices=["new", "legacy"],
+        default="new",
+        help="Normalization engine (default: new; 'legacy' is the vendored parity oracle)",
+    )
     p.set_defaults(func=cmd_normalize)
 
     p = sub.add_parser("run", help="Full pipeline: production + vendor inputs, catalogs, crosswalk, merge, gap")
