@@ -386,6 +386,17 @@ def cmd_maturity(cfg, args):
         print("Proposal only (use --apply to write the matured audit).")
 
 
+def cmd_download(cfg, args):
+    from pysc.downloads import run as run_download
+
+    run_download(
+        cfg,
+        apply=args.apply,
+        keep_archive=not args.no_cache,
+        all_variants=args.all,
+    )
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="pysc",
@@ -514,6 +525,18 @@ def build_parser():
     p.add_argument("--apply", action="store_true", help="Write the matured audit copy")
     p.add_argument("--out", help="Matured audit output path (with --apply)")
     p.set_defaults(func=cmd_maturity)
+
+    p = sub.add_parser(
+        "download",
+        help="Fetch current vendor .audit benchmarks from Tenable downloads and stage new/updated ones",
+    )
+    p.add_argument("--apply", action="store_true",
+                   help="Copy staged NEW/UPDATED files into audit_inputs (default: stage for review)")
+    p.add_argument("--all", action="store_true",
+                   help="Also stage platform-relevant benchmarks outside the curated families")
+    p.add_argument("--no-cache", action="store_true",
+                   help="Delete the downloaded archive after staging")
+    p.set_defaults(func=cmd_download)
 
     return parser
 

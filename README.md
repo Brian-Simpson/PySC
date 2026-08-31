@@ -26,6 +26,7 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 
 | Command | Purpose |
 |---|---|
+| `download [--apply] [--all]` | Fetch Tenable's `audits.tar.gz` (SHA-256 verified), stage UPDATED/NEW_VERSION benchmarks for curated families into `audit_inputs\_incoming_<ts>\`; `--apply` copies them in; `--all` also stages non-curated variants |
 | `normalize <file\|folder> [--strict] [--engine legacy]` | Normalize vendor audits into HTH baseline format (golden-tested engine; catalog + merge follow automatically on folder runs) |
 | `run` | Full legacy-equivalent pipeline: production + vendor inputs, catalogs, crosswalk, merge, production gap analysis |
 | `gap platform --dir <folder> [--platform CODE]` | Baseline vs candidates for one platform against the OSCAL catalog, incl. recoverable coverage from commented-out checks |
@@ -39,14 +40,16 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 
 ## The maturity loop
 
-1. Normalize vendor benchmarks; merge into the HTH baseline (`pysc run`).
-2. Load the baseline into the Tenable console and scan.
-3. Export scan results to Excel (Description + Pass columns).
-4. `pysc maturity --audit <baseline> --pass-rates <export> --apply` comments
+1. Pull current vendor benchmarks from Tenable downloads (`pysc download`,
+   review the staged manifest, then `pysc download --apply`).
+2. Normalize vendor benchmarks; merge into the HTH baseline (`pysc run`).
+3. Load the baseline into the Tenable console and scan.
+4. Export scan results to Excel (Description + Pass columns).
+5. `pysc maturity --audit <baseline> --pass-rates <export> --apply` comments
    out checks failing fleet-wide.
-5. Commented checks surface as **recoverable coverage** in `pysc gap` — the
+6. Commented checks surface as **recoverable coverage** in `pysc gap` — the
    remediation queue for bringing them back.
-6. `pysc report all` publishes the executive workbook + dashboard and records
+7. `pysc report all` publishes the executive workbook + dashboard and records
    the trend snapshot.
 
 ## Data layout

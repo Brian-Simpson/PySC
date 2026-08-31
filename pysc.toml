@@ -26,6 +26,14 @@ see_also_replacement = "See HTH Policies and Standards"
 # Fleet pass-rate threshold (percent). Checks below this get comment-out proposals.
 pass_threshold = 90
 
+[downloads]
+# Tenable public downloads (anonymous API). 'pysc download' stages new/updated
+# benchmarks matching configured platforms into audit_inputs\_incoming_<ts>\.
+page = "download-all-compliance-audit-files"
+archive = "audits.tar.gz"
+cache_dir = "Downloads_Cache"
+user_agent = "pysc-audit-toolkit/0.1"
+
 # --- Platform profiles -------------------------------------------------------
 # baseline: the production baseline audit for the platform (in production_inputs
 # unless an absolute path is given). Other keys override [normalize] defaults.
