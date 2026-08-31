@@ -29,8 +29,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-from pysc.gap.enterprise import DETECTION_TO_PLATFORM
-from pysc.parser import determine_platform_from_filename
+from pysc.platforms import PlatformMatcher
 
 API_BASE = "https://www.tenable.com/downloads/api/v2/pages"
 DEFAULT_SLUG = "download-all-compliance-audit-files"
@@ -114,26 +113,22 @@ def download_archive(asset, dest_dir, user_agent=DEFAULT_USER_AGENT, progress=pr
     return target
 
 
-def relevant_platform(filename, configured_platforms, vendor_only=True):
+def relevant_platform(filename, matcher, vendor_only=True):
     """Platform code if the filename maps to a configured platform, else None."""
     name = Path(filename).name
     if vendor_only and not VENDOR_PREFIX_RE.match(name):
         return None
-    detected = determine_platform_from_filename(name)
-    code = DETECTION_TO_PLATFORM.get(detected)
-    if code and code in configured_platforms:
-        return code
-    return None
+    return matcher.match(name)
 
 
-def scan_archive(archive_path, configured_platforms, vendor_only=True):
+def scan_archive(archive_path, matcher, vendor_only=True):
     """[(member, platform_code)] for relevant .audit members of the tarball."""
     matches = []
     with tarfile.open(archive_path, "r:gz") as tar:
         for member in tar.getmembers():
             if not member.isfile() or not member.name.lower().endswith(".audit"):
                 continue
-            code = relevant_platform(member.name, configured_platforms, vendor_only)
+            code = relevant_platform(member.name, matcher, vendor_only)
             if code:
                 matches.append((member.name, code))
     return matches
@@ -231,7 +226,7 @@ def run(cfg, apply=False, keep_archive=True, all_variants=False, progress=print)
     asset = fetch_metadata(slug, archive, user_agent)
     archive_path = download_archive(asset, cache_dir, user_agent, progress)
 
-    configured = set(cfg.platforms())
+    configured = PlatformMatcher.from_config(cfg)
     matches = scan_archive(archive_path, configured)
     progress(f"Relevant .audit files in archive: {len(matches)}")
 

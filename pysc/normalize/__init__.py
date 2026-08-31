@@ -45,6 +45,7 @@ _CONFIG_TO_DETECTION = {
     "MSWRK": "MSWRK",
     "RHEL": "RHEL",
     "MSSQL": "SQL",
+    "SQL": "SQL",
     "NetIOS": "IOS",
     "NetPAFW": "PAFW",
     "NetNXOS": "NX-OS",

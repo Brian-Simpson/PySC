@@ -62,7 +62,9 @@ class Config:
         return self.data.get("normalize", {}).get(key, default)
 
     def platform(self, code):
-        return self.data.get("platforms", {}).get(code, {})
+        from pysc.platforms import canonical_platform
+
+        return self.data.get("platforms", {}).get(canonical_platform(code), {})
 
     def platforms(self):
         return dict(self.data.get("platforms", {}))

@@ -19,11 +19,25 @@ from pysc.downloads import (
     scan_archive,
     stage,
 )
+from pysc.platforms import PlatformMatcher
 
-PLATFORMS = {
-    "MSSRV", "MSWRK", "MSSQL", "RHEL", "VMware", "Azure", "AWS",
-    "NetIOS", "NetNXOS", "NetASA", "NetPAFW", "NetF5", "NetACI",
+# Mirrors the pysc.toml filename_tokens declarations.
+TOKENS = {
+    "MSSRV": ["Windows_Server"],
+    "MSWRK": ["Windows_11"],
+    "SQL": ["SQL_Server"],
+    "RHEL": ["Hat_Enterprise_Linux"],
+    "VMware": ["VMware"],
+    "Azure": ["Microsoft_Azure"],
+    "AWS": ["Amazon_Web_Services"],
+    "NetIOS": ["Cisco_IOS"],
+    "NetNXOS": ["Cisco_NX"],
+    "NetASA": ["_ASA_"],
+    "NetPAFW": ["Palo_Alto"],
+    "NetF5": ["_F5_"],
+    "NetACI": ["Cisco_ACI"],
 }
+MATCHER = PlatformMatcher(TOKENS)
 
 
 def _make_archive(tmp_path, members):
@@ -38,14 +52,27 @@ def _make_archive(tmp_path, members):
 
 
 def test_relevant_platform_mapping():
-    assert relevant_platform("CIS_Microsoft_Windows_Server_2022_v5.0.0_L1_MS.audit", PLATFORMS) == "MSSRV"
-    assert relevant_platform("portal_audits/CIS_F5_Networks_Benchmark_v1.0.0_L1.audit", PLATFORMS) == "NetF5"
-    assert relevant_platform("DISA_STIG_VMware_vSphere_6.7_ESXi_v1r3.audit", PLATFORMS) == "VMware"
-    # Non-vendor prefix rejected by default, accepted with vendor_only=False.
-    assert relevant_platform("HTH_MSSRV_BASELINE.audit", PLATFORMS) is None
-    assert relevant_platform("HTH_MSSRV_BASELINE.audit", PLATFORMS, vendor_only=False) == "MSSRV"
+    assert relevant_platform("CIS_Microsoft_Windows_Server_2022_v5.0.0_L1_MS.audit", MATCHER) == "MSSRV"
+    assert relevant_platform("portal_audits/CIS_F5_Networks_Benchmark_v1.0.0_L1.audit", MATCHER) == "NetF5"
+    assert relevant_platform("DISA_STIG_VMware_vSphere_6.7_ESXi_v1r3.audit", MATCHER) == "VMware"
+    assert relevant_platform("CIS_Microsoft_SQL_Server_2022_v1.2.1_L1_Database_Engine.audit", MATCHER) == "SQL"
+    assert relevant_platform("CIS_Cisco_NX-OS_v1.2.0_L1.audit", MATCHER) == "NetNXOS"
+    assert relevant_platform("CIS_Palo_Alto_Firewall_11_Benchmark_v1.2.0_L1.audit", MATCHER) == "NetPAFW"
+    assert relevant_platform("CIS_Red_Hat_Enterprise_Linux_10_v1.0.1_L1_Server.audit", MATCHER) == "RHEL"
+    # Non-vendor prefix rejected by default; token fallback works without it.
+    assert relevant_platform("HTH_MSSRV_BASELINE.audit", MATCHER) is None
+    assert relevant_platform("HTH_MSSRV_BASELINE.audit", MATCHER, vendor_only=False) == "MSSRV"
     # Unmappable platform rejected.
-    assert relevant_platform("CIS_IBM_AIX_7_v1.0.0_L1.audit", PLATFORMS) is None
+    assert relevant_platform("CIS_IBM_AIX_7_v1.0.0_L1.audit", MATCHER) is None
+
+
+def test_platform_alias():
+    from pysc.platforms import canonical_platform
+
+    assert canonical_platform("MSSQL") == "SQL"
+    assert canonical_platform("mssql") == "SQL"
+    assert canonical_platform("SQL") == "SQL"
+    assert canonical_platform("MSSRV") == "MSSRV"
 
 
 def test_family_key_version_agnostic():
@@ -89,7 +116,7 @@ def test_scan_stage_diff_apply(tmp_path):
         },
     )
 
-    matches = scan_archive(archive, PLATFORMS)
+    matches = scan_archive(archive, MATCHER)
     assert len(matches) == 4  # AIX and readme excluded
 
     staging = tmp_path / "staging"
