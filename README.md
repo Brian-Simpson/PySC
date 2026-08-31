@@ -33,6 +33,8 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 | `gap production [--stage]` | Whole-estate reference gap analysis (legacy engine) |
 | `gap harvest --dir <folder> [--platform CODE]` | Pull gap-closing checks from candidate audits into a paste-ready `.audit` |
 | `gap f5-compare --dir <folder> [--splice-orphans]` | F5 structural diff by (f5_command, json_transform) signature |
+| `library build [--include-normalized]` | Rebuild `control_library.json` + review workbook: every control keyed by what-is-audited (native/PowerShell mechanics collapse to one entry), expectations recorded, variance + duplicates flagged |
+| `library check <audit> [--verbose]` | Classify an audit's checks against the library: NEW / KNOWN / EXPECTATION_DIFFERS / DUPLICATE_IN_FILE |
 | `report matrix\|html\|all` | Unified_Compliance_Matrix workbook and/or self-contained HTML dashboard into `Output\`; records a history snapshot |
 | `history show\|export` | Per-run per-platform coverage trend from `pysc_history.sqlite` |
 | `maturity --audit <baseline> --pass-rates <export.xlsx> [--apply]` | Propose/apply comment-outs for checks under the fleet pass-rate threshold (default 90%) |

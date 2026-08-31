@@ -397,6 +397,37 @@ def cmd_download(cfg, args):
     )
 
 
+def cmd_library(cfg, args):
+    from pysc.library import LIBRARY_NAME, check_audit_file, load_library, run_build
+
+    if args.library_command == "build":
+        run_build(cfg, include_normalized=args.include_normalized)
+        return
+
+    # check
+    library_path = cfg.root / LIBRARY_NAME
+    if not library_path.is_file():
+        raise SystemExit(f"No library at {library_path} - run 'pysc library build' first")
+    controls = load_library(library_path)
+    rows = check_audit_file(controls, args.audit)
+    counts = {}
+    for row in rows:
+        counts[row["status"]] = counts.get(row["status"], 0) + 1
+    for row in rows:
+        if row["status"] == "KNOWN" and not args.verbose:
+            continue
+        line = f"[{row['status']}] {row['key']}"
+        if row["rule_id"]:
+            line += f" (rule {row['rule_id']})"
+        line += f" expected={row['expected']}"
+        if row["status"] == "EXPECTATION_DIFFERS":
+            line += f" library={row['library_expectations']}"
+        print(line)
+    print(
+        f"Checks: {len(rows)} | " + " | ".join(f"{k}: {v}" for k, v in sorted(counts.items()))
+    )
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="pysc",
@@ -537,6 +568,20 @@ def build_parser():
     p.add_argument("--no-cache", action="store_true",
                    help="Delete the downloaded archive after staging")
     p.set_defaults(func=cmd_download)
+
+    p = sub.add_parser(
+        "library",
+        help="Control library: canonical registry keyed by what is audited + what is expected",
+    )
+    lib_sub = p.add_subparsers(dest="library_command", required=True)
+    lb = lib_sub.add_parser("build", help="Scan canonical inputs and (re)build control_library.json + workbook")
+    lb.add_argument("--include-normalized", action="store_true",
+                    help="Also scan the latest Normalized generation of each input tree")
+    lb.set_defaults(func=cmd_library)
+    lc = lib_sub.add_parser("check", help="Classify an audit's checks against the library (NEW / KNOWN / EXPECTATION_DIFFERS / DUPLICATE_IN_FILE)")
+    lc.add_argument("audit", help="Audit file to check")
+    lc.add_argument("--verbose", action="store_true", help="Also list KNOWN checks")
+    lc.set_defaults(func=cmd_library)
 
     return parser
 
