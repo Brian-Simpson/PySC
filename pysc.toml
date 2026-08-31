@@ -53,7 +53,7 @@ baseline = "HTH_SQL_BASELINE.audit"
 filename_tokens = ["SQL_Server"]
 
 [platforms.RHEL]
-baseline = "Red Hat Enterprise Linux.audit"
+baseline = "HTH_Baseline_RHEL.audit"
 filename_tokens = ["Hat_Enterprise_Linux"]
 
 [platforms.VMware]
@@ -69,23 +69,23 @@ baseline = ""   # no production baseline yet
 filename_tokens = ["Amazon_Web_Services"]
 
 [platforms.NetIOS]
-baseline = "Baseline_NetIOS_AuditFile.audit"
+baseline = "HTH_Baseline_NetIOS_AuditFile.audit"
 filename_tokens = ["Cisco_IOS"]
 
 [platforms.NetNXOS]
-baseline = "NETNXOS.audit"
+baseline = "HTH_Baseline_NETNXOS.audit"
 filename_tokens = ["Cisco_NX"]
 
 [platforms.NetASA]
-baseline = "NetASA.audit"
+baseline = "HTH_Baseline_NetASA.audit"
 filename_tokens = ["_ASA_"]
 
 [platforms.NetPAFW]
-baseline = "NETPAFW.audit"
+baseline = "HTH_Baseline_NETPAFW.audit"
 filename_tokens = ["Palo_Alto"]
 
 [platforms.NetF5]
-baseline = "NetF5.audit"
+baseline = "HTH_Baseline_NetF5.audit"
 filename_tokens = ["_F5_"]
 info_sentences = 3   # F5 keeps richer summaries (legacy Normalize_f5.py behavior)
 
