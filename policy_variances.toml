@@ -238,6 +238,10 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "Disabled\" || \"Not Found"
 rationale = "HTH baseline value ratified as enterprise policy"
 
+[controls."MSWRK|AUDIT_POWERSHELL:SMB1PROTOCOL"]
+approved = "Disabled\" || \"Not Found"
+rationale = "HTH baseline value ratified as enterprise policy"
+
 [controls."MSWRK|LOCKOUT_POLICY:LOCKOUT_DURATION"]
 approved = "^([1-9][0-9]{2,}|[2-9][0-9]{1}|1[5-9])$"
 rationale = "HTH baseline value ratified as enterprise policy"
@@ -262,6 +266,10 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "Enabled"
 rationale = "HTH baseline value ratified as enterprise policy"
 
+[controls."MSWRK|PASSWORD_POLICY:MAXIMUM_PASSWORD_AGE"]
+approved = "60"
+rationale = "HTH baseline value ratified as enterprise policy"
+
 [controls."MSWRK|PASSWORD_POLICY:MINIMUM_PASSWORD_AGE"]
 approved = "1"
 rationale = "HTH baseline value ratified as enterprise policy"
@@ -274,10 +282,50 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "Disabled"
 rationale = "HTH baseline value ratified as enterprise policy"
 
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\MICROSOFT\\WINDOWS NT\\CURRENTVERSION\\WINLOGON|PASSWORDEXPIRYWARNING"]
+approved = "^(5|6|7|8|9|10|11|12|13|14|15)$"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\POWER\\POWERSETTINGS\\F15576E8-98B7-4186-B944-EAFA664402D9|ACSETTINGINDEX"]
+approved = "1"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\POWER\\POWERSETTINGS\\F15576E8-98B7-4186-B944-EAFA664402D9|DCSETTINGINDEX"]
+approved = "1"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\EVENTLOG\\APPLICATION|MAXSIZE"]
+approved = "^([1-9][0-9]{5,}|[4-9][0-9]{4}|3[3-9][0-9]{3}|32[8-9][0-9]{2}|327[7-9][0-9]{1}|3276[8-9])$"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\EVENTLOG\\SECURITY|MAXSIZE"]
+approved = "^([1-9][0-9]{6,}|[2-9][0-9]{5}|19[7-9][0-9]{3}|196[7-9][0-9]{2}|1966[1-9][0-9]{1}|19660[8-9])$"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\EVENTLOG\\SETUP|MAXSIZE"]
+approved = "^([1-9][0-9]{5,}|[4-9][0-9]{4}|3[3-9][0-9]{3}|32[8-9][0-9]{2}|327[7-9][0-9]{1}|3276[8-9])$"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\EVENTLOG\\SYSTEM|MAXSIZE"]
+approved = "^([1-9][0-9]{5,}|[4-9][0-9]{4}|3[3-9][0-9]{3}|32[8-9][0-9]{2}|327[7-9][0-9]{1}|3276[8-9])$"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\WINDOWSUPDATE\\AU|NOAUTOUPDATE"]
+approved = "1"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\WINRM\\SERVICE|ALLOWBASIC"]
+approved = "1"
+rationale = "HTH baseline value ratified as enterprise policy"
+
 [controls."MSWRK|REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\SECUREPIPESERVERS\\WINREG\\ALLOWEDEXACTPATHS|MACHINE"]
 approved = "System\\\\CurrentControlSet\\\\Control\\\\ProductOptions\" && \"System\\\\CurrentControlSet\\\\Control\\\\Server Applications\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion"
 rationale = "HTH baseline value ratified as enterprise policy"
 
 [controls."MSWRK|REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\SECUREPIPESERVERS\\WINREG\\ALLOWEDPATHS|MACHINE"]
 approved = "System\\\\CurrentControlSet\\\\Control\\\\Print\\\\Printers\" && \"System\\\\CurrentControlSet\\\\Services\\\\Eventlog\" && \"Software\\\\Microsoft\\\\OLAP Server\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Print\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Windows\" && \"System\\\\CurrentControlSet\\\\Control\\\\ContentIndex\" && \"System\\\\CurrentControlSet\\\\Control\\\\Terminal Server\" && \"System\\\\CurrentControlSet\\\\Control\\\\Terminal Server\\\\UserConfig\" && \"System\\\\CurrentControlSet\\\\Control\\\\Terminal Server\\\\DefaultUserConfiguration\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Perflib\" && \"System\\\\CurrentControlSet\\\\Services\\\\Sysmonlog"
+rationale = "HTH baseline value ratified as enterprise policy"
+
+[controls."MSWRK|REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\SERVICES\\NETLOGON\\PARAMETERS|MAXIMUMPASSWORDAGE"]
+approved = "^(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30)$"
 rationale = "HTH baseline value ratified as enterprise policy"

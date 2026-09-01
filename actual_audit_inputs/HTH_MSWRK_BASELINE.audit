@@ -805,7 +805,7 @@
           check_type        : CHECK_REGEX
           value_type        : POLICY_TEXT
           value_data        : "^(?=.*S-1-5-32-544)(?=.*S-1-5-6)?(?=.*S-1-5-19)?(?=.*S-1-5-20)?.*$"
-          powershell_args   : "$t=[IO.Path]::GetTempFileName();secedit /export /cfg $t /areas USER_RIGHTS /quiet;$l=(Get-Content $t -Encoding Unicode|Where-Object{$_ -match '^\s*SeCreateSymbolicLinkPrivilege\s*='}|Select-Object -Last 1);Remove-Item $t -Force;if($l){(($l -replace '.*=','' -replace '\*','' -split ',')|Where-Object{$_}|Sort-Object -Unique) -join ', '}"
+          powershell_args   : "$t=[IO.Path]::GetTempFileName();secedit /export /cfg $t /areas USER_RIGHTS /quiet;$l=(Get-Content $t -Encoding Unicode|Where-Object{$_ -match '^\s*SeCreateGlobalPrivilege\s*='}|Select-Object -Last 1);Remove-Item $t -Force;if($l){(($l -replace '.*=','' -replace '\*','' -split ',')|Where-Object{$_}|Sort-Object -Unique) -join ', '}"
         </custom_item>
 
         <custom_item>
@@ -1859,8 +1859,8 @@
           reference         : "NIST 800-53r5|CM-6 CM-7"
           see_also          : "See corresponding HTH Policy or Standard"
           value_type        : POLICY_TEXT
-          value_data        : "Disabled"
-          powershell_args   : "$f = Get-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -ErrorAction SilentlyContinue; if ($null -eq $f) { 'Not Found' } else { [string]$f.State }"
+          value_data        : "Service Not Found"
+          powershell_args   : "$s=Get-Service -Name Browser -EA SilentlyContinue;if($s){[string]$s.Status}else{'Service Not Found'}"
           check_type        : CHECK_EQUAL
         </custom_item>
 

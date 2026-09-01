@@ -172,6 +172,14 @@ def summarize_powershell_audit_target(powershell_args):
 
     m_registry_prop = re.search(r"PSObject\.Properties\[['\"]([^'\"]+)['\"]\]", script, flags=re.IGNORECASE)
     if m_registry_prop:
+        # Include the registry path when present: MaxSize under EventLog\Security
+        # and EventLog\Application are DIFFERENT controls, as is Netlogon's
+        # MaximumPasswordAge vs the user password policy.
+        m_prop_path = re.search(
+            r"-Path\s+['\"](?:Registry::)?([^'\"]+)['\"]", script, flags=re.IGNORECASE
+        )
+        if m_prop_path:
+            return f"{m_prop_path.group(1)} {m_registry_prop.group(1)}"
         return f"registry {m_registry_prop.group(1)}"
 
     m_registry_path = re.search(r"-Path\s+['\"](?:Registry::)?([^'\"]+)['\"]", script, flags=re.IGNORECASE)
@@ -235,7 +243,11 @@ def _registry_key_from_powershell_target(ps_target):
     if not target:
         return ''
 
-    match = re.match(r'((?:HKCU|HKLM):\\.+)\s+([A-Za-z0-9_]+)$', target, flags=re.IGNORECASE)
+    match = re.match(
+        r'((?:HKCU:|HKLM:|HKEY_CURRENT_USER|HKEY_LOCAL_MACHINE)\\.+?)\s+([A-Za-z0-9_]+)$',
+        target,
+        flags=re.IGNORECASE,
+    )
     if not match:
         return ''
 

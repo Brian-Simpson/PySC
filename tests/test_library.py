@@ -321,3 +321,41 @@ def test_mssrv_role_markers_split_controls(tmp_path):
     wrk.write_text(ms_block, encoding="utf-8")
     entries_wrk = build_library([wrk], matcher)
     assert set(entries_wrk) == {f"MSWRK|{EXPECTED_KEY}"}
+
+
+def test_registry_psobject_keys_are_path_qualified():
+    """PSObject.Properties checks key on path+item: EventLog Security vs
+    Application MaxSize are different controls; Netlogon MaximumPasswordAge
+    is NOT the user password policy."""
+    from pysc.library._keys_core import derive_evaluated_item_key
+
+    def ps_check(path, prop):
+        return {
+            "type": "AUDIT_POWERSHELL",
+            "description": '"x"',
+            "powershell_args": (
+                f"\"$p = Get-ItemProperty -Path 'Registry::{path}' -ErrorAction "
+                f"SilentlyContinue; $val = if ($p -and $p.PSObject.Properties['{prop}'] "
+                f"-ne $null) {{ [string]$p.'{prop}' }} else {{ '0' }}; $val\""
+            ),
+        }
+
+    sec = ps_check(
+        r"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\EventLog\Security", "MaxSize"
+    )
+    app = ps_check(
+        r"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\EventLog\Application", "MaxSize"
+    )
+    netlogon = ps_check(
+        r"HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters",
+        "MaximumPasswordAge",
+    )
+
+    key_sec = derive_evaluated_item_key(sec)
+    key_app = derive_evaluated_item_key(app)
+    key_netlogon = derive_evaluated_item_key(netlogon)
+
+    assert key_sec == "REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\EVENTLOG\\SECURITY|MAXSIZE"
+    assert key_app != key_sec
+    assert key_netlogon.startswith("REGISTRY:HKLM\\SYSTEM")
+    assert key_netlogon != "PASSWORD_POLICY:MAXIMUM_PASSWORD_AGE"
