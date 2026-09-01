@@ -212,7 +212,32 @@ def apply_staged(rows, vendor_root, progress=print):
     return applied
 
 
-def run(cfg, apply=False, keep_archive=True, all_variants=False, progress=print):
+def _post_apply_library_update(cfg, applied_rows, vendor_root, progress):
+    """After applying downloads: report what each new benchmark adds vs the
+    control library, then rebuild the library to accept the changes."""
+    from pysc.library import LIBRARY_NAME, check_audit_file, load_library, run_build
+
+    library_path = cfg.root / LIBRARY_NAME
+    if library_path.is_file():
+        controls = load_library(library_path)
+        for row in applied_rows:
+            results = check_audit_file(controls, Path(vendor_root) / row["name"])
+            counts = {}
+            for r in results:
+                counts[r["status"]] = counts.get(r["status"], 0) + 1
+            summary = " | ".join(f"{k}: {v}" for k, v in sorted(counts.items()))
+            progress(f"Library check [{row['status']}] {row['name']}: {summary}")
+            for r in results:
+                if r["status"] == "NEW":
+                    progress(f"  NEW control: {r['key']} expected={r['expected']}")
+    else:
+        progress("No control library yet - building one now.")
+
+    progress("Rebuilding control library...")
+    run_build(cfg, progress=progress)
+
+
+def run(cfg, apply=False, keep_archive=True, all_variants=False, update_library=True, progress=print):
     """Full download flow driven by pysc.toml. Returns the staged rows."""
     dl_cfg = cfg.data.get("downloads", {})
     slug = dl_cfg.get("page", DEFAULT_SLUG)
@@ -245,6 +270,8 @@ def run(cfg, apply=False, keep_archive=True, all_variants=False, progress=print)
     if apply:
         applied = apply_staged(rows, vendor_root, progress)
         progress(f"Applied {applied} file(s) into {vendor_root}")
+        if applied and update_library:
+            _post_apply_library_update(cfg, staged, vendor_root, progress)
     elif staged:
         progress(f"Review staged files in {staging_dir}, then re-run with --apply")
     else:

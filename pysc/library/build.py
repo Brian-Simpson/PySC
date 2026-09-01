@@ -32,6 +32,7 @@ from pysc.parser import extract_variables
 from pysc.platforms import PlatformMatcher
 
 LIBRARY_NAME = "control_library.json"
+MASTER_WORKBOOK_NAME = "Control_Library.xlsx"
 
 _STRIP_INACTIVE_RE = re.compile(r"(?ms)^\s*#\s*<custom_item>.*?^\s*#\s*</custom_item>\s*$")
 _BLOCK_RE = re.compile(r"(?ms)^(?!\s*#)\s*<(?:custom_item|item)>(.*?)^\s*</(?:custom_item|item)>[ \t]*$")
@@ -300,7 +301,11 @@ def default_sources(cfg, include_normalized=False):
     return sources
 
 
-def run_build(cfg, include_normalized=False, progress=print):
+def run_build(cfg, include_normalized=None, progress=print):
+    if include_normalized is None:
+        include_normalized = bool(
+            cfg.data.get("library", {}).get("include_normalized", True)
+        )
     sources = default_sources(cfg, include_normalized)
     matcher = PlatformMatcher.from_config(cfg)
     progress(f"Scanning {len(sources)} audit file(s)...")
@@ -310,12 +315,21 @@ def run_build(cfg, include_normalized=False, progress=print):
     save_library(entries, library_path)
     progress(f"Library: {library_path} ({len(entries)} controls)")
 
-    out_dir = cfg.path("report_output")
-    out_dir.mkdir(parents=True, exist_ok=True)
-    stamp = time.strftime("%y%m%d%H%M")
-    workbook = out_dir / f"Control_Library_{stamp}.xlsx"
-    export_workbook(entries, workbook)
-    progress(f"Workbook: {workbook}")
+    # One master workbook, overwritten each build. If it is open in Excel the
+    # write fails with PermissionError; fall back to a timestamped copy.
+    workbook = cfg.root / MASTER_WORKBOOK_NAME
+    try:
+        export_workbook(entries, workbook)
+        progress(f"Workbook: {workbook}")
+    except PermissionError:
+        out_dir = cfg.path("report_output")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        fallback = out_dir / f"Control_Library_{time.strftime('%y%m%d%H%M')}.xlsx"
+        export_workbook(entries, fallback)
+        progress(
+            f"WARNING: {workbook} is locked (open in Excel?) - wrote {fallback}; "
+            "close the master file and rebuild to refresh it"
+        )
 
     dupes = duplicates_in_file(entries)
     variances = expectation_variances(entries)

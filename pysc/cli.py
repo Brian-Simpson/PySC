@@ -394,6 +394,7 @@ def cmd_download(cfg, args):
         apply=args.apply,
         keep_archive=not args.no_cache,
         all_variants=args.all,
+        update_library=not args.no_library,
     )
 
 
@@ -401,7 +402,10 @@ def cmd_library(cfg, args):
     from pysc.library import LIBRARY_NAME, check_audit_file, load_library, run_build
 
     if args.library_command == "build":
-        run_build(cfg, include_normalized=args.include_normalized)
+        run_build(
+            cfg,
+            include_normalized=True if args.include_normalized else None,
+        )
         return
 
     # check
@@ -567,6 +571,8 @@ def build_parser():
                    help="Also stage platform-relevant benchmarks outside the curated families")
     p.add_argument("--no-cache", action="store_true",
                    help="Delete the downloaded archive after staging")
+    p.add_argument("--no-library", action="store_true",
+                   help="Skip the library check + rebuild after --apply")
     p.set_defaults(func=cmd_download)
 
     p = sub.add_parser(

@@ -26,14 +26,14 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 
 | Command | Purpose |
 |---|---|
-| `download [--apply] [--all]` | Fetch Tenable's `audits.tar.gz` (SHA-256 verified), stage UPDATED/NEW_VERSION benchmarks for curated families into `audit_inputs\_incoming_<ts>\`; `--apply` copies them in; `--all` also stages non-curated variants |
+| `download [--apply] [--all] [--no-library]` | Fetch Tenable's `audits.tar.gz` (SHA-256 verified), stage UPDATED/NEW_VERSION benchmarks for curated families into `audit_inputs\_incoming_<ts>\`; `--apply` copies them in, reports each file's NEW/KNOWN controls against the library, and rebuilds it |
 | `normalize <file\|folder> [--strict] [--engine legacy]` | Normalize vendor audits into HTH baseline format (golden-tested engine; catalog + merge follow automatically on folder runs) |
 | `run` | Full legacy-equivalent pipeline: production + vendor inputs, catalogs, crosswalk, merge, production gap analysis |
 | `gap platform --dir <folder> [--platform CODE]` | Baseline vs candidates for one platform against the OSCAL catalog, incl. recoverable coverage from commented-out checks |
 | `gap production [--stage]` | Whole-estate reference gap analysis (legacy engine) |
 | `gap harvest --dir <folder> [--platform CODE]` | Pull gap-closing checks from candidate audits into a paste-ready `.audit` |
 | `gap f5-compare --dir <folder> [--splice-orphans]` | F5 structural diff by (f5_command, json_transform) signature |
-| `library build [--include-normalized]` | Rebuild `control_library.json` + review workbook: every control keyed by what-is-audited (native/PowerShell mechanics collapse to one entry), expectations recorded, variance + duplicates flagged |
+| `library build [--include-normalized]` | Rebuild the registry: `control_library.json` + the single master `Control_Library.xlsx` (repo root, overwritten each build; falls back to a timestamped copy in `Output\` if the master is open in Excel). Every control keyed by what-is-audited; expectations recorded, variance + duplicates flagged |
 | `library check <audit> [--verbose]` | Classify an audit's checks against the library: NEW / KNOWN / EXPECTATION_DIFFERS / DUPLICATE_IN_FILE |
 | `report matrix\|html\|all` | Unified_Compliance_Matrix workbook and/or self-contained HTML dashboard into `Output\`; records a history snapshot |
 | `history show\|export` | Per-run per-platform coverage trend from `pysc_history.sqlite` |

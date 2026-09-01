@@ -26,6 +26,11 @@ see_also_replacement = "See HTH Policies and Standards"
 # Fleet pass-rate threshold (percent). Checks below this get comment-out proposals.
 pass_threshold = 90
 
+[library]
+# Control library build scope: also scan the latest Normalized generation of
+# each input tree (captures PowerShell-converted check mechanics).
+include_normalized = true
+
 [downloads]
 # Tenable public downloads (anonymous API). 'pysc download' stages new/updated
 # benchmarks matching configured platforms into audit_inputs\_incoming_<ts>\.
