@@ -27,7 +27,7 @@ def _pct(part, whole):
     return round((part / whole) * 100, 2) if whole else 0.0
 
 
-def build_matrix(result, output_file, history=None, cis_variances=None):
+def build_matrix(result, output_file, history=None, cis_variances=None, attack_mappings=None):
     """Write the workbook for an EnterpriseGapResult; returns output_file."""
     wb = Workbook()
 
@@ -174,6 +174,25 @@ def build_matrix(result, output_file, history=None, cis_variances=None):
             ]
             for r in (cis_variances or [])
         ],
+    )
+
+    # --- Attack_Vectors (ATT&CK exposure from open gaps) -------------------------
+    ws = wb.create_sheet("Attack_Vectors")
+    vector_rows = []
+    if attack_mappings:
+        from pysc.nist.attack import attack_vectors_for_gaps
+
+        for v in attack_vectors_for_gaps(result, attack_mappings):
+            vector_rows.append(
+                [
+                    v["technique_id"], v["technique_name"], v["sub_technique_count"],
+                    " ".join(v["controls"]), " ".join(v["platforms"]),
+                ]
+            )
+    write_sheet(
+        ws,
+        ["Technique", "Attack Vector", "Sub-techniques", "Weakened Mitigations (gap controls)", "Platforms"],
+        vector_rows,
     )
 
     # --- Trend ------------------------------------------------------------------

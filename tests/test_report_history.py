@@ -100,7 +100,7 @@ def test_matrix_build(result, tmp_path):
     wb = load_workbook(out)
     assert wb.sheetnames == [
         "Executive_Summary", "Platform_Family_Coverage", "NIST_Matrix",
-        "Priority_Gaps", "CIS_Variances", "Trend",
+        "Priority_Gaps", "CIS_Variances", "Attack_Vectors", "Trend",
     ]
     ws = wb["Executive_Summary"]
     platforms = [ws.cell(row=r, column=1).value for r in range(2, ws.max_row + 1)]
@@ -135,6 +135,35 @@ def test_priority_gap_rows(result):
     ia5 = next(r for r in rows if r["control_id"] == "IA-5")
     assert ia5["score"] == 3 and ia5["action"] == "Un-comment existing check"
     assert priority_gap_rows(result, limit=1) == rows[:1]
+
+
+def test_attack_vectors_from_gaps(result, tmp_path):
+    from pysc.nist.attack import attack_vectors_for_gaps
+
+    # Synthetic mapping: gaps are IA-5 (recoverable) and SC-7 (missing).
+    mappings = {
+        "IA-5": [("T1110", "Brute Force"), ("T1110.001", "Password Guessing")],
+        "SC-7": [("T1110", "Brute Force"), ("T1046", "Network Service Discovery")],
+        "AC-2": [("T1136", "Create Account")],  # covered control -> not exposed
+    }
+    vectors = attack_vectors_for_gaps(result, mappings)
+    by_id = {v["technique_id"]: v for v in vectors}
+    # Brute Force weakened via BOTH gap controls, sub-technique rolled up.
+    assert by_id["T1110"]["controls"] == ["IA-5", "SC-7"]
+    assert by_id["T1110"]["sub_technique_count"] == 1
+    assert by_id["T1110"]["technique_name"] == "Brute Force"
+    assert by_id["T1046"]["controls"] == ["SC-7"]
+    # AC-2 is covered by the baseline -> Create Account is NOT exposed.
+    assert "T1136" not in by_id
+    # Ranked first: most platforms, then most weakened controls.
+    assert vectors[0]["technique_id"] == "T1110"
+
+    # Dashboard renders the section when mappings are supplied.
+    out = build_dashboard(result, tmp_path / "dash2.html", attack_mappings=mappings)
+    text = Path(out).read_text(encoding="utf-8")
+    assert "Common attack vectors exposed by current gaps" in text
+    assert "Brute Force" in text
+    assert "Enterprise coverage trend" not in text
 
 
 def test_sanitize_for_excel_formula_guard():

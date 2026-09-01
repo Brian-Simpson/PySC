@@ -303,6 +303,13 @@ def _cis_variance_rows(cfg):
     )
 
 
+def _attack_mappings(cfg):
+    from pysc.nist.attack import load_attack_mappings
+
+    path = cfg.path("attack_mappings")
+    return load_attack_mappings(path) if path else {}
+
+
 def cmd_report(cfg, args):
     import os
     import time
@@ -332,7 +339,10 @@ def cmd_report(cfg, args):
             out = args.out if (args.out and args.format == "matrix") else os.path.join(
                 str(out_dir), f"Unified_Compliance_Matrix_{stamp}.xlsx"
             )
-            build_matrix(result, out, history=history, cis_variances=cis_rows)
+            build_matrix(
+                result, out, history=history, cis_variances=cis_rows,
+                attack_mappings=_attack_mappings(cfg),
+            )
             print(f"Wrote {out}")
 
         if args.format in ("html", "all"):
@@ -341,7 +351,7 @@ def cmd_report(cfg, args):
             out = args.out if (args.out and args.format == "html") else os.path.join(
                 str(out_dir), f"dashboard_{stamp}.html"
             )
-            build_dashboard(result, out, history=history)
+            build_dashboard(result, out, history=history, attack_mappings=_attack_mappings(cfg))
             print(f"Wrote {out}")
     finally:
         history.close()
