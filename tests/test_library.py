@@ -278,3 +278,46 @@ def test_platform_specific_controls_no_cross_platform_conflict(tmp_path):
     drift.write_text(SECEDIT_FILE.replace('"60"', '"90"'), encoding="utf-8")
     rows = check_audit_file(controls, drift, matcher=matcher)
     assert [r["status"] for r in rows] == ["EXPECTATION_DIFFERS"]
+
+
+def test_mssrv_role_markers_split_controls(tmp_path):
+    """On MSSRV, '(MS only)' / '(DC only)' in the description makes the
+    control role-specific - different expected values are NOT a conflict."""
+    from pysc.library.policy import classify_variances
+    from pysc.platforms import PlatformMatcher
+
+    matcher = PlatformMatcher({"MSSRV": ["Windows_Server"], "MSWRK": ["Windows_11"]})
+
+    ms_block = SECEDIT_FILE.replace(
+        "Ensure Maximum password age is set to 365 or fewer days, but not 0",
+        "Ensure Maximum password age is set for member servers (MS only)",
+    )
+    dc_block = SECEDIT_FILE.replace(
+        "Ensure Maximum password age is set to 365 or fewer days, but not 0",
+        "Ensure Maximum password age is set for domain controllers (DC only)",
+    ).replace('"60"', '"30"')
+
+    prod = tmp_path / "prod"
+    prod.mkdir()
+    srv = prod / "HTH_Windows_Server_BASELINE.audit"
+    srv.write_text(ms_block + "\n" + dc_block, encoding="utf-8")
+
+    entries = build_library([srv], matcher)
+    assert set(entries) == {
+        f"MSSRV|{EXPECTED_KEY}:MS_ONLY",
+        f"MSSRV|{EXPECTED_KEY}:DC_ONLY",
+    }
+    # Distinct controls -> no variance/conflict despite 60 vs 30.
+    assert classify_variances(entries, {}, prod) == []
+
+    # Same file checked back: both KNOWN, and NOT duplicates of each other.
+    lib_path = tmp_path / "lib.json"
+    save_library(entries, lib_path)
+    rows = check_audit_file(load_library(lib_path), srv, matcher=matcher)
+    assert [r["status"] for r in rows] == ["KNOWN", "KNOWN"]
+
+    # On any other platform the markers are inert (key unchanged).
+    wrk = prod / "HTH_Windows_11_BASELINE.audit"
+    wrk.write_text(ms_block, encoding="utf-8")
+    entries_wrk = build_library([wrk], matcher)
+    assert set(entries_wrk) == {f"MSWRK|{EXPECTED_KEY}"}

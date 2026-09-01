@@ -38,6 +38,26 @@ _STRIP_INACTIVE_RE = re.compile(r"(?ms)^\s*#\s*<custom_item>.*?^\s*#\s*</custom_
 _BLOCK_RE = re.compile(r"(?ms)^(?!\s*#)\s*<(?:custom_item|item)>(.*?)^\s*</(?:custom_item|item)>[ \t]*$")
 _TIMESTAMP_SUFFIX_RE = re.compile(r"_(\d{8,12})$")
 
+# Windows Server checks carry role markers: the same audited item may
+# legitimately differ between Member Servers and Domain Controllers.
+_ROLE_MARKERS = (
+    (re.compile(r"\(\s*MS\s+only\s*\)", re.IGNORECASE), "MS_ONLY"),
+    (re.compile(r"\(\s*DC\s+only\s*\)", re.IGNORECASE), "DC_ONLY"),
+)
+
+
+def _role_qualifier(platform, fields):
+    """On MSSRV only: '(MS only)' / '(DC only)' in the description makes the
+    control role-specific — distinct from its counterpart and from the
+    unmarked control."""
+    if platform != "MSSRV":
+        return ""
+    description = fields.get("description", "")
+    for pattern, tag in _ROLE_MARKERS:
+        if pattern.search(description):
+            return f":{tag}"
+    return ""
+
 
 def iter_active_checks(path):
     """Yield field dicts for every active check block in an audit file.
@@ -107,7 +127,10 @@ def build_library(sources, matcher=None):
             item_key = derive_evaluated_item_key(fields)
             if not item_key:
                 continue
-            key = f"{platform}|{item_key}" if platform else item_key
+            if platform:
+                key = f"{platform}|{item_key}{_role_qualifier(platform, fields)}"
+            else:
+                key = item_key
             entry = entries.setdefault(
                 key,
                 {
@@ -197,7 +220,10 @@ def check_audit_file(library_controls, audit_path, matcher=None):
         item_key = derive_evaluated_item_key(fields)
         if not item_key:
             continue
-        key = f"{platform}|{item_key}" if platform else item_key
+        if platform:
+            key = f"{platform}|{item_key}{_role_qualifier(platform, fields)}"
+        else:
+            key = item_key
         occurrence = _occurrence(audit_path, fields)
         seen_in_file[key] += 1
         if seen_in_file[key] > 1:

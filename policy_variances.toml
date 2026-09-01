@@ -22,7 +22,7 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "Success\" ||\"Success and Failure"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:COMPUTER ACCOUNT MANAGEMENT"]
+[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:COMPUTER ACCOUNT MANAGEMENT:DC_ONLY"]
 approved = "Success"
 rationale = "HTH baseline value ratified as enterprise policy"
 
@@ -30,15 +30,15 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "Success and Failure"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:DIRECTORY SERVICE ACCESS"]
+[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:DIRECTORY SERVICE ACCESS:DC_ONLY"]
 approved = "Failure"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:DIRECTORY SERVICE CHANGES"]
+[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:DIRECTORY SERVICE CHANGES:DC_ONLY"]
 approved = "Success"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:DISTRIBUTION GROUP MANAGEMENT"]
+[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:DISTRIBUTION GROUP MANAGEMENT:DC_ONLY"]
 approved = "Success"
 rationale = "HTH baseline value ratified as enterprise policy"
 
@@ -50,7 +50,7 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "Success and Failure"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:OTHER ACCOUNT MANAGEMENT EVENTS"]
+[controls."MSSRV|AUDIT_POLICY_SUBCATEGORY:OTHER ACCOUNT MANAGEMENT EVENTS:DC_ONLY"]
 approved = "Success"
 rationale = "HTH baseline value ratified as enterprise policy"
 
@@ -122,10 +122,6 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "24"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|PASSWORD_POLICY:LOCKOUT_ADMINS"]
-approved = "Enabled"
-rationale = "HTH baseline value ratified as enterprise policy"
-
 [controls."MSSRV|PASSWORD_POLICY:MAXIMUM_PASSWORD_AGE"]
 approved = "60"
 rationale = "HTH baseline value ratified as enterprise policy"
@@ -178,12 +174,12 @@ rationale = "HTH baseline value ratified as enterprise policy"
 approved = "((\"backup operators\" && \"administrators\") || \"administrators\")"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|USER_RIGHTS_POLICY:SEREMOTEINTERACTIVELOGONRIGHT"]
-approved = "Administrators\" && \"Remote Desktop Users"
+[controls."MSSRV|USER_RIGHTS_POLICY:SEIMPERSONATEPRIVILEGE:DC_ONLY"]
+approved = "Administrators\" && \"LOCAL SERVICE\" && \"NETWORK SERVICE\" && \"SERVICE"
 rationale = "HTH baseline value ratified as enterprise policy"
 
-[controls."MSSRV|USER_RIGHTS_POLICY:SESECURITYPRIVILEGE"]
-approved = "Administrators"
+[controls."MSSRV|USER_RIGHTS_POLICY:SEIMPERSONATEPRIVILEGE:MS_ONLY"]
+approved = "(\"Administrators\" && \"Local Service\" && \"Network Service\" && \"Service\") || (\"Administrators\" && \"IIS_IUSRS\" && \"Local Service\" && \"Network Service\" && \"Service\")"
 rationale = "HTH baseline value ratified as enterprise policy"
 
 [controls."MSSRV|USER_RIGHTS_POLICY:SESYSTEMPROFILEPRIVILEGE"]
