@@ -123,7 +123,7 @@ def test_dashboard_build(result, tmp_path):
     assert "prefers-color-scheme: dark" in text
     assert "Coverage % by platform and NIST family" in text
     assert "background: var(--platform-color)" in text
-    assert f"--platform-color:{_PLATFORM_COLORS['MSSRV']}" in text
+    assert f"--platform-color:{_PLATFORM_COLORS['MSSRV']};" in text
 
 
 def test_dashboard_platform_colors_are_distinct():
