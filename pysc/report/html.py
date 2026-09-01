@@ -31,7 +31,7 @@ body {
 .viz-root {
   --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
   --muted: #898781; --grid: #e1e0d9; --baseline: #c3c2b7;
-  --series-1: #2a78d6; --good: #0ca30c; --critical: #d03b3b; --serious: #ec835a;
+  --series-1: #2a78d6; --cis: #9ec5f4; --good: #0ca30c; --critical: #d03b3b; --serious: #ec835a;
   --border: rgba(11,11,11,0.10);
 }
 @media (prefers-color-scheme: dark) {
@@ -39,7 +39,7 @@ body {
   .viz-root {
     --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
     --muted: #898781; --grid: #2c2c2a; --baseline: #383835;
-    --series-1: #3987e5; --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5; --cis: #2f5a8f; --border: rgba(255,255,255,0.10);
   }
 }
 h1 { font-size: 20px; margin: 0 0 4px; }
@@ -53,10 +53,12 @@ h2 { font-size: 14px; margin: 0 0 12px; color: var(--text-primary); }
 .tile { flex: 1 1 140px; }
 .tile .value { font-size: 32px; font-weight: 600; }
 .tile .label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.bar-row { display: grid; grid-template-columns: 90px 1fr 110px; gap: 8px; align-items: center; margin: 6px 0; font-size: 13px; }
+.bar-row { display: grid; grid-template-columns: 90px 1fr 150px; gap: 8px; align-items: center; margin: 6px 0; font-size: 13px; }
 .bar-track { background: transparent; border-left: 2px solid var(--baseline); height: 16px; position: relative; }
-.bar-fill { background: var(--series-1); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-cis { position: absolute; left: 0; top: 0; background: var(--cis); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-fill { position: absolute; left: 0; top: 0; background: var(--series-1); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
 .bar-val { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 3px; }
 table { border-collapse: collapse; font-size: 12px; width: 100%; }
 th, td { padding: 5px 8px; text-align: right; border: 1px solid var(--grid); }
 th { color: var(--text-secondary); font-weight: 600; }
@@ -91,6 +93,10 @@ def _platform_rows(result):
     rows = []
     for code, analysis in sorted(result.analyses.items()):
         total = len(analysis.target_baseline)
+        # CIS potential: base controls any file (baseline + CIS/DISA candidates)
+        # can cover - the highest achievable coverage if candidate checks are
+        # imported. Mirrors "Highest Potential" in Platform_Family_Coverage.
+        cis = len(set(analysis.target_baseline) & analysis.all_possible_controls)
         rows.append(
             {
                 "code": code,
@@ -100,6 +106,8 @@ def _platform_rows(result):
                 "covered": analysis.baseline_coverage_count,
                 "total": total,
                 "pct": _pct(analysis.baseline_coverage_count, total),
+                "cis": cis,
+                "cis_pct": _pct(cis, total),
                 "recoverable": len(analysis.inactive_coverage_opportunities),
                 "additional": len(analysis.additional_controls_not_present),
             }
@@ -196,18 +204,24 @@ def build_dashboard(result, output_file, history=None, attack_mappings=None):
         <div class="label">Require new checks (import from benchmarks)</div></div>
     </div></section>"""
 
-    max_pct = max((r["pct"] for r in rows), default=1) or 1
+    max_pct = max((max(r["pct"], r["cis_pct"]) for r in rows), default=1) or 1
     bar_rows = "".join(
         f'<div class="bar-row"><div>{_esc(r["code"])}</div>'
-        f'<div class="bar-track"><div class="bar-fill" '
-        f'style="width:{max(r["pct"] / max_pct * 100, 0.5)}%" '
-        f'title="{_esc(r["code"])}: {r["covered"]} of {r["total"]} base controls"></div></div>'
-        f'<div class="bar-val">{r["pct"]}% ({r["covered"]}/{r["total"]})</div></div>'
+        f'<div class="bar-track">'
+        f'<div class="bar-cis" style="width:{max(r["cis_pct"] / max_pct * 100, 0.5)}%" '
+        f'title="{_esc(r["code"])} CIS potential: {r["cis"]} of {r["total"]} base controls"></div>'
+        f'<div class="bar-fill" style="width:{max(r["pct"] / max_pct * 100, 0.5)}%" '
+        f'title="{_esc(r["code"])} HTH baseline: {r["covered"]} of {r["total"]} base controls"></div>'
+        f'</div>'
+        f'<div class="bar-val">{r["pct"]}% / {r["cis_pct"]}% CIS</div></div>'
         for r in rows
     )
     bars = f"""
     <section><h2>Base-control coverage by platform</h2>{bar_rows}
-    <div class="legend-note">Bars scaled to the highest platform ({max_pct}%).
+    <div class="legend-note">
+    <span class="swatch" style="background:var(--series-1)"></span>HTH baseline coverage &nbsp;
+    <span class="swatch" style="background:var(--cis)"></span>CIS benchmark potential (highest achievable
+    if candidate checks are imported). Bars scaled to the highest platform potential ({max_pct}%).
     Coverage counts NIST 800-53r5 base controls referenced by active baseline checks.</div>
     </section>"""
 
