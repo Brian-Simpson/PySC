@@ -92,15 +92,22 @@ def _occurrence(source, fields):
 
 
 def build_library(sources, matcher=None):
-    """Aggregate controls across audit files -> {key: entry}."""
+    """Aggregate controls across audit files -> {key: entry}.
+
+    Controls are PLATFORM-SPECIFIC: with a matcher, the key is
+    '<PLATFORM>|<evaluated item>' so the same audited item on MSSRV and MSWRK
+    is two distinct controls (per-platform policy is legitimate, not a
+    conflict). Without a matcher, keys are unscoped (tests/ad-hoc use).
+    """
     entries = {}
     for source in sources:
         source = Path(source)
         platform = matcher.match(source.name) if matcher else None
         for fields in iter_active_checks(source):
-            key = derive_evaluated_item_key(fields)
-            if not key:
+            item_key = derive_evaluated_item_key(fields)
+            if not item_key:
                 continue
+            key = f"{platform}|{item_key}" if platform else item_key
             entry = entries.setdefault(
                 key,
                 {
@@ -173,19 +180,24 @@ def load_library(path):
     return payload.get("controls", {})
 
 
-def check_audit_file(library_controls, audit_path):
+def check_audit_file(library_controls, audit_path, matcher=None):
     """Classify each active check of an audit against the library.
+
+    With a matcher, keys are platform-qualified from the audit's filename so
+    checks compare against that platform's controls only.
 
     Statuses: NEW (key unknown), KNOWN (key + expectation match),
     EXPECTATION_DIFFERS (known key, unseen expectation),
     DUPLICATE_IN_FILE (key repeated within this audit).
     """
+    platform = matcher.match(Path(audit_path).name) if matcher else None
     seen_in_file = defaultdict(int)
     rows = []
     for fields in iter_active_checks(audit_path):
-        key = derive_evaluated_item_key(fields)
-        if not key:
+        item_key = derive_evaluated_item_key(fields)
+        if not item_key:
             continue
+        key = f"{platform}|{item_key}" if platform else item_key
         occurrence = _occurrence(audit_path, fields)
         seen_in_file[key] += 1
         if seen_in_file[key] > 1:

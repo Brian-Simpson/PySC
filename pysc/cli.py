@@ -488,11 +488,13 @@ def cmd_library(cfg, args):
         return
 
     # check
+    from pysc.platforms import PlatformMatcher
+
     library_path = cfg.root / LIBRARY_NAME
     if not library_path.is_file():
         raise SystemExit(f"No library at {library_path} - run 'pysc library build' first")
     controls = load_library(library_path)
-    rows = check_audit_file(controls, args.audit)
+    rows = check_audit_file(controls, args.audit, matcher=PlatformMatcher.from_config(cfg))
     counts = {}
     for row in rows:
         counts[row["status"]] = counts.get(row["status"], 0) + 1

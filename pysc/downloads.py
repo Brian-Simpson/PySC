@@ -220,8 +220,11 @@ def _post_apply_library_update(cfg, applied_rows, vendor_root, progress):
     library_path = cfg.root / LIBRARY_NAME
     if library_path.is_file():
         controls = load_library(library_path)
+        matcher = PlatformMatcher.from_config(cfg)
         for row in applied_rows:
-            results = check_audit_file(controls, Path(vendor_root) / row["name"])
+            results = check_audit_file(
+                controls, Path(vendor_root) / row["name"], matcher=matcher
+            )
             counts = {}
             for r in results:
                 counts[r["status"]] = counts.get(r["status"], 0) + 1

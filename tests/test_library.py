@@ -240,3 +240,41 @@ def test_ratify_and_cis_variance_register(tmp_path):
     assert row["cis_values"] == "[1..365]"
     assert "CIS_Microsoft_Windows_11" in row["cis_sources"]
     assert row["rationale"] == "HTH Password Standard 4.1"
+
+
+def test_platform_specific_controls_no_cross_platform_conflict(tmp_path):
+    """MSSRV and MSWRK may legitimately set different values for the same
+    audited item - platform-qualified keys mean that is NOT a conflict."""
+    from pysc.library.policy import classify_variances, ratify_baselines
+    from pysc.platforms import PlatformMatcher
+
+    matcher = PlatformMatcher({"MSSRV": ["Windows_Server"], "MSWRK": ["Windows_11"]})
+
+    prod = tmp_path / "prod"
+    prod.mkdir()
+    srv = prod / "HTH_Windows_Server_BASELINE.audit"
+    wrk = prod / "HTH_Windows_11_BASELINE.audit"
+    srv.write_text(SECEDIT_FILE, encoding="utf-8")                       # expects 60
+    wrk.write_text(SECEDIT_FILE.replace('"60"', '"90"'), encoding="utf-8")  # expects 90
+
+    entries = build_library([srv, wrk], matcher)
+    assert set(entries) == {f"MSSRV|{EXPECTED_KEY}", f"MSWRK|{EXPECTED_KEY}"}
+
+    # Each platform entry has ONE expectation -> no variance, no conflict.
+    assert classify_variances(entries, {}, prod) == []
+    ratified, conflicts = ratify_baselines(
+        entries, {}, prod, tmp_path / "policy_variances.toml"
+    )
+    assert conflicts == []
+
+    # Checking a platform's audit compares against that platform's control.
+    lib_path = tmp_path / "lib.json"
+    save_library(entries, lib_path)
+    controls = load_library(lib_path)
+    rows = check_audit_file(controls, srv, matcher=matcher)
+    assert [r["status"] for r in rows] == ["KNOWN"]
+    # The MSWRK value (90) applied to an MSSRV audit is NOT known for MSSRV.
+    drift = prod / "HTH_Windows_Server_BASELINE_drift.audit"
+    drift.write_text(SECEDIT_FILE.replace('"60"', '"90"'), encoding="utf-8")
+    rows = check_audit_file(controls, drift, matcher=matcher)
+    assert [r["status"] for r in rows] == ["EXPECTATION_DIFFERS"]

@@ -65,7 +65,7 @@ filename_tokens = ["SQL_Server"]
 
 [platforms.RHEL]
 baseline = "HTH_Baseline_RHEL.audit"
-filename_tokens = ["Hat_Enterprise_Linux"]
+filename_tokens = ["Hat_Enterprise_Linux", "RHEL"]
 
 [platforms.VMware]
 baseline = ""   # no production baseline yet
