@@ -18,6 +18,7 @@ venv/
 **/Normalized/
 **/For_Gap/
 **/_incoming_*/
+**/_unassigned/
 Downloads_Cache/
 actual_audit_inputs/Merged/
 Output/

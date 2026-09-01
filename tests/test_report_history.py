@@ -114,9 +114,27 @@ def test_dashboard_build(result, tmp_path):
     text = Path(out).read_text(encoding="utf-8")
     assert "<!DOCTYPE html>" in text
     assert "MSSRV" in text
-    assert "NO BASELINE" in text            # NetACI surfaced
+    # Executive scope: no missing-baseline reporting on the dashboard.
+    assert "NO BASELINE" not in text
+    assert "without a baseline" not in text
+    # Ranked remediation priorities are front and center.
+    assert "Top remediation priorities" in text
+    assert "Import candidate check" in text or "Un-comment existing check" in text
     assert "prefers-color-scheme: dark" in text
     assert "Coverage % by platform and NIST family" in text
+
+
+def test_priority_gap_rows(result):
+    from pysc.report.priority import priority_gap_rows
+
+    rows = priority_gap_rows(result)
+    # Synthetic MSSRV analysis: IA-5 recoverable (priority family, weight 3),
+    # SC-7 missing (priority family, weight 3 x2 = 6, ranked first).
+    assert rows[0]["control_id"] == "SC-7" and rows[0]["score"] == 6
+    assert rows[0]["action"] == "Import candidate check"
+    ia5 = next(r for r in rows if r["control_id"] == "IA-5")
+    assert ia5["score"] == 3 and ia5["action"] == "Un-comment existing check"
+    assert priority_gap_rows(result, limit=1) == rows[:1]
 
 
 def test_sanitize_for_excel_formula_guard():

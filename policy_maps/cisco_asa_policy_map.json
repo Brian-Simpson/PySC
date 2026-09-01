@@ -1,6 +1,0 @@
-{
-  "vendor": "cisco_asa",
-  "audit_files": [],
-  "description": "Placeholder policy map for vendor-specific security controls.",
-  "mappings": {}
-}

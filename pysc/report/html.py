@@ -64,7 +64,7 @@ td.rowhead, th.rowhead { text-align: left; font-weight: 600; }
 td.heat { font-variant-numeric: tabular-nums; }
 .chip { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
 .chip.missing { border: 1px solid var(--critical); color: var(--critical); }
-.chip.nobaseline { border: 1px solid var(--serious); color: var(--serious); }
+.prio-score { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .legend-note { color: var(--muted); font-size: 11px; margin-top: 8px; }
 svg text { fill: var(--text-secondary); font-size: 11px; }
 footer { color: var(--muted); font-size: 11px; margin-top: 12px; }
@@ -170,27 +170,31 @@ def _trend_svg(history):
 
 
 def build_dashboard(result, output_file, history=None):
+    from pysc.report.priority import PRIORITY_FAMILIES, priority_gap_rows
+
     rows = _platform_rows(result)
     families, grid = _family_grid(result)
     trend_svg, trend_points = _trend_svg(history)
+    priorities = priority_gap_rows(result)
 
     covered_sum = sum(r["covered"] for r in rows)
     total_sum = sum(r["total"] for r in rows)
     recoverable_sum = sum(r["recoverable"] for r in rows)
     additional_sum = sum(r["additional"] for r in rows)
+    priority_family_gaps = sum(1 for p in priorities if p["family"] in PRIORITY_FAMILIES)
 
     tiles = f"""
     <section><div class="tiles">
       <div class="tile"><div class="value">{len(rows)}</div>
-        <div class="label">Platforms with baselines</div></div>
+        <div class="label">Platforms under baseline management</div></div>
       <div class="tile"><div class="value">{_pct(covered_sum, total_sum)}%</div>
         <div class="label">Base-control coverage (all platforms)</div></div>
+      <div class="tile"><div class="value">{priority_family_gaps}</div>
+        <div class="label">Gaps in priority families (AC IA AU SC SI)</div></div>
       <div class="tile"><div class="value">{recoverable_sum}</div>
-        <div class="label">Gaps recoverable by un-commenting</div></div>
+        <div class="label">Recoverable now (un-comment existing checks)</div></div>
       <div class="tile"><div class="value">{additional_sum}</div>
-        <div class="label">Gaps requiring new checks</div></div>
-      <div class="tile"><div class="value">{len(result.missing_baseline)}</div>
-        <div class="label">Platforms without a baseline</div></div>
+        <div class="label">Require new checks (import from benchmarks)</div></div>
     </div></section>"""
 
     max_pct = max((r["pct"] for r in rows), default=1) or 1
@@ -223,19 +227,27 @@ def build_dashboard(result, output_file, history=None):
     <div class="legend-note">Darker blue = higher coverage; every cell shows its value.</div>
     </section>"""
 
-    missing_rows = "".join(
-        f'<tr><td class="rowhead">{_esc(code)}</td>'
-        f'<td style="text-align:left"><span class="chip nobaseline">NO BASELINE</span></td>'
-        f'<td style="text-align:left">{_esc(", ".join(names) or "no candidates either")}</td></tr>'
-        for code, names in sorted(result.missing_baseline.items())
+    # Top remediation priorities: what to address first, ranked.
+    top = priorities[:15]
+    prio_rows_html = "".join(
+        f'<tr><td class="prio-score">{"HIGH" if p["score"] >= 3 else "STD"} {p["score"]}</td>'
+        f'<td class="rowhead">{_esc(p["platform"])}</td>'
+        f'<td style="text-align:left">{_esc(p["control_id"])}</td>'
+        f'<td style="text-align:left">{_esc(p["title"])}</td>'
+        f'<td style="text-align:left">{_esc(p["family_name"])}</td>'
+        f'<td style="text-align:left">{_esc(p["action"])}</td></tr>'
+        for p in top
     )
-    missing = (
-        f"""<section><h2>Platforms without a production baseline</h2>
-        <table><tr><th class="rowhead">Platform</th><th>Status</th>
-        <th>Vendor candidates available</th></tr>{missing_rows}</table></section>"""
-        if result.missing_baseline
-        else ""
-    )
+    priorities_section = f"""
+    <section><h2>Top remediation priorities</h2>
+    <table><tr><th>Priority</th><th class="rowhead">Platform</th><th style="text-align:left">Control</th>
+    <th style="text-align:left">Title</th><th style="text-align:left">NIST Family</th>
+    <th style="text-align:left">Action</th></tr>{prio_rows_html}</table>
+    <div class="legend-note">Ranked by NIST family criticality (AC/IA/AU/SC/SI weigh 3x)
+    and effort (missing checks outrank recoverable ones). Showing top {len(top)} of
+    {len(priorities)} open gaps; the full ranked list is the Priority_Gaps sheet of the
+    Unified_Compliance_Matrix workbook.</div>
+    </section>"""
 
     if trend_points >= 2:
         trend = f"<section><h2>Enterprise coverage trend</h2>{trend_svg}</section>"
@@ -255,7 +267,7 @@ def build_dashboard(result, output_file, history=None):
 <body><div class="viz-root">
 <h1>HTH Compliance Baseline Dashboard</h1>
 <div class="subtitle">Tenable .audit baseline posture vs NIST SP 800-53r5 &middot; generated {stamp}</div>
-{tiles}{bars}{heatmap}{missing}{trend}
+{tiles}{bars}{priorities_section}{heatmap}{trend}
 <footer>Generated by pysc. Coverage reflects audit-file content (checks referencing
 NIST controls), not fleet scan pass rates.</footer>
 </div></body></html>"""

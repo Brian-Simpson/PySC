@@ -22,8 +22,6 @@ from pysc.report.excel_util import (
     write_sheet,
 )
 
-PRIORITY_FAMILIES = {"AC", "IA", "AU", "SC", "SI"}
-
 
 def _pct(part, whole):
     return round((part / whole) * 100, 2) if whole else 0.0
@@ -141,22 +139,16 @@ def build_matrix(result, output_file, history=None, cis_variances=None):
                 cell.fill = fill
 
     # --- Priority_Gaps ----------------------------------------------------------
+    from pysc.report.priority import priority_gap_rows
+
     ws = wb.create_sheet("Priority_Gaps")
-    prio_rows = []
-    for code, analysis in sorted(result.analyses.items()):
-        for control_id in sorted(analysis.coverage_opportunities):
-            family, family_name = OscalCatalog.family_of(control_id)
-            recoverable = control_id in analysis.inactive_coverage_opportunities
-            weight = 3 if family in PRIORITY_FAMILIES else 1
-            score = weight * (1 if recoverable else 2)
-            prio_rows.append(
-                [
-                    score, code, control_id,
-                    analysis.catalog.title(control_id), family, family_name,
-                    "Un-comment existing check" if recoverable else "Import candidate check",
-                ]
-            )
-    prio_rows.sort(key=lambda r: (-r[0], r[1], r[2]))
+    prio_rows = [
+        [
+            r["score"], r["platform"], r["control_id"], r["title"],
+            r["family"], r["family_name"], r["action"],
+        ]
+        for r in priority_gap_rows(result)
+    ]
     write_sheet(
         ws,
         ["Priority", "Platform", "Control ID", "Control Title", "Family", "Family Name", "Remediation Path"],

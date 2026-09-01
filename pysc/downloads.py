@@ -278,6 +278,20 @@ def _post_apply_library_update(cfg, applied_rows, vendor_root, progress):
     run_build(cfg, progress=progress)
 
 
+def covered_platforms(cfg):
+    """Platforms whose declared production baseline exists on disk.
+
+    Program rule: no .audit file is processed, parsed, or reported without a
+    corresponding baseline in actual_audit_inputs.
+    """
+    covered = set()
+    for code in cfg.platforms():
+        baseline = cfg.baseline_path(code)
+        if baseline is not None and baseline.is_file():
+            covered.add(code)
+    return covered
+
+
 def run(cfg, apply=False, keep_archive=True, all_variants=False, update_library=True, progress=print):
     """Full download flow driven by pysc.toml. Returns the staged rows."""
     dl_cfg = cfg.data.get("downloads", {})
@@ -294,6 +308,15 @@ def run(cfg, apply=False, keep_archive=True, all_variants=False, update_library=
 
     configured = PlatformMatcher.from_config(cfg)
     matches = scan_archive(archive_path, configured)
+
+    covered = covered_platforms(cfg)
+    uncovered = sorted({code for _name, code in matches if code not in covered})
+    matches = [(name, code) for name, code in matches if code in covered]
+    if uncovered:
+        progress(
+            "Skipping platforms without a production baseline: "
+            + ", ".join(uncovered)
+        )
     progress(f"Relevant .audit files in archive: {len(matches)}")
 
     families = curated_families(cfg)

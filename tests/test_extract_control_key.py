@@ -3,8 +3,15 @@ import sys
 
 import pytest
 
-# The module under test lives in Scripts\, not the workspace root.
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "Scripts"))
+# The module under test was a legacy Scripts\ utility, retired to TAPARCHIVE;
+# its dashboard logic was superseded by pysc.report. Skip when absent.
+_SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "Scripts"
+if not (_SCRIPTS_DIR / "Consolidate_Framework_Baselines.py").is_file():
+    pytest.skip(
+        "legacy Scripts/Consolidate_Framework_Baselines retired (TAPARCHIVE)",
+        allow_module_level=True,
+    )
+sys.path.insert(0, str(_SCRIPTS_DIR))
 
 from Consolidate_Framework_Baselines import extract_control_key
 

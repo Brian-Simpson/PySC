@@ -513,6 +513,49 @@ def cmd_library(cfg, args):
     )
 
 
+def _quarantine_uncovered(cfg):
+    """Enforce the program rule: no .audit is processed without a
+    corresponding baseline. Files in the input trees that don't map to a
+    baseline-covered platform (or aren't declared baselines) are moved into
+    an _unassigned\\ subfolder, which no pipeline stage scans."""
+    import shutil
+
+    from pysc.downloads import covered_platforms
+    from pysc.platforms import PlatformMatcher
+
+    matcher = PlatformMatcher.from_config(cfg)
+    covered = covered_platforms(cfg)
+    declared_baselines = {
+        cfg.platform(code).get("baseline", "").lower()
+        for code in cfg.platforms()
+        if cfg.platform(code).get("baseline")
+    }
+
+    moved = []
+    vendor_root = cfg.path("vendor_inputs")
+    if vendor_root and vendor_root.is_dir():
+        for path in sorted(vendor_root.glob("*.audit")):
+            code = matcher.match(path.name)
+            if code not in covered:
+                quarantine = vendor_root / "_unassigned"
+                quarantine.mkdir(exist_ok=True)
+                shutil.move(str(path), str(quarantine / path.name))
+                moved.append((path.name, code or "unmapped"))
+
+    production_root = cfg.path("production_inputs")
+    if production_root and production_root.is_dir():
+        for path in sorted(production_root.glob("*.audit")):
+            if path.name.lower() not in declared_baselines:
+                quarantine = production_root / "_unassigned"
+                quarantine.mkdir(exist_ok=True)
+                shutil.move(str(path), str(quarantine / path.name))
+                moved.append((path.name, "not a declared baseline"))
+
+    for name, reason in moved:
+        print(f"[QUARANTINED] {name} ({reason}) -> _unassigned\\")
+    return moved
+
+
 def cmd_refresh(cfg, args):
     """The clean-slate operating procedure in one command:
     baselines in actual_audit_inputs -> everything else regenerates."""
@@ -533,6 +576,8 @@ def cmd_refresh(cfg, args):
             "No declared baselines found in actual_audit_inputs - drop them in "
             "first (filenames must match the [platforms.<CODE>] baseline entries)."
         )
+
+    _quarantine_uncovered(cfg)
 
     print("\n[1/4] Vendor benchmarks from Tenable downloads...")
     from pysc.downloads import run as run_download

@@ -1,15 +1,14 @@
 # PySC configuration — replaces PYSC_* environment variables and hardcoded paths.
-# All relative paths resolve against [paths].root.
+# All relative paths resolve against the folder containing this file (the
+# toolkit root), so the tree is relocatable as a unit.
 
 [paths]
-root = "C:/PySC"
 production_inputs = "actual_audit_inputs"      # was PYSC_PRODUCTION_AUDIT_ROOT
 vendor_inputs = "audit_inputs"
 normalized = "actual_audit_inputs/Normalized"  # was PYSC_PRODUCTION_NORMALIZED_ROOT
 gap_staging = "actual_audit_inputs/For_Gap"    # was PYSC_PRODUCTION_GAP_ROOT
 gap_output = "actual_audit_inputs"             # was PYSC_PRODUCTION_GAP_OUTPUT_ROOT
 oscal_catalog = "NIST_SP-800-53_rev5_catalog.json"
-threat_intel_cache = "Scripts/threat_intel_cache.json"
 history_db = "pysc_history.sqlite"
 report_output = "Output"
 

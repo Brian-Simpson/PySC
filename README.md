@@ -8,6 +8,16 @@ and producing enterprise compliance reporting.
 > **Scope:** this repo manages the audit *files*. Ongoing audit scanning runs
 > in the Tenable console; scan results come back into this tooling as Excel
 > exports.
+>
+> **Location:** the toolkit root is `C:\PySC\TAP` (all paths in `pysc.toml`
+> resolve relative to it — the tree is relocatable as a unit). Superseded and
+> non-toolkit material lives in `C:\PySC\TAPARCHIVE`.
+>
+> **Program rule:** no `.audit` file is processed, parsed, or reported
+> without a corresponding baseline declared in `pysc.toml` and present in
+> `actual_audit_inputs\`. Downloads skip uncovered platforms, and `pysc
+> refresh` quarantines stray files into `_unassigned\` folders that no
+> pipeline stage reads.
 
 ## Setup
 
