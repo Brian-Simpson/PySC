@@ -6,8 +6,8 @@
 production_inputs = "actual_audit_inputs"      # was PYSC_PRODUCTION_AUDIT_ROOT
 vendor_inputs = "audit_inputs"
 normalized = "actual_audit_inputs/Normalized"  # was PYSC_PRODUCTION_NORMALIZED_ROOT
-gap_staging = "actual_audit_inputs/For_Gap"    # was PYSC_PRODUCTION_GAP_ROOT
-gap_output = "actual_audit_inputs"             # was PYSC_PRODUCTION_GAP_OUTPUT_ROOT
+gap_staging = "Output/Processed/For_Gap"       # was PYSC_PRODUCTION_GAP_ROOT
+gap_output = "Output/Processed"                # was PYSC_PRODUCTION_GAP_OUTPUT_ROOT
 oscal_catalog = "NIST_SP-800-53_rev5_catalog.json"
 attack_mappings = "nist800-53-r5-attack-mappings.json"
 history_db = "pysc_history.sqlite"

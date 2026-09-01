@@ -43,6 +43,7 @@ pysc/_legacy/threat_intel_cache.json
 *.pem
 secrets*.json
 pysc_history.sqlite
+validation_cache.json
 
 # --- Editor/OS noise ---
 Thumbs.db

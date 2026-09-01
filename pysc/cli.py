@@ -23,9 +23,17 @@ def _finish_legacy(legacy):
     legacy._print_validation_summary()
 
 
-def _run_legacy_main(cfg, argv):
+def _enable_validation_cache(cfg, modules, revalidate=False):
+    """Skip Docker check_audit for byte-identical content that already passed."""
+    from pysc import validation_cache
+
+    return validation_cache.enable(cfg, modules, revalidate=revalidate)
+
+
+def _run_legacy_main(cfg, argv, revalidate=False):
     """Invoke legacy main() with a reconstructed sys.argv."""
     legacy = _legacy_session(cfg)
+    cache = _enable_validation_cache(cfg, [legacy], revalidate=revalidate)
     old_argv = sys.argv
     sys.argv = ["ALL_AUDITS.py"] + argv
     try:
@@ -33,6 +41,14 @@ def _run_legacy_main(cfg, argv):
     finally:
         sys.argv = old_argv
         _finish_legacy(legacy)
+        if cache.hits or cache.misses:
+            print(
+                f"check_audit cache: {cache.hits} skipped (unchanged content), "
+                f"{cache.misses} validated in Docker"
+            )
+        from pysc.outputs import organize_outputs
+
+        organize_outputs(cfg)
 
 
 def cmd_normalize(cfg, args):
@@ -57,6 +73,7 @@ def cmd_normalize(cfg, args):
     from pysc import normalize
 
     legacy = _legacy_session(cfg)
+    _enable_validation_cache(cfg, [legacy, normalize._core])
     normalize.apply_platform_overrides(cfg)
     normalize.reset_validation_summary()
     try:
@@ -95,13 +112,16 @@ def cmd_normalize(cfg, args):
             raise SystemExit(f"ERROR: Path does not exist: {target}")
     finally:
         normalize.print_validation_summary()
+        from pysc.outputs import organize_outputs
+
+        organize_outputs(cfg)
 
 
 def cmd_run(cfg, args):
     argv = []
     if args.strict:
         argv.append("--strict")
-    _run_legacy_main(cfg, argv)
+    _run_legacy_main(cfg, argv, revalidate=getattr(args, "revalidate", False))
 
 
 def cmd_gap_production(cfg, args):
@@ -328,7 +348,9 @@ def cmd_report(cfg, args):
             run_id = history.record_enterprise_run(result, notes=f"pysc report {args.format}")
             print(f"History snapshot recorded (run {run_id})")
 
-        out_dir = cfg.path("report_output")
+        from pysc.outputs import reports_dir
+
+        out_dir = reports_dir(cfg)
         out_dir.mkdir(parents=True, exist_ok=True)
         stamp = time.strftime("%y%m%d%H%M")
 
@@ -402,7 +424,9 @@ def cmd_maturity(cfg, args):
     import os
     import time
 
-    out_dir = cfg.path("report_output")
+    from pysc.outputs import reports_dir
+
+    out_dir = reports_dir(cfg)
     out_dir.mkdir(parents=True, exist_ok=True)
     stamp = time.strftime("%y%m%d%H%M")
     workbook = os.path.join(str(out_dir), f"Maturity_Proposals_{stamp}.xlsx")
@@ -596,7 +620,7 @@ def cmd_refresh(cfg, args):
 
     print("\n[2/4] Full pipeline (normalize -> catalog -> merge -> gap)...")
     argv = ["--strict"] if args.strict else []
-    _run_legacy_main(cfg, argv)
+    _run_legacy_main(cfg, argv, revalidate=getattr(args, "revalidate", False))
 
     print("\n[3/4] Control library...")
     from pysc.library import run_build
@@ -636,6 +660,8 @@ def build_parser():
 
     p = sub.add_parser("run", help="Full pipeline: production + vendor inputs, catalogs, crosswalk, merge, gap")
     p.add_argument("--strict", action="store_true")
+    p.add_argument("--revalidate", action="store_true",
+                   help="Clear the check_audit cache and re-validate everything in Docker")
     p.set_defaults(func=cmd_run)
 
     p = sub.add_parser(
@@ -643,6 +669,8 @@ def build_parser():
         help="Clean-slate one-shot: verify baselines, download benchmarks, run pipeline, rebuild library, publish reports",
     )
     p.add_argument("--strict", action="store_true", help="Fail the pipeline on any preflight/normalization error")
+    p.add_argument("--revalidate", action="store_true",
+                   help="Clear the check_audit cache and re-validate everything in Docker")
     p.set_defaults(func=cmd_refresh)
 
     p = sub.add_parser("gap", help="NIST 800-53 gap analysis")
