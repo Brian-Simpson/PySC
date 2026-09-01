@@ -292,6 +292,13 @@ def cmd_report(cfg, args):
     import time
 
     result = _enterprise_result(cfg)
+    if not cfg.data.get("report", {}).get("show_missing_baselines", True):
+        if result.missing_baseline:
+            print(
+                "Excluded from reports (no baseline declared): "
+                + ", ".join(sorted(result.missing_baseline))
+            )
+        result.missing_baseline = {}
     history = _history_store(cfg)
     try:
         if not args.no_snapshot:
@@ -406,6 +413,34 @@ def cmd_library(cfg, args):
             cfg,
             include_normalized=True if args.include_normalized else None,
         )
+        return
+
+    if args.library_command == "seed-policy":
+        from pysc.library.build import build_library, default_sources
+        from pysc.library.policy import (
+            REGISTER_NAME,
+            load_register,
+            seed_register,
+        )
+        from pysc.platforms import PlatformMatcher
+
+        sources = default_sources(
+            cfg, bool(cfg.data.get("library", {}).get("include_normalized", True))
+        )
+        entries = build_library(sources, PlatformMatcher.from_config(cfg))
+        register_path = cfg.root / REGISTER_NAME
+        register = load_register(register_path)
+        candidates, conflicts = seed_register(
+            entries, register, cfg.path("production_inputs"), register_path
+        )
+        print(f"Seeded {len(candidates)} approval(s) into {register_path}")
+        for row in candidates:
+            print(f"  + {row['key']} approved={next(iter(row['baseline_values']))}")
+        if conflicts:
+            print(f"BASELINE CONFLICTS requiring manual resolution ({len(conflicts)}):")
+            for row in conflicts:
+                print(f"  ! {row['key']} baseline values={row['baseline_values']}")
+        print("Review rationale text, then re-run: pysc library build")
         return
 
     # check
@@ -584,6 +619,11 @@ def build_parser():
     lb.add_argument("--include-normalized", action="store_true",
                     help="Also scan the latest Normalized generation of each input tree")
     lb.set_defaults(func=cmd_library)
+    lsp = lib_sub.add_parser(
+        "seed-policy",
+        help="Draft policy_variances.toml approvals from HTH baseline values (NEEDS_POLICY_DECISION controls)",
+    )
+    lsp.set_defaults(func=cmd_library)
     lc = lib_sub.add_parser("check", help="Classify an audit's checks against the library (NEW / KNOWN / EXPECTATION_DIFFERS / DUPLICATE_IN_FILE)")
     lc.add_argument("audit", help="Audit file to check")
     lc.add_argument("--verbose", action="store_true", help="Also list KNOWN checks")

@@ -211,7 +211,7 @@ def check_audit_file(library_controls, audit_path):
     return rows
 
 
-def export_workbook(entries, output_path):
+def export_workbook(entries, output_path, policy_rows=None):
     from openpyxl import Workbook
 
     from pysc.report.excel_util import FILL_PARTIAL, write_sheet
@@ -251,20 +251,38 @@ def export_workbook(entries, output_path):
             ws.cell(row=row_idx, column=6).fill = FILL_PARTIAL
 
     ws2 = wb.create_sheet("Expectation_Variance")
-    variance_rows = []
-    for key, expectations in expectation_variances(entries):
-        for expected, count in sorted(expectations.items()):
-            files = sorted(
-                {
-                    Path(o["file"]).name
-                    for o in entries[key]["occurrences"]
-                    if o["expected"] == expected
-                }
-            )
-            variance_rows.append([key, expected, count, "; ".join(files)])
+    if policy_rows is None:
+        variance_rows = []
+        for key, expectations in expectation_variances(entries):
+            for expected, count in sorted(expectations.items()):
+                files = sorted(
+                    {
+                        Path(o["file"]).name
+                        for o in entries[key]["occurrences"]
+                        if o["expected"] == expected
+                    }
+                )
+                variance_rows.append([key, "", "", expected, count, "; ".join(files)])
+    else:
+        variance_rows = []
+        for row in policy_rows:
+            for expected, count in sorted(row["all_values"].items()):
+                files = sorted(
+                    {
+                        Path(o["file"]).name
+                        for o in entries[row["key"]]["occurrences"]
+                        if o["expected"] == expected
+                    }
+                )
+                variance_rows.append(
+                    [
+                        row["key"], row["status"], row["approved"], expected,
+                        count, "; ".join(files),
+                    ]
+                )
     write_sheet(
         ws2,
-        ["Control Key", "Expected Value", "Occurrences", "Files"],
+        ["Control Key", "Policy Status", "Approved Value", "Expected Value", "Occurrences", "Files"],
         variance_rows,
     )
 
@@ -315,27 +333,39 @@ def run_build(cfg, include_normalized=None, progress=print):
     save_library(entries, library_path)
     progress(f"Library: {library_path} ({len(entries)} controls)")
 
+    from pysc.library.policy import REGISTER_NAME, classify_variances, load_register
+
+    register = load_register(cfg.root / REGISTER_NAME)
+    policy_rows = classify_variances(entries, register, cfg.path("production_inputs"))
+
     # One master workbook, overwritten each build. If it is open in Excel the
     # write fails with PermissionError; fall back to a timestamped copy.
     workbook = cfg.root / MASTER_WORKBOOK_NAME
     try:
-        export_workbook(entries, workbook)
+        export_workbook(entries, workbook, policy_rows=policy_rows)
         progress(f"Workbook: {workbook}")
     except PermissionError:
         out_dir = cfg.path("report_output")
         out_dir.mkdir(parents=True, exist_ok=True)
         fallback = out_dir / f"Control_Library_{time.strftime('%y%m%d%H%M')}.xlsx"
-        export_workbook(entries, fallback)
+        export_workbook(entries, fallback, policy_rows=policy_rows)
         progress(
             f"WARNING: {workbook} is locked (open in Excel?) - wrote {fallback}; "
             "close the master file and rebuild to refresh it"
         )
 
     dupes = duplicates_in_file(entries)
-    variances = expectation_variances(entries)
+    status_counts = {}
+    for row in policy_rows:
+        status_counts[row["status"]] = status_counts.get(row["status"], 0) + 1
     total_occurrences = sum(len(e["occurrences"]) for e in entries.values())
     progress(
         f"Occurrences: {total_occurrences} | Unique controls: {len(entries)} | "
-        f"Expectation variances: {len(variances)} | In-file duplicates: {len(dupes)}"
+        f"In-file duplicates: {len(dupes)}"
     )
+    if policy_rows:
+        progress(
+            "Variances: "
+            + " | ".join(f"{k}: {v}" for k, v in sorted(status_counts.items()))
+        )
     return entries

@@ -66,8 +66,10 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 - `Archive\2026-08_legacy\` — superseded scripts and trees (git-ignored,
   preserved on disk; also in git history before commit d059730's follow-up)
 
-`ALL_AUDITS.py` and `NIST_audit_Gap_Analysis.py` remain at the root as parity
-oracles; they archive after two clean production cycles through `pysc run`.
+`ALL_AUDITS.py` and `NIST_audit_Gap_Analysis.py` retired to
+`Archive\2026-08_legacy\` on 2026-09-01 after two clean validated production
+cycles; the vendored copy in `pysc\_legacy\` remains the byte-parity oracle
+for the golden test suite.
 
 Legacy-only inputs that never existed in this workspace and are NOT required
 by the package: `Baseline_-_MSSRV.csv`, `Merged_2607.csv`,

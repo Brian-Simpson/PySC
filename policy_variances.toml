@@ -1,0 +1,196 @@
+# Enterprise policy variances - approved expectations for controls where
+# HTH policy deliberately differs from vendor benchmark defaults.
+# Curate rationale text; entries here are authoritative for reporting.
+
+
+[controls."AUDIT_POLICY_SUBCATEGORY:APPLICATION GROUP MANAGEMENT"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:AUTHORIZATION POLICY CHANGE"]
+approved = "Success\" ||\"Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:COMPUTER ACCOUNT MANAGEMENT"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:CREDENTIAL VALIDATION"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:DIRECTORY SERVICE ACCESS"]
+approved = "Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:DIRECTORY SERVICE CHANGES"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:DISTRIBUTION GROUP MANAGEMENT"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:LOGON"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:OTHER ACCOUNT MANAGEMENT EVENTS"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:OTHER LOGON/LOGOFF EVENTS"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:OTHER SYSTEM EVENTS"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:PLUG AND PLAY EVENTS"]
+approved = "Success\" ||\"Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:PROCESS CREATION"]
+approved = "Success\" || \"Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:REMOVABLE STORAGE"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:SECURITY GROUP MANAGEMENT"]
+approved = "Success\" ||\"Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:SYSTEM INTEGRITY"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POLICY_SUBCATEGORY:USER ACCOUNT MANAGEMENT"]
+approved = "Success and Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''AUTHORIZATION POLICY CHANGE'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''AUTHORIZATION POLICY CHANGE'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''AUTHORIZATION POLICY CHANGE'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*AUTHORIZATION\\ POLICY\\ CHANGE\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "(?s)^(?:Success|Success\\ and\\ Failure)$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''COMPUTER ACCOUNT MANAGEMENT'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''COMPUTER ACCOUNT MANAGEMENT'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''COMPUTER ACCOUNT MANAGEMENT'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*COMPUTER\\ ACCOUNT\\ MANAGEMENT\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''DIRECTORY SERVICE ACCESS'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''DIRECTORY SERVICE ACCESS'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''DIRECTORY SERVICE ACCESS'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*DIRECTORY\\ SERVICE\\ ACCESS\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "Failure"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''DIRECTORY SERVICE CHANGES'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''DIRECTORY SERVICE CHANGES'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''DIRECTORY SERVICE CHANGES'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*DIRECTORY\\ SERVICE\\ CHANGES\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''DISTRIBUTION GROUP MANAGEMENT'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''DISTRIBUTION GROUP MANAGEMENT'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''DISTRIBUTION GROUP MANAGEMENT'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*DISTRIBUTION\\ GROUP\\ MANAGEMENT\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''OTHER ACCOUNT MANAGEMENT EVENTS'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''OTHER ACCOUNT MANAGEMENT EVENTS'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''OTHER ACCOUNT MANAGEMENT EVENTS'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*OTHER\\ ACCOUNT\\ MANAGEMENT\\ EVENTS\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "Success"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''PLUG AND PLAY EVENTS'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''PLUG AND PLAY EVENTS'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''PLUG AND PLAY EVENTS'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*PLUG\\ AND\\ PLAY\\ EVENTS\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "(?s)^(?:Success|Success\\ and\\ Failure)$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''PROCESS CREATION'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''PROCESS CREATION'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''PROCESS CREATION'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*PROCESS\\ CREATION\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "(?s)^(?:Success|Success\\ and\\ Failure)$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $ROWS = AUDITPOL /GET /SUBCATEGORY:''SECURITY GROUP MANAGEMENT'' /R 2>$NULL | CONVERTFROM-CSV; $ROW = IF($ROWS){ $ROWS | WHERE-OBJECT { $_.SUBCATEGORY -EQ ''SECURITY GROUP MANAGEMENT'' } | SELECT-OBJECT -FIRST 1 } ELSE { $NULL }; $INC = IF($ROW){ [STRING]$ROW.''INCLUSION SETTING'' } ELSE { '''' }; IF(-NOT [STRING]::ISNULLORWHITESPACE($INC)){ WRITE-OUTPUT $INC.TRIM(); RETURN }; $AP = AUDITPOL /GET /SUBCATEGORY:''SECURITY GROUP MANAGEMENT'' 2>$NULL | FOREACH-OBJECT { $_.TOSTRING() }; $LINE = $AP | WHERE-OBJECT { $_ -MATCH ''^\\S*SECURITY\\ GROUP\\ MANAGEMENT\\S{2,}'' } | SELECT-OBJECT -FIRST 1; IF(-NOT $LINE){ WRITE-OUTPUT ''NOT FOUND''; RETURN }; IF($LINE -MATCH ''SUCCESS AND FAILURE''){ WRITE-OUTPUT ''SUCCESS AND FAILURE''; RETURN }; IF($LINE -MATCH ''NO AUDITING''){ WRITE-OUTPUT ''NO AUDITING''; RETURN }; IF($LINE -MATCH ''SUCCESS''){ WRITE-OUTPUT ''SUCCESS''; RETURN }; IF($LINE -MATCH ''FAILURE''){ WRITE-OUTPUT ''FAILURE''; RETURN }; WRITE-OUTPUT $LINE; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "(?s)^(?:Success|Success\\ and\\ Failure)$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { $W = GET-WMIOBJECT -NAMESPACE ''ROOT/CIMV2'' -QUERY ''SELECT DOMAINROLE FROM WIN32_COMPUTERSYSTEM'' -ERRORACTION SILENTLYCONTINUE; IF($NULL -EQ $W){ WRITE-OUTPUT ''__NON_COMPLIANT__''; RETURN }; $V = $W.DOMAINROLE; IF($NULL -EQ $V -OR [STRING]::ISNULLORWHITESPACE([STRING]$V)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT $V }; } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "(?s)^(?:4|5)$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:-NOPROFILE -EXECUTIONPOLICY BYPASS -COMMAND '$__PYSC_RESULT = (& { IF(TEST-PATH -PATH ''HKLM:\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\LSA\\MSV1_0''){$NOUTPUT = (GET-ITEMPROPERTY -PATH ''HKLM:\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\LSA\\MSV1_0'').RESTRICTSENDINGNTLMTRAFFIC;IF($NULL -EQ $NOUTPUT){ WRITE-OUTPUT ''COMPLIANT''; RETURN };TRY { IF([INT]$NOUTPUT -GE 1){ WRITE-OUTPUT ''COMPLIANT'' } ELSE { WRITE-OUTPUT ''NON-COMPLIANT'' } }CATCH { WRITE-OUTPUT ''NON-COMPLIANT'' }}ELSE { WRITE-OUTPUT ''NON-COMPLIANT'' } } | OUT-STRING); IF([STRING]::ISNULLORWHITESPACE([STRING]$__PYSC_RESULT)){ WRITE-OUTPUT ''__NON_COMPLIANT__'' } ELSE { WRITE-OUTPUT ($__PYSC_RESULT.TRIM()) }"]
+approved = "Compliant"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."AUDIT_POWERSHELL:WINS"]
+approved = "Running"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."PASSWORD_POLICY:COMPLEXITY_REQUIREMENTS"]
+approved = "Enabled"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."PASSWORD_POLICY:ENFORCE_PASSWORD_HISTORY"]
+approved = "24"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."PASSWORD_POLICY:MINIMUM_PASSWORD_AGE"]
+approved = "1"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."PASSWORD_POLICY:REVERSIBLE_ENCRYPTION"]
+approved = "Disabled"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY"]
+approved = ""
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SOFTWARE\\MICROSOFT\\WINDOWS NT\\CURRENTVERSION|PRODUCTNAME"]
+approved = "^[Ww][Ii][Nn][Dd][Oo][Ww][Ss].+[Ss][Ee][Rr][Vv][Ee][Rr].+$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\WINRM\\SERVICE|ALLOWBASIC"]
+approved = "Running"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\LSA\\MSV1_0|RESTRICTSENDINGNTLMTRAFFIC"]
+approved = "Compliant"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\SECUREPIPESERVERS\\WINREG\\ALLOWEDEXACTPATHS|MACHINE"]
+approved = "System\\\\CurrentControlSet\\\\Control\\\\ProductOptions\" && \"System\\\\CurrentControlSet\\\\Control\\\\Server Applications\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\CONTROL\\SECUREPIPESERVERS\\WINREG\\ALLOWEDPATHS|MACHINE"]
+approved = "System\\\\CurrentControlSet\\\\Control\\\\Print\\\\Printers\" && \"System\\\\CurrentControlSet\\\\Services\\\\Eventlog\" && \"Software\\\\Microsoft\\\\OLAP Server\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Print\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Windows\" && \"System\\\\CurrentControlSet\\\\Control\\\\ContentIndex\" && \"System\\\\CurrentControlSet\\\\Control\\\\Terminal Server\" && \"System\\\\CurrentControlSet\\\\Control\\\\Terminal Server\\\\UserConfig\" && \"System\\\\CurrentControlSet\\\\Control\\\\Terminal Server\\\\DefaultUserConfiguration\" && \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Perflib\" && \"System\\\\CurrentControlSet\\\\Services\\\\Sysmonlog"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\SERVICES\\LANMANSERVER\\PARAMETERS|NULLSESSIONPIPES"]
+approved = ""
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\SERVICES\\LANMANSERVER\\PARAMETERS|RESTRICTNULLSESSACCESS"]
+approved = "^1$"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."REGISTRY:HKLM\\SYSTEM\\CURRENTCONTROLSET\\SERVICES\\LDAP|LDAPCLIENTINTEGRITY"]
+approved = "1\" ||\"2"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."USER_RIGHTS_POLICY:SEAUDITPRIVILEGE"]
+approved = "LOCAL SERVICE\" && \"NETWORK SERVICE"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."USER_RIGHTS_POLICY:SEBACKUPPRIVILEGE"]
+approved = "((\"backup operators\" && \"administrators\") || \"administrators\")"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."USER_RIGHTS_POLICY:SEREMOTEINTERACTIVELOGONRIGHT"]
+approved = "Administrators\" && \"Remote Desktop Users"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."USER_RIGHTS_POLICY:SESECURITYPRIVILEGE"]
+approved = "Administrators"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."USER_RIGHTS_POLICY:SESYSTEMPROFILEPRIVILEGE"]
+approved = "\"Administrators\" && (\"NT SERVICE\\WdiServiceHost\" ||\"WdiServiceHost\")"
+rationale = "Seeded from HTH baseline value - review"
+
+[controls."WMI_POLICY:"]
+approved = "4 || 5"
+rationale = "Seeded from HTH baseline value - review"

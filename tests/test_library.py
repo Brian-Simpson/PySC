@@ -140,3 +140,49 @@ def test_latest_normalized_picks_newest_generation(tmp_path):
         "CIS_Other_v2.0.0_L1_26083111.audit",
         "CIS_Thing_v1.0.0_L1_26083111.audit",
     ]
+
+
+def test_policy_variance_lifecycle(tmp_path):
+    from pysc.library.policy import classify_variances, load_register, seed_register
+
+    prod = tmp_path / "prod"
+    vendor = tmp_path / "vendor"
+    prod.mkdir()
+    vendor.mkdir()
+    (vendor / "CIS_Microsoft_Windows_11_Enterprise_v5.0.0_L1_BL.audit").write_text(
+        NATIVE_FILE, encoding="utf-8"
+    )
+    baseline = prod / "HTH_MSWRK_BASELINE.audit"
+    baseline.write_text(SECEDIT_FILE, encoding="utf-8")
+
+    entries = build_library([vendor / "CIS_Microsoft_Windows_11_Enterprise_v5.0.0_L1_BL.audit", baseline])
+    register_path = tmp_path / "policy_variances.toml"
+
+    # Baselines agree on 60, vendor says [1..365], nothing approved yet.
+    rows = classify_variances(entries, {}, prod)
+    assert len(rows) == 1
+    assert rows[0]["status"] == "NEEDS_POLICY_DECISION"
+    assert rows[0]["baseline_values"] == {"60": 1}
+
+    # Seeding proposes the baseline value as the approved policy.
+    candidates, conflicts = seed_register(entries, {}, prod, register_path)
+    assert len(candidates) == 1 and not conflicts
+    register = load_register(register_path)
+    assert register[EXPECTED_KEY]["approved"] == "60"
+
+    # With the approval recorded, the variance is APPROVED_POLICY.
+    rows = classify_variances(entries, register, prod)
+    assert rows[0]["status"] == "APPROVED_POLICY"
+
+    # A second baseline that disagrees becomes a policy conflict.
+    rebel = prod / "HTH_MSSRV_BASELINE.audit"
+    rebel.write_text(SECEDIT_FILE.replace('"60"', '"90"'), encoding="utf-8")
+    entries2 = build_library(
+        [vendor / "CIS_Microsoft_Windows_11_Enterprise_v5.0.0_L1_BL.audit", baseline, rebel]
+    )
+    rows = classify_variances(entries2, register, prod)
+    assert rows[0]["status"] == "CONFLICTS_WITH_POLICY"
+
+    # ...and without any approval it is a BASELINE_CONFLICT.
+    rows = classify_variances(entries2, {}, prod)
+    assert rows[0]["status"] == "BASELINE_CONFLICT"

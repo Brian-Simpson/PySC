@@ -26,6 +26,12 @@ see_also_replacement = "See HTH Policies and Standards"
 # Fleet pass-rate threshold (percent). Checks below this get comment-out proposals.
 pass_threshold = 90
 
+[report]
+# Platforms without a declared production baseline are omitted from the
+# executive matrix and dashboard when false (they remain visible in
+# pysc gap / library tooling).
+show_missing_baselines = false
+
 [library]
 # Control library build scope: also scan the latest Normalized generation of
 # each input tree (captures PowerShell-converted check mechanics).

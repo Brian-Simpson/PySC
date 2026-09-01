@@ -27,6 +27,11 @@ from pysc.nist.oscal import OscalCatalog, normalize_control_id  # noqa: E402
 
 @pytest.fixture(scope="module")
 def legacy_gap():
+    if not (REPO_ROOT / "NIST_audit_Gap_Analysis.py").is_file():
+        pytest.skip(
+            "legacy gap oracle archived (parity was proven before retirement; "
+            "see Archive/2026-08_legacy)"
+        )
     if str(REPO_ROOT) not in sys.path:
         sys.path.insert(0, str(REPO_ROOT))
     import NIST_audit_Gap_Analysis as legacy
