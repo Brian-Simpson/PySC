@@ -29,7 +29,7 @@ def _pct(part, whole):
     return round((part / whole) * 100, 2) if whole else 0.0
 
 
-def build_matrix(result, output_file, history=None):
+def build_matrix(result, output_file, history=None, cis_variances=None):
     """Write the workbook for an EnterpriseGapResult; returns output_file."""
     wb = Workbook()
 
@@ -161,6 +161,24 @@ def build_matrix(result, output_file, history=None):
         ws,
         ["Priority", "Platform", "Control ID", "Control Title", "Family", "Family Name", "Remediation Path"],
         prio_rows,
+    )
+
+    # --- CIS_Variances (enterprise deviation register) --------------------------
+    ws = wb.create_sheet("CIS_Variances")
+    write_sheet(
+        ws,
+        [
+            "Control Key", "Platforms", "HTH Approved Value",
+            "CIS Recommended Value(s)", "CIS Source Files", "NIST 800-53r5",
+            "Rationale", "Example Description",
+        ],
+        [
+            [
+                r["key"], r["platforms"], r["hth_value"], r["cis_values"],
+                r["cis_sources"], r["nist_refs"], r["rationale"], r["description"],
+            ]
+            for r in (cis_variances or [])
+        ],
     )
 
     # --- Trend ------------------------------------------------------------------

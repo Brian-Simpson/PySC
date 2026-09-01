@@ -287,6 +287,22 @@ def _history_store(cfg):
     return HistoryStore(cfg.path("history_db"))
 
 
+def _cis_variance_rows(cfg):
+    """Deviation-register rows from the saved control library (empty if absent)."""
+    from pysc.library import LIBRARY_NAME, load_library
+    from pysc.library.policy import REGISTER_NAME, cis_variance_rows, load_register
+
+    library_path = cfg.root / LIBRARY_NAME
+    if not library_path.is_file():
+        return []
+    return cis_variance_rows(
+        load_library(library_path),
+        load_register(cfg.root / REGISTER_NAME),
+        cfg.path("production_inputs"),
+        cfg.path("vendor_inputs"),
+    )
+
+
 def cmd_report(cfg, args):
     import os
     import time
@@ -312,10 +328,11 @@ def cmd_report(cfg, args):
         if args.format in ("matrix", "all"):
             from pysc.report.matrix import build_matrix
 
+            cis_rows = _cis_variance_rows(cfg)
             out = args.out if (args.out and args.format == "matrix") else os.path.join(
                 str(out_dir), f"Unified_Compliance_Matrix_{stamp}.xlsx"
             )
-            build_matrix(result, out, history=history)
+            build_matrix(result, out, history=history, cis_variances=cis_rows)
             print(f"Wrote {out}")
 
         if args.format in ("html", "all"):
@@ -413,6 +430,33 @@ def cmd_library(cfg, args):
             cfg,
             include_normalized=True if args.include_normalized else None,
         )
+        return
+
+    if args.library_command == "ratify-baselines":
+        from pysc.library.build import build_library, default_sources
+        from pysc.library.policy import (
+            REGISTER_NAME,
+            load_register,
+            ratify_baselines,
+        )
+        from pysc.platforms import PlatformMatcher
+
+        sources = default_sources(
+            cfg, bool(cfg.data.get("library", {}).get("include_normalized", True))
+        )
+        entries = build_library(sources, PlatformMatcher.from_config(cfg))
+        register_path = cfg.root / REGISTER_NAME
+        ratified, conflicts = ratify_baselines(
+            entries, load_register(register_path), cfg.path("production_inputs"), register_path
+        )
+        print(f"Ratified {len(ratified)} baseline value(s) into {register_path}")
+        if conflicts:
+            print(f"TRUE BASELINE CONFLICTS still needing a decision ({len(conflicts)}):")
+            for row in conflicts:
+                print(f"  ! {row['key']} values={row['baseline_values']}")
+        else:
+            print("No raw-baseline conflicts remain.")
+        print("Now run: pysc library build")
         return
 
     if args.library_command == "seed-policy":
@@ -624,6 +668,11 @@ def build_parser():
         help="Draft policy_variances.toml approvals from HTH baseline values (NEEDS_POLICY_DECISION controls)",
     )
     lsp.set_defaults(func=cmd_library)
+    lrb = lib_sub.add_parser(
+        "ratify-baselines",
+        help="Adopt raw production-baseline values as enterprise policy for every variance control",
+    )
+    lrb.set_defaults(func=cmd_library)
     lc = lib_sub.add_parser("check", help="Classify an audit's checks against the library (NEW / KNOWN / EXPECTATION_DIFFERS / DUPLICATE_IN_FILE)")
     lc.add_argument("audit", help="Audit file to check")
     lc.add_argument("--verbose", action="store_true", help="Also list KNOWN checks")

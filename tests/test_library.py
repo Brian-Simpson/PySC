@@ -186,3 +186,57 @@ def test_policy_variance_lifecycle(tmp_path):
     # ...and without any approval it is a BASELINE_CONFLICT.
     rows = classify_variances(entries2, {}, prod)
     assert rows[0]["status"] == "BASELINE_CONFLICT"
+
+
+def test_ratify_and_cis_variance_register(tmp_path):
+    from pysc.library.policy import (
+        cis_variance_rows,
+        classify_variances,
+        load_register,
+        ratify_baselines,
+    )
+
+    prod = tmp_path / "prod"
+    vendor = tmp_path / "vendor"
+    norm = prod / "Normalized"
+    prod.mkdir()
+    vendor.mkdir()
+    norm.mkdir()
+    cis = vendor / "CIS_Microsoft_Windows_11_Enterprise_v5.0.0_L1_BL.audit"
+    cis.write_text(NATIVE_FILE, encoding="utf-8")
+    baseline = prod / "HTH_MSWRK_BASELINE.audit"
+    baseline.write_text(SECEDIT_FILE, encoding="utf-8")
+    # Normalized derivative re-encodes the expectation - must NOT count as a
+    # second baseline opinion (this caused the false conflicts).
+    derived = norm / "HTH_MSWRK_BASELINE_26083111.audit"
+    derived.write_text(SECEDIT_FILE.replace('"60"', '"^(60)$"'), encoding="utf-8")
+
+    entries = build_library([cis, baseline, derived])
+    rows = classify_variances(entries, {}, prod)
+    assert rows[0]["status"] == "NEEDS_POLICY_DECISION"
+    assert rows[0]["baseline_values"] == {"60": 1}
+
+    register_path = tmp_path / "policy_variances.toml"
+    ratified, conflicts = ratify_baselines(entries, {}, prod, register_path)
+    assert ratified == [EXPECTED_KEY] and not conflicts
+    register = load_register(register_path)
+    assert register[EXPECTED_KEY]["approved"] == "60"
+
+    # Hand-curated rationales survive re-ratification.
+    register[EXPECTED_KEY]["rationale"] = "HTH Password Standard 4.1"
+    from pysc.library.policy import write_register
+
+    write_register(register, register_path)
+    ratified, _ = ratify_baselines(entries, load_register(register_path), prod, register_path)
+    assert ratified == []  # already ratified with curated rationale
+    assert load_register(register_path)[EXPECTED_KEY]["rationale"] == "HTH Password Standard 4.1"
+
+    # Deviation register: HTH 60 differs from the CIS recommendation [1..365].
+    cis_rows = cis_variance_rows(entries, load_register(register_path), prod, vendor)
+    assert len(cis_rows) == 1
+    row = cis_rows[0]
+    assert row["key"] == EXPECTED_KEY
+    assert row["hth_value"] == "60"
+    assert row["cis_values"] == "[1..365]"
+    assert "CIS_Microsoft_Windows_11" in row["cis_sources"]
+    assert row["rationale"] == "HTH Password Standard 4.1"

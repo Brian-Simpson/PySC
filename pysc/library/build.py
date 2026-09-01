@@ -211,7 +211,7 @@ def check_audit_file(library_controls, audit_path):
     return rows
 
 
-def export_workbook(entries, output_path, policy_rows=None):
+def export_workbook(entries, output_path, policy_rows=None, cis_rows=None):
     from openpyxl import Workbook
 
     from pysc.report.excel_util import FILL_PARTIAL, write_sheet
@@ -286,16 +286,34 @@ def export_workbook(entries, output_path, policy_rows=None):
         variance_rows,
     )
 
-    ws3 = wb.create_sheet("Duplicates_In_File")
+    ws3 = wb.create_sheet("CIS_Variances")
     write_sheet(
         ws3,
+        [
+            "Control Key", "Readable Target", "Platforms",
+            "HTH Approved Value", "CIS Recommended Value(s)", "CIS Source Files",
+            "NIST 800-53r5", "Rationale", "Example Description",
+        ],
+        [
+            [
+                r["key"], r["readable"], r["platforms"], r["hth_value"],
+                r["cis_values"], r["cis_sources"], r["nist_refs"],
+                r["rationale"], r["description"],
+            ]
+            for r in (cis_rows or [])
+        ],
+    )
+
+    ws4 = wb.create_sheet("Duplicates_In_File")
+    write_sheet(
+        ws4,
         ["Control Key", "File", "Expected Value", "Count"],
         [[k, Path(f).name, e, c] for k, f, e, c in duplicates_in_file(entries)],
     )
 
-    ws4 = wb.create_sheet("All_Occurrences")
+    ws5 = wb.create_sheet("All_Occurrences")
     write_sheet(
-        ws4,
+        ws5,
         ["Control Key", "File", "Rule ID", "Type", "Expected", "Description"],
         [
             [key, Path(o["file"]).name, o["rule_id"], o["type"], o["expected"], o["description"]]
@@ -333,22 +351,30 @@ def run_build(cfg, include_normalized=None, progress=print):
     save_library(entries, library_path)
     progress(f"Library: {library_path} ({len(entries)} controls)")
 
-    from pysc.library.policy import REGISTER_NAME, classify_variances, load_register
+    from pysc.library.policy import (
+        REGISTER_NAME,
+        cis_variance_rows,
+        classify_variances,
+        load_register,
+    )
 
     register = load_register(cfg.root / REGISTER_NAME)
     policy_rows = classify_variances(entries, register, cfg.path("production_inputs"))
+    cis_rows = cis_variance_rows(
+        entries, register, cfg.path("production_inputs"), cfg.path("vendor_inputs")
+    )
 
     # One master workbook, overwritten each build. If it is open in Excel the
     # write fails with PermissionError; fall back to a timestamped copy.
     workbook = cfg.root / MASTER_WORKBOOK_NAME
     try:
-        export_workbook(entries, workbook, policy_rows=policy_rows)
+        export_workbook(entries, workbook, policy_rows=policy_rows, cis_rows=cis_rows)
         progress(f"Workbook: {workbook}")
     except PermissionError:
         out_dir = cfg.path("report_output")
         out_dir.mkdir(parents=True, exist_ok=True)
         fallback = out_dir / f"Control_Library_{time.strftime('%y%m%d%H%M')}.xlsx"
-        export_workbook(entries, fallback, policy_rows=policy_rows)
+        export_workbook(entries, fallback, policy_rows=policy_rows, cis_rows=cis_rows)
         progress(
             f"WARNING: {workbook} is locked (open in Excel?) - wrote {fallback}; "
             "close the master file and rebuild to refresh it"
@@ -368,4 +394,5 @@ def run_build(cfg, include_normalized=None, progress=print):
             "Variances: "
             + " | ".join(f"{k}: {v}" for k, v in sorted(status_counts.items()))
         )
+    progress(f"CIS variances (deviation register): {len(cis_rows)}")
     return entries

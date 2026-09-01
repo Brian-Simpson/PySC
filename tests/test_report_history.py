@@ -100,7 +100,7 @@ def test_matrix_build(result, tmp_path):
     wb = load_workbook(out)
     assert wb.sheetnames == [
         "Executive_Summary", "Platform_Family_Coverage", "NIST_Matrix",
-        "Priority_Gaps", "Trend",
+        "Priority_Gaps", "CIS_Variances", "Trend",
     ]
     ws = wb["Executive_Summary"]
     platforms = [ws.cell(row=r, column=1).value for r in range(2, ws.max_row + 1)]
