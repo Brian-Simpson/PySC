@@ -40,6 +40,35 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 | `maturity --audit <baseline> --pass-rates <export.xlsx> [--apply]` | Propose/apply comment-outs for checks under the fleet pass-rate threshold (default 90%) |
 | `catalog`, `match-catalogs`, `validate`, `threat-intel` | Catalog/crosswalk/Docker-validation utilities |
 
+## Clean-slate operating procedure
+
+The go-forward workflow: drop production baselines into
+`actual_audit_inputs\` and run one command — everything else regenerates.
+
+1. **Keep the toolkit.** Never move the git-tracked files: `pysc\`,
+   `pysc.toml`, `NIST_SP-800-53_rev5_catalog.json`,
+   `Scripts\threat_intel_cache.json`, `control_library.json`,
+   `Control_Library.xlsx`, `policy_variances.toml`, `curated_benchmarks.txt`,
+   `tests\`, `requirements.txt`. (If moved by accident: `git restore .`)
+   Everything generated — `Normalized\`, `For_Gap\`, `Merged\`, `Output\`,
+   `Downloads_Cache\`, staging folders — can be deleted freely.
+2. **Drop baselines** into `actual_audit_inputs\` with filenames matching the
+   `[platforms.<CODE>] baseline` entries in `pysc.toml` (rename either side
+   to agree; new platform = new `[platforms.X]` section + tokens).
+3. **Start Docker Desktop** if you want check_audit validation (skipped
+   gracefully otherwise).
+4. Run:
+
+   ```powershell
+   & "C:\Program Files\Python39\python.exe" -m pysc refresh
+   ```
+
+   which verifies the baselines, pulls current benchmarks from Tenable
+   downloads (curated families remembered in `curated_benchmarks.txt`, so an
+   empty `audit_inputs\` repopulates itself), runs the full pipeline,
+   rebuilds the control library, and publishes the matrix + dashboard to
+   `Output\`.
+
 ## The maturity loop
 
 1. Pull current vendor benchmarks from Tenable downloads (`pysc download`,

@@ -37,6 +37,42 @@ DEFAULT_ARCHIVE = "audits.tar.gz"
 DEFAULT_USER_AGENT = "pysc-audit-toolkit/0.1"
 VENDOR_PREFIX_RE = re.compile(r"^(CIS_|DISA_|Tenable_)", re.IGNORECASE)
 
+# Tracked manifest of curated benchmark families. Folder contents come and go
+# (clean-slate resets, pruning); this file is the durable memory of which
+# families HTH curates, so 'pysc download' still stages the right benchmarks
+# when audit_inputs starts empty.
+MANIFEST_NAME = "curated_benchmarks.txt"
+
+
+def load_manifest(root):
+    path = Path(root) / MANIFEST_NAME
+    if not path.is_file():
+        return set()
+    families = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            families.add(line)
+    return families
+
+
+def save_manifest(root, families):
+    path = Path(root) / MANIFEST_NAME
+    lines = [
+        "# Curated benchmark families (version-agnostic). Maintained by",
+        "# 'pysc download --apply'; hand-edit to adopt or retire a family.",
+    ] + sorted(families)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
+def curated_families(cfg):
+    """Union of families present in audit_inputs and the tracked manifest."""
+    vendor_root = cfg.path("vendor_inputs")
+    families = {family_key(p.name) for p in vendor_root.glob("*.audit")}
+    families |= load_manifest(cfg.root)
+    return families
+
 # Version tokens inside benchmark filenames: v5.0.0 / v2.2.1 / v1r3 (DISA).
 _VERSION_TOKEN_RE = re.compile(r"_v\d+(?:[\._]\d+)*(?:r\d+)?", re.IGNORECASE)
 
@@ -134,7 +170,7 @@ def scan_archive(archive_path, matcher, vendor_only=True):
     return matches
 
 
-def stage(archive_path, matches, vendor_root, staging_dir, all_variants=False, progress=print):
+def stage(archive_path, matches, vendor_root, staging_dir, all_variants=False, progress=print, families=None):
     """Extract relevant members flat into staging; classify vs vendor_root.
 
     Returns rows: [{name, platform, status, staged_path}] with status:
@@ -143,15 +179,17 @@ def stage(archive_path, matches, vendor_root, staging_dir, all_variants=False, p
     - NEW_VERSION  new name in a benchmark family already curated (staged)
     - OTHER        platform-relevant but not a curated family (manifest only,
                    staged when all_variants=True)
+    Curated families default to the vendor folder's contents; pass `families`
+    (folder + tracked manifest) so clean-slate resets keep working.
     Members are written by basename only (no archive paths are trusted).
     """
     vendor_root = Path(vendor_root)
     staging_dir = Path(staging_dir)
     staging_dir.mkdir(parents=True, exist_ok=True)
 
-    curated_families = {
-        family_key(p.name) for p in vendor_root.glob("*.audit")
-    }
+    if families is None:
+        families = {family_key(p.name) for p in vendor_root.glob("*.audit")}
+    curated = set(families)
 
     rows = []
     seen_names = set()
@@ -163,7 +201,7 @@ def stage(archive_path, matches, vendor_root, staging_dir, all_variants=False, p
             seen_names.add(base)
 
             existing = vendor_root / base
-            if not existing.is_file() and family_key(base) not in curated_families:
+            if not existing.is_file() and family_key(base) not in curated:
                 status = "OTHER"
                 if not all_variants:
                     rows.append({"name": base, "platform": code, "status": status, "staged_path": ""})
@@ -258,7 +296,8 @@ def run(cfg, apply=False, keep_archive=True, all_variants=False, update_library=
     matches = scan_archive(archive_path, configured)
     progress(f"Relevant .audit files in archive: {len(matches)}")
 
-    rows = stage(archive_path, matches, vendor_root, staging_dir, all_variants, progress)
+    families = curated_families(cfg)
+    rows = stage(archive_path, matches, vendor_root, staging_dir, all_variants, progress, families)
     counts = {}
     for row in rows:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
@@ -273,6 +312,9 @@ def run(cfg, apply=False, keep_archive=True, all_variants=False, update_library=
     if apply:
         applied = apply_staged(rows, vendor_root, progress)
         progress(f"Applied {applied} file(s) into {vendor_root}")
+        # Persist the curated-family memory so clean-slate resets keep working.
+        families |= {family_key(p.name) for p in vendor_root.glob("*.audit")}
+        save_manifest(cfg.root, families)
         if applied and update_library:
             _post_apply_library_update(cfg, staged, vendor_root, progress)
     elif staged:

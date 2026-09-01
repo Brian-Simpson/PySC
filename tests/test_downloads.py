@@ -146,6 +146,36 @@ def test_scan_stage_diff_apply(tmp_path):
     assert other and other[0]["status"] == "OTHER" and other[0]["staged_path"]
 
 
+def test_clean_slate_manifest_keeps_families(tmp_path):
+    """After a clean-slate reset (empty audit_inputs), the tracked manifest
+    still identifies curated families so downloads stage correctly."""
+    from pysc.downloads import load_manifest, save_manifest
+
+    vendor_root = tmp_path / "audit_inputs"
+    vendor_root.mkdir()  # deliberately EMPTY
+
+    families = {family_key("CIS_Microsoft_Windows_Server_2025_v2.1.0_L1_MS.audit")}
+    save_manifest(tmp_path, families)
+    assert load_manifest(tmp_path) == families
+
+    archive = _make_archive(
+        tmp_path,
+        {"audits/CIS_Microsoft_Windows_Server_2025_v3.0.0_L1_MS.audit": "new version"},
+    )
+    matches = scan_archive(archive, MATCHER)
+
+    # Without the manifest: unknown family -> OTHER (not staged).
+    rows = stage(archive, matches, vendor_root, tmp_path / "s1", progress=lambda *_: None)
+    assert rows[0]["status"] == "OTHER"
+
+    # With the manifest families: recognized -> NEW_VERSION (staged).
+    rows = stage(
+        archive, matches, vendor_root, tmp_path / "s2",
+        progress=lambda *_: None, families=load_manifest(tmp_path),
+    )
+    assert rows[0]["status"] == "NEW_VERSION" and rows[0]["staged_path"]
+
+
 def test_sha256_mismatch_raises(tmp_path, monkeypatch):
     from pysc import downloads
 

@@ -513,6 +513,49 @@ def cmd_library(cfg, args):
     )
 
 
+def cmd_refresh(cfg, args):
+    """The clean-slate operating procedure in one command:
+    baselines in actual_audit_inputs -> everything else regenerates."""
+    import argparse as _argparse
+
+    baselines = [
+        (code, cfg.baseline_path(code))
+        for code in sorted(cfg.platforms())
+        if cfg.platform(code).get("baseline")
+    ]
+    present = [(c, p) for c, p in baselines if p and p.is_file()]
+    missing = [(c, p) for c, p in baselines if not p or not p.is_file()]
+    print(f"Baselines found: {len(present)} of {len(baselines)} declared in pysc.toml")
+    for code, path in missing:
+        print(f"  [-] {code}: {path.name if path else '(unset)'} not found in actual_audit_inputs")
+    if not present:
+        raise SystemExit(
+            "No declared baselines found in actual_audit_inputs - drop them in "
+            "first (filenames must match the [platforms.<CODE>] baseline entries)."
+        )
+
+    print("\n[1/4] Vendor benchmarks from Tenable downloads...")
+    from pysc.downloads import run as run_download
+
+    run_download(cfg, apply=True, update_library=False)
+
+    print("\n[2/4] Full pipeline (normalize -> catalog -> merge -> gap)...")
+    argv = ["--strict"] if args.strict else []
+    _run_legacy_main(cfg, argv)
+
+    print("\n[3/4] Control library...")
+    from pysc.library import run_build
+
+    run_build(cfg)
+
+    print("\n[4/4] Enterprise reports...")
+    cmd_report(
+        cfg,
+        _argparse.Namespace(format="all", out=None, no_snapshot=False),
+    )
+    print("\nRefresh complete.")
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="pysc",
@@ -539,6 +582,13 @@ def build_parser():
     p = sub.add_parser("run", help="Full pipeline: production + vendor inputs, catalogs, crosswalk, merge, gap")
     p.add_argument("--strict", action="store_true")
     p.set_defaults(func=cmd_run)
+
+    p = sub.add_parser(
+        "refresh",
+        help="Clean-slate one-shot: verify baselines, download benchmarks, run pipeline, rebuild library, publish reports",
+    )
+    p.add_argument("--strict", action="store_true", help="Fail the pipeline on any preflight/normalization error")
+    p.set_defaults(func=cmd_refresh)
 
     p = sub.add_parser("gap", help="NIST 800-53 gap analysis")
     gap_sub = p.add_subparsers(dest="gap_command", required=True)

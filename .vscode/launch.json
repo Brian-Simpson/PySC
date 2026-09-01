@@ -2,6 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "pysc: refresh (baselines -> everything)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pysc",
+            "args": ["refresh"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "pysc: full pipeline (run)",
             "type": "debugpy",
             "request": "launch",
