@@ -289,38 +289,31 @@ def export_workbook(entries, output_path, policy_rows=None, cis_rows=None):
             ws.cell(row=row_idx, column=6).fill = FILL_PARTIAL
 
     ws2 = wb.create_sheet("Expectation_Variance")
-    if policy_rows is None:
-        variance_rows = []
-        for key, expectations in expectation_variances(entries):
-            for expected, count in sorted(expectations.items()):
-                files = sorted(
-                    {
-                        Path(o["file"]).name
-                        for o in entries[key]["occurrences"]
-                        if o["expected"] == expected
-                    }
-                )
-                variance_rows.append([key, "", "", expected, count, "; ".join(files)])
-    else:
-        variance_rows = []
-        for row in policy_rows:
-            for expected, count in sorted(row["all_values"].items()):
-                files = sorted(
-                    {
-                        Path(o["file"]).name
-                        for o in entries[row["key"]]["occurrences"]
-                        if o["expected"] == expected
-                    }
-                )
-                variance_rows.append(
-                    [
-                        row["key"], row["status"], row["approved"], expected,
-                        count, "; ".join(files),
-                    ]
-                )
+    variance_rows = []
+    for row in (policy_rows or []):
+        files = sorted({Path(o["file"]).name for o in entries[row["key"]]["occurrences"]})
+        variance_rows.append(
+            [
+                row["key"],
+                row["status"],
+                row.get("enterprise_display", ""),
+                row.get("cis_display", ""),
+                row.get("other_display", ""),
+                row.get("enterprise_raw", ""),
+                " | ".join(row.get("cis_raw", [])),
+                row.get("rationale", ""),
+                "; ".join(files),
+            ]
+        )
     write_sheet(
         ws2,
-        ["Control Key", "Policy Status", "Approved Value", "Expected Value", "Occurrences", "Files"],
+        [
+            "Control Key", "Policy Status",
+            "Enterprise Expected Value", "CIS Expected Value",
+            "Other Observed Values",
+            "Enterprise Raw Expression", "CIS Raw Expression(s)",
+            "Rationale", "Files",
+        ],
         variance_rows,
     )
 
@@ -329,14 +322,16 @@ def export_workbook(entries, output_path, policy_rows=None, cis_rows=None):
         ws3,
         [
             "Control Key", "Readable Target", "Platforms",
-            "HTH Approved Value", "CIS Recommended Value(s)", "CIS Source Files",
-            "NIST 800-53r5", "Rationale", "Example Description",
+            "Enterprise Expected Value", "CIS Expected Value",
+            "Enterprise Raw Expression", "CIS Raw Expression(s)",
+            "CIS Source Files", "NIST 800-53r5", "Rationale", "Example Description",
         ],
         [
             [
-                r["key"], r["readable"], r["platforms"], r["hth_value"],
-                r["cis_values"], r["cis_sources"], r["nist_refs"],
-                r["rationale"], r["description"],
+                r["key"], r["readable"], r["platforms"],
+                r["hth_display"], r["cis_display"],
+                r["hth_value"], r["cis_values"],
+                r["cis_sources"], r["nist_refs"], r["rationale"], r["description"],
             ]
             for r in (cis_rows or [])
         ],
@@ -397,7 +392,9 @@ def run_build(cfg, include_normalized=None, progress=print):
     )
 
     register = load_register(cfg.root / REGISTER_NAME)
-    policy_rows = classify_variances(entries, register, cfg.path("production_inputs"))
+    policy_rows = classify_variances(
+        entries, register, cfg.path("production_inputs"), cfg.path("vendor_inputs")
+    )
     cis_rows = cis_variance_rows(
         entries, register, cfg.path("production_inputs"), cfg.path("vendor_inputs")
     )

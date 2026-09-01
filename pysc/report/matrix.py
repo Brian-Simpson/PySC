@@ -168,13 +168,16 @@ def build_matrix(result, output_file, history=None, cis_variances=None):
     write_sheet(
         ws,
         [
-            "Control Key", "Platforms", "HTH Approved Value",
-            "CIS Recommended Value(s)", "CIS Source Files", "NIST 800-53r5",
-            "Rationale", "Example Description",
+            "Control Key", "Platforms",
+            "Enterprise Expected Value", "CIS Expected Value",
+            "Enterprise Raw Expression", "CIS Raw Expression(s)",
+            "CIS Source Files", "NIST 800-53r5", "Rationale", "Example Description",
         ],
         [
             [
-                r["key"], r["platforms"], r["hth_value"], r["cis_values"],
+                r["key"], r["platforms"],
+                r["hth_display"], r["cis_display"],
+                r["hth_value"], r["cis_values"],
                 r["cis_sources"], r["nist_refs"], r["rationale"], r["description"],
             ]
             for r in (cis_variances or [])

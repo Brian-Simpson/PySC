@@ -64,8 +64,15 @@ def _vendor_expectations(entry, vendor_root):
     return values, sources
 
 
-def classify_variances(entries, register, production_root):
-    """Rows for every control with >1 distinct expectation."""
+def classify_variances(entries, register, production_root, vendor_root=None):
+    """Rows for every control with >1 distinct expectation.
+
+    Each row carries the Enterprise expected value (approved, else the single
+    raw-baseline value) and the CIS expected value(s) from raw vendor files,
+    both raw and decoded to human-readable policy terms.
+    """
+    from pysc.library.expected import decode_expected
+
     rows = []
     for key, entry in sorted(entries.items()):
         if len(entry["expectations"]) < 2:
@@ -84,6 +91,21 @@ def classify_variances(entries, register, production_root):
         else:
             status = "VENDOR_ONLY"
 
+        if approved is not None and str(approved) != "":
+            enterprise_raw = str(approved)
+        elif len(baseline_values) == 1:
+            enterprise_raw = next(iter(baseline_values))
+        else:
+            enterprise_raw = ""
+
+        if vendor_root is not None:
+            vendor_values, _sources = _vendor_expectations(entry, vendor_root)
+        else:
+            vendor_values = {}
+        cis_raw = sorted(vendor_values)
+        accounted = set(cis_raw) | ({enterprise_raw} if enterprise_raw else set())
+        other_values = sorted(set(entry["expectations"]) - accounted)
+
         rows.append(
             {
                 "key": key,
@@ -92,6 +114,11 @@ def classify_variances(entries, register, production_root):
                 "rationale": rationale,
                 "baseline_values": dict(sorted(baseline_values.items())),
                 "all_values": dict(sorted(entry["expectations"].items())),
+                "enterprise_raw": enterprise_raw,
+                "enterprise_display": decode_expected(enterprise_raw),
+                "cis_raw": cis_raw,
+                "cis_display": " | ".join(decode_expected(v) for v in cis_raw),
+                "other_display": " | ".join(decode_expected(v) for v in other_values),
             }
         )
     return rows
@@ -158,7 +185,10 @@ def ratify_baselines(entries, register, production_root, register_path):
 
 def cis_variance_rows(entries, register, production_root, vendor_root):
     """The deviation register: controls where the HTH baseline/approved value
-    differs from the CIS-recommended value(s) in the raw vendor benchmarks."""
+    differs from the CIS-recommended value(s) in the raw vendor benchmarks.
+    Values are decoded to policy terms; raw expressions are retained."""
+    from pysc.library.expected import decode_expected
+
     rows = []
     for key, entry in sorted(entries.items()):
         baseline_values = _baseline_expectations(entry, production_root)
@@ -175,13 +205,16 @@ def cis_variance_rows(entries, register, production_root, vendor_root):
             continue
         example = entry["occurrences"][0]
         cis_files = sorted({f for files in vendor_sources.values() for f in files})
+        cis_raw_sorted = sorted(vendor_values)
         rows.append(
             {
                 "key": key,
                 "readable": entry.get("readable", ""),
                 "platforms": " ".join(sorted(entry.get("platforms", []))),
                 "hth_value": hth_value,
-                "cis_values": " | ".join(sorted(vendor_values)),
+                "hth_display": decode_expected(hth_value),
+                "cis_values": " | ".join(cis_raw_sorted),
+                "cis_display": " | ".join(decode_expected(v) for v in cis_raw_sorted),
                 "cis_sources": "; ".join(cis_files),
                 "nist_refs": " ".join(sorted(entry.get("nist_refs", []))),
                 "rationale": register.get(key, {}).get("rationale", ""),
