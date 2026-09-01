@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pysc"
+version = "0.1.0"
+description = "HTH Tenable audit file management toolkit"
+requires-python = ">=3.9"
+dependencies = [
+    "openpyxl==3.1.5",
+    "numpy>=1.24,<2.0",
+    "pandas>=1.3,<2.1",
+    "tomli>=2.0; python_version < '3.11'",
+    "matplotlib>=3.5,<3.10",
+]
+
+[project.scripts]
+pysc = "pysc.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pysc*"]
