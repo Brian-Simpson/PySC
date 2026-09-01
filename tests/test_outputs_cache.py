@@ -82,16 +82,24 @@ def test_organize_outputs_routes_artifacts(tmp_path):
     (output / "dashboard_2609.html").write_text("x")
 
     moved = organize_outputs(cfg, progress=lambda *_: None)
-    assert len(moved) == 7
+    assert len(moved) == 8
 
     processed = output / "Processed"
     reports = output / "Reports"
     assert (processed / "Parsing Results_2609011200.xlsx").is_file()
     assert (processed / "Parsing Results_2609011201.xlsx").is_file()
     assert (processed / "Production_NIST_Reference_Gap_Analysis_2609.xlsx").is_file()
-    assert (processed / "Unique_Controls_Catalog_2609.xlsx").is_file()
+    # Whole Normalized/ and Merged/ trees relocate under Processed, structure kept.
+    assert (processed / "Normalized" / "Unique_Controls_Catalog_2609.xlsx").is_file()
+    assert (processed / "Normalized" / "HTH_MSSRV_BASELINE_2609.audit").is_file()
     assert (processed / "Merged" / "Merged_MSSRV_2609.audit").is_file()
     assert (reports / "Unified_Compliance_Matrix_2609.xlsx").is_file()
     assert (reports / "dashboard_2609.html").is_file()
-    # Normalized .audit pipeline state is NOT swept.
-    assert (prod / "Normalized" / "HTH_MSSRV_BASELINE_2609.audit").is_file()
+    # Normalized .audit is now swept out of the input tree.
+    assert not (prod / "Normalized" / "HTH_MSSRV_BASELINE_2609.audit").exists()
+    # A manifest inventorying Output\Processed is written.
+    manifest = processed / "manifest.csv"
+    assert manifest.is_file()
+    text = manifest.read_text(encoding="utf-8")
+    assert "relative_path,category,size_bytes,modified" in text
+    assert "Normalized/HTH_MSSRV_BASELINE_2609.audit" in text
