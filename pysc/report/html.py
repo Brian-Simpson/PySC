@@ -4,9 +4,8 @@ One portable file (inline CSS, no external assets, no JS dependencies) suitable
 for posting to SharePoint/intranet. Charts are pure HTML/SVG: a horizontal bar
 list for per-platform coverage, a platform x NIST-family heatmap table with
 visible values (doubles as the table view), and a coverage trend line from the
-history DB. Colors follow the validated reference palette (single blue series;
-sequential blue ramp; status colors only for labeled state chips), with dark
-mode via prefers-color-scheme using the palette's documented dark steps.
+history DB. Colors follow the validated HTH reference palette, with dark mode
+via prefers-color-scheme using the palette's documented dark steps.
 """
 
 import html as _html
@@ -20,6 +19,23 @@ _RAMP = [
     "#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7",
     "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b",
 ]
+
+# Assign each configured platform a distinct HTH palette color.
+_PLATFORM_COLORS = {
+    "MSSRV": "#0d366b",
+    "MSWRK": "#104281",
+    "SQL": "#184f95",
+    "RHEL": "#1c5cab",
+    "VMware": "#256abf",
+    "Azure": "#2a78d6",
+    "AWS": "#3987e5",
+    "NetIOS": "#5598e7",
+    "NetNXOS": "#6da7ec",
+    "NetASA": "#86b6ef",
+    "NetPAFW": "#9ec5f4",
+    "NetF5": "#b7d3f6",
+    "NetACI": "#cde2fb",
+}
 
 _CSS = """
 :root { color-scheme: light dark; }
@@ -56,7 +72,7 @@ h2 { font-size: 14px; margin: 0 0 12px; color: var(--text-primary); }
 .bar-row { display: grid; grid-template-columns: 90px 1fr 150px; gap: 8px; align-items: center; margin: 6px 0; font-size: 13px; }
 .bar-track { background: transparent; border-left: 2px solid var(--baseline); height: 16px; position: relative; }
 .bar-cis { position: absolute; left: 0; top: 0; background: var(--cis); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
-.bar-fill { position: absolute; left: 0; top: 0; background: var(--series-1); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-fill { position: absolute; left: 0; top: 0; background: var(--platform-color); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
 .bar-val { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
 .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 3px; }
 table { border-collapse: collapse; font-size: 12px; width: 100%; }
@@ -79,6 +95,10 @@ def _esc(value):
 
 def _pct(part, whole):
     return round((part / whole) * 100, 2) if whole else 0.0
+
+
+def _platform_color(code):
+    return _PLATFORM_COLORS.get(code, "#2a78d6")
 
 
 def _heat_style(pct):
@@ -210,7 +230,7 @@ def build_dashboard(result, output_file, history=None, attack_mappings=None):
         f'<div class="bar-track">'
         f'<div class="bar-cis" style="width:{max(r["cis_pct"] / max_pct * 100, 0.5)}%" '
         f'title="{_esc(r["code"])} CIS potential: {r["cis"]} of {r["total"]} base controls"></div>'
-        f'<div class="bar-fill" style="width:{max(r["pct"] / max_pct * 100, 0.5)}%" '
+        f'<div class="bar-fill" style="--platform-color:{_platform_color(r["code"])};width:{max(r["pct"] / max_pct * 100, 0.5)}%" '
         f'title="{_esc(r["code"])} HTH baseline: {r["covered"]} of {r["total"]} base controls"></div>'
         f'</div>'
         f'<div class="bar-val">{r["pct"]}% / {r["cis_pct"]}% CIS</div></div>'
