@@ -21,7 +21,11 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
-from pysc.gap.extract import _NIST_REF_RE, extract_control_number
+from pysc.gap.extract import (
+    _NIST_REF_RE,
+    extract_control_number,
+    extract_nist_controls,
+)
 from pysc.gap.harvest import extract_fields
 from pysc.library._keys_core import (
     derive_control_keyword,
@@ -148,8 +152,8 @@ def build_library(sources, matcher=None):
             if platform:
                 entry["platforms"].add(platform)
             entry["expectations"][occurrence["expected"]] += 1
-            for ref in _NIST_REF_RE.finditer(fields.get("reference", "")):
-                entry["nist_refs"].add(ref.group(1).upper())
+            for ctrl in extract_nist_controls(fields.get("reference", "")):
+                entry["nist_refs"].add(ctrl)
             entry["occurrences"].append(occurrence)
     return entries
 

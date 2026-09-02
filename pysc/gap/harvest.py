@@ -81,10 +81,18 @@ def normalize_info(info_value):
     return f'"{info}"'
 
 
+_NIST_SECTION_RE = re.compile(
+    r"(?:(?:NIST[\s\-_]SP[\s\-_]|NIST[\s\-_])?800-53(?:r5| Rev\.?\s*5)?)\s*[:\|]\s*([^,\"\';\r\n]+)",
+    re.IGNORECASE,
+)
+_CONTROL_ID_RE = re.compile(r"([A-Z]{2,4}-[A-Z0-9()\-]+)", re.IGNORECASE)
+
+
 def normalize_reference(reference_value):
     refs = []
-    refs.extend(re.findall(r"800-53r5\|([A-Z]{2,4}-[A-Z0-9()\-]+)", reference_value, re.IGNORECASE))
-    refs.extend(re.findall(r"800-53\|([A-Z]{2,4}-[A-Z0-9()\-]+)", reference_value, re.IGNORECASE))
+    for section in _NIST_SECTION_RE.finditer(reference_value):
+        for m in _CONTROL_ID_RE.finditer(section.group(1)):
+            refs.append(m.group(1).upper())
     refs = list(dict.fromkeys(refs))
     if refs:
         return f'"NIST 800-53r5|{" ".join(refs)}"'
