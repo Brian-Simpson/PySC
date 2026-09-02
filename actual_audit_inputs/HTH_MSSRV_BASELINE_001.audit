@@ -5118,18 +5118,18 @@
 #   check_type      : CHECK_REGEX
 # </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0386 - MSSRV - Ensure Configure validation of ROCA-vulnerable WHfB keys during authentication is set to Enabled: Block (DC only)"
-#   info            : "This policy setting allows you to configure how Domain Controllers handle Windows Hello for Business (WHfB) keys that are vulnerable to the \'Return of Coppersmith\'s attack\' (ROCA) vulnerability."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to Enabled: Block :"
-#   reference       : "NIST 800-53r5|SC-39 SI-16"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "2"
-#   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\SAM'; $K = 'SamNGCKeyROCAValidation'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+<custom_item>
+  type            : AUDIT_POWERSHELL
+  description     : "1.0386 - MSSRV - Ensure Configure validation of ROCA-vulnerable WHfB keys during authentication is set to Enabled: Block (DC only)"
+  info            : "This policy setting allows you to configure how Domain Controllers handle Windows Hello for Business (WHfB) keys that are vulnerable to the \'Return of Coppersmith\'s attack\' (ROCA) vulnerability."
+  solution        : "To establish the recommended configuration via GP, set the following UI path to Enabled: Block :"
+  reference       : "NIST 800-53r5|SC-39 SI-16"
+  see_also        : "See HTH Policies and Standards"
+  value_type      : POLICY_TEXT
+  value_data      : "2"
+  powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\SAM'; $K = 'SamNGCKeyROCAValidation'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+  check_type      : CHECK_REGEX
+</custom_item>
 
 # <custom_item>
 #   type            : AUDIT_POWERSHELL

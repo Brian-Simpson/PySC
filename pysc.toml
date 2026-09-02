@@ -12,10 +12,7 @@ oscal_catalog = "NIST_SP-800-53_rev5_catalog.json"
 attack_mappings = "nist800-53-r5-attack-mappings.json"
 history_db = "pysc_history.sqlite"
 report_output = "Output"
-# Where the previous run's entire Output\ tree is archived before a fresh
-# refresh/run regenerates it (timestamped subfolder each time). Absolute path
-# since it lives outside the toolkit root; blank/absent disables archiving.
-output_archive = 'C:\PySC\TAPARCHIVE'
+archive_output = "../TAPARCHIVE/Output"        # previous Output contents move here before each run
 
 # Legacy description-match workbook inputs (optional; skipped when absent)
 baseline_mssrv_csv = "Baseline_-_MSSRV.csv"                              # was PYSC_BASELINE_MSSRV_CSV

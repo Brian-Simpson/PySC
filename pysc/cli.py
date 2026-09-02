@@ -57,6 +57,9 @@ def _enable_validation_cache(cfg, modules, revalidate=False):
 
 def _run_legacy_main(cfg, argv, revalidate=False):
     """Invoke legacy main() with a reconstructed sys.argv."""
+    from pysc.outputs import archive_outputs
+
+    archive_outputs(cfg)
     legacy = _legacy_session(cfg)
     cache = _enable_validation_cache(cfg, [legacy], revalidate=revalidate)
     old_argv = sys.argv
@@ -77,6 +80,9 @@ def _run_legacy_main(cfg, argv, revalidate=False):
 
 
 def cmd_normalize(cfg, args):
+    from pysc.outputs import archive_outputs
+
+    archive_outputs(cfg)
     if args.engine == "legacy":
         argv = [args.input]
         if args.out_xlsx:
@@ -143,9 +149,6 @@ def cmd_normalize(cfg, args):
 
 
 def cmd_run(cfg, args):
-    from pysc.outputs import archive_previous_output
-
-    archive_previous_output(cfg)
     argv = []
     if args.strict:
         argv.append("--strict")
@@ -362,6 +365,9 @@ def cmd_report(cfg, args):
     import os
     import time
 
+    from pysc.outputs import archive_outputs
+
+    archive_outputs(cfg)
     result = _enterprise_result(cfg)
     if not cfg.data.get("report", {}).get("show_missing_baselines", True):
         if result.missing_baseline:
@@ -436,7 +442,9 @@ def cmd_maturity(cfg, args):
         propose,
         write_proposal_workbook,
     )
+    from pysc.outputs import archive_outputs
 
+    archive_outputs(cfg)
     threshold = (args.threshold if args.threshold is not None
                  else cfg.data.get("maturity", {}).get("pass_threshold", 90)) / 100.0
 
@@ -488,6 +496,9 @@ def cmd_library(cfg, args):
     from pysc.library import LIBRARY_NAME, check_audit_file, load_library, run_build
 
     if args.library_command == "build":
+        from pysc.outputs import archive_outputs
+
+        archive_outputs(cfg)
         run_build(
             cfg,
             include_normalized=True if args.include_normalized else None,
@@ -623,6 +634,12 @@ def cmd_refresh(cfg, args):
     baselines in actual_audit_inputs -> everything else regenerates."""
     import argparse as _argparse
 
+    from pysc.outputs import archive_outputs
+
+    # Archive the previous run's Output\ up front; the guard in
+    # archive_outputs keeps steps 2-4 from re-archiving this run's own output.
+    archive_outputs(cfg)
+
     baselines = [
         (code, cfg.baseline_path(code))
         for code in sorted(cfg.platforms())
@@ -638,10 +655,6 @@ def cmd_refresh(cfg, args):
             "No declared baselines found in actual_audit_inputs - drop them in "
             "first (filenames must match the [platforms.<CODE>] baseline entries)."
         )
-
-    from pysc.outputs import archive_previous_output
-
-    archive_previous_output(cfg)
 
     _quarantine_uncovered(cfg)
 

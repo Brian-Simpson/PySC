@@ -4,7 +4,7 @@ import types
 from pathlib import Path
 
 from pysc.config import Config
-from pysc.outputs import archive_previous_output, organize_outputs
+from pysc.outputs import organize_outputs
 from pysc.validation_cache import ValidationCache
 
 
@@ -105,51 +105,66 @@ def test_organize_outputs_routes_artifacts(tmp_path):
     assert "Normalized/HTH_MSSRV_BASELINE_2609.audit" in text
 
 
-def test_archive_previous_output_moves_whole_tree(tmp_path):
+def _archive_cfg(root):
     data = {
         "paths": {
             "report_output": "Output",
-            "output_archive": str(tmp_path / "TAPARCHIVE"),
+            "archive_output": "TAPARCHIVE/Output",
         }
     }
-    cfg = Config(data, tmp_path / "pysc.toml")
+    return Config(data, root / "pysc.toml")
+
+
+def test_archive_outputs_moves_previous_output(tmp_path):
+    import pysc.outputs as outputs
+
+    cfg = _archive_cfg(tmp_path)
     output = tmp_path / "Output"
     (output / "Reports").mkdir(parents=True)
-    (output / "Reports" / "dashboard_2609.html").write_text("x")
-    (output / "Processed").mkdir()
-    (output / "Processed" / "manifest.csv").write_text("x")
+    (output / "Processed" / "Normalized").mkdir(parents=True)
+    (output / "Reports" / "dashboard_2609.html").write_text("old")
+    (output / "Processed" / "Normalized" / "a.audit").write_text("old")
+    (output / "stray.xlsx").write_text("old")
 
-    destination = archive_previous_output(cfg, progress=lambda *_: None)
+    outputs._ARCHIVED.clear()
+    moved = outputs.archive_outputs(cfg, progress=lambda *_: None)
+    assert len(moved) == 3
 
-    assert destination is not None
-    assert destination.parent == tmp_path / "TAPARCHIVE"
-    assert (destination / "Reports" / "dashboard_2609.html").is_file()
-    assert (destination / "Processed" / "manifest.csv").is_file()
-    # Output\ is gone; a fresh run's mkdir(parents=True) recreates it clean.
-    assert not output.exists()
+    archive = tmp_path / "TAPARCHIVE" / "Output"
+    # Relative layout preserved; Output emptied (including pruned subdirs).
+    assert (archive / "Reports" / "dashboard_2609.html").is_file()
+    assert (archive / "Processed" / "Normalized" / "a.audit").is_file()
+    assert (archive / "stray.xlsx").is_file()
+    assert not (output / "Reports").exists()
+    assert not (output / "stray.xlsx").exists()
+
+    # Second call in the same process is a guarded no-op (refresh chains
+    # pipeline -> library -> report and must not archive its own output).
+    (output / "Reports").mkdir(parents=True)
+    (output / "Reports" / "dashboard_2610.html").write_text("new")
+    assert outputs.archive_outputs(cfg, progress=lambda *_: None) == []
+    assert (output / "Reports" / "dashboard_2610.html").is_file()
+
+    # A later run (guard cleared) never overwrites archived files: a name
+    # collision gets a timestamp suffix.
+    (output / "Reports" / "dashboard_2609.html").write_text("collides")
+    outputs._ARCHIVED.clear()
+    moved = outputs.archive_outputs(cfg, progress=lambda *_: None)
+    assert len(moved) == 2
+    assert (archive / "Reports" / "dashboard_2609.html").read_text() == "old"
+    suffixed = [
+        p for p in (archive / "Reports").glob("dashboard_2609_*.html")
+    ]
+    assert len(suffixed) == 1 and suffixed[0].read_text() == "collides"
 
 
-def test_archive_previous_output_noop_when_unconfigured(tmp_path):
-    data = {"paths": {"report_output": "Output"}}
-    cfg = Config(data, tmp_path / "pysc.toml")
+def test_archive_outputs_without_config_is_noop(tmp_path):
+    import pysc.outputs as outputs
+
+    cfg = _fake_cfg(tmp_path)  # no archive_output key
     output = tmp_path / "Output"
     output.mkdir()
-    (output / "keep.txt").write_text("x")
-
-    assert archive_previous_output(cfg, progress=lambda *_: None) is None
-    assert (output / "keep.txt").is_file()
-
-
-def test_archive_previous_output_noop_when_output_empty(tmp_path):
-    data = {
-        "paths": {
-            "report_output": "Output",
-            "output_archive": str(tmp_path / "TAPARCHIVE"),
-        }
-    }
-    cfg = Config(data, tmp_path / "pysc.toml")
-    (tmp_path / "Output").mkdir()
-
-    assert archive_previous_output(cfg, progress=lambda *_: None) is None
-    assert not (tmp_path / "TAPARCHIVE").exists()
-
+    (output / "dashboard_2609.html").write_text("x")
+    outputs._ARCHIVED.clear()
+    assert outputs.archive_outputs(cfg, progress=lambda *_: None) == []
+    assert (output / "dashboard_2609.html").is_file()

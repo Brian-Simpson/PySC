@@ -13,10 +13,10 @@ Output\\Processed so a run's complete intermediate state lives in one place, and
 a manifest.csv inventorying Output\\Processed is written alongside them. Each run
 regenerates the trees from the inputs, so moving them post-run is non-destructive.
 
-archive_previous_output() runs before a fresh refresh/run pipeline starts: it
-relocates the entire previous Output\\ tree (Reports + Processed from the last
-run) into a timestamped folder under the configured output_archive root, so
-every run's deliverables are preserved rather than overwritten in place.
+archive_outputs() runs before an output-producing command starts: it relocates
+the previous run's entire Output\\ contents (Reports + Processed) into the
+configured archive_output root, so every run's deliverables are preserved
+rather than overwritten in place.
 """
 
 import csv
@@ -41,31 +41,71 @@ PROCESSED_TREES = ("Normalized", "For_Gap", "Merged")
 
 MANIFEST_NAME = "manifest.csv"
 
+# Output roots already archived by this process: archive_outputs() runs at most
+# once per root per invocation so multi-step commands (pysc refresh calls the
+# pipeline, library build, and report in sequence) don't archive their own
+# freshly generated intermediates between steps.
+_ARCHIVED = set()
+
+
+def archive_outputs(cfg, progress=print):
+    """Move the current contents of Output\\ into the archive root (paths.
+    archive_output, e.g. TAPARCHIVE\\Output) before a command writes fresh
+    output, preserving the relative layout. Existing archive names are never
+    overwritten - collisions get a _yymmddHHMM (then _n) suffix. Locked files
+    (open in Excel/browser) are left in place and picked up on a later run.
+
+    Not called by the gap commands: they read staged inputs from
+    Output\\Processed\\For_Gap, which archiving would remove.
+    """
+    out_root = cfg.path("report_output")
+    archive_root = cfg.path("archive_output")
+    if out_root is None or archive_root is None:
+        return []
+    out_root = Path(out_root)
+    key = str(out_root)
+    if key in _ARCHIVED:
+        return []
+    _ARCHIVED.add(key)
+    if not out_root.is_dir():
+        return []
+    archive_root = Path(archive_root)
+    stamp = time.strftime("%y%m%d%H%M")
+    moved = []
+    for path in sorted(out_root.rglob("*")):
+        if not path.is_file():
+            continue
+        base = archive_root / path.relative_to(out_root)
+        target = base
+        if target.exists():
+            target = base.with_name(f"{base.stem}_{stamp}{base.suffix}")
+            counter = 1
+            while target.exists():
+                target = base.with_name(f"{base.stem}_{stamp}_{counter}{base.suffix}")
+                counter += 1
+        try:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(path), str(target))
+            moved.append(target)
+        except (PermissionError, OSError):
+            pass  # locked file - archived on a later run
+    # Prune directories left empty by the move (deepest first).
+    for folder in sorted((p for p in out_root.rglob("*") if p.is_dir()), reverse=True):
+        try:
+            folder.rmdir()
+        except OSError:
+            pass
+    if moved:
+        progress(f"Archived {len(moved)} previous output file(s) -> {archive_root}")
+    return moved
+
 
 def archive_previous_output(cfg, progress=print):
-    """Move the entire previous Output\\ tree into a timestamped folder under
-    the configured output_archive root, before a fresh run regenerates Output.
-    No-op when output_archive is unset or Output\\ doesn't exist/is empty."""
-    archive_root = cfg.path("output_archive")
-    if archive_root is None:
-        return None
-    source = cfg.path("report_output")
-    if source is None or not source.is_dir():
-        return None
-    if not any(source.iterdir()):
-        return None  # nothing to archive yet
-
-    stamp = time.strftime("%Y%m%d_%H%M%S")
-    destination = Path(archive_root) / f"Output_{stamp}"
-    try:
-        archive_root_path = Path(archive_root)
-        archive_root_path.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(source), str(destination))
-    except OSError as exc:
-        progress(f"Could not archive previous Output\\ to {destination}: {exc}")
-        return None
-    progress(f"Archived previous Output\\ -> {destination}")
-    return destination
+    """Deprecated alias for archive_outputs() (the parallel implementation
+    merged from origin/master used this name and the output_archive key).
+    Delegates so any external caller keeps working."""
+    moved = archive_outputs(cfg, progress=progress)
+    return moved or None
 
 
 def reports_dir(cfg):
