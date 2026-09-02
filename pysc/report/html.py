@@ -4,9 +4,12 @@ One portable file (inline CSS, no external assets, no JS dependencies) suitable
 for posting to SharePoint/intranet. Charts are pure HTML/SVG: a horizontal bar
 list for per-platform coverage, a platform x NIST-family heatmap table with
 visible values (doubles as the table view), and a coverage trend line from the
-history DB. Colors follow the validated reference palette (single blue series;
-sequential blue ramp; status colors only for labeled state chips), with dark
-mode via prefers-color-scheme using the palette's documented dark steps.
+history DB. Colors follow the HTH (Hilltop Holdings) brand guideline palette:
+PMS 287 blue for the baseline series, Golden for the CIS-potential series and
+the sequential heatmap ramp, PMS 1805 red for critical/priority state. Mark
+colors are OKLCH-snapped into the chart lightness band (hue held) and the
+light/dark pairs are validated (CVD deltaE >= 25, contrast >= 3:1) with the
+dataviz palette validator; dark mode via prefers-color-scheme.
 """
 
 import html as _html
@@ -15,23 +18,26 @@ from collections import defaultdict
 
 from pysc.nist.oscal import OscalCatalog
 
-# Sequential blue ramp (light mode), step 100 -> 700, from the reference palette.
+# Sequential Golden ramp (brand hue 71deg, monotone OKLCH L 0.92 -> 0.32).
+# Pale low end matches the surface like the values-in-every-cell design needs;
+# the printed value is the mandated relief for near-surface steps.
 _RAMP = [
-    "#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7",
-    "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b",
+    "#f2e2d0", "#e3d1bc", "#d5c0a9", "#c6b097", "#b8a084", "#aa9072",
+    "#9c8160", "#8f714e", "#81623d", "#74542b", "#674518", "#5a3700", "#4d2900",
 ]
 
 _CSS = """
 :root { color-scheme: light dark; }
 body {
   margin: 0; padding: 24px;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: Calluna, "Calluna Light", Calibri, "Segoe UI", system-ui, sans-serif;
   background: #f9f9f7; color: #0b0b0b;
 }
 .viz-root {
   --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
   --muted: #898781; --grid: #e1e0d9; --baseline: #c3c2b7;
-  --series-1: #2a78d6; --cis: #9ec5f4; --good: #0ca30c; --critical: #d03b3b; --serious: #ec835a;
+  --brand-navy: #00308c; --brand-gold: #a47b48;
+  --series-1: #2051af; --cis: #a77431; --good: #0ca30c; --critical: #af2734; --serious: #de988d;
   --border: rgba(11,11,11,0.10);
 }
 @media (prefers-color-scheme: dark) {
@@ -39,10 +45,15 @@ body {
   .viz-root {
     --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
     --muted: #898781; --grid: #2c2c2a; --baseline: #383835;
-    --series-1: #3987e5; --cis: #2f5a8f; --border: rgba(255,255,255,0.10);
+    --brand-navy: #ffffff;
+    --series-1: #4e82e5; --cis: #b68038; --critical: #d3595c; --border: rgba(255,255,255,0.10);
   }
 }
-h1 { font-size: 20px; margin: 0 0 4px; }
+h1, h2, .tile .value { font-family: "Gill Sans Nova", "Gill Sans MT", Calibri, "Segoe UI", sans-serif; }
+h1 {
+  font-size: 20px; margin: 0 0 4px; color: var(--brand-navy);
+  padding-bottom: 6px; border-bottom: 3px solid var(--brand-gold);
+}
 .subtitle { color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
 section {
   background: var(--surface-1); border: 1px solid var(--border);
@@ -67,6 +78,7 @@ td.heat { font-variant-numeric: tabular-nums; }
 .chip { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
 .chip.missing { border: 1px solid var(--critical); color: var(--critical); }
 .prio-score { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prio-high { color: var(--critical); }
 .legend-note { color: var(--muted); font-size: 11px; margin-top: 8px; }
 svg text { fill: var(--text-secondary); font-size: 11px; }
 footer { color: var(--muted); font-size: 11px; margin-top: 12px; }
@@ -81,9 +93,15 @@ def _pct(part, whole):
     return round((part / whole) * 100, 2) if whole else 0.0
 
 
-def _heat_style(pct):
-    """Sequential ramp cell: light ink on dark steps, dark ink on light steps."""
-    idx = min(int(pct / 100 * (len(_RAMP) - 1)), len(_RAMP) - 1)
+def _heat_style(pct, scale_max=100.0):
+    """Sequential ramp cell: light ink on dark steps, dark ink on light steps.
+
+    Shading is scaled to scale_max (the highest cell in the grid) so the ramp
+    differentiates cells even while absolute coverage is low; each cell prints
+    its absolute value, so the scaling is presentational only.
+    """
+    frac = (pct / scale_max) if scale_max else 0.0
+    idx = min(int(frac * (len(_RAMP) - 1)), len(_RAMP) - 1)
     color = _RAMP[idx]
     ink = "#0b0b0b" if idx < 7 else "#ffffff"
     return f"background:{color};color:{ink}"
@@ -237,13 +255,15 @@ def build_dashboard(result, output_file, history=None, attack_mappings=None):
     heatmap = f"""
     <section><h2>Coverage % by platform and NIST family</h2>
     <table><tr><th class="rowhead">Platform</th>{head}</tr>{''.join(body_rows)}</table>
-    <div class="legend-note">Darker blue = higher coverage; every cell shows its value.</div>
+    <div class="legend-note">Darker gold = higher coverage; every cell shows its value.</div>
     </section>"""
 
     # Top remediation priorities: what to address first, ranked.
     top = priorities[:15]
     prio_rows_html = "".join(
-        f'<tr><td class="prio-score">{"HIGH" if p["score"] >= 3 else "STD"} {p["score"]}</td>'
+        '<tr><td class="prio-score">'
+        + ('<span class="prio-high">HIGH</span>' if p["score"] >= 3 else "STD")
+        + f' {p["score"]}</td>'
         f'<td class="rowhead">{_esc(p["platform"])}</td>'
         f'<td style="text-align:left">{_esc(p["control_id"])}</td>'
         f'<td style="text-align:left">{_esc(p["title"])}</td>'
