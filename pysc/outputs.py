@@ -12,6 +12,11 @@ their internal directory structure preserved) are relocated under
 Output\\Processed so a run's complete intermediate state lives in one place, and
 a manifest.csv inventorying Output\\Processed is written alongside them. Each run
 regenerates the trees from the inputs, so moving them post-run is non-destructive.
+
+archive_previous_output() runs before a fresh refresh/run pipeline starts: it
+relocates the entire previous Output\\ tree (Reports + Processed from the last
+run) into a timestamped folder under the configured output_archive root, so
+every run's deliverables are preserved rather than overwritten in place.
 """
 
 import csv
@@ -35,6 +40,32 @@ PROCESSED_ROOT_PATTERNS = (
 PROCESSED_TREES = ("Normalized", "For_Gap", "Merged")
 
 MANIFEST_NAME = "manifest.csv"
+
+
+def archive_previous_output(cfg, progress=print):
+    """Move the entire previous Output\\ tree into a timestamped folder under
+    the configured output_archive root, before a fresh run regenerates Output.
+    No-op when output_archive is unset or Output\\ doesn't exist/is empty."""
+    archive_root = cfg.path("output_archive")
+    if archive_root is None:
+        return None
+    source = cfg.path("report_output")
+    if source is None or not source.is_dir():
+        return None
+    if not any(source.iterdir()):
+        return None  # nothing to archive yet
+
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    destination = Path(archive_root) / f"Output_{stamp}"
+    try:
+        archive_root_path = Path(archive_root)
+        archive_root_path.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(source), str(destination))
+    except OSError as exc:
+        progress(f"Could not archive previous Output\\ to {destination}: {exc}")
+        return None
+    progress(f"Archived previous Output\\ -> {destination}")
+    return destination
 
 
 def reports_dir(cfg):

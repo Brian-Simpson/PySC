@@ -4,7 +4,7 @@ import types
 from pathlib import Path
 
 from pysc.config import Config
-from pysc.outputs import organize_outputs
+from pysc.outputs import archive_previous_output, organize_outputs
 from pysc.validation_cache import ValidationCache
 
 
@@ -103,3 +103,53 @@ def test_organize_outputs_routes_artifacts(tmp_path):
     text = manifest.read_text(encoding="utf-8")
     assert "relative_path,category,size_bytes,modified" in text
     assert "Normalized/HTH_MSSRV_BASELINE_2609.audit" in text
+
+
+def test_archive_previous_output_moves_whole_tree(tmp_path):
+    data = {
+        "paths": {
+            "report_output": "Output",
+            "output_archive": str(tmp_path / "TAPARCHIVE"),
+        }
+    }
+    cfg = Config(data, tmp_path / "pysc.toml")
+    output = tmp_path / "Output"
+    (output / "Reports").mkdir(parents=True)
+    (output / "Reports" / "dashboard_2609.html").write_text("x")
+    (output / "Processed").mkdir()
+    (output / "Processed" / "manifest.csv").write_text("x")
+
+    destination = archive_previous_output(cfg, progress=lambda *_: None)
+
+    assert destination is not None
+    assert destination.parent == tmp_path / "TAPARCHIVE"
+    assert (destination / "Reports" / "dashboard_2609.html").is_file()
+    assert (destination / "Processed" / "manifest.csv").is_file()
+    # Output\ is gone; a fresh run's mkdir(parents=True) recreates it clean.
+    assert not output.exists()
+
+
+def test_archive_previous_output_noop_when_unconfigured(tmp_path):
+    data = {"paths": {"report_output": "Output"}}
+    cfg = Config(data, tmp_path / "pysc.toml")
+    output = tmp_path / "Output"
+    output.mkdir()
+    (output / "keep.txt").write_text("x")
+
+    assert archive_previous_output(cfg, progress=lambda *_: None) is None
+    assert (output / "keep.txt").is_file()
+
+
+def test_archive_previous_output_noop_when_output_empty(tmp_path):
+    data = {
+        "paths": {
+            "report_output": "Output",
+            "output_archive": str(tmp_path / "TAPARCHIVE"),
+        }
+    }
+    cfg = Config(data, tmp_path / "pysc.toml")
+    (tmp_path / "Output").mkdir()
+
+    assert archive_previous_output(cfg, progress=lambda *_: None) is None
+    assert not (tmp_path / "TAPARCHIVE").exists()
+

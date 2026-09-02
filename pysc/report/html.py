@@ -21,34 +21,58 @@ _RAMP = [
     "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b",
 ]
 
+# HTH corporate theme (Calibri font; primary theme colors for section titles
+# and the "critical" status accent).
+_CORP_TITLE = "#283B49"
+_CORP_CRITICAL = "#BF2E1B"
+
+# Secondary theme colors + additional chart colors: one distinct accent per
+# platform bar in the coverage chart, cycled if there are more platforms than
+# swatches.
+_PLATFORM_PALETTE = [
+    "#1F3D7D", "#DE988C", "#D0BFA5", "#CECECE",
+    "#9D452A", "#A47B48", "#7AAAC0", "#9FBCA7",
+]
+
+
+def _hex_to_rgba(hex_color, alpha):
+    hex_color = hex_color.lstrip("#")
+    r, g, b = (int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
+    return f"rgba({r},{g},{b},{alpha})"
+
+
+def _platform_color(index):
+    return _PLATFORM_PALETTE[index % len(_PLATFORM_PALETTE)]
+
 _CSS = """
 :root { color-scheme: light dark; }
 body {
   margin: 0; padding: 24px;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: "Calibri", "Segoe UI", system-ui, -apple-system, sans-serif;
   background: #f9f9f7; color: #0b0b0b;
 }
 .viz-root {
-  --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
+  --title: #283B49; --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
   --muted: #898781; --grid: #e1e0d9; --baseline: #c3c2b7;
-  --series-1: #2a78d6; --cis: #9ec5f4; --good: #0ca30c; --critical: #d03b3b; --serious: #ec835a;
+  --series-1: #2a78d6; --cis: #9ec5f4; --good: #0ca30c; --critical: #BF2E1B; --serious: #ec835a;
   --border: rgba(11,11,11,0.10);
 }
 @media (prefers-color-scheme: dark) {
   body { background: #0d0d0d; color: #ffffff; }
   .viz-root {
-    --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+    --title: #7AAAC0; --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
     --muted: #898781; --grid: #2c2c2a; --baseline: #383835;
-    --series-1: #3987e5; --cis: #2f5a8f; --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5; --cis: #2f5a8f; --critical: #DE988C; --border: rgba(255,255,255,0.10);
   }
 }
+h1, h2 { color: var(--title); }
 h1 { font-size: 20px; margin: 0 0 4px; }
 .subtitle { color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
 section {
   background: var(--surface-1); border: 1px solid var(--border);
   border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;
 }
-h2 { font-size: 14px; margin: 0 0 12px; color: var(--text-primary); }
+h2 { font-size: 14px; margin: 0 0 12px; }
 .tiles { display: flex; gap: 16px; flex-wrap: wrap; }
 .tile { flex: 1 1 140px; }
 .tile .value { font-size: 32px; font-weight: 600; }
@@ -91,7 +115,7 @@ def _heat_style(pct):
 
 def _platform_rows(result):
     rows = []
-    for code, analysis in sorted(result.analyses.items()):
+    for index, (code, analysis) in enumerate(sorted(result.analyses.items())):
         total = len(analysis.target_baseline)
         # CIS potential: base controls any file (baseline + CIS/DISA candidates)
         # can cover - the highest achievable coverage if candidate checks are
@@ -110,6 +134,7 @@ def _platform_rows(result):
                 "cis_pct": _pct(cis, total),
                 "recoverable": len(analysis.inactive_coverage_opportunities),
                 "additional": len(analysis.additional_controls_not_present),
+                "color": _platform_color(index),
             }
         )
     return rows
@@ -206,11 +231,14 @@ def build_dashboard(result, output_file, history=None, attack_mappings=None):
 
     max_pct = max((max(r["pct"], r["cis_pct"]) for r in rows), default=1) or 1
     bar_rows = "".join(
-        f'<div class="bar-row"><div>{_esc(r["code"])}</div>'
+        f'<div class="bar-row"><div><span class="swatch" style="background:{r["color"]}">'
+        f'</span>{_esc(r["code"])}</div>'
         f'<div class="bar-track">'
-        f'<div class="bar-cis" style="width:{max(r["cis_pct"] / max_pct * 100, 0.5)}%" '
+        f'<div class="bar-cis" style="width:{max(r["cis_pct"] / max_pct * 100, 0.5)}%;'
+        f'background:{_hex_to_rgba(r["color"], 0.35)}" '
         f'title="{_esc(r["code"])} CIS potential: {r["cis"]} of {r["total"]} base controls"></div>'
-        f'<div class="bar-fill" style="width:{max(r["pct"] / max_pct * 100, 0.5)}%" '
+        f'<div class="bar-fill" style="width:{max(r["pct"] / max_pct * 100, 0.5)}%;'
+        f'background:{r["color"]}" '
         f'title="{_esc(r["code"])} HTH baseline: {r["covered"]} of {r["total"]} base controls"></div>'
         f'</div>'
         f'<div class="bar-val">{r["pct"]}% / {r["cis_pct"]}% CIS</div></div>'
@@ -219,10 +247,11 @@ def build_dashboard(result, output_file, history=None, attack_mappings=None):
     bars = f"""
     <section><h2>Base-control coverage by platform</h2>{bar_rows}
     <div class="legend-note">
-    <span class="swatch" style="background:var(--series-1)"></span>HTH baseline coverage &nbsp;
-    <span class="swatch" style="background:var(--cis)"></span>CIS benchmark potential (highest achievable
-    if candidate checks are imported). Bars scaled to the highest platform potential ({max_pct}%).
-    Coverage counts NIST 800-53r5 base controls referenced by active baseline checks.</div>
+    Each platform is drawn in its own HTH theme accent color; the solid bar is
+    baseline coverage, the lighter tint of the same color is CIS benchmark
+    potential (highest achievable if candidate checks are imported). Bars
+    scaled to the highest platform potential ({max_pct}%). Coverage counts
+    NIST 800-53r5 base controls referenced by active baseline checks.</div>
     </section>"""
 
     head = "".join(f"<th>{_esc(f)}</th>" for f in families)

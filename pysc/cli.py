@@ -7,10 +7,35 @@ ALL_AUDITS.py directly. Later phases replace delegates with native modules.
 """
 
 import argparse
+import difflib
+import re
 import sys
 
 from pysc import __version__
 from pysc.config import ConfigError, load_config, load_legacy
+
+
+class _SuggestingArgumentParser(argparse.ArgumentParser):
+    """ArgumentParser that appends a "did you mean" hint for typo'd
+    subcommand choices (e.g. ``pysc referesh`` -> suggest ``refresh``)."""
+
+    _INVALID_CHOICE_RE = re.compile(
+        r"^argument (?P<dest>[^:]+): invalid choice: '(?P<value>[^']*)'"
+    )
+
+    def error(self, message):
+        match = self._INVALID_CHOICE_RE.match(message)
+        if match and self._subparsers:
+            for action in self._subparsers._group_actions:
+                choice_map = action.choices
+                if choice_map and match.group("value") not in choice_map:
+                    guess = difflib.get_close_matches(
+                        match.group("value"), choice_map.keys(), n=1
+                    )
+                    if guess:
+                        message += f" -- did you mean '{guess[0]}'?"
+                    break
+        super().error(message)
 
 
 def _legacy_session(cfg):
@@ -118,6 +143,9 @@ def cmd_normalize(cfg, args):
 
 
 def cmd_run(cfg, args):
+    from pysc.outputs import archive_previous_output
+
+    archive_previous_output(cfg)
     argv = []
     if args.strict:
         argv.append("--strict")
@@ -611,6 +639,10 @@ def cmd_refresh(cfg, args):
             "first (filenames must match the [platforms.<CODE>] baseline entries)."
         )
 
+    from pysc.outputs import archive_previous_output
+
+    archive_previous_output(cfg)
+
     _quarantine_uncovered(cfg)
 
     print("\n[1/4] Vendor benchmarks from Tenable downloads...")
@@ -636,13 +668,13 @@ def cmd_refresh(cfg, args):
 
 
 def build_parser():
-    parser = argparse.ArgumentParser(
+    parser = _SuggestingArgumentParser(
         prog="pysc",
         description="HTH Tenable .audit file management: normalize, gap-analyze, report.",
     )
     parser.add_argument("--version", action="version", version=f"pysc {__version__}")
     parser.add_argument("--config", help="Path to pysc.toml (default: search upward from cwd)")
-    sub = parser.add_subparsers(dest="command", required=True)
+    sub = parser.add_subparsers(dest="command", required=True, parser_class=_SuggestingArgumentParser)
 
     p = sub.add_parser("normalize", help="Normalize .audit file(s) into HTH baseline format")
     p.add_argument("input", help="Audit file or folder")
