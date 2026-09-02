@@ -143,6 +143,9 @@ def cmd_normalize(cfg, args):
 
 
 def cmd_run(cfg, args):
+    from pysc.outputs import archive_previous_output
+
+    archive_previous_output(cfg)
     argv = []
     if args.strict:
         argv.append("--strict")
@@ -635,6 +638,10 @@ def cmd_refresh(cfg, args):
             "No declared baselines found in actual_audit_inputs - drop them in "
             "first (filenames must match the [platforms.<CODE>] baseline entries)."
         )
+
+    from pysc.outputs import archive_previous_output
+
+    archive_previous_output(cfg)
 
     _quarantine_uncovered(cfg)
 
