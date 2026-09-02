@@ -1670,6 +1670,18 @@ def _strip_bom_prefix(value):
     return text.lstrip('\ufeff').lstrip('ï»¿')
 
 
+def _write_audit_text(path, text):
+    """Write audit text with CRLF line endings regardless of host platform.
+
+    Tenable .audit files use Windows-style CRLF endings; opening in text mode
+    without an explicit newline would translate '\\n' to the host OS's
+    os.linesep (LF on Linux), diverging from the CRLF golden snapshots.
+    """
+    normalized = text.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '\r\n')
+    with open(path, 'w', encoding='utf-8', newline='') as fh:
+        fh.write(normalized)
+
+
 def _sanitize_audit_lines(lines):
     cleaned = []
     for index, line in enumerate(lines or []):
@@ -2837,8 +2849,7 @@ def validate_and_repair_audit_file(audit_path, *, check_type_name=None, check_ty
 
     if changed:
         current = _strip_bom_prefix(current)
-        with open(audit_path, 'w', encoding='utf-8') as fh:
-            fh.write(current)
+        _write_audit_text(audit_path, current)
 
     if scan_errors:
         detail = '\n'.join(scan_errors[:25])
@@ -2869,8 +2880,7 @@ def validate_and_repair_audit_file(audit_path, *, check_type_name=None, check_ty
     )
 
     if changed:
-        with open(audit_path, 'w', encoding='utf-8') as fh:
-            fh.write(repaired)
+        _write_audit_text(audit_path, repaired)
         if scan_errors:
             detail = '\n'.join(scan_errors[:25])
             print(f'{error_label} for {audit_path}')
@@ -3252,10 +3262,9 @@ def process_file(infile, open_in_vscode=False, strict_mode=False):
             'details': details,
         })
 
-    with open(outfile, "w", encoding="utf-8") as f:
-        safe_text = _strip_bom_prefix("\n".join(output) + "\n")
-        _assert_no_encoding_markers(safe_text, outfile)
-        f.write(safe_text)
+    safe_text = _strip_bom_prefix("\n".join(output) + "\n")
+    _assert_no_encoding_markers(safe_text, outfile)
+    _write_audit_text(outfile, safe_text)
 
     validate_and_repair_audit_file(
         outfile,
@@ -3331,10 +3340,9 @@ def process_file(infile, open_in_vscode=False, strict_mode=False):
                 _record_validation_result(infile, 'failed', '\n'.join(preflight_errors[:25]))
                 return False
 
-            with open(outfile, "w", encoding="utf-8") as f:
-                safe_text = _strip_bom_prefix("\n".join(output) + "\n")
-                _assert_no_encoding_markers(safe_text, outfile)
-                f.write(safe_text)
+            safe_text = _strip_bom_prefix("\n".join(output) + "\n")
+            _assert_no_encoding_markers(safe_text, outfile)
+            _write_audit_text(outfile, safe_text)
 
             validate_and_repair_audit_file(
                 outfile,

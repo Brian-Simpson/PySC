@@ -21,6 +21,7 @@ from pysc.gap.extract import (  # noqa: E402
     extract_active_checks,
     extract_control_number,
     extract_inactive_checks,
+    extract_nist_controls,
 )
 from pysc.nist.oscal import OscalCatalog, normalize_control_id  # noqa: E402
 
@@ -107,6 +108,53 @@ def test_normalize_control_id():
 def test_extract_control_number():
     assert extract_control_number("18.9.13.1 Ensure thing") == "18.9.13.1"
     assert extract_control_number("1.0022 - MSSRV - Something") == "1.0022"
+
+
+def test_extract_nist_controls_multi_and_formats():
+    # Single control
+    assert extract_nist_controls('reference : "800-53r5|AC-2"') == {"AC-2"}
+    assert extract_nist_controls('reference : "800-53r5|AC-02"') == {"AC-2"}
+    assert extract_nist_controls('reference : "800-53r5|AC-2(1)"') == {"AC-2(1)"}
+    # Space-separated multi-controls (e.g. from normalization pipeline)
+    assert extract_nist_controls(
+        'reference : "NIST 800-53r5|AU-3 AU-3(1) AU-7 AU-12"'
+    ) == {"AU-3", "AU-3(1)", "AU-7", "AU-12"}
+    # Comma-separated multi-controls
+    assert extract_nist_controls(
+        'reference : "800-53r5|AC-17(3),800-53r5|CM-7,800-53r5|MA-4,800-53r5|SI-7"'
+    ) == {"AC-17(3)", "CM-7", "MA-4", "SI-7"}
+    # Mixed with non-NIST references
+    assert extract_nist_controls(
+        'reference : "800-53r5|AC-2(1) AC-3,CSCv8|6.5"'
+    ) == {"AC-2(1)", "AC-3"}
+    # Variations in prefix and casing
+    assert extract_nist_controls(
+        'reference : "NIST SP 800-53 Rev. 5|AC-2,NIST SP 800-53 Rev. 5|AC-3"'
+    ) == {"AC-2", "AC-3"}
+    assert extract_nist_controls('reference : "NIST 800-53|AC-2 AC-3"') == {"AC-2", "AC-3"}
+    # Sub-item letters and punctuation
+    assert extract_nist_controls('reference : "NIST 800-53r5|AC-11a AC-8a"') == {"AC-11", "AC-8"}
+    assert extract_nist_controls('reference : "NIST 800-53r5|AC-11a."') == {"AC-11"}
+    # Empty / non-matching
+    assert extract_nist_controls('reference : "800-53r5|Not Mapped"') == set()
+    assert extract_nist_controls('reference : "CSCv8|1.1"') == set()
+    assert extract_nist_controls("") == set()
+
+
+def test_active_checks_multi_control(tmp_path):
+    audit_content = '''<check_type:"Windows" version:"2">
+<custom_item>
+  type        : AUDIT_POWERSHELL
+  description : "1.0001 Multi-control test"
+  reference   : "NIST 800-53r5|AC-18 AC-18(1) AU-3 CM-2"
+</custom_item>
+</check_type>
+'''
+    audit_file = tmp_path / "multi.audit"
+    audit_file.write_text(audit_content, encoding="utf-8")
+    checks = extract_active_checks(str(audit_file))
+    assert len(checks) == 1
+    assert sorted(checks[0]["controls"]) == ["AC-18", "AC-18(1)", "AU-3", "CM-2"]
 
 
 # --- Synthetic derivation tests ----------------------------------------------

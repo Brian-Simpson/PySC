@@ -12,6 +12,11 @@ their internal directory structure preserved) are relocated under
 Output\\Processed so a run's complete intermediate state lives in one place, and
 a manifest.csv inventorying Output\\Processed is written alongside them. Each run
 regenerates the trees from the inputs, so moving them post-run is non-destructive.
+
+archive_outputs() runs before an output-producing command starts: it relocates
+the previous run's entire Output\\ contents (Reports + Processed) into the
+configured archive_output root, so every run's deliverables are preserved
+rather than overwritten in place.
 """
 
 import csv
@@ -93,6 +98,14 @@ def archive_outputs(cfg, progress=print):
     if moved:
         progress(f"Archived {len(moved)} previous output file(s) -> {archive_root}")
     return moved
+
+
+def archive_previous_output(cfg, progress=print):
+    """Deprecated alias for archive_outputs() (the parallel implementation
+    merged from origin/master used this name and the output_archive key).
+    Delegates so any external caller keeps working."""
+    moved = archive_outputs(cfg, progress=progress)
+    return moved or None
 
 
 def reports_dir(cfg):

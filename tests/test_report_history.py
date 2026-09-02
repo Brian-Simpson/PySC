@@ -11,7 +11,7 @@ from pysc.gap.engine import analyze_files  # noqa: E402
 from pysc.gap.enterprise import DETECTION_TO_PLATFORM, EnterpriseGapResult  # noqa: E402
 from pysc.history import HistoryStore  # noqa: E402
 from pysc.report.excel_util import sanitize_for_excel  # noqa: E402
-from pysc.report.html import build_dashboard  # noqa: E402
+from pysc.report.html import _SERIES, build_dashboard  # noqa: E402
 from pysc.report.matrix import build_matrix  # noqa: E402
 
 BASELINE_AUDIT = '''<check_type:"Windows" version:"2">
@@ -122,6 +122,18 @@ def test_dashboard_build(result, tmp_path):
     assert "Import candidate check" in text or "Un-comment existing check" in text
     assert "prefers-color-scheme: dark" in text
     assert "Coverage % by platform and NIST family" in text
+    # Coverage bar for MSSRV (first/only platform row) uses its own palette
+    # slot: the row carries the p0 class and the CSS binds that class to the
+    # slot's fill and darker CIS shade.
+    assert 'class="bar-row p0"' in text
+    assert f"background: {_SERIES[0][0]}" in text  # p0 fill
+    assert f"background: {_SERIES[0][1]}" in text  # p0 darker CIS shade
+
+
+def test_platform_palette_colors_are_distinct():
+    for column in range(4):  # light fill, light CIS, dark fill, dark CIS
+        colors = [slot[column] for slot in _SERIES]
+        assert len(colors) == len(set(colors))
 
 
 def test_priority_gap_rows(result):

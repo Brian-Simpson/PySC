@@ -19,10 +19,24 @@ _BLOCK_RE = re.compile(
     re.MULTILINE,
 )
 
-_NIST_REF_RE = re.compile(
-    r"(?:800-53r5|800-53|NIST[\s\-_]SP[\s\-_]800-53(?:r5| Rev\.? 5)?)\|?([A-Z]{2}-\d+(?:\(\d+\))?)",
+_NIST_SECTION_RE = re.compile(
+    r"(?:(?:NIST[\s\-_]SP[\s\-_]|NIST[\s\-_])?800-53(?:r5| Rev\.?\s*5)?)\s*[:\|]\s*([^,\"\';\r\n]+)",
     re.IGNORECASE,
 )
+_CONTROL_ID_RE = re.compile(r"([A-Z]{2}-\d+(?:\(\d+\))?)", re.IGNORECASE)
+_NIST_REF_RE = _NIST_SECTION_RE
+
+
+def extract_nist_controls(text):
+    """Extract all canonical NIST 800-53 control identifiers from a text/reference snippet."""
+    if not text:
+        return set()
+    controls = set()
+    for section in _NIST_SECTION_RE.finditer(text):
+        for match in _CONTROL_ID_RE.finditer(section.group(1)):
+            controls.add(re.sub(r"-0(\d)", r"-\1", match.group(1).upper()))
+    return controls
+
 
 _COMMENT_PREFIX_RE = re.compile(r"(?m)^\s*#\s?")
 
@@ -57,15 +71,13 @@ def extract_active_checks(file_path):
         ref_match = re.search(r'reference\s*:\s*["\'](.*?)["\']', block_text)
         references = ref_match.group(1) if ref_match else ""
 
-        nist_controls = set()
-        for found in _NIST_REF_RE.finditer(references + " " + block_text):
-            nist_controls.add(found.group(1).upper())
+        nist_controls = extract_nist_controls(references + " " + block_text)
 
         items.append(
             {
                 "control_number": extract_control_number(description),
                 "description": description,
-                "controls": list(nist_controls),
+                "controls": sorted(nist_controls),
             }
         )
     return items
@@ -82,9 +94,7 @@ def extract_inactive_checks(file_path):
         desc_match = re.search(r'description\s*:\s*"(.*?)"', block_text)
         description = desc_match.group(1) if desc_match else ""
 
-        refs = set()
-        for ref_match in _NIST_REF_RE.finditer(block_text):
-            refs.add(ref_match.group(1).upper())
+        refs = extract_nist_controls(block_text)
 
         inactive.append(
             {
