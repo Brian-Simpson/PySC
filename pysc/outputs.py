@@ -36,6 +36,64 @@ PROCESSED_TREES = ("Normalized", "For_Gap", "Merged")
 
 MANIFEST_NAME = "manifest.csv"
 
+# Output roots already archived by this process: archive_outputs() runs at most
+# once per root per invocation so multi-step commands (pysc refresh calls the
+# pipeline, library build, and report in sequence) don't archive their own
+# freshly generated intermediates between steps.
+_ARCHIVED = set()
+
+
+def archive_outputs(cfg, progress=print):
+    """Move the current contents of Output\\ into the archive root (paths.
+    archive_output, e.g. TAPARCHIVE\\Output) before a command writes fresh
+    output, preserving the relative layout. Existing archive names are never
+    overwritten - collisions get a _yymmddHHMM (then _n) suffix. Locked files
+    (open in Excel/browser) are left in place and picked up on a later run.
+
+    Not called by the gap commands: they read staged inputs from
+    Output\\Processed\\For_Gap, which archiving would remove.
+    """
+    out_root = cfg.path("report_output")
+    archive_root = cfg.path("archive_output")
+    if out_root is None or archive_root is None:
+        return []
+    out_root = Path(out_root)
+    key = str(out_root)
+    if key in _ARCHIVED:
+        return []
+    _ARCHIVED.add(key)
+    if not out_root.is_dir():
+        return []
+    archive_root = Path(archive_root)
+    stamp = time.strftime("%y%m%d%H%M")
+    moved = []
+    for path in sorted(out_root.rglob("*")):
+        if not path.is_file():
+            continue
+        base = archive_root / path.relative_to(out_root)
+        target = base
+        if target.exists():
+            target = base.with_name(f"{base.stem}_{stamp}{base.suffix}")
+            counter = 1
+            while target.exists():
+                target = base.with_name(f"{base.stem}_{stamp}_{counter}{base.suffix}")
+                counter += 1
+        try:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(path), str(target))
+            moved.append(target)
+        except (PermissionError, OSError):
+            pass  # locked file - archived on a later run
+    # Prune directories left empty by the move (deepest first).
+    for folder in sorted((p for p in out_root.rglob("*") if p.is_dir()), reverse=True):
+        try:
+            folder.rmdir()
+        except OSError:
+            pass
+    if moved:
+        progress(f"Archived {len(moved)} previous output file(s) -> {archive_root}")
+    return moved
+
 
 def reports_dir(cfg):
     path = cfg.path("report_output") / "Reports"
