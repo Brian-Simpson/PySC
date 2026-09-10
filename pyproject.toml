@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-pysc = "pysc.cli:main"
+tap = "pysc.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["pysc*"]
+include = ["pysc*", "tap*"]

@@ -1,4 +1,4 @@
-"""pysc command-line interface.
+"""tap command-line interface (package internals live under ``pysc``).
 
 Phase 1: every subcommand is a thin delegate into the vendored legacy engine
 (pysc/_legacy/all_audits.py). Delegation happens by rebuilding the argv the
@@ -17,7 +17,7 @@ from pysc.config import ConfigError, load_config, load_legacy
 
 class _SuggestingArgumentParser(argparse.ArgumentParser):
     """ArgumentParser that appends a "did you mean" hint for typo'd
-    subcommand choices (e.g. ``pysc referesh`` -> suggest ``refresh``)."""
+    subcommand choices (e.g. ``tap referesh`` -> suggest ``refresh``)."""
 
     _INVALID_CHOICE_RE = re.compile(
         r"^argument (?P<dest>[^:]+): invalid choice: '(?P<value>[^']*)'"
@@ -379,7 +379,7 @@ def cmd_report(cfg, args):
     history = _history_store(cfg)
     try:
         if not args.no_snapshot:
-            run_id = history.record_enterprise_run(result, notes=f"pysc report {args.format}")
+            run_id = history.record_enterprise_run(result, notes=f"tap report {args.format}")
             print(f"History snapshot recorded (run {run_id})")
 
         from pysc.outputs import reports_dir
@@ -419,7 +419,7 @@ def cmd_history(cfg, args):
         if args.history_command == "show":
             rows = history.platform_trend(args.platform)
             if not rows:
-                print("No history recorded yet (run: pysc report all)")
+                print("No history recorded yet (run: tap report all)")
                 return
             print(f"{'Run':>4} {'Timestamp':<20} {'Platform':<10} "
                   f"{'Covered':>8} {'Recov':>6} {'Total':>6} {'Cov %':>7}")
@@ -529,7 +529,7 @@ def cmd_library(cfg, args):
                 print(f"  ! {row['key']} values={row['baseline_values']}")
         else:
             print("No raw-baseline conflicts remain.")
-        print("Now run: pysc library build")
+        print("Now run: tap library build")
         return
 
     if args.library_command == "seed-policy":
@@ -557,7 +557,7 @@ def cmd_library(cfg, args):
             print(f"BASELINE CONFLICTS requiring manual resolution ({len(conflicts)}):")
             for row in conflicts:
                 print(f"  ! {row['key']} baseline values={row['baseline_values']}")
-        print("Review rationale text, then re-run: pysc library build")
+        print("Review rationale text, then re-run: tap library build")
         return
 
     # check
@@ -565,7 +565,7 @@ def cmd_library(cfg, args):
 
     library_path = cfg.root / LIBRARY_NAME
     if not library_path.is_file():
-        raise SystemExit(f"No library at {library_path} - run 'pysc library build' first")
+        raise SystemExit(f"No library at {library_path} - run 'tap library build' first")
     controls = load_library(library_path)
     rows = check_audit_file(controls, args.audit, matcher=PlatformMatcher.from_config(cfg))
     counts = {}
@@ -682,10 +682,10 @@ def cmd_refresh(cfg, args):
 
 def build_parser():
     parser = _SuggestingArgumentParser(
-        prog="pysc",
+        prog="tap",
         description="HTH Tenable .audit file management: normalize, gap-analyze, report.",
     )
-    parser.add_argument("--version", action="version", version=f"pysc {__version__}")
+    parser.add_argument("--version", action="version", version=f"tap {__version__}")
     parser.add_argument("--config", help="Path to pysc.toml (default: search upward from cwd)")
     sub = parser.add_subparsers(dest="command", required=True, parser_class=_SuggestingArgumentParser)
 
