@@ -50,6 +50,20 @@
 
       <then>
 
+         <custom_item>
+          type            : REGISTRY_SETTING
+          description     : "Ensure 'Enable disk quotas' is set to 'Enabled'"
+          info            : "This setting turns on disk space tracking and restricts malicious or standard internal users from filling up the volume, preventing a localized DoS state."
+          solution        : "Set the UI path 'Computer Configuration\\Administrative Templates\\System\\Disk Quotas\\Enable disk quotas' to 'Enabled'."
+          reference       : "NIST 800-53r5|SC-5(1) SC-5(2) SC-6"
+          see_also        : "See Internal Infrastructure Hardening Standard"
+          value_type      : POLICY_DWORD
+          value_data      : 1
+          reg_key         : "HKLM\Software\Policies\Microsoft\Windows NT\DiskQuota"
+          reg_item        : "Enable"
+          reg_option      : MUST_EXIST
+        </custom_item>
+
         <custom_item>
           type              : AUDIT_POWERSHELL
           description       : "1.0003 - MSWRK - Ensure Enforce password history is set to 24 or more password(s)"
