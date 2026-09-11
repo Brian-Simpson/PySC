@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-10 09:38:40",
+ "generated": "2026-09-10 17:01:15",
  "control_count": 946,
  "controls": {
   "MSSRV|ANONYMOUS_SID_SETTING:": {
@@ -89,7 +89,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0058",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0058 - MSSRV - Audit Account Lockout is set to include Failure",
@@ -167,7 +167,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0059",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0059 - MSSRV - Audit Application Group Management is set to Success and Failure",
@@ -245,7 +245,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0060",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0060 - MSSRV - Audit Audit Policy Change is set to include Success",
@@ -323,7 +323,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0061",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0061 - MSSRV - Audit Authentication Policy Change is set to include Success",
@@ -401,7 +401,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0062",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0062 - MSSRV - Audit Authorization Policy Change is set to include Success",
@@ -523,7 +523,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0063",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0063 - MSSRV - Audit Credential Validation is set to Success and Failure",
@@ -1093,7 +1093,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0064",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0064 - MSSRV - Audit Logoff is set to include Success",
@@ -1171,7 +1171,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0065",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0065 - MSSRV - Audit Logon is set to Success and Failure",
@@ -1361,7 +1361,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0066",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0066 - MSSRV - Audit Other Logon/Logoff Events is set to Success and Failure",
@@ -1575,7 +1575,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0067",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0067 - MSSRV - Audit Other System Events is set to Success and Failure",
@@ -1653,7 +1653,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0068",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0068 - MSSRV - Audit PNP Activity is set to include Success",
@@ -1731,7 +1731,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0069",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0069 - MSSRV - Audit Process Creation is set to include Success",
@@ -1809,7 +1809,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0070",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0070 - MSSRV - Audit Removable Storage is set to Success and Failure",
@@ -1887,7 +1887,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0071",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0071 - MSSRV - Audit Security Group Management is set to include Success",
@@ -1965,7 +1965,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0072",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0072 - MSSRV - Audit Security State Change is set to include Success",
@@ -2043,7 +2043,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0073",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0073 - MSSRV - Audit Security System Extension is set to include Success",
@@ -2189,7 +2189,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0074",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0074 - MSSRV - Audit Special Logon is set to include Success",
@@ -2267,7 +2267,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0075",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0075 - MSSRV - Audit System Integrity is set to Success and Failure",
@@ -2345,7 +2345,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0076",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0076 - MSSRV - Audit User Account Management is set to Success and Failure",
@@ -2419,7 +2419,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0220",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0220 - MSSRV - Ensure Disable HTTP proxy features: Disable WPAD is set to Enabled: Checked",
@@ -2442,7 +2442,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0324",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0324 - MSSRV - 32-bit subsystem on 64-bit OS",
@@ -2467,7 +2467,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0302",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0302 - MSSRV - (L1) Ensure Network access: Shares that can be accessed anonymously is set to None",
@@ -2492,7 +2492,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0016",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0016 - MSSRV - Domain member: Disable machine account password changes is set to Disabled",
@@ -2521,7 +2521,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0013",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0013 - MSSRV - Domain member: Digitally encrypt or sign secure channel data (always) is set to Enabled",
@@ -2550,7 +2550,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0017",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0017 - MSSRV - Domain member: Require strong (Windows 2000 or later) session key is set to Enabled",
@@ -2579,7 +2579,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0014",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0014 - MSSRV - Domain member: Digitally encrypt secure channel data (when possible) is set to Enabled",
@@ -2608,7 +2608,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0015",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0015 - MSSRV - Domain member: Digitally sign secure channel data (when possible) is set to Enabled",
@@ -2631,7 +2631,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "System/Domain Identification",
      "type": "AUDIT_POWERSHELL",
      "description": "System/Domain Identification",
@@ -2657,7 +2657,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0036",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0036 - MSSRV - Network access: Allow anonymous SID/Name translation is set to Disabled",
@@ -2682,7 +2682,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0094",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0094 - MSSRV - Services - Base Filtering Engine is running",
@@ -2705,7 +2705,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0104",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0104 - MSSRV - Services - Windows Event Log",
@@ -2889,7 +2889,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0095",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0095 - MSSRV - Services - Lanman Server",
@@ -2914,7 +2914,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0096",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0096 - MSSRV - Services - Lanmanworkstation",
@@ -2939,7 +2939,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0099",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0099 - MSSRV - Services - Sentinel One Log Processor Service",
@@ -2964,7 +2964,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0127",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0127 - MSSRV - Services - Windows Firewall is enabled",
@@ -2987,7 +2987,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "Network Information",
      "type": "AUDIT_POWERSHELL",
      "description": "Network Information",
@@ -3013,7 +3013,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0093",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0093 - MSSRV - Routing and Remote Access (RemoteAccess) is Disabled",
@@ -3038,7 +3038,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0097",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0097 - MSSRV - Services - Security Accounts Manager",
@@ -3068,7 +3068,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0048",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0048 - MSSRV - Replace a process level token is set to LOCAL SERVICE, NETWORK SERVICE",
@@ -3098,7 +3098,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0020",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0020 - MSSRV - Generate security audits is set to LOCAL SERVICE, NETWORK SERVICE",
@@ -3128,7 +3128,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0003",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0003 - MSSRV - Back up files and directories is configured correctly",
@@ -3158,7 +3158,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0008",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0008 - MSSRV - Create global objects is configured correctly.",
@@ -3188,7 +3188,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0006",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0006 - MSSRV - Create a pagefile is configured correctly.",
@@ -3218,7 +3218,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0009",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0009 - MSSRV - Create permanent shared objects is configured correctly.",
@@ -3248,7 +3248,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0367",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0367 - MSSRV - Create symbolic links is set to Administrators, NT VIRTUAL MACHINE\\Virtual Machines (MS only)",
@@ -3278,7 +3278,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0007",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0007 - MSSRV - Create a token object is set to No One",
@@ -3308,7 +3308,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0010",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0010 - MSSRV - Debug programs is configured correctly.",
@@ -3338,7 +3338,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0011",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0011 - MSSRV - Deny log on locally to include Guests",
@@ -3368,7 +3368,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0299",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0299 - MSSRV - (L1) Ensure Deny log on as a service to include Guests",
@@ -3398,7 +3398,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0368",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0368 - MSSRV - Enable computer and user accounts to be trusted for delegation is set to No One (MS only)",
@@ -3428,7 +3428,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0369",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0369 - MSSRV - Impersonate a client after authentication is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE and (when the Web Server (IIS) Role with Web Services Role Service is installed) IIS_IUSRS (MS only)",
@@ -3458,7 +3458,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0021",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0021 - MSSRV - Increase scheduling priority is set to Administrators, Window Manager\\Window Manager Group",
@@ -3488,7 +3488,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0002",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0002 - MSSRV - Adjust memory quotas for a process is set to Administrators, LOCAL SERVICE, NETWORK SERVICE",
@@ -3518,7 +3518,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0023",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0023 - MSSRV - Load and unload device drivers is set to Administrators",
@@ -3548,7 +3548,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0024",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0024 - MSSRV - Lock pages in memory is set to No One",
@@ -3578,7 +3578,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0044",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0044 - MSSRV - Perform volume maintenance tasks is set to Administrators",
@@ -3608,7 +3608,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0046",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0046 - MSSRV - Profile single process is set to Administrators",
@@ -3638,7 +3638,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0031",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0031 - MSSRV - Modify an object label is set to No One",
@@ -3668,7 +3668,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0366",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0366 - MSSRV - Allow log on through Remote Desktop Services is set to Administrators, Remote Desktop Users (MS only)",
@@ -3698,7 +3698,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0019",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0019 - MSSRV - Force shutdown from a remote system is set to Administrators",
@@ -3728,7 +3728,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0300",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0300 - MSSRV - (L1) Ensure Restore files and directories is set to Administrators",
@@ -3758,7 +3758,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0370",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0370 - MSSRV - Manage auditing and security log is set to Administrators (MS only)",
@@ -3788,7 +3788,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0301",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0301 - MSSRV - (L1) Ensure Shut down the system is set to Administrators",
@@ -3818,7 +3818,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0032",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0032 - MSSRV - Modify firmware environment values is set to Administrators",
@@ -3848,7 +3848,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0047",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0047 - MSSRV - Profile system performance is set to Administrators, NT SERVICE\\WdiServiceHost",
@@ -3878,7 +3878,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0004",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0004 - MSSRV - Change the system time is configured correctly.",
@@ -3908,7 +3908,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0053",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0053 - MSSRV - Take ownership of files or other objects is set to Administrators",
@@ -3938,7 +3938,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0001",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0001 - MSSRV - Act as part of the operating system is set to No One",
@@ -3968,7 +3968,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0005",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0005 - MSSRV - Change the time zone is configured correctly.",
@@ -3998,7 +3998,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0000",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0000 - MSSRV - Access Credential Manager as a trusted caller is set to No One",
@@ -4023,7 +4023,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0101",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0101 - MSSRV - Services - SentinelAgent",
@@ -4048,7 +4048,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0098",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0098 - MSSRV - Services - Sentinel One Helper Service",
@@ -4073,7 +4073,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0100",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0100 - MSSRV - Services - Sentinel Static Engine",
@@ -4098,7 +4098,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0102",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0102 - MSSRV - Services - TermService",
@@ -4123,7 +4123,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0103",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0103 - MSSRV - Services - Update Orchestrator Service",
@@ -4149,7 +4149,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0035",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0035 - MSSRV - Network access - WINS Server Feature installed",
@@ -4271,7 +4271,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0112",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0112 - MSSRV - Account - Rename Local Admin",
@@ -4344,7 +4344,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0110",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0110 - MSSRV - Account - Local Admin Account Disabled",
@@ -4369,7 +4369,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0109",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0109 - MSSRV - Account - Guest Account Disabled",
@@ -4395,7 +4395,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0111",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0111 - MSSRV - Account - Rename Guest Account",
@@ -4469,7 +4469,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0372",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0372 - MSSRV - Accounts: Guest account status is configured correctly.(MS only)",
@@ -4521,7 +4521,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0041",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0041 - MSSRV - Password - Account Lockout Duration - 60 minutes",
@@ -4597,7 +4597,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0042",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0042 - MSSRV - Password - Account Lockout Reset - 1 day",
@@ -4673,7 +4673,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0043",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0043 - MSSRV - Password - Account Lockout Threshold - 5 invalid attempts",
@@ -4747,7 +4747,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0117",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0117 - MSSRV - Password - Complexity Requirements - Enabled",
@@ -4822,7 +4822,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0118",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0118 - MSSRV - Password - History - 24 passwords remembered",
@@ -4960,7 +4960,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0120",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0120 - MSSRV - Password - Lockout Admins - Enabled",
@@ -4988,7 +4988,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0373",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0373 - MSSRV - (L1) Ensure Allow Administrator account lockout is set to Enabled (MS only)",
@@ -5040,7 +5040,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0115",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0115 - MSSRV - Domain member: Maximum machine account password age is set to 30 or fewer days, but not 0",
@@ -5048,7 +5048,7 @@
      "value_type": "POLICY_TEXT"
     },
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0121",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0121 - MSSRV - Password - Maximum Age - 60 days",
@@ -5123,7 +5123,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0122",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0122 - MSSRV - Password - Minimum Age - 1 day",
@@ -5198,7 +5198,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0119",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0119 - MSSRV - Password - Length - 8 characters",
@@ -5274,7 +5274,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0123",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0123 - MSSRV - Password - Reversible Encryption - Disabled",
@@ -5348,7 +5348,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0125",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0125 - MSSRV - Enable Certificate Padding is set to Enabled",
@@ -5424,7 +5424,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0114",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0114 - MSSRV - AutoAdminLogon Enable Automatic Logon is set to Disabled",
@@ -5543,7 +5543,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0116",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0116 - MSSRV - Interactive logon: Prompt user to change password before expiration is set to between 5 and 14 days",
@@ -5685,7 +5685,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "Windows Server is installed",
      "type": "REGISTRY_SETTING",
      "description": "Windows Server is installed",
@@ -7088,7 +7088,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0052",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0052 - MSSRV - Sign-in and lock last interactive user automatically after a restart is configured correctly.",
@@ -7162,7 +7162,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0022",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0022 - MSSRV - Interactive logon: Do not require CTRL+ALT+DEL is set to Disabled",
@@ -7254,7 +7254,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0054",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0054 - MSSRV - User Account Control: Detect application installations and prompt for elevation is set to Enabled",
@@ -7443,7 +7443,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0055",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0055 - MSSRV - User Account Control: Only elevate UIAccess applications that are installed in secure locations is set to Enabled",
@@ -7517,7 +7517,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0128",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0128 - MSSRV - User Account Control: Virtualize file and registry write failures to per-user locations is set to Enabled",
@@ -7960,7 +7960,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0056",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0056 - MSSRV - User Account Control: Switch to the secure desktop when prompting for elevation is set to Enabled",
@@ -8034,7 +8034,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0051",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0051 - MSSRV - Shutdown: Allow system to be shut down without having to log on is set to Disabled",
@@ -8836,7 +8836,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0108",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0108 - MSSRV - Turn off multicast name resolution is set to Enabled",
@@ -8976,7 +8976,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0045",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0045 - MSSRV - Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt",
@@ -9115,7 +9115,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0092",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0092 - MSSRV - Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt",
@@ -10360,7 +10360,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0050",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0050 - MSSRV - Set client connection encryption level is set to Enabled: High Level",
@@ -10573,7 +10573,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0049",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0049 - MSSRV - Require user authentication for remote connections by using Network Level Authentication is set to Enabled",
@@ -10788,7 +10788,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0129",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0129 - MSSRV - Windows Firewall: Domain: Logging: Size limit (KB) is set to 16,384 KB or greater",
@@ -11275,7 +11275,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0130",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0130 - MSSRV - Windows Firewall: Private: Logging: Size limit (KB) is set to 16,384 KB or greater",
@@ -11762,7 +11762,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0131",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0131 - MSSRV - Windows Firewall: Public: Logging: Size limit (KB) is set to 16,384 KB or greater",
@@ -13165,7 +13165,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0057",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0057 - MSSRV - Application: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater",
@@ -13305,7 +13305,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0080",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0080 - MSSRV - Security: Specify the maximum log file size (KB) is set to Enabled: 196,608 or greater",
@@ -13445,7 +13445,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0082",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0082 - MSSRV - Setup: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater",
@@ -13519,7 +13519,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0081",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0081 - MSSRV - Setup: Control Event Log behavior when the log file reaches its maximum size is set to Disabled",
@@ -13594,7 +13594,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0083",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0083 - MSSRV - System: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater",
@@ -16266,7 +16266,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0124",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0124 - MSSRV - When Preview Builds and Feature Updates are received is set to Enabled: 180 or more days",
@@ -16698,7 +16698,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0084",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0084 - MSSRV - Check if WinRM service is running",
@@ -17244,7 +17244,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0079",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0079 - MSSRV - Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to NULL",
@@ -17391,7 +17391,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0078",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0078 - MSSRV - Audit: Shut down system immediately if unable to log security audits is set to Disabled",
@@ -17465,7 +17465,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0037",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0037 - MSSRV - Network access: Let Everyone permissions apply to anonymous users is set to Disabled",
@@ -17539,7 +17539,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0091",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0091 - MSSRV - Network access: Sharing and security model for local accounts is set to Classic - local users authenticate as themselves",
@@ -17613,7 +17613,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0113",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0113 - MSSRV - Accounts: Limit local account use of blank passwords to console logon only is set to Enabled",
@@ -17758,7 +17758,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0039",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0039 - MSSRV - Network security: Do not store LAN Manager hash value on next password change is configured correctly.",
@@ -17857,7 +17857,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0371",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0371 - MSSRV - Network access: Do not allow anonymous enumeration of SAM accounts is set to Enabled (MS only)",
@@ -17984,7 +17984,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0077",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0077 - MSSRV - Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings is set to Enabled",
@@ -18170,7 +18170,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0012",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0012 - MSSRV - Devices: Prevent users from installing printer drivers is set to Enabled",
@@ -18343,7 +18343,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0033",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0033 - MSSRV - Network access - Remotely accessible registry paths and sub-paths Allowed Exact Paths is configured",
@@ -18421,7 +18421,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0034",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0034 - MSSRV - Network access - Remotely accessible registry paths and sub-paths Allowed Paths is configured",
@@ -18674,7 +18674,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0132",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0132 - MSSRV - Enable Structured Exception Handling Overwrite Protection (SEHOP) is set to Enabled",
@@ -18748,7 +18748,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0105",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0105 - MSSRV - System objects: Require case insensitivity for non-Windows subsystems is set to Enabled",
@@ -18830,7 +18830,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0106",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0106 - MSSRV - System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links) is set to Enabled",
@@ -19165,7 +19165,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0027",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0027 - MSSRV - Microsoft network server: Amount of idle time required before suspending session is set to 15 or fewer minute(s)",
@@ -19239,7 +19239,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0030",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0030 - MSSRV - Microsoft network server: Disconnect clients when logon hours expire is set to Enabled",
@@ -19316,7 +19316,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0029",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0029 - MSSRV - Microsoft network server: Digitally sign communications (if client agrees) is set to Enabled",
@@ -19493,7 +19493,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0028",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0028 - MSSRV - Microsoft network server: Digitally sign communications (always) is set to Enabled",
@@ -19568,7 +19568,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0038",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0038 - MSSRV - Network access: Restrict anonymous access to Named Pipes and Shares is set to Enabled",
@@ -19643,7 +19643,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0086",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0086 - MSSRV - Configure SMB v1 server is set to Disabled",
@@ -19770,7 +19770,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0026",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0026 - MSSRV - Microsoft network client: Send unencrypted password to third-party SMB servers is set to Disabled",
@@ -19847,7 +19847,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0025",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0025 - MSSRV - Microsoft network client: Digitally sign communications (if server agrees) is set to Enabled",
@@ -19980,7 +19980,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0040",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0040 - MSSRV - Network security: LDAP client signing requirements is set to Negotiate signing or higher",
@@ -20055,7 +20055,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0085",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0085 - MSSRV - Configure SMB v1 client driver is set to Enabled: Disable driver (recommended)",
@@ -20137,7 +20137,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0090",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0090 - MSSRV - NetBT NodeType configuration is set to Enabled: P-node (recommended)",
@@ -20935,7 +20935,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0107",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0107 - MSSRV - TCPIP6 is disabled",
@@ -21026,7 +21026,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0126",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0126 - MSSRV - MSS: (DisableIPSourceRouting) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled",
@@ -21173,7 +21173,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0087",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0087 - MSSRV - Ensure Do not preserve zone information in file attachments is set to Disabled",
@@ -21247,7 +21247,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0133",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0133 - MSSRV - Ensure Notify antivirus programs when opening attachments is set to Enabled'",
@@ -21386,7 +21386,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0018",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0018 - MSSRV - Ensure Configure Windows spotlight on lock screen is set to Disabled",
@@ -21461,7 +21461,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0089",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0089 - MSSRV - Ensure Turn off Spotlight collection on Desktop is set to Enabled",
@@ -21535,7 +21535,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "1.0088",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0088 - MSSRV - Ensure Do not suggest third-party content in Windows spotlight is set to Enabled",
@@ -24720,7 +24720,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "Check if server is Member Server",
      "type": "WMI_POLICY",
      "description": "Check if server is Member Server",
@@ -24728,7 +24728,7 @@
      "value_type": "POLICY_DWORD"
     },
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSSRV_BASELINE.audit",
      "rule_id": "Check if server is Domain Controller",
      "type": "WMI_POLICY",
      "description": "Check if server is Domain Controller",
@@ -24802,7 +24802,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0143",
      "type": "ANONYMOUS_SID_SETTING",
      "description": "1.0143 - MSWRK - Network access: Allow anonymous SID/Name translation is set to Disabled",
@@ -24848,7 +24848,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0013",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0013 - MSWRK - Ensure Audit of Account Lockout is set to include Failure",
@@ -24930,7 +24930,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0018",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0018 - MSWRK - Ensure Audit of Audit Policy Change is set to include Success",
@@ -24976,7 +24976,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0019",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0019 - MSWRK - Ensure Audit of Authentication Policy Change is set to include Success",
@@ -25022,7 +25022,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0179",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0179 - MSWRK - Ensure Audit Authorization Policy Change is set to include Success",
@@ -25068,7 +25068,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0168",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0168 - MSWRK - Ensure Audit Credential Validation is set to Success and Failure",
@@ -25258,7 +25258,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0014",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0014 - MSWRK - Ensure Audit of Logoff is set to include Success",
@@ -25304,7 +25304,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0015",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0015 - MSWRK - Ensure Audit of Logon is set to Success and Failure",
@@ -25386,7 +25386,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0016",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0016 - MSWRK - Ensure Audit of Other Logon/Logoff Events is set to Success and Failure",
@@ -25504,7 +25504,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0020",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0020 - MSWRK - Ensure Audit of Other System Events is set to Success and Failure",
@@ -25550,7 +25550,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0172",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0172 - MSWRK - Ensure Audit PNP Activity is set to include Success",
@@ -25596,7 +25596,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0173",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0173 - MSWRK - Ensure Audit Process Creation is set to include Success",
@@ -25642,7 +25642,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0178",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0178 - MSWRK - Ensure Audit Removable Storage is set to Success and Failure",
@@ -25688,7 +25688,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0170",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0170 - MSWRK - Ensure Audit Security Group Management is set to include Success",
@@ -25734,7 +25734,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0021",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0021 - MSWRK - Ensure Audit of Security State Change is set to include Success",
@@ -25780,7 +25780,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0022",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0022 - MSWRK - Ensure Audit of Security System Extension is set to include Success",
@@ -25862,7 +25862,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0017",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0017 - MSWRK - Ensure Audit of Special Logon is set to include Success",
@@ -25908,7 +25908,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0023",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0023 - MSWRK - Ensure Audit of System Integrity is set to Success and Failure",
@@ -25954,7 +25954,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0171",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0171 - MSWRK - Ensure Audit User Account Management is set to Success and Failure",
@@ -25995,7 +25995,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0109",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0109 - MSWRK - Configure Accounts: Rename administrator account",
@@ -26020,7 +26020,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0156",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0156 - MSWRK - Services - Cisco VPN Secure Client",
@@ -26045,7 +26045,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0157",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0157 - MSWRK - Services - Windows Event Log",
@@ -26070,7 +26070,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0161",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0161 - MSWRK- Services - SentinelOne Endpoint Protection Agent Health Check",
@@ -26095,7 +26095,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0152",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0152 - MSWRK - Services - Windows Firewall is enabled",
@@ -26120,7 +26120,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0155",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0155 - MSWRK - Services - Security Accounts Manager",
@@ -26145,7 +26145,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0154",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0154 - MSWRK - Services - BitLocker Drive Encryption Service",
@@ -26170,7 +26170,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0153",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0153 - MSWRK - Services - Windows Defender",
@@ -26196,7 +26196,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0159",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0159 - MSWRK - Services - Check if WinRM service is running",
@@ -26221,7 +26221,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0162",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0162 - MSWRK - Services - Xbox Live Auth Manager",
@@ -26246,7 +26246,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0163",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0163 - MSWRK - Services - Xbox Live Game Save Service",
@@ -26271,7 +26271,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0164",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0164 - MSWRK - Services - Xbox Live Networking Service",
@@ -26319,7 +26319,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "SYSTEMS INFORMATION - MSWRK - INFO - System/Domain Identification",
      "type": "AUDIT_POWERSHELL",
      "description": "SYSTEMS INFORMATION - MSWRK - INFO - System/Domain Identification",
@@ -26346,7 +26346,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0140",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0140 - MSWRK - Screensaver - Enabled",
@@ -26373,7 +26373,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0141",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0141 - MSWRK - Screensaver - Password protect the screen saver- Enabled",
@@ -26400,7 +26400,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0150",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0150 - MSWRK - Screensaver - Timeout is set to 900 seconds or fewer",
@@ -26426,7 +26426,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0424",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0424 - MSWRK - Ensure Network access: Allow anonymous SID/Name translation is set to Disabled",
@@ -26449,7 +26449,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "SYSTEMS INFORMATION - MSWRK - INFO - Network Information",
      "type": "AUDIT_POWERSHELL",
      "description": "SYSTEMS INFORMATION - MSWRK - INFO - Network Information",
@@ -26479,7 +26479,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0090",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0090 - MSWRK - Ensure Replace a process level token is set to LOCAL SERVICE, NETWORK SERVICE",
@@ -26509,7 +26509,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0078",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0078 - MSWRK - Ensure Generate security audits is set to LOCAL SERVICE, NETWORK SERVICE",
@@ -26539,7 +26539,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0097",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0097 - MSWRK - Ensure Back up files and directories is set to Administrators",
@@ -26569,7 +26569,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0099",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0099 - MSWRK - Ensure Create a pagefile is set to Administrators",
@@ -26599,7 +26599,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0070",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0070 - MSWRK - Ensure Create permanent shared objects is set to No One",
@@ -26630,7 +26630,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0069",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0069 - MSWRK - Ensure Create global objects is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE",
@@ -26638,7 +26638,7 @@
      "value_type": "POLICY_TEXT"
     },
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0071",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0071 - MSWRK - Ensure Create symbolic links is set to Administrators",
@@ -26668,7 +26668,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0068",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0068 - MSWRK - Ensure Create a token object is set to No One",
@@ -26698,7 +26698,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0072",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0072 - MSWRK - Ensure Debug programs is set to Administrators",
@@ -26728,7 +26728,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0074",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0074 - MSWRK - Ensure Deny log on locally to include Guests",
@@ -26758,7 +26758,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0073",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0073 - MSWRK - Ensure Deny log on as a service to include Guests",
@@ -26788,7 +26788,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0076",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0076 - MSWRK - Ensure Enable computer and user accounts to be trusted for delegation is set to No One",
@@ -26818,7 +26818,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0079",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0079 - MSWRK - Ensure Impersonate a client after authentication is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE, and Print Spooler",
@@ -26848,7 +26848,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0080",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0080 - MSWRK - Ensure Increase scheduling priority is not explicitly assigned",
@@ -26878,7 +26878,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0094",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0094 - MSWRK - Ensure Adjust memory quotas for a process is set to Administrators, LOCAL SERVICE, NETWORK SERVICE",
@@ -26908,7 +26908,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0095",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0095 - MSWRK - Ensure Allow log on locally is set to Administrators, Users",
@@ -26938,7 +26938,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0081",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0081 - MSWRK - Ensure Load and unload device drivers is restricted to Administrators",
@@ -26968,7 +26968,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0082",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0082 - MSWRK - Ensure Lock pages in memory is set to No One",
@@ -26998,7 +26998,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0087",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0087 - MSWRK - Ensure Perform volume maintenance tasks is set to Administrators",
@@ -27028,7 +27028,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0075",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0075 - MSWRK - Ensure Access this computer from the network is set to Administrators, Remote Desktop Users",
@@ -27053,7 +27053,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0088",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0088 - MSWRK - Ensure Profile single process is restricted to Administrators",
@@ -27083,7 +27083,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0085",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0085 - MSWRK - Ensure Modify an object label is set to No One",
@@ -27113,7 +27113,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0096",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0096 - MSWRK - Ensure Allow log on through Remote Desktop Services is set to Administrators, Remote Desktop Users",
@@ -27143,7 +27143,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0077",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0077 - MSWRK - Ensure Force shutdown from a remote system is set to Administrators",
@@ -27173,7 +27173,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0091",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0091 - MSWRK - Ensure Restore files and directories is restricted to Administrators and Backup Operators",
@@ -27203,7 +27203,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0083",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0083 - MSWRK - Ensure Manage auditing and security log is restricted to Administrators",
@@ -27233,7 +27233,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0092",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0092 - MSWRK - Ensure Shut down the system is set to Administrators, Users",
@@ -27263,7 +27263,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0086",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0086 - MSWRK - Ensure Modify firmware environment values is set to Administrators",
@@ -27293,7 +27293,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0089",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0089 - MSWRK - Ensure Profile system performance is restricted to Administrators",
@@ -27323,7 +27323,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0098",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0098 - MSWRK - Ensure Change the system time is set to Administrators, LOCAL SERVICE",
@@ -27353,7 +27353,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0093",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0093 - MSWRK - Ensure Take ownership of files or other objects is set to Administrators",
@@ -27383,7 +27383,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0084",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0084 - MSWRK - Ensure Act as part of the operating system is set to No One",
@@ -27413,7 +27413,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0067",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0067 - MSWRK - Ensure Access Credential Manager as a trusted caller is set to No One",
@@ -27439,7 +27439,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0165",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0165 - MSWRK - Services - Simple TCP/IP Services (simptcp) is Not Installed",
@@ -27466,7 +27466,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0160",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0160 - MSWRK- Services - Computer Browser (Browser) is not Installed",
@@ -27474,7 +27474,7 @@
      "value_type": "POLICY_TEXT"
     },
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0166",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0166 - MSWRK - Services - SMB v1 server is set to Disabled",
@@ -27499,7 +27499,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0105",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0105 - MSWRK - Ensure Accounts: Local administrator account is disabled",
@@ -27558,7 +27558,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0110",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0110 - MSWRK - Configure Accounts: Rename guest account",
@@ -27600,7 +27600,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0104",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0104 - MSWRK - Ensure Accounts: Guest account status is set to Disabled",
@@ -27644,7 +27644,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0009",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0009 - MSWRK - Ensure Account lockout duration is set to 15 or more minute(s)",
@@ -27688,7 +27688,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0012",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0012 - MSWRK - Ensure Reset account lockout counter after is set to 15 or more minute(s)",
@@ -27732,7 +27732,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0010",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0010 - MSWRK - Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0",
@@ -27774,7 +27774,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0007",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0007 - MSWRK - Ensure Password must meet complexity requirements is set to Enabled",
@@ -27817,7 +27817,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0003",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0003 - MSWRK - Ensure Enforce password history is set to 24 or more password(s)",
@@ -27893,7 +27893,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0011",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0011 - MSWRK - Ensure Allow Administrator account lockout is set to Enabled",
@@ -27936,7 +27936,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0004",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0004 - MSWRK - Ensure Maximum password age is set to 365 or fewer days, but not 0",
@@ -27979,7 +27979,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0005",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0005 - MSWRK - Ensure Minimum password age is set to 1 or more day(s)",
@@ -28022,7 +28022,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0006",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0006 - MSWRK - Ensure Minimum password length is set to 8 or more character(s)",
@@ -28066,7 +28066,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0008",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0008 - MSWRK - Ensure Store passwords using reversible encryption is set to Disabled",
@@ -28108,7 +28108,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0053",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0053 - MSWRK - Ensure Enable Certificate Padding is set to Enabled",
@@ -28184,7 +28184,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0057",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0057 - MSWRK - Ensure Allow Windows to automatically connect to suggested open hotspots, to networks shared by contacts, and to hotspots offering paid services is set to Disabled",
@@ -28224,7 +28224,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0327",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0327 - MSWRK - Ensure AutoAdminLogon is Windows: Registry Value to 0",
@@ -28263,7 +28263,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0328",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0328 - MSWRK - Ensure DefaultPassword does not exist",
@@ -28290,7 +28290,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0123",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0123 - MSWRK - Ensure Interactive logon: Prompt user to change password before expiration is set to between 5 and 15 days",
@@ -28333,7 +28333,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0139",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0139 - MSWRK - MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires is set to Enabled: 5 or fewer seconds",
@@ -28393,7 +28393,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "Windows 11 is installed",
      "type": "AUDIT_POWERSHELL",
      "description": "Windows 11 is installed",
@@ -28433,7 +28433,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "Windows 11 installation type",
      "type": "AUDIT_POWERSHELL",
      "description": "Windows 11 installation type",
@@ -28476,7 +28476,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0320",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0320 - MSWRK - Ensure Disable HTTP proxy features: Disable WPAD is set to Enabled: Checked",
@@ -28552,7 +28552,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0024",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0024 - MSWRK - Ensure Enumerate administrator accounts on elevation is set to Disabled",
@@ -28695,7 +28695,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0239",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0239 - MSWRK - Ensure Turn off shell protocol protected mode is set to Disabled",
@@ -28808,7 +28808,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0379",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0379 - MSWRK - Ensure Password Settings: Password Age (Days) is set to Enabled: 30 or fewer",
@@ -29217,7 +29217,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0044",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0044 - MSWRK - Ensure Sign-in and lock last interactive user automatically after a restart is set to Disabled",
@@ -29266,7 +29266,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0370",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0370 - MSWRK - Ensure Turn off background refresh of Group Policy is set to Disabled",
@@ -29291,7 +29291,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0149",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0149 - MSWRK - Interactive logon: Do not require CTRL+ALT+DEL is set to Disabled",
@@ -29383,7 +29383,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0114",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0114 - MSWRK - Ensure User Account Control: Run all administrators in Admin Approval Mode is set to Enabled",
@@ -29426,7 +29426,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0304",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0304 - MSWRK - Ensure Configure the transmission of the users password in the content of MPR notifications sent by winlogon. is set to Disabled",
@@ -29468,7 +29468,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0113",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0113 - MSWRK - Ensure User Account Control: Only elevate UIAccess applications that are installed in secure locations is set to Enabled",
@@ -29510,7 +29510,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0115",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0115 - MSWRK - Ensure User Account Control: Virtualize file and registry write failures to per-user locations is set to Enabled",
@@ -29589,7 +29589,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0449",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0449 - MSWRK - Ensure Interactive logon: Machine inactivity limit is set to 900 or fewer second(s), but not 0",
@@ -29697,7 +29697,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0322",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0322 - MSWRK - Ensure Apply UAC restrictions to local accounts on network logons is set to Enabled",
@@ -29839,7 +29839,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0272",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0272 - MSWRK - Ensure Allow camera and microphone access in Microsoft Defender Application Guard is set to Disabled",
@@ -29882,7 +29882,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0273",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0273 - MSWRK - Ensure Allow data persistence for Microsoft Defender Application Guard is set to Disabled",
@@ -29994,7 +29994,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0274",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0274 - MSWRK - Ensure Allow files to download and save to the host operating system from Microsoft Defender Application Guard is set to Disabled",
@@ -30069,7 +30069,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0138",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0138 - MSWRK - Allow widgets is set to Disabled",
@@ -30095,7 +30095,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0194",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0194 - MSWRK - Ensure Choose how BitLocker-protected fixed drives can be recovered: Save BitLocker recovery information to AD DS for fixed data drives is set to Enabled: False",
@@ -30183,7 +30183,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0184",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0184 - MSWRK - Ensure Allow access to BitLocker-protected fixed data drives from earlier versions of Windows is set to Disabled",
@@ -30245,7 +30245,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0185",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0185 - MSWRK - Ensure Configure use of hardware-based encryption for fixed data drives is set to Disabled",
@@ -30329,7 +30329,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0186",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0186 - MSWRK - Ensure Configure use of passwords for fixed data drives is set to Disabled",
@@ -30438,7 +30438,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0196",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0196 - MSWRK - Ensure Choose how BitLocker-protected fixed drives can be recovered: Do not enable BitLocker until recovery information is stored to AD DS for fixed data drives is set to Enabled: False",
@@ -30547,7 +30547,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0199",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0199 - MSWRK - Ensure Configure use of hardware-based encryption for operating system drives is set to Disabled",
@@ -30758,7 +30758,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0221",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0221 - MSWRK - Ensure Choose how BitLocker-protected removable drives can be recovered: Configure storage of BitLocker recovery information to AD DS: is set to Enabled: Backup recovery passwords and key packages",
@@ -30899,7 +30899,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0209",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0209 - MSWRK - Ensure Configure use of hardware-based encryption for removable data drives is set to Disabled",
@@ -30934,7 +30934,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0219",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0219 - MSWRK - Ensure Choose how BitLocker-protected removable drives can be recovered: Omit recovery options from the BitLocker setup wizard is set to Enabled: True",
@@ -30969,7 +30969,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0216",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0216 - MSWRK - Ensure Choose how BitLocker-protected removable drives can be recovered: Allow data recovery agent is set to Enabled: True",
@@ -31029,7 +31029,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0215",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0215 - MSWRK - Ensure Choose how BitLocker-protected removable drives can be recovered is set to Enabled",
@@ -31175,7 +31175,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0051",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0051 - MSWRK - Ensure Allow users to enable online speech recognition services is set to Disabled",
@@ -31318,7 +31318,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0395",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0395 - MSWRK - Ensure Require a password when a computer wakes (plugged in) is set to Enabled - 0e796bdb-100d-47d6-a2d5-f7d2daa51f51",
@@ -31360,7 +31360,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0394",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0394 - MSWRK - Ensure Require a password when a computer wakes (on battery) is set to Enabled - 0e796bdb-100d-47d6-a2d5-f7d2daa51f51",
@@ -31410,7 +31410,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0393",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0393 - MSWRK - Ensure Allow standby states (S1-S3) when sleeping (plugged in) is set to Disabled - Abfc2519-3608-4c2a-94ea-171b0ed546ab",
@@ -31452,7 +31452,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0392",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0392 - MSWRK - Ensure Allow standby states (S1-S3) when sleeping (on battery) is set to Disabled - Abfc2519-3608-4c2a-94ea-171b0ed546ab",
@@ -31487,7 +31487,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0063",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0063 - MSWRK - Ensure Allow network connectivity during connected-standby (plugged in) is set to Disabled - F15576e8-98b7-4186-b944-eafa664402d9",
@@ -31530,7 +31530,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0062",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0062 - MSWRK - Ensure Allow network connectivity during connected-standby (on battery) is set to Disabled - F15576e8-98b7-4186-b944-eafa664402d9",
@@ -31607,7 +31607,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0404",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0404 - MSWRK - Ensure Enable Windows NTP Server is set to Disabled - Ntpserver",
@@ -31681,7 +31681,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0036",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0036 - MSWRK - Ensure Turn on behavior monitoring is set to Disabled",
@@ -31706,7 +31706,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0034",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0034 - MSWRK - Ensure Scan all downloaded files and attachments is set to Enabled",
@@ -31731,7 +31731,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0035",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0035 - MSWRK - Ensure Turn off real-time protection is set to Enabled",
@@ -31757,7 +31757,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0252",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0252 - MSWRK - Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled",
@@ -31782,7 +31782,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0037",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0037 - MSWRK - Ensure Configure detection for potentially unwanted applications is Disabled",
@@ -31809,7 +31809,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "Ensure 'Enable disk quotas' is set to 'Enabled'",
      "type": "REGISTRY_SETTING",
      "description": "Ensure 'Enable disk quotas' is set to 'Enabled'",
@@ -31835,7 +31835,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0339",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0339 - MSWRK - Ensure Configure multicast DNS (mDNS) protocol is set to Disabled",
@@ -31878,7 +31878,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0058",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0058 - MSWRK - Ensure Turn off multicast name resolution is set to Enabled",
@@ -31921,7 +31921,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0340",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0340 - MSWRK - Ensure Configure NetBIOS settings is set to Enabled: Disable NetBIOS name resolution on public networks",
@@ -31963,7 +31963,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0059",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0059 - MSWRK - Ensure Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt",
@@ -32038,7 +32038,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0060",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0060 - MSWRK - Ensure Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt",
@@ -32080,7 +32080,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0362",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0362 - MSWRK - Ensure Configure RPC listener settings: Authentication protocol to use for incoming RPC connections: is set to Enabled: Negotiate or higher",
@@ -32122,7 +32122,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0360",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0360 - MSWRK - Ensure Configure RPC connection settings: Use authentication for outgoing RPC connections is set to Enabled: Default",
@@ -32197,7 +32197,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0363",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0363 - MSWRK - Ensure Configure RPC over TCP port is set to Enabled: 0",
@@ -32239,7 +32239,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0359",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0359 - MSWRK - Ensure Configure RPC connection settings: Protocol to use for outgoing RPC connections is set to Enabled: RPC over TCP",
@@ -32548,7 +32548,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0064",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0064 - MSWRK - Ensure Configure Solicited Remote Assistance is set to Disabled",
@@ -32695,7 +32695,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0038",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0038 - MSWRK - Ensure Always prompt for password upon connection is set to Enabled",
@@ -32774,7 +32774,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0040",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0040 - MSWRK - Ensure Set client connection encryption level is set to Enabled: High Level",
@@ -32857,7 +32857,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0039",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0039 - MSWRK - Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled",
@@ -33536,7 +33536,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0483",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0483 - MSWRK - Ensure Windows Firewall: Public: Settings: Apply local connection security rules is set to No",
@@ -33579,7 +33579,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0482",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0482 - MSWRK - Ensure Windows Firewall: Public: Settings: Apply local firewall rules is set to No",
@@ -33723,7 +33723,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0299",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0299 - MSWRK - Ensure Allow Windows Ink Workspace is set to Enabled: On, but disallow access above lock OR Enabled: Disabled",
@@ -33768,7 +33768,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0042",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0042 - MSWRK - Ensure Turn off Automatic Download and Install of updates is set to Disabled",
@@ -33843,7 +33843,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0137",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0137 - MSWRK - Ensure Only display the private store within the Microsoft Store is set to 'Disabled'",
@@ -33870,7 +33870,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0234",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0234 - MSWRK - Ensure Enable App Installer Microsoft Store Source Certificate Validation Bypass is set to Disabled",
@@ -33981,7 +33981,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0233",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0233 - MSWRK - Ensure Enable App Installer Local Archive Malware Scan Override is set to Disabled",
@@ -34159,7 +34159,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0345",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0345 - MSWRK - Ensure Enable remote mailslots is set to Disabled - Bowser",
@@ -34201,7 +34201,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0223",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0223 - MSWRK - Ensure Turn off cloud consumer account state content is set to Enabled",
@@ -34244,7 +34244,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0224",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0224 - MSWRK - Ensure Turn off Microsoft consumer experiences is set to Enabled",
@@ -34385,7 +34385,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0227",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0227 - MSWRK - Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data",
@@ -34463,7 +34463,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0230",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0230 - MSWRK - Ensure Download Mode is NOT set to Enabled: Internet",
@@ -34605,7 +34605,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0065",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0065 - MSWRK - Ensure Turn On Virtualization Based Security is set to Enabled",
@@ -34746,7 +34746,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0066",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0066 - MSWRK - Ensure Turn On Virtualization Based Security: Select Platform Security Level is set to Secure Boot or higher",
@@ -34839,7 +34839,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0027",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0027 - MSWRK - Ensure Application: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater",
@@ -34881,7 +34881,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0026",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0026 - MSWRK - Ensure Application: Control Event Log behavior when the log file reaches its maximum size is set to Disabled",
@@ -34924,7 +34924,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0029",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0029 - MSWRK - Ensure Security: Specify the maximum log file size (KB) is set to Enabled: 196,608 or greater",
@@ -34966,7 +34966,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0028",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0028 - MSWRK - Ensure Security: Control Event Log behavior when the log file reaches its maximum size is set to Disabled",
@@ -35009,7 +35009,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0031",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0031 - MSWRK - Ensure Setup: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater",
@@ -35051,7 +35051,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0030",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0030 - MSWRK - Ensure Setup: Control Event Log behavior when the log file reaches its maximum size is set to Disabled",
@@ -35094,7 +35094,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0033",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0033 - MSWRK - Ensure System: Specify the maximum log file size (KB) is set to Enabled: 32,768 or greater",
@@ -35136,7 +35136,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0032",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0032 - MSWRK - Ensure System: Control Event Log behavior when the log file reaches its maximum size is set to Disabled",
@@ -35178,7 +35178,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0237",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0237 - MSWRK - Ensure Do not apply the Mark of the Web tag to files copied from insecure sources is set to Disabled",
@@ -35253,7 +35253,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0236",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0236 - MSWRK - Ensure Turn off Data Execution Prevention for Explorer is set to Disabled",
@@ -35296,7 +35296,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0238",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0238 - MSWRK - Ensure Turn off heap termination on corruption is set to Disabled",
@@ -35339,7 +35339,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0043",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0043 - MSWRK - Ensure Enables or disables Windows Game Recording and Broadcasting is set to Disabled",
@@ -35389,7 +35389,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0367",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0367 - MSWRK - Ensure Configure security policy processing: Do not apply during periodic background processing is set to Enabled: FALSE",
@@ -35439,7 +35439,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0368",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0368 - MSWRK - Ensure Configure security policy processing: Process even if the Group Policy objects have not changed is set to Enabled: TRUE",
@@ -35481,7 +35481,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0302",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0302 - MSWRK - Ensure Always install with elevated privileges is set to Disabled",
@@ -35523,7 +35523,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0301",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0301 - MSWRK - Ensure Allow user control over installs is set to Disabled",
@@ -35798,7 +35798,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0351",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0351 - MSWRK - Ensure Enable insecure guest logons is set to Disabled",
@@ -36026,7 +36026,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0333",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0333 - MSWRK - Ensure Prohibit installation and configuration of Network Bridge on your DNS domain network is set to Enabled",
@@ -36069,7 +36069,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0334",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0334 - MSWRK - Ensure Prohibit use of Internet Connection Sharing on your DNS domain network is set to Enabled",
@@ -36207,7 +36207,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0352",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0352 - MSWRK - Ensure Enable remote mailslots is set to Disabled - Networkprovider",
@@ -36282,7 +36282,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0050",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0050 - MSWRK - Ensure Prevent enabling lock screen slide show is set to Enabled",
@@ -36325,7 +36325,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0047",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0047 - MSWRK - Ensure Allow clipboard sharing with Windows Sandbox is set to Disabled",
@@ -36368,7 +36368,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0048",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0048 - MSWRK - Ensure Allow networking in Windows Sandbox is set to Disabled",
@@ -36410,7 +36410,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0406",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0406 - MSWRK - (L1) Ensure Configure the behavior of the sudo command is set to Enabled: Disabled - Sudo",
@@ -36452,7 +36452,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0382",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0382 - MSWRK - Ensure Allow Custom SSPs and APs to be loaded into LSASS is set to Disabled",
@@ -36495,7 +36495,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0061",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0061 - MSWRK - Ensure Turn on convenience PIN sign-in is set to Disabled",
@@ -36711,7 +36711,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0369",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0369 - MSWRK - Ensure Continue experiences on this device is set to Disabled",
@@ -36784,7 +36784,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0387",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0387 - MSWRK - Ensure Enumerate local users on domain-joined computers is set to Disabled",
@@ -36826,7 +36826,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0025",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0025 - MSWRK - Ensure Prevent the use of security questions for local accounts is set to Enabled",
@@ -36974,7 +36974,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0056",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0056 - MSWRK - Ensure Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled: 3 = Prevent Wi-Fi when on Ethernet",
@@ -37017,7 +37017,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0041",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0041 - MSWRK - Ensure Allow Cortana is set to Disabled",
@@ -37060,7 +37060,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0284",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0284 - MSWRK - Ensure Allow Cortana above lock screen is set to Disabled",
@@ -37103,7 +37103,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0285",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0285 - MSWRK - Ensure Allow indexing of encrypted files is set to Disabled",
@@ -37146,7 +37146,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0286",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0286 - MSWRK - Ensure Allow search and Cortana to use location is set to Disabled",
@@ -37189,7 +37189,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0289",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0289 - MSWRK - Ensure Allow Recall to be enabled is set to Disabled",
@@ -37234,7 +37234,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0311",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0311 - MSWRK - Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled",
@@ -37280,7 +37280,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0049",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0049 - MSWRK - Ensure Configure Automatic Updates is set to Disabled for WSUS",
@@ -37325,7 +37325,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0312",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0312 - MSWRK - Ensure Configure Automatic Updates: Scheduled install day is set to 0 - Every day",
@@ -37370,7 +37370,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0313",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0313 - MSWRK - Ensure Enable features introduced via servicing that are off by default is set to Disabled",
@@ -37441,7 +37441,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0316",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0316 - MSWRK - Value of DeferQualityUpdatesPeriodInDays",
@@ -37520,7 +37520,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0318",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0318 - MSWRK - Ensure Enable optional updates is set to Disabled",
@@ -37602,7 +37602,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0305",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0305 - MSWRK - Ensure Allow Basic authentication is set to Disabled - Client",
@@ -37648,7 +37648,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0307",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0307 - MSWRK - Ensure Disallow Digest authentication is set to Enabled",
@@ -37694,7 +37694,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0306",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0306 - MSWRK - Ensure Allow unencrypted traffic is set to Disabled - Client",
@@ -37741,7 +37741,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0045",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0045 - MSWRK - Ensure Allow Basic authentication is set to Enabled - Service",
@@ -37787,7 +37787,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0046",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0046 - MSWRK - Ensure Allow unencrypted traffic is set to Disabled - Service",
@@ -38025,7 +38025,7 @@
    "nist_refs": [],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0324",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0324 - MSWRK - 32-bit subsystem on 64-bit OS - Config",
@@ -38067,7 +38067,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0436",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0436 - MSWRK - Ensure Network security: Allow LocalSystem NULL session fallback is set to Disabled",
@@ -38263,7 +38263,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0437",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0437 - MSWRK - Ensure Network Security: Allow PKU2U authentication requests to this computer to use online identities is set to Disabled",
@@ -38305,7 +38305,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0116",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0116 - MSWRK - Ensure Audit: Shut down system immediately if unable to log security audits is set to Disabled",
@@ -38380,7 +38380,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0102",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0102 - MSWRK - Ensure Network access: Let Everyone permissions apply to anonymous users is set to Disabled",
@@ -38422,7 +38422,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0100",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0100 - MSWRK - Ensure Network access: Sharing and security model for local accounts is set to Classic - local users authenticate as themselves",
@@ -38464,7 +38464,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0108",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0108 - MSWRK - Ensure Accounts: Limit local account use of blank passwords to console logon only is set to Enabled",
@@ -38510,7 +38510,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0106",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0106 - MSWRK - Ensure Network security: LAN Manager authentication level is set to Send NTLMv2 response only. Refuse LM & NTLM",
@@ -38552,7 +38552,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0148",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0148 - MSWRK - Network security: Do not store LAN Manager hash value on next password change is set to Enabled",
@@ -38611,7 +38611,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0101",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0101 - MSWRK - Ensure Network access: Do not allow anonymous enumeration of SAM accounts is set to Enabled",
@@ -38689,7 +38689,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0447",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0447 - MSWRK - Ensure Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings is set to Enabled",
@@ -38831,7 +38831,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0146",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0146 - MSWRK - Network access: Remotely accessible registry paths is configured - Allowedexactpaths",
@@ -38874,7 +38874,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0147",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0147 - MSWRK - Network access: Remotely accessible registry paths and sub-paths is configured - Allowedpaths",
@@ -38918,7 +38918,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0326",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0326 - MSWRK - Ensure WDigest Authentication is set to Disabled",
@@ -38960,7 +38960,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0325",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0325 - MSWRK - Ensure Enable Structured Exception Handling Overwrite Protection (SEHOP) is set to Enabled",
@@ -39002,7 +39002,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0111",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0111 - MSWRK - Ensure System objects: Require case insensitivity for non-Windows subsystems is set to Enabled",
@@ -39052,7 +39052,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0112",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0112 - MSWRK - Ensure System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links) is set to Enabled",
@@ -39094,7 +39094,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0332",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0332 - MSWRK - Ensure MSS: (SafeDllSearchMode) Enable Safe DLL search mode is set to Enabled",
@@ -39330,7 +39330,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0132",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0132 - MSWRK - Ensure Windows Mobile Hotspot Service (icssvc) is set to Disabled - Icssvc",
@@ -39473,7 +39473,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0127",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0127 - MSWRK - Ensure Microsoft network server: Disconnect clients when logon hours expire is set to Enabled",
@@ -39515,7 +39515,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0145",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0145 - MSWRK - Network access: Named Pipes that can be accessed anonymously is set to None",
@@ -39557,7 +39557,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0144",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0144 - MSWRK - Network access: Shares that can be accessed anonymously is set to None",
@@ -39603,7 +39603,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0126",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0126 - MSWRK - Ensure Microsoft network server: Digitally sign communications (always) is set to Enabled - Parameters",
@@ -39645,7 +39645,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0103",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0103 - MSWRK - Ensure Network access: Restrict anonymous access to Named Pipes and Shares is set to Enabled",
@@ -39688,7 +39688,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0323",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0323 - MSWRK - Ensure Configure SMB v1 server is set to Disabled",
@@ -39767,7 +39767,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0125",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0125 - MSWRK - Ensure Microsoft network client: Send unencrypted password to third-party SMB servers is set to Disabled",
@@ -39811,7 +39811,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0151",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0151 - MSWRK - Microsoft network client: Digitally sign communications (if server agrees) is set to Enabled",
@@ -39841,7 +39841,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0124",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0124 - MSWRK - Ensure Microsoft network client: Digitally sign communications (always) is set to Enabled - Parameters",
@@ -39920,7 +39920,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0107",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0107 - MSWRK - Ensure Network security: LDAP client signing requirements is set to Negotiate signing or higher",
@@ -39963,7 +39963,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0052",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0052 - MSWRK - Ensure Configure SMB v1 client driver is set to Enabled: Disable driver (recommended) - Mrxsmb10",
@@ -40013,7 +40013,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0054",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0054 - MSWRK - Ensure NetBT NodeType configuration is set to Enabled: P-node (recommended)",
@@ -40062,7 +40062,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0331",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0331 - MSWRK - Ensure MSS: (NoNameReleaseOnDemand) Allow the computer to ignore NetBIOS name release requests except from WINS servers is set to Enabled",
@@ -40104,7 +40104,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0120",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0120 - MSWRK - Ensure Domain member: Disable machine account password changes is set to Disabled",
@@ -40147,7 +40147,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0121",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0121 - MSWRK - Ensure Domain member: Maximum machine account password age is set to 30 or fewer days, but not 0",
@@ -40193,7 +40193,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0117",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0117 - MSWRK - Ensure Domain member: Digitally encrypt or sign secure channel data (always) is set to Enabled",
@@ -40239,7 +40239,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0122",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0122 - MSWRK - Ensure Domain member: Require strong (Windows 2000 or later) session key is set to Enabled",
@@ -40285,7 +40285,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0118",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0118 - MSWRK - Ensure Domain member: Digitally encrypt secure channel data (when possible) is set to Enabled",
@@ -40331,7 +40331,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0119",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0119 - MSWRK - Ensure Domain member: Digitally sign secure channel data (when possible) is set to Enabled",
@@ -40374,7 +40374,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0128",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0128 - MSWRK - Ensure Routing and Remote Access (RemoteAccess) is set to Disabled - Remoteaccess",
@@ -40519,7 +40519,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0129",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0129 - MSWRK - Ensure SSDP Discovery (SSDPSRV) is set to Disabled - Ssdpsrv",
@@ -40602,7 +40602,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0158",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0158 - MSWRK- Services - TCPIP6 is disabled",
@@ -40628,7 +40628,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0055",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0055 - MSWRK - Ensure MSS: (DisableIPSourceRouting IPv6) IP source routing protection level is set to Enabled: Highest protection, source routing is completely disabled - Parameters",
@@ -40712,7 +40712,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0330",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0330 - MSWRK - Ensure MSS: (EnableICMPRedirect) Allow ICMP redirects to override OSPF generated routes is set to Disabled",
@@ -40755,7 +40755,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0130",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0130 - MSWRK - Ensure UPnP Device Host (upnphost) is set to Disabled - Upnphost",
@@ -40832,7 +40832,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0131",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0131 - MSWRK - Ensure Windows Media Player Network Sharing Service (WMPNetworkSvc) is set to Disabled or Not Installed - Wmpnetworksvc",
@@ -40909,7 +40909,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0134",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0134 - MSWRK - Ensure Xbox Live Auth Manager (XblAuthManager) is set to Disabled - Xblauthmanager",
@@ -40952,7 +40952,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0135",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0135 - MSWRK - Ensure Xbox Live Game Save (XblGameSave) is set to Disabled - Xblgamesave",
@@ -40995,7 +40995,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0133",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0133 - MSWRK - Ensure Xbox Accessory Management Service (XboxGipSvc) is set to Disabled - Xboxgipsvc",
@@ -41038,7 +41038,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0136",
      "type": "AUDIT_POWERSHELL",
      "description": "1.0136 - MSWRK - Ensure Xbox Live Networking Service (XboxNetApiSvc) is set to Disabled - Xboxnetapisvc",
@@ -42746,7 +42746,7 @@
    ],
    "occurrences": [
     {
-     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_Baseline.audit",
+     "file": "C:\\PySC\\TAP\\actual_audit_inputs\\HTH_MSWRK_BASELINE.audit",
      "rule_id": "1.0142",
      "type": "USER_RIGHTS_POLICY",
      "description": "1.0142 - MSWRK - Ensure Change the time zone is set to Administrators, LOCAL SERVICE'",
