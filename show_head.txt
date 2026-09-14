@@ -1,0 +1,19 @@
+commit 9d95f827a43afea72d7703109c2bf6e0395c0719
+Author: Brian Simpson <brian.simpson@hilltop.global>
+Date:   Mon Sep 14 16:10:37 2026 -0500
+
+    Fix: Comment opening <custom_item> tags for unused audit controls
+    
+    Root cause: The consolidation pipeline was not properly commenting opening
+    tags when controls were marked as unused. The issue was in load_controls_catalog()
+    which was looking for 'All_Occurrences' sheet instead of platform-specific sheets.
+    
+    Changes:
+    - Added audit_type parameter to AuditConsolidator.__init__()
+    - Updated load_controls_catalog() to load platform-specific sheets (PAFW, NXOS, etc)
+    - Updated main() in consolidator script to pass audit_type
+    
+    Result: All opening <custom_item> tags are now properly commented for unused controls
+    across all audit types (PAFW, NXOS, IOS, ASA, F5, RHEL, MSWRK, MSSRV, SQL)
+
+M	scripts/audit_consolidator.py

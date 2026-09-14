@@ -1,0 +1,36 @@
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   Control_Library.xlsx
+	modified:   control_library.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	allsheets_out.txt
+	check_all_sheets.py
+	check_sheets.py
+	consolidation_test.log
+	debug_commenting.py
+	final_test.txt
+	final_test_err.txt
+	git_full_status.txt
+	git_log.txt
+	git_status.txt
+	sheets_out.txt
+	status_out.txt
+	stderr.txt
+	stdout.txt
+	test_all_types.py
+	test_all_types_out.txt
+	test_consolidate_debug.py
+	test_error2.txt
+	test_final.txt
+	test_final_err.txt
+	test_output.txt
+	test_output2.txt
+	verify_fix.py
+
+no changes added to commit (use "git add" and/or "git commit -a")

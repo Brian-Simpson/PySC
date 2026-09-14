@@ -1,0 +1,10 @@
+9d95f82 Fix: Comment opening <custom_item> tags for unused audit controls
+be8645a Add manifest-based deduplication to skip unchanged CIS files during refresh
+40642d4 Fix: properly comment tags with whitespace using regex
+2f9830a Use correct For_Gap directory in Output/Processed
+0a84a20 Fix consolidation: use correct For_Gap path and improve output
+e17b291 Find latest Unique_Controls_Catalog instead of hardcoded date
+ef8047a Fix: properly clear and populate Excel sheet for audit types
+7d0ea1a Add Excel sheet population for audit types
+eb75455 Fix: ensure opening tags are commented if control content is commented
+c084c7f Fix: ensure ALL lines are commented including <custom_item> tags

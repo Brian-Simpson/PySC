@@ -1,0 +1,59 @@
+Testing consolidation with debug output...
+✅ Consolidated: C:\PySC\TAP\Output\Consolidated\PAFW_all_audits_test.audit
+   Items: 369
+✅ Consolidated 369 controls
+
+=== First 50 lines of output ===
+  1: # Consolidated audit - auto-generated
+  2: <check_type:"Windows" version:"2">
+  3: 
+  4: #<custom_item>
+  5: #      type             : AUDIT_XML
+  6: #      description      : "Device Type Check - Palo Alto Firewall"
+  7: #      info             : "Verify this is a Palo Alto Firewall device."
+  8: #      solution         : "Ensure this audit is run against a Palo Alto Firewall."
+  9: #      reference        : ""
+ 10: #      see_also         : "See HTH Policies and Standards"
+ 11: #      expect           : ".*"
+ 12: #      api_request_type : "op"
+ 13: #      request          : "<show><system><info></info></system></show>"
+ 14: #      xsl_stmt         : "<xsl:value-of select="/response/result/system/sw-version"/>"
+ 15: #      regex            : ".*"
+ 16: #    </custom_item>
+ 17: 
+ 18: #<custom_item>
+ 19: #   type             : AUDIT_XML
+ 20: #   description      : "1.0000 - PAFW - Ensure Password Profiles do not exist"
+ 21: #   info             : "Password profiles that are weaker than the recommended minimum password complexity settings must not exist."
+ 22: #   solution         : "Navigate to Device > Password Profiles. Ensure Password Profiles weaker than the recommended minimum password complexity settings do not exist. Default Value: Not configured"
+ 23: #   reference        : "NIST 800-53r5|IA-5(1)"
+ 24: #   see_also         : "See HTH Policies and Standards"
+ 25: #   api_request_type : "config"
+ 26: #   request          : ""
+ 27: #   xsl_stmt         : "</xsl:for-each>"
+ 28: #   not_expect       : "Failed"
+ 29: # </custom_item>
+ 30: 
+ 31: #<custom_item>
+ 32: #   type             : AUDIT_XML
+ 33: #   description      : "1.0001 - PAFW - Ensure Password Profiles do not exist"
+ 34: #   info             : "Password profiles that are weaker than the recommended minimum password complexity settings must not exist."
+ 35: #   solution         : "Navigate to Device > Password Profiles. Ensure Password Profiles weaker than the recommended minimum password complexity settings do not exist. Default Value: Not configured"
+ 36: #   reference        : "NIST 800-53r5|IA-5(1)"
+ 37: #   see_also         : "See HTH Policies and Standards"
+ 38: #   expect           : "Passed"
+ 39: #   api_request_type : "op"
+ 40: #   request          : "<show><config><merged></merged></config></show>"
+ 41: #   xsl_stmt         : "</xsl:choose>"
+ 42: #   regex            : "(Passed|Failed)"
+ 43: # </custom_item>
+ 44: 
+ 45: #<custom_item>
+ 46: #   type             : AUDIT_XML
+ 47: #   description      : "1.0002 - PAFW - Ensure valid certificate is set for browser-based administrator interface - Authentication Profile"
+ 48: #   info             : "In most cases, a browser HTTPS interface is used to administer the Palo Alto appliance."
+ 49: #   solution         : "Create or acquire a certificate that meets the stated criteria and set it: Navigate to Device > Certificate Management > Certificates Import an appropriate Certificate for your administrative session, from a trusted Certificate Authority. Navigate to Device > Certificate Management > SSL/TLS Service Profile Choose or import the certificate you want to use for the web based administrative session. Navigate to Device > Setup > Management > General Settings > SSL/TLS Service Profile Choose the Service Profile that you have configured Default Value: A self-signed certificate is installed by default for the administrative interface."
+ 50: #   reference        : "NIST 800-53r5|AC-18 AC-18(1) AC-18(3) CM-2 CM-6 CM-7 CM-7(1) CM-9"
+
+✅ Opening tags PROPERLY commented: 4
+❌ Opening tags NOT commented: 0

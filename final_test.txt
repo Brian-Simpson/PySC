@@ -1,0 +1,8 @@
+✅ Consolidated: C:\PySC\TAP\Output\Consolidated\PAFW_all_audits_test.audit
+   Items: 369
+✅ Consolidated: C:\PySC\TAP\Output\Consolidated\NXOS_all_audits_test.audit
+   Items: 93
+✅ Consolidated: C:\PySC\TAP\Output\Consolidated\IOS_all_audits_test.audit
+   Items: 212
+[PAFW] Processing...
+[PAFW] ✅ DONE - 369 items, 369 properly commented, 0 improperly commented
