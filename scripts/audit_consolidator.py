@@ -115,10 +115,15 @@ class AuditConsolidator:
                 commented.append(line)
             else:
                 # Add # to the BEGINNING of the line (before any whitespace)
-                # This ensures tags and all content get commented
                 commented.append('#' + line)
 
         result = '\n'.join(commented)
+
+        # Safety check: if <custom_item> is uncommented but has commented lines, comment it
+        if '<custom_item>' in result and '#' in result:
+            result = result.replace('<custom_item>', '#<custom_item>')
+            result = result.replace('</custom_item>', '#</custom_item>')
+
         return result
 
     def fix_xsl_statement(self, item):
