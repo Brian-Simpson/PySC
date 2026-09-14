@@ -102,22 +102,24 @@ class AuditConsolidator:
         return False
 
     def comment_out_control(self, item_content):
-        """Completely comment out a control - every line including tags"""
+        """Completely comment out a control - EVERY line including tags"""
         lines = item_content.split('\n')
         commented = []
+
         for line in lines:
-            stripped = line.strip()
-            # Don't double-comment lines already starting with #
-            if stripped and not stripped.startswith('#'):
-                # Add # with proper spacing
-                commented.append('#' + line)
-            elif not stripped:
-                # Keep empty lines as-is
+            if not line.strip():
+                # Keep blank lines
                 commented.append(line)
-            else:
+            elif line.strip().startswith('#'):
                 # Already commented, keep as-is
                 commented.append(line)
-        return '\n'.join(commented)
+            else:
+                # Add # to the BEGINNING of the line (before any whitespace)
+                # This ensures tags and all content get commented
+                commented.append('#' + line)
+
+        result = '\n'.join(commented)
+        return result
 
     def fix_xsl_statement(self, item):
         """Fix broken XSL"""
