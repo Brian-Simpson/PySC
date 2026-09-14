@@ -145,6 +145,9 @@ class AuditConsolidator:
 
             items = re.findall(r'<custom_item>.*?</custom_item>', content, re.DOTALL)
 
+            # Replace version checks with single generic check
+            items = self._simplify_device_checks(items)
+
             for item_str in items:
                 item = AuditItem(item_str)
                 is_used = self.is_control_used(item.description)
@@ -161,6 +164,46 @@ class AuditConsolidator:
         except Exception as e:
             print(f"❌ Consolidate: {e}", file=sys.stderr)
             return None
+
+    def _simplify_device_checks(self, items):
+        """Replace multiple version checks with single generic check"""
+        version_patterns = [
+            'Check for Palo Alto version',
+            'Panorama model',
+            'Panorama system-mode'
+        ]
+
+        # Check if we have version checks
+        has_version_checks = any(
+            any(pattern in item for pattern in version_patterns)
+            for item in items
+        )
+
+        if not has_version_checks:
+            return items
+
+        # Filter out version checks
+        filtered_items = [
+            item for item in items
+            if not any(pattern in item for pattern in version_patterns)
+        ]
+
+        # Create single generic device check
+        generic_check = '''<custom_item>
+      type             : AUDIT_XML
+      description      : "Device Type Check - Palo Alto Firewall"
+      info             : "Verify this is a Palo Alto Firewall device."
+      solution         : "Ensure this audit is run against a Palo Alto Firewall."
+      reference        : ""
+      see_also         : "See HTH Policies and Standards"
+      expect           : ".*"
+      api_request_type : "op"
+      request          : "<show><system><info></info></system></show>"
+      xsl_stmt         : "<xsl:value-of select="/response/result/system/sw-version"/>"
+      regex            : ".*"
+    </custom_item>'''
+
+        return [generic_check] + filtered_items
 
     def write_consolidated(self, output_path, header):
         """Write output"""
