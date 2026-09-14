@@ -110,7 +110,7 @@ def cmd_normalize(cfg, args):
     try:
         target = args.input.strip().strip('"').strip("'")
         if os.path.isdir(target):
-            ok = normalize.process_folder(target, strict_mode=args.strict)
+            ok = normalize.process_folder(target, cfg=cfg, strict_mode=args.strict)
             print("\nGenerating controls catalog...")
             outp = legacy.generate_catalog(
                 target, args.out_xlsx, os.path.join(target, "Normalized")
