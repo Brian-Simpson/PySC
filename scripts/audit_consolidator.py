@@ -280,25 +280,8 @@ def extract_controls_to_sheet(consolidated_items, output_audit_path, catalog_pat
 
         # Update Excel sheet
         wb = openpyxl.load_workbook(catalog_path)
-        if audit_type in wb.sheetnames:
-            ws = wb[audit_type]
-            # Clear existing rows (keep header)
-            ws.delete_rows(2, ws.max_row)
-        else:
-            ws = wb.create_sheet(audit_type)
 
-        # Get all unique column names from existing sheets
-        all_columns = set()
-        for sheet_name in wb.sheetnames:
-            if sheet_name != audit_type:
-                tmp_ws = wb[sheet_name]
-                if tmp_ws.max_row > 0:
-                    for cell in tmp_ws[1]:
-                        if cell.value:
-                            all_columns.add(cell.value)
-                break
-
-        # Use standard columns
+        # Use standard columns (consistent across all sheets)
         columns = [
             'control_type', 'control_key', 'control_keyword', 'expected_value',
             'description', 'info', 'reference', 'condition_type', 'report_type',
@@ -316,10 +299,17 @@ def extract_controls_to_sheet(consolidated_items, output_audit_path, catalog_pat
             'system', 'tmsh'
         ]
 
-        # Write header
+        # Remove old sheet if it exists
+        if audit_type in wb.sheetnames:
+            del wb[audit_type]
+
+        # Create new sheet
+        ws = wb.create_sheet(audit_type)
+
+        # Write header row
         ws.append(columns)
 
-        # Write rows
+        # Write data rows
         for row_dict in rows:
             row_values = []
             for col in columns:
