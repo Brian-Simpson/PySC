@@ -102,13 +102,20 @@ class AuditConsolidator:
         return False
 
     def comment_out_control(self, item_content):
-        """Completely comment out a control"""
+        """Completely comment out a control - every line including tags"""
         lines = item_content.split('\n')
         commented = []
         for line in lines:
-            if line.strip() and not line.strip().startswith('#'):
+            stripped = line.strip()
+            # Don't double-comment lines already starting with #
+            if stripped and not stripped.startswith('#'):
+                # Add # with proper spacing
                 commented.append('#' + line)
+            elif not stripped:
+                # Keep empty lines as-is
+                commented.append(line)
             else:
+                # Already commented, keep as-is
                 commented.append(line)
         return '\n'.join(commented)
 
