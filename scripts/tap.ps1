@@ -8,14 +8,16 @@ param(
 
 $repo = Split-Path -Parent $PSScriptRoot
 
-# Find Python: check PATH first, then fall back to hardcoded location
+# Find Python: check hardcoded path first, then PATH
 $python = $null
-try {
-    $python = (Get-Command python -ErrorAction Stop).Source
-} catch {
-    $fallback = 'C:\Program Files\Python39\python.exe'
-    if (Test-Path $fallback) {
-        $python = $fallback
+$fallback = 'C:\Program Files\Python39\python.exe'
+if (Test-Path $fallback) {
+    $python = $fallback
+} else {
+    try {
+        $python = (Get-Command python -ErrorAction Stop).Source
+    } catch {
+        $python = $null
     }
 }
 

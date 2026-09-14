@@ -24,18 +24,24 @@ $config = @{
     Timestamp = $timestamp
 }
 
-# Find Python: check PATH first, then fall back to hardcoded location
+# Find Python: check hardcoded path first, then PATH
 function Find-Python {
+    $fallback = 'C:\Program Files\Python39\python.exe'
+    if (Test-Path $fallback) {
+        return $fallback
+    }
+
     $python = $null
     try {
         $python = (Get-Command python -ErrorAction Stop).Source
-    } catch {
-        $fallback = 'C:\Program Files\Python39\python.exe'
-        if (Test-Path $fallback) {
-            $python = $fallback
+        if ($python -and (Test-Path $python)) {
+            return $python
         }
+    } catch {
+        # Continue to fallback
     }
-    return $python
+
+    return $null
 }
 
 # Validate prerequisites
@@ -73,13 +79,15 @@ function Invoke-TapRefresh {
 
     Push-Location $config.Repo
     try {
+        $argList = @("-m", "tap", "refresh") + $Args
         $process = Start-Process -FilePath $config.Python `
-            -ArgumentList @("-m", "tap", "refresh") + $Args `
+            -ArgumentList $argList `
             -RedirectStandardOutput $logFile `
             -RedirectStandardError $errFile `
             -NoNewWindow `
             -PassThru
 
+        $process.WaitForExit()
         $exitCode = $process.ExitCode
 
         # Display output
@@ -88,7 +96,7 @@ function Invoke-TapRefresh {
         }
 
         # Display errors if any
-        if (Test-Path $errFile -and (Get-Item $errFile).Length -gt 0) {
+        if ((Test-Path $errFile) -and ((Get-Item $errFile).Length -gt 0)) {
             Write-Host "`n--- STDERR ---" -ForegroundColor Yellow
             Get-Content $errFile
         }
