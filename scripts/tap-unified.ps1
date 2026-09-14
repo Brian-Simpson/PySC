@@ -180,7 +180,7 @@ function Invoke-AuditConsolidation {
     }
 
     $normalizedDir = Join-Path $config.Repo 'Output' 'Processed' 'Normalized'
-    $forGapDir = Join-Path $config.Repo 'actual_audit_inputs' 'For_Gap'
+    $forGapDir = Join-Path $config.Repo 'Output' 'Processed' 'For_Gap'
     $consolidatedDir = Join-Path $config.Repo 'Output' 'Consolidated'
 
     # Ensure consolidated directory exists
