@@ -115,6 +115,11 @@ function Invoke-TapRefresh {
 
         if ($exitCode -eq 0) {
             Write-Host "`n✅ Refresh completed successfully at $(Get-Date -Format 'HH:mm:ss')" -ForegroundColor Green
+
+            # Post-process audits to fix and consolidate
+            Write-Host "`nConsolidating audit files..." -ForegroundColor Cyan
+            Invoke-AuditConsolidation
+
         } else {
             Write-Host "`n❌ Refresh failed with exit code $exitCode" -ForegroundColor Red
         }
@@ -144,6 +149,42 @@ function Invoke-TapCommand {
     }
     finally {
         Pop-Location
+    }
+}
+
+# Consolidate and fix audit files
+function Invoke-AuditConsolidation {
+    $consolidatorScript = Join-Path $config.Repo 'scripts' 'audit_consolidator.py'
+    $inputAudit = Join-Path $config.Repo 'Output' 'Processed' 'For_Gap' 'PAFW.audit'
+    $cisBenchmark = 'C:\Users\brian.simpson\OneDrive - Hilltop Holdings\Downloads\CIS_Palo_Alto_Firewall_11_Benchmark_v1.2.0_L1-normalized (1).audit'
+    $outputFile = 'C:\PySC\TAP\Output\Consolidated\PAFW_all_audits.audit'
+
+    if (-not (Test-Path $consolidatorScript)) {
+        Write-Host "⚠️  Consolidator script not found: $consolidatorScript" -ForegroundColor Yellow
+        return
+    }
+
+    if (-not (Test-Path $inputAudit)) {
+        Write-Host "⚠️  Input audit not found: $inputAudit" -ForegroundColor Yellow
+        return
+    }
+
+    if (-not (Test-Path $cisBenchmark)) {
+        Write-Host "⚠️  CIS benchmark not found: $cisBenchmark" -ForegroundColor Yellow
+        return
+    }
+
+    try {
+        Write-Host "  Processing PAFW audits..." -NoNewline
+        & $config.Python $consolidatorScript "PAFW" $inputAudit $cisBenchmark $outputFile 2>&1 | ForEach-Object {
+            if ($_ -match "✅|❌|⚠️") {
+                Write-Host "`n  $_" -ForegroundColor Cyan
+            }
+        }
+        Write-Host "  Consolidation complete" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "`n  ⚠️  Consolidation skipped: $_" -ForegroundColor Yellow
     }
 }
 
