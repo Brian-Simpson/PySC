@@ -180,7 +180,7 @@ function Invoke-AuditConsolidation {
     }
 
     $normalizedDir = Join-Path $config.Repo 'Output' 'Processed' 'Normalized'
-    $forGapDir = Join-Path $config.Repo 'Output' 'Processed' 'For_Gap'
+    $forGapDir = Join-Path $config.Repo 'actual_audit_inputs' 'For_Gap'
     $consolidatedDir = Join-Path $config.Repo 'Output' 'Consolidated'
 
     # Ensure consolidated directory exists
@@ -199,24 +199,27 @@ function Invoke-AuditConsolidation {
         # Find matching CIS benchmark
         $cisBenchmark = Get-Item (Join-Path $normalizedDir $auditType.CISPattern) -ErrorAction SilentlyContinue | Select-Object -First 1
         if (-not $cisBenchmark) {
-            Write-Host "⚠️  CIS benchmark not found for $typeCode" -ForegroundColor Yellow
+            Write-Host "  [$typeCode] ⚠️  CIS benchmark not found" -ForegroundColor Yellow
             continue
         }
 
         $outputFile = Join-Path $consolidatedDir "${typeCode}_all_audits.audit"
 
         try {
-            Write-Host "  [$typeCode] Consolidating..." -NoNewline -ForegroundColor Cyan
+            Write-Host "  [$typeCode] " -NoNewline -ForegroundColor Cyan
             $args = @($consolidatorScript, $typeCode, $inputAudit, $cisBenchmark.FullName, $outputFile)
             if ($controlsCatalog -and (Test-Path $controlsCatalog)) {
                 $args += $controlsCatalog
             }
-            & $config.Python @args 2>&1 | Where-Object { $_ -match "✅|❌" } | ForEach-Object {
-                Write-Host "`n  $_"
+            $output = & $config.Python @args 2>&1
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "✅" -ForegroundColor Green
+            } else {
+                Write-Host "⚠️ " -ForegroundColor Yellow
             }
         }
         catch {
-            Write-Host " ⚠️  Skipped" -ForegroundColor Yellow
+            Write-Host "❌ Exception" -ForegroundColor Red
         }
     }
 
