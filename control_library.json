@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
  "generated": "2026-09-14 13:26:32",
+=======
+ "generated": "2026-09-14 13:21:47",
+>>>>>>> e19a9278695466b920d0e0ecbcf99d75542d4cb2
  "control_count": 946,
  "controls": {
   "MSSRV|ANONYMOUS_SID_SETTING:": {
