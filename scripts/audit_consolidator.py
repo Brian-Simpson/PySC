@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """
 Audit Consolidator - Post-processor for TAP audit files
-Fixes broken XSL statements, consolidates audit items, and deduplicates
+Fixes broken XSL, consolidates audits, deduplicates, comments out unused controls, and validates
 
-Usage: python audit_consolidator.py <audit_type> <input_audit> <cis_benchmark> <output_file>
-Example: python audit_consolidator.py PAFW PAFW_0002.audit CIS_benchmark.audit consolidated.audit
+Usage: python audit_consolidator.py PAFW input.audit cis.audit output.audit [controls.xlsx]
 """
 
 import sys
 import re
+import subprocess
 from pathlib import Path
 from collections import OrderedDict
+
+try:
+    import openpyxl
+    HAS_OPENPYXL = True
+except ImportError:
+    HAS_OPENPYXL = False
 
 class AuditItem:
     """Represents a single audit custom_item"""
@@ -21,29 +27,22 @@ class AuditItem:
         self.xsl_stmts = self._extract_xsl_statements()
 
     def _extract_field(self, field_name):
-        """Extract a field value from the item"""
         pattern = rf'{field_name}\s*:\s*"([^"]*)"'
         match = re.search(pattern, self.content)
         return match.group(1) if match else ""
 
     def _extract_xsl_statements(self):
-        """Extract all xsl_stmt lines"""
         pattern = r'xsl_stmt\s*:\s*"([^"]*)"'
         return re.findall(pattern, self.content)
 
     def has_broken_xsl(self):
-        """Check if XSL statements are broken (orphaned closing tags)"""
         for stmt in self.xsl_stmts:
             if stmt.startswith('</') and not any(opening in stmt for opening in ['<xsl:template', '<xsl:for-each', '<xsl:choose']):
                 return True
         return False
 
     def get_unique_key(self):
-        """Get a unique key for deduplication"""
         return self.description
-
-    def __repr__(self):
-        return self.content
 
 class AuditConsolidator:
     """Consolidates and fixes audit files"""
@@ -51,137 +50,155 @@ class AuditConsolidator:
     def __init__(self, cis_benchmark_path):
         self.cis_patterns = self._load_cis_patterns(cis_benchmark_path)
         self.consolidated_items = OrderedDict()
+        self.used_controls = set()
 
     def _load_cis_patterns(self, cis_path):
-        """Load XSL patterns from CIS benchmark file"""
         patterns = {}
         try:
             with open(cis_path, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
-
-            # Extract all custom_items
             items = re.findall(r'<custom_item>.*?</custom_item>', content, re.DOTALL)
-
             for item in items:
                 api_type = re.search(r'api_request_type\s*:\s*"([^"]*)"', item)
                 xsl_stmts = re.findall(r'xsl_stmt\s*:\s*"([^"]*)"', item)
-
                 if api_type and xsl_stmts:
                     key = api_type.group(1)
                     if key not in patterns:
                         patterns[key] = xsl_stmts
         except Exception as e:
-            print(f"Warning: Could not load CIS patterns: {e}", file=sys.stderr)
-
+            print(f"⚠️  CIS patterns: {e}", file=sys.stderr)
         return patterns
 
-    def fix_xsl_statement(self, item, cis_patterns):
-        """Fix broken XSL statements based on CIS patterns"""
-        api_type = item.api_request_type
+    def load_controls_catalog(self, catalog_path):
+        """Load used controls from Excel"""
+        if not HAS_OPENPYXL:
+            print("⚠️  openpyxl not installed, skipping controls validation", file=sys.stderr)
+            return False
 
+        try:
+            wb = openpyxl.load_workbook(catalog_path)
+            if 'All_Occurrences' not in wb.sheetnames:
+                print(f"⚠️  'All_Occurrences' sheet not found", file=sys.stderr)
+                return False
+
+            ws = wb['All_Occurrences']
+            for row in ws.iter_rows(values_only=True):
+                if row and row[0]:
+                    self.used_controls.add(str(row[0]).strip())
+
+            print(f"✅ Loaded {len(self.used_controls)} controls", file=sys.stderr)
+            return True
+        except Exception as e:
+            print(f"⚠️  Controls load: {e}", file=sys.stderr)
+            return False
+
+    def is_control_used(self, description):
+        """Check if control is used"""
+        if not self.used_controls:
+            return True
+        for used in self.used_controls:
+            if used.lower() in description.lower():
+                return True
+        return False
+
+    def comment_out_control(self, item_content):
+        """Completely comment out a control"""
+        lines = item_content.split('\n')
+        commented = []
+        for line in lines:
+            if line.strip() and not line.strip().startswith('#'):
+                commented.append('#' + line)
+            else:
+                commented.append(line)
+        return '\n'.join(commented)
+
+    def fix_xsl_statement(self, item):
+        """Fix broken XSL"""
         if not item.has_broken_xsl():
             return item.content
 
-        # Get appropriate XSL pattern for this API type
-        if api_type in cis_patterns:
-            proper_xsl = cis_patterns[api_type]
-            fixed_content = item.content
+        api_type = item.api_request_type
+        if api_type not in self.cis_patterns:
+            return item.content
 
-            # Replace all xsl_stmt lines with proper ones
-            fixed_content = re.sub(r'xsl_stmt\s*:.*', '', fixed_content)
+        proper_xsl = self.cis_patterns[api_type]
+        fixed = re.sub(r'xsl_stmt\s*:.*\n?', '', item.content)
+        insert_point = fixed.rfind('</custom_item>')
+        xsl_lines = '\n  '.join([f'xsl_stmt         : "{stmt}"' for stmt in proper_xsl])
+        return fixed[:insert_point] + '  ' + xsl_lines + '\n' + fixed[insert_point:]
 
-            # Add proper XSL statements
-            insert_point = fixed_content.rfind('</custom_item>')
-            xsl_lines = '\n  '.join([f'xsl_stmt         : "{stmt}"' for stmt in proper_xsl])
-            fixed_content = fixed_content[:insert_point] + '  ' + xsl_lines + '\n' + fixed_content[insert_point:]
-
-            return fixed_content
-
-        return item.content
-
-    def consolidate(self, audit_file_path, cis_benchmark_path):
-        """Consolidate and fix audit file"""
+    def consolidate(self, audit_path):
+        """Consolidate audit file"""
         try:
-            with open(audit_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(audit_path, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
 
-            # Extract header and all custom_items
             header_match = re.search(r'^.*?(<check_type[^>]*>)', content, re.DOTALL)
             header = header_match.group(1) if header_match else '<check_type:"Palo_Alto">'
 
-            # Extract all custom_item blocks
             items = re.findall(r'<custom_item>.*?</custom_item>', content, re.DOTALL)
 
-            # Process items
             for item_str in items:
                 item = AuditItem(item_str)
-                unique_key = item.get_unique_key()
+                is_used = self.is_control_used(item.description)
 
-                # Fix broken XSL
-                if item.has_broken_xsl():
-                    fixed_content = self.fix_xsl_statement(item, self.cis_patterns)
+                if is_used:
+                    fixed = self.fix_xsl_statement(item)
                 else:
-                    fixed_content = item_str
+                    fixed = self.comment_out_control(item_str)
 
-                # Deduplicate by description
-                if unique_key not in self.consolidated_items:
-                    self.consolidated_items[unique_key] = fixed_content
+                if item.get_unique_key() not in self.consolidated_items:
+                    self.consolidated_items[item.get_unique_key()] = fixed
 
             return header
-
         except Exception as e:
-            print(f"Error consolidating audit file: {e}", file=sys.stderr)
+            print(f"❌ Consolidate: {e}", file=sys.stderr)
             return None
 
     def write_consolidated(self, output_path, header):
-        """Write consolidated audit file"""
+        """Write output"""
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
-
             with open(output_path, 'w', encoding='utf-8') as f:
-                f.write('# Consolidated audit file - auto-generated by audit_consolidator.py\n')
+                f.write('# Consolidated audit - auto-generated\n')
                 f.write(header + '\n\n')
-
                 for item in self.consolidated_items.values():
                     f.write(item + '\n\n')
-
                 f.write('</check_type>\n')
 
-            print(f"✅ Consolidated audit written to: {output_path}")
-            print(f"   Total items: {len(self.consolidated_items)}")
+            print(f"✅ Consolidated: {output_path}")
+            print(f"   Items: {len(self.consolidated_items)}")
             return True
-
         except Exception as e:
-            print(f"❌ Error writing consolidated file: {e}", file=sys.stderr)
+            print(f"❌ Write: {e}", file=sys.stderr)
             return False
 
 def main():
     if len(sys.argv) < 5:
-        print("Usage: audit_consolidator.py <audit_type> <input_audit> <cis_benchmark> <output_file>")
-        print("Example: audit_consolidator.py PAFW PAFW_0002.audit CIS_benchmark.audit consolidated.audit")
+        print("Usage: python audit_consolidator.py PAFW input.audit cis.audit output.audit [controls.xlsx]")
         sys.exit(1)
 
     audit_type = sys.argv[1]
     input_audit = Path(sys.argv[2])
     cis_benchmark = Path(sys.argv[3])
     output_file = Path(sys.argv[4])
+    controls_catalog = Path(sys.argv[5]) if len(sys.argv) > 5 else None
 
-    if not input_audit.exists():
-        print(f"❌ Input audit file not found: {input_audit}", file=sys.stderr)
+    if not input_audit.exists() or not cis_benchmark.exists():
+        print(f"❌ Files not found", file=sys.stderr)
         sys.exit(1)
 
-    if not cis_benchmark.exists():
-        print(f"❌ CIS benchmark file not found: {cis_benchmark}", file=sys.stderr)
-        sys.exit(1)
-
-    print(f"Processing {audit_type} audit file...")
     consolidator = AuditConsolidator(str(cis_benchmark))
-    header = consolidator.consolidate(str(input_audit), str(cis_benchmark))
 
+    # Load controls catalog if provided
+    if controls_catalog and controls_catalog.exists():
+        consolidator.load_controls_catalog(str(controls_catalog))
+
+    header = consolidator.consolidate(str(input_audit))
     if header:
         consolidator.write_consolidated(output_file, header)
     else:
-        print(f"❌ Failed to consolidate audit file", file=sys.stderr)
+        print(f"❌ Failed to consolidate", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == '__main__':

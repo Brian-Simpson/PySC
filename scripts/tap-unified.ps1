@@ -152,40 +152,66 @@ function Invoke-TapCommand {
     }
 }
 
-# Consolidate and fix audit files
+# Consolidate and fix audit files for all types
 function Invoke-AuditConsolidation {
     $consolidatorScript = Join-Path $config.Repo 'scripts' 'audit_consolidator.py'
-    $inputAudit = Join-Path $config.Repo 'Output' 'Processed' 'For_Gap' 'PAFW.audit'
-    $cisBenchmark = 'C:\Users\brian.simpson\OneDrive - Hilltop Holdings\Downloads\CIS_Palo_Alto_Firewall_11_Benchmark_v1.2.0_L1-normalized (1).audit'
-    $outputFile = 'C:\PySC\TAP\Output\Consolidated\PAFW_all_audits.audit'
+    $controlsCatalog = Join-Path $config.Repo 'Output' 'Processed' 'Normalized' 'All_Controls_Catalog_26091414.xlsx'
+
+    # Audit types to process
+    $auditTypes = @(
+        @{ Type = 'PAFW'; CISPattern = 'CIS_Palo_Alto_Firewall_11_Benchmark_v*.audit' },
+        @{ Type = 'NXOS'; CISPattern = 'CIS_Cisco_NX-OS_v*.audit' },
+        @{ Type = 'IOS'; CISPattern = 'CIS_Cisco_IOS_*.audit' },
+        @{ Type = 'ASA'; CISPattern = 'CIS_Cisco_ASA_*.audit' },
+        @{ Type = 'F5'; CISPattern = 'CIS_F5_Networks_*.audit' },
+        @{ Type = 'RHEL'; CISPattern = 'CIS_Red_Hat*.audit' },
+        @{ Type = 'MSWRK'; CISPattern = 'CIS_Microsoft_Windows_*.audit' },
+        @{ Type = 'MSSRV'; CISPattern = 'CIS_Microsoft_SQL_Server_*.audit' },
+        @{ Type = 'SQL'; CISPattern = 'CIS_Microsoft_SQL_Server_*.audit' }
+    )
 
     if (-not (Test-Path $consolidatorScript)) {
-        Write-Host "⚠️  Consolidator script not found: $consolidatorScript" -ForegroundColor Yellow
+        Write-Host "⚠️  Consolidator not found" -ForegroundColor Yellow
         return
     }
 
-    if (-not (Test-Path $inputAudit)) {
-        Write-Host "⚠️  Input audit not found: $inputAudit" -ForegroundColor Yellow
-        return
-    }
+    $normalizedDir = Join-Path $config.Repo 'Output' 'Processed' 'Normalized'
+    $forGapDir = Join-Path $config.Repo 'Output' 'Processed' 'For_Gap'
+    $consolidatedDir = 'C:\PySC\TAP\Output\Consolidated'
 
-    if (-not (Test-Path $cisBenchmark)) {
-        Write-Host "⚠️  CIS benchmark not found: $cisBenchmark" -ForegroundColor Yellow
-        return
-    }
+    foreach ($auditType in $auditTypes) {
+        $typeCode = $auditType.Type
+        $inputAudit = Join-Path $forGapDir "$typeCode.audit"
 
-    try {
-        Write-Host "  Processing PAFW audits..." -NoNewline
-        & $config.Python $consolidatorScript "PAFW" $inputAudit $cisBenchmark $outputFile 2>&1 | ForEach-Object {
-            if ($_ -match "✅|❌|⚠️") {
-                Write-Host "`n  $_" -ForegroundColor Cyan
+        if (-not (Test-Path $inputAudit)) {
+            continue
+        }
+
+        # Find matching CIS benchmark
+        $cisBenchmark = Get-Item (Join-Path $normalizedDir $auditType.CISPattern) -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $cisBenchmark) {
+            Write-Host "⚠️  CIS benchmark not found for $typeCode" -ForegroundColor Yellow
+            continue
+        }
+
+        $outputFile = Join-Path $consolidatedDir "${typeCode}_all_audits.audit"
+
+        try {
+            Write-Host "  [$typeCode] Consolidating..." -NoNewline -ForegroundColor Cyan
+            $args = @($consolidatorScript, $typeCode, $inputAudit, $cisBenchmark.FullName, $outputFile)
+            if (Test-Path $controlsCatalog) {
+                $args += $controlsCatalog
+            }
+            & $config.Python @args 2>&1 | Where-Object { $_ -match "✅|❌" } | ForEach-Object {
+                Write-Host "`n  $_"
             }
         }
-        Write-Host "  Consolidation complete" -ForegroundColor Green
+        catch {
+            Write-Host " ⚠️  Skipped" -ForegroundColor Yellow
+        }
     }
-    catch {
-        Write-Host "`n  ⚠️  Consolidation skipped: $_" -ForegroundColor Yellow
-    }
+
+    Write-Host "  Consolidation complete" -ForegroundColor Green
 }
 
 # Main
