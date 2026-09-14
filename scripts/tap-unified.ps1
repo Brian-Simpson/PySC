@@ -155,7 +155,11 @@ function Invoke-TapCommand {
 # Consolidate and fix audit files for all types
 function Invoke-AuditConsolidation {
     $consolidatorScript = Join-Path $config.Repo 'scripts' 'audit_consolidator.py'
-    $controlsCatalog = Join-Path $config.Repo 'Output' 'Processed' 'Normalized' 'All_Controls_Catalog_26091414.xlsx'
+
+    # Find latest Unique_Controls_Catalog
+    $catalogDir = Join-Path $config.Repo 'Output' 'Processed' 'Normalized'
+    $catalogs = @(Get-ChildItem -Path $catalogDir -Filter 'Unique_Controls_Catalog*.xlsx' -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending)
+    $controlsCatalog = if ($catalogs.Count -gt 0) { $catalogs[0].FullName } else { $null }
 
     # Audit types to process
     $auditTypes = @(
@@ -177,7 +181,12 @@ function Invoke-AuditConsolidation {
 
     $normalizedDir = Join-Path $config.Repo 'Output' 'Processed' 'Normalized'
     $forGapDir = Join-Path $config.Repo 'Output' 'Processed' 'For_Gap'
-    $consolidatedDir = 'C:\PySC\TAP\Output\Consolidated'
+    $consolidatedDir = Join-Path $config.Repo 'Output' 'Consolidated'
+
+    # Ensure consolidated directory exists
+    if (-not (Test-Path $consolidatedDir)) {
+        New-Item -ItemType Directory -Force -Path $consolidatedDir | Out-Null
+    }
 
     foreach ($auditType in $auditTypes) {
         $typeCode = $auditType.Type
@@ -199,7 +208,7 @@ function Invoke-AuditConsolidation {
         try {
             Write-Host "  [$typeCode] Consolidating..." -NoNewline -ForegroundColor Cyan
             $args = @($consolidatorScript, $typeCode, $inputAudit, $cisBenchmark.FullName, $outputFile)
-            if (Test-Path $controlsCatalog) {
+            if ($controlsCatalog -and (Test-Path $controlsCatalog)) {
                 $args += $controlsCatalog
             }
             & $config.Python @args 2>&1 | Where-Object { $_ -match "✅|❌" } | ForEach-Object {
