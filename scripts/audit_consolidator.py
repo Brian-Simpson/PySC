@@ -230,6 +230,107 @@ class AuditConsolidator:
             print(f"❌ Write: {e}", file=sys.stderr)
             return False
 
+def extract_controls_to_sheet(consolidated_items, output_audit_path, catalog_path, audit_type):
+    """Extract controls from consolidated audit and populate Excel sheet"""
+    if not HAS_OPENPYXL:
+        return
+
+    try:
+        # Read consolidated audit to extract control details
+        with open(output_audit_path, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+
+        items = re.findall(r'<custom_item>.*?</custom_item>', content, re.DOTALL)
+        rows = []
+
+        for item_str in items:
+            # Skip commented out items
+            if item_str.strip().startswith('#'):
+                continue
+
+            item = AuditItem(item_str)
+            desc = item.description
+
+            # Extract key fields
+            row_dict = {
+                'control_type': 'AUDIT_XML',
+                'control_key': desc[:50] if desc else 'Unknown',
+                'control_keyword': desc[:50] if desc else 'Unknown',
+                'expected_value': '',
+                'description': desc,
+                'info': '',
+                'reference': '',
+                'condition_type': 'AND',
+                'report_type': None,
+                'report_description': None,
+                'raw_fields': item_str[:200],
+                'source_count': '1',
+                'source_files': '',
+                'source_file': '',
+                'type': 'AUDIT_XML',
+                'api_request_type': item.api_request_type,
+                'xsl_stmt': item.xsl_stmts[0] if item.xsl_stmts else '',
+                'regex': '.*',
+                'request': '',
+            }
+            rows.append(row_dict)
+
+        if not rows:
+            return
+
+        # Update Excel sheet
+        wb = openpyxl.load_workbook(catalog_path)
+        if audit_type in wb.sheetnames:
+            ws = wb[audit_type]
+            # Clear existing rows (keep header)
+            ws.delete_rows(2, ws.max_row)
+        else:
+            ws = wb.create_sheet(audit_type)
+
+        # Get all unique column names from existing sheets
+        all_columns = set()
+        for sheet_name in wb.sheetnames:
+            if sheet_name != audit_type:
+                tmp_ws = wb[sheet_name]
+                if tmp_ws.max_row > 0:
+                    for cell in tmp_ws[1]:
+                        if cell.value:
+                            all_columns.add(cell.value)
+                break
+
+        # Use standard columns
+        columns = [
+            'control_type', 'control_key', 'control_keyword', 'expected_value',
+            'description', 'info', 'reference', 'condition_type', 'report_type',
+            'report_description', 'raw_fields', 'source_count', 'source_files',
+            'source_file', 'Custom item', 'Conditional', 'type', 'solution', 'see_also',
+            'value_type', 'value_data', 'reg_key', 'reg_item', 'reg_option', 'expect',
+            'api_request_type', 'request', 'xsl_stmt', 'regex', 'item', 'cmd', 'right_type',
+            'not_expect', 'audit_policy_subcategory', 'check_type', 'sql_request', 'sql_types',
+            'sql_expect', 'rpm', 'operator', 'severity', 'password_policy', 'reg_include_hku_users',
+            'min_occurrences', 'f5_command', 'json_transform', 'powershell_args', 'string_required',
+            'match_all', 'mask', 'lockout_policy', 'account_type', 'key_item', 'wmi_namespace',
+            'wmi_request', 'wmi_attribute', 'wmi_key', 'file_required', 'timeout', 'is_substring',
+            'where', 'dont_echo_cmd', 'interface_name', 'only_show_cmd_output', 'policy_arn',
+            'powershell_option', 'reg_ignore_hku_users', 'reg_type', 'shared_key', 'show_output',
+            'system', 'tmsh'
+        ]
+
+        # Write header
+        ws.append(columns)
+
+        # Write rows
+        for row_dict in rows:
+            row_values = []
+            for col in columns:
+                row_values.append(row_dict.get(col))
+            ws.append(row_values)
+
+        wb.save(catalog_path)
+        print(f"✅ Updated {audit_type} sheet: {len(rows)} controls", file=sys.stderr)
+    except Exception as e:
+        print(f"⚠️  Excel update: {e}", file=sys.stderr)
+
 def main():
     if len(sys.argv) < 5:
         print("Usage: python audit_consolidator.py PAFW input.audit cis.audit output.audit [controls.xlsx]")
@@ -254,6 +355,10 @@ def main():
     header = consolidator.consolidate(str(input_audit))
     if header:
         consolidator.write_consolidated(output_file, header)
+
+        # Populate Excel sheet with extracted controls
+        if controls_catalog and controls_catalog.exists():
+            extract_controls_to_sheet(consolidator.consolidated_items, str(output_file), str(controls_catalog), audit_type)
     else:
         print(f"❌ Failed to consolidate", file=sys.stderr)
         sys.exit(1)
