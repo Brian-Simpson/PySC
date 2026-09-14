@@ -120,9 +120,10 @@ class AuditConsolidator:
         result = '\n'.join(commented)
 
         # Safety check: if <custom_item> is uncommented but has commented lines, comment it
-        if '<custom_item>' in result and '#' in result:
-            result = result.replace('<custom_item>', '#<custom_item>')
-            result = result.replace('</custom_item>', '#</custom_item>')
+        # Use regex to handle whitespace before tags
+        if re.search(r'^\s*<custom_item>', result, re.MULTILINE) and '#' in result:
+            result = re.sub(r'^(\s*)<custom_item>', r'\1#<custom_item>', result, flags=re.MULTILINE)
+            result = re.sub(r'^(\s*)</custom_item>', r'\1#</custom_item>', result, flags=re.MULTILINE)
 
         return result
 
