@@ -47,7 +47,9 @@ class AuditItem:
 class AuditConsolidator:
     """Consolidates and fixes audit files"""
 
-    def __init__(self, cis_benchmark_path):
+    def __init__(self, cis_benchmark_path, audit_type='PAFW'):
+        self.cis_benchmark_path = cis_benchmark_path
+        self.audit_type = audit_type
         self.cis_patterns = self._load_cis_patterns(cis_benchmark_path)
         self.consolidated_items = OrderedDict()
         self.used_controls = set()
@@ -70,23 +72,27 @@ class AuditConsolidator:
         return patterns
 
     def load_controls_catalog(self, catalog_path):
-        """Load used controls from Excel"""
+        """Load used controls from Excel for this audit type"""
         if not HAS_OPENPYXL:
             print("⚠️  openpyxl not installed, skipping controls validation", file=sys.stderr)
             return False
 
         try:
             wb = openpyxl.load_workbook(catalog_path)
-            if 'All_Occurrences' not in wb.sheetnames:
-                print(f"⚠️  'All_Occurrences' sheet not found", file=sys.stderr)
+            # For platform-specific catalogs, use the audit type as sheet name
+            # But also support All_Occurrences for backwards compat
+            sheet_name = self.audit_type if self.audit_type in wb.sheetnames else 'All_Occurrences'
+
+            if sheet_name not in wb.sheetnames:
+                print(f"⚠️  Neither '{self.audit_type}' nor 'All_Occurrences' sheet found", file=sys.stderr)
                 return False
 
-            ws = wb['All_Occurrences']
+            ws = wb[sheet_name]
             for row in ws.iter_rows(values_only=True):
                 if row and row[0]:
                     self.used_controls.add(str(row[0]).strip())
 
-            print(f"✅ Loaded {len(self.used_controls)} controls", file=sys.stderr)
+            print(f"✅ Loaded {len(self.used_controls)} controls from '{sheet_name}' sheet", file=sys.stderr)
             return True
         except Exception as e:
             print(f"⚠️  Controls load: {e}", file=sys.stderr)
@@ -156,18 +162,26 @@ class AuditConsolidator:
             # Replace version checks with single generic check
             items = self._simplify_device_checks(items)
 
+            commented_count = 0
+            used_count = 0
+
             for item_str in items:
                 item = AuditItem(item_str)
                 is_used = self.is_control_used(item.description)
 
                 if is_used:
                     fixed = self.fix_xsl_statement(item)
+                    used_count += 1
                 else:
                     fixed = self.comment_out_control(item_str)
+                    commented_count += 1
 
-                if item.get_unique_key() not in self.consolidated_items:
-                    self.consolidated_items[item.get_unique_key()] = fixed
+                key = item.get_unique_key()
+                if key not in self.consolidated_items:
+                    self.consolidated_items[key] = fixed
 
+            if used_count > 0 or commented_count > 0:
+                print(f"✅ Processed: {used_count} used, {commented_count} commented", file=sys.stderr)
             return header
         except Exception as e:
             print(f"❌ Consolidate: {e}", file=sys.stderr)
@@ -337,7 +351,7 @@ def main():
         print(f"❌ Files not found", file=sys.stderr)
         sys.exit(1)
 
-    consolidator = AuditConsolidator(str(cis_benchmark))
+    consolidator = AuditConsolidator(str(cis_benchmark), audit_type=audit_type)
 
     # Load controls catalog if provided
     if controls_catalog and controls_catalog.exists():
