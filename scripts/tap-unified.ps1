@@ -80,6 +80,9 @@ function Invoke-TapRefresh {
     Push-Location $config.Repo
     try {
         $argList = @("-m", "tap", "refresh") + $Args
+
+        Write-Host "Processing" -NoNewline -ForegroundColor Cyan
+
         $process = Start-Process -FilePath $config.Python `
             -ArgumentList $argList `
             -RedirectStandardOutput $logFile `
@@ -87,7 +90,16 @@ function Invoke-TapRefresh {
             -NoNewWindow `
             -PassThru
 
-        $process.WaitForExit()
+        # Show spinner while waiting
+        $spinner = @('|', '/', '-', '\')
+        $i = 0
+        while (-not $process.HasExited) {
+            Write-Host "`b$($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
+            $i++
+            Start-Sleep -Milliseconds 250
+        }
+        Write-Host "`b " # Clear spinner
+
         $exitCode = $process.ExitCode
 
         # Display output
@@ -102,9 +114,9 @@ function Invoke-TapRefresh {
         }
 
         if ($exitCode -eq 0) {
-            Write-Host "`nRefresh completed successfully at $(Get-Date -Format 'HH:mm:ss')" -ForegroundColor Green
+            Write-Host "`n✅ Refresh completed successfully at $(Get-Date -Format 'HH:mm:ss')" -ForegroundColor Green
         } else {
-            Write-Host "`nRefresh failed with exit code $exitCode" -ForegroundColor Red
+            Write-Host "`n❌ Refresh failed with exit code $exitCode" -ForegroundColor Red
         }
 
         return $exitCode
