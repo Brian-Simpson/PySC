@@ -99,13 +99,37 @@ class AuditConsolidator:
             return False
 
     def is_control_used(self, description):
-        """Check if control is used"""
+        """Check if control is used by ID matching"""
         if not self.used_controls:
+            return True  # If no baseline loaded, keep all controls
+
+        # Extract ID from description (e.g., "1.0000" from "1.0000 - PAFW - ...")
+        id_match = re.match(r'(\d+\.\d+)', description)
+        if not id_match:
+            return False
+
+        control_id = id_match.group(1)
+        return control_id in self.used_controls
+
+    def load_baseline_controls(self, baseline_path):
+        """Load control IDs from the baseline file"""
+        self.used_controls.clear()
+        try:
+            with open(baseline_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+            items = re.findall(r'<custom_item>.*?</custom_item>', content, re.DOTALL)
+            for item in items:
+                item_obj = AuditItem(item)
+                if item_obj.description:
+                    # Extract just the ID (e.g., "1.0000" from "1.0000 - PAFW - ...")
+                    id_match = re.match(r'(\d+\.\d+)', item_obj.description)
+                    if id_match:
+                        self.used_controls.add(id_match.group(1))
+            print(f"✅ Loaded {len(self.used_controls)} control IDs from baseline", file=sys.stderr)
             return True
-        for used in self.used_controls:
-            if used.lower() in description.lower():
-                return True
-        return False
+        except Exception as e:
+            print(f"⚠️  Baseline load: {e}", file=sys.stderr)
+            return False
 
     def comment_out_control(self, item_content):
         """Completely comment out a control - EVERY line including tags"""
@@ -114,24 +138,16 @@ class AuditConsolidator:
 
         for line in lines:
             if not line.strip():
-                # Keep blank lines
-                commented.append(line)
-            elif line.strip().startswith('#'):
-                # Already commented, keep as-is
+                # Keep blank lines as-is
                 commented.append(line)
             else:
-                # Add # to the BEGINNING of the line (before any whitespace)
-                commented.append('#' + line)
+                # Add # prefix to every non-blank line that isn't already commented
+                if not line.lstrip().startswith('#'):
+                    commented.append('#' + line)
+                else:
+                    commented.append(line)
 
-        result = '\n'.join(commented)
-
-        # Safety check: if <custom_item> is uncommented but has commented lines, comment it
-        # Use regex to handle whitespace before tags
-        if re.search(r'^\s*<custom_item>', result, re.MULTILINE) and '#' in result:
-            result = re.sub(r'^(\s*)<custom_item>', r'\1#<custom_item>', result, flags=re.MULTILINE)
-            result = re.sub(r'^(\s*)</custom_item>', r'\1#</custom_item>', result, flags=re.MULTILINE)
-
-        return result
+        return '\n'.join(commented)
 
     def fix_xsl_statement(self, item):
         """Fix broken XSL"""
@@ -338,14 +354,15 @@ def extract_controls_to_sheet(consolidated_items, output_audit_path, catalog_pat
 
 def main():
     if len(sys.argv) < 5:
-        print("Usage: python audit_consolidator.py PAFW input.audit cis.audit output.audit [controls.xlsx]")
+        print("Usage: python audit_consolidator.py PAFW input.audit cis.audit output.audit [baseline.audit] [controls.xlsx]")
         sys.exit(1)
 
     audit_type = sys.argv[1]
     input_audit = Path(sys.argv[2])
     cis_benchmark = Path(sys.argv[3])
     output_file = Path(sys.argv[4])
-    controls_catalog = Path(sys.argv[5]) if len(sys.argv) > 5 else None
+    baseline_audit = Path(sys.argv[5]) if len(sys.argv) > 5 else None
+    controls_catalog = Path(sys.argv[6]) if len(sys.argv) > 6 else None
 
     if not input_audit.exists() or not cis_benchmark.exists():
         print(f"❌ Files not found", file=sys.stderr)
@@ -353,8 +370,11 @@ def main():
 
     consolidator = AuditConsolidator(str(cis_benchmark), audit_type=audit_type)
 
-    # Load controls catalog if provided
-    if controls_catalog and controls_catalog.exists():
+    # Load baseline controls if provided (to uncomment matching controls)
+    if baseline_audit and baseline_audit.exists():
+        consolidator.load_baseline_controls(str(baseline_audit))
+    # Otherwise, load controls catalog if provided
+    elif controls_catalog and controls_catalog.exists():
         consolidator.load_controls_catalog(str(controls_catalog))
 
     header = consolidator.consolidate(str(input_audit))

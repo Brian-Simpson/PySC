@@ -1,0 +1,6 @@
+Baseline IDs: ['1.0000', '1.0001', '1.0002']
+
+UNCOMMENT - 1.0000 - PAFW - Ensure Password Profiles do not exist
+UNCOMMENT - 1.0001 - PAFW - Ensure Password Profiles do not exist
+UNCOMMENT - 1.0002 - PAFW - Ensure valid certificate is set
+COMMENT   - 2.0000 - PAFW - Some other control

@@ -1,0 +1,12 @@
+Starting consolidation...
+
+[PAFW] Processing...
+  Input: True
+  Baseline: True
+  CIS: False
+  ERROR: CIS not found
+
+[RHEL] Processing...
+  CIS not found: C:\PySC\TAP\Output\Processed\Normalized\CIS_RedHat_Enterprise_Linux_*.audit
+
+Done

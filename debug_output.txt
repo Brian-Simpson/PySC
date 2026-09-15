@@ -1,0 +1,5 @@
+Testing PAFW consolidation...
+Baseline exists: True
+Baseline loaded successfully: True
+Controls loaded: 20
+Sample controls: ['1.0009 - PAFW - NetPAFW - Management Profiles Permitted IPs - SNMP', '1.0007 - PAFW - Check for existence of permitted-ip', '1.0002 - PAFW - NetPAFW - Audit Logging - hip match']
