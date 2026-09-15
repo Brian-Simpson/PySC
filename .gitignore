@@ -2,6 +2,7 @@
 TAPARCHIVE/
 TAP/  # TAP has its own git repository
 PL/   # Personal property/legal documents - not part of project
+PySC/  # Nested git repository
 
 # IDE and OS files
 .vscode/
