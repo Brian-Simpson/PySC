@@ -1,0 +1,29 @@
+# Large archive and generated data - never commit to source control
+TAPARCHIVE/
+TAP/  # TAP has its own git repository
+PL/   # Personal property/legal documents - not part of project
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Temporary and lock files
+*.tmp
+*.lock
+~$*
+
+# OS-specific
+.DS_Store
