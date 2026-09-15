@@ -15,7 +15,7 @@ and producing enterprise compliance reporting.
 >
 > **Program rule:** no `.audit` file is processed, parsed, or reported
 > without a corresponding baseline declared in `pysc.toml` and present in
-> `actual_audit_inputs\`. Downloads skip uncovered platforms, and `pysc
+> `actual_audit_inputs\`. Downloads skip uncovered platforms, and `tap
 > refresh` quarantines stray files into `_unassigned\` folders that no
 > pipeline stage reads.
 
@@ -32,7 +32,9 @@ validation during normalization; without it, validation is skipped.
 
 ## CLI
 
-All commands: `python -m pysc <command>` (run from `C:\PySC`).
+All commands: `python -m tap <command>` (run from `C:\PySC\TAP`; the `tap`
+package is a thin alias for the internal `pysc` package, and the interactive
+`tap` PowerShell profile function wraps the same thing).
 
 | Command | Purpose |
 |---|---|
@@ -55,7 +57,7 @@ All commands: `python -m pysc <command>` (run from `C:\PySC`).
 The go-forward workflow: drop production baselines into
 `actual_audit_inputs\` and run one command — everything else regenerates.
 
-1. **Keep the toolkit.** Never move the git-tracked files: `pysc\`,
+1. **Keep the toolkit.** Never move the git-tracked files: `pysc\`, `tap\`,
    `pysc.toml`, `NIST_SP-800-53_rev5_catalog.json`,
    `Scripts\threat_intel_cache.json`, `control_library.json`,
    `Control_Library.xlsx`, `policy_variances.toml`, `curated_benchmarks.txt`,
@@ -70,7 +72,7 @@ The go-forward workflow: drop production baselines into
 4. Run:
 
    ```powershell
-   & "C:\Program Files\Python39\python.exe" -m pysc refresh
+   & "C:\Program Files\Python39\python.exe" -m tap refresh
    ```
 
    which verifies the baselines, pulls current benchmarks from Tenable
@@ -81,16 +83,16 @@ The go-forward workflow: drop production baselines into
 
 ## The maturity loop
 
-1. Pull current vendor benchmarks from Tenable downloads (`pysc download`,
-   review the staged manifest, then `pysc download --apply`).
-2. Normalize vendor benchmarks; merge into the HTH baseline (`pysc run`).
+1. Pull current vendor benchmarks from Tenable downloads (`tap download`,
+   review the staged manifest, then `tap download --apply`).
+2. Normalize vendor benchmarks; merge into the HTH baseline (`tap run`).
 3. Load the baseline into the Tenable console and scan.
 4. Export scan results to Excel (Description + Pass columns).
-5. `pysc maturity --audit <baseline> --pass-rates <export> --apply` comments
+5. `tap maturity --audit <baseline> --pass-rates <export> --apply` comments
    out checks failing fleet-wide.
-6. Commented checks surface as **recoverable coverage** in `pysc gap` — the
+6. Commented checks surface as **recoverable coverage** in `tap gap` — the
    remediation queue for bringing them back.
-7. `pysc report all` publishes the executive workbook + dashboard and records
+7. `tap report all` publishes the executive workbook + dashboard and records
    the trend snapshot.
 
 ## Data layout
@@ -112,7 +114,7 @@ for the golden test suite.
 
 Legacy-only inputs that never existed in this workspace and are NOT required
 by the package: `Baseline_-_MSSRV.csv`, `Merged_2607.csv`,
-`MSSRV_Mature.xlsx`/`MSWRK_Mature.xlsx` (replaced by `pysc maturity`
+`MSSRV_Mature.xlsx`/`MSWRK_Mature.xlsx` (replaced by `tap maturity`
 pass-rate exports).
 
 See `SECURITY_NOTE.md` for credential-handling rules and keys pending rotation.

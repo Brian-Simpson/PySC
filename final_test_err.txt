@@ -1,0 +1,12 @@
+✅ Loaded 2 controls from 'PAFW' sheet
+✅ Processed: 0 used, 369 commented
+✅ Loaded 2 controls from 'NXOS' sheet
+✅ Processed: 0 used, 93 commented
+✅ Loaded 2 controls from 'IOS' sheet
+✅ Processed: 0 used, 212 commented
+Traceback (most recent call last):
+  File "C:\PySC\TAP\test_all_types.py", line 71, in <module>
+    f.write(line + '\n')
+  File "C:\Program Files\Python39\lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 7: character maps to <undefined>

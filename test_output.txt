@@ -1,0 +1,27 @@
+Original control:
+<custom_item>
+  type             : REST_CHECK
+  description      : "1.0000 - F5 - Test Control"
+  info             : "Test info"
+  expect           : "Test"
+  f5_command       : "/tm/ltm/pool"
+</custom_item>
+
+============================================================
+
+After comment_out_control():
+#<custom_item>
+#  type             : REST_CHECK
+#  description      : "1.0000 - F5 - Test Control"
+#  info             : "Test info"
+#  expect           : "Test"
+#  f5_command       : "/tm/ltm/pool"
+#</custom_item>
+
+============================================================
+
+Analysis:
+  Opening tag commented: True
+  Closing tag commented: True
+  Opening tag uncommented: False
+  Closing tag uncommented: False

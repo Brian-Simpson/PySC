@@ -1,0 +1,13 @@
+F5 Input File Structure Analysis
+================================
+
+Total controls extracted: 125
+Total open tags in file: 125
+Total close tags in file: 125
+
+
+Total malformed controls: 0
+
+After removing all matched controls:
+  Remaining opens: 0
+  Remaining closes: 0

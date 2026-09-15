@@ -1,0 +1,14 @@
+Starting consolidation for PAFW
+Input: C:\PySC\TAP\Output\Processed\For_Gap\PAFW.audit
+Baseline: C:\PySC\TAP\Output\Processed\Normalized\HTH_Baseline_NETPAFW_26091508.audit
+CIS: C:\PySC\TAP\Output\Processed\Normalized\CIS_Palo_Alto_Firewall_11_Benchmark_v1.2.0_L1.audit
+Created consolidator
+Loading baseline controls...
+Baseline load result: True
+Controls loaded: 20
+  Sample: 1.0007 - PAFW - Check for existence of permitted-ip
+  Sample: 1.0010 - PAFW - NetPAFW - Ensure Permitted IP Addresses is set for all management profiles where SSH, HTTPS, or SNMP is enabled - SSH
+  Sample: 1.0003 - PAFW - NetPAFW - Audit Logging - system
+Starting consolidation...
+Consolidation successful
+Results: 20 uncommented, 349 commented

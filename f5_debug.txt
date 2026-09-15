@@ -1,0 +1,18 @@
+F5 Consolidation Debug
+=======================
+
+Loading baseline controls...
+  Baseline loaded: True
+  Used controls: 27
+
+Consolidating input...
+  Header: <check_type:"Windows" version:"2">
+  Consolidated items: 125
+
+Writing output...
+  Output file: C:\PySC\TAP\Output\Consolidated\F5_test_20260915_104307.audit
+
+Output verification:
+  Opening tags: 125
+  Closing tags: 125
+  Balance: True

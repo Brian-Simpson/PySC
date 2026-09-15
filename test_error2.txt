@@ -1,0 +1,372 @@
+⚠️  CIS patterns: [Errno 2] No such file or directory: 'C:\\PySC\\TAP\\Output\\Processed\\Normalized\\CIS_Palo_Alto_Firewall_11_Benchmark_v1.2.0_L1.audit'
+✅ Loaded 2 controls from 'PAFW' sheet
+  Storing [COMMENTED]: Device Type Check - Palo Alto Firewall... | starts with: #<custom_item>\n#      type             : AUDIT_XML... | opening commented: True
+  Storing [COMMENTED]: 1.0000 - PAFW - Ensure Password Profiles... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0001 - PAFW - Ensure Password Profiles... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0002 - PAFW - Ensure valid certificate... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0003 - PAFW - Ensure valid certificate... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0004 - PAFW - Ensure valid certificate... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0005 - PAFW - Ensure valid certificate... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0006 - PAFW - Ensure valid certificate... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0007 - PAFW - Ensure a secure antiviru... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0008 - PAFW - Ensure a secure antiviru... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0009 - PAFW - Ensure a secure antiviru... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0010 - PAFW - Lockout Time... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0011 - PAFW - Lockout Time... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0012 - PAFW - Ensure Minimum Password ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0013 - PAFW - Ensure Minimum Length is... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0014 - PAFW - Ensure Minimum Uppercase... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0015 - PAFW - Ensure Minimum Lowercase... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0016 - PAFW - Ensure Minimum Numeric L... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0017 - PAFW - Ensure Minimum Special C... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0018 - PAFW - Ensure Required Password... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0019 - PAFW - Ensure New Password Diff... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0020 - PAFW - Ensure Prevent Password ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0021 - PAFW - Ensure Minimum Password ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0022 - PAFW - Ensure Minimum Length is... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0023 - PAFW - Ensure Minimum Uppercase... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0024 - PAFW - Ensure Minimum Lowercase... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0025 - PAFW - Ensure Minimum Numeric L... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0026 - PAFW - Ensure Minimum Special C... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0027 - PAFW - Ensure Required Password... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0028 - PAFW - Ensure New Password Diff... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0029 - PAFW - Ensure Prevent Password ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0030 - PAFW - Ensure that User Credent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0031 - PAFW - Ensure that User Credent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0032 - PAFW - Ensure that User Credent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0033 - PAFW - Ensure that User Credent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0034 - PAFW - Ensure that WildFire fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0035 - PAFW - Ensure a WildFire Analys... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0036 - PAFW - Ensure forwarding of dec... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0037 - PAFW - Ensure that WildFire fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0038 - PAFW - Ensure a WildFire Analys... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0039 - PAFW - Ensure forwarding of dec... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0040 - PAFW - Ensure that WildFire fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0041 - PAFW - Ensure a WildFire Analys... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0042 - PAFW - Ensure forwarding of dec... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0043 - PAFW - Ensure that WildFire fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0044 - PAFW - Ensure a WildFire Analys... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0045 - PAFW - Ensure forwarding of dec... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0046 - PAFW - NetPAFW - Services - NTP... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0047 - PAFW - NetPAFW - Services - NTP... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0048 - PAFW - Ensure that security pol... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0049 - PAFW - Ensure that security pol... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0050 - PAFW - Ensure that security pol... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0051 - PAFW - Ensure that security pol... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0052 - PAFW - Ensure Service setting o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0053 - PAFW - Ensure Service setting o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0054 - PAFW - Ensure Service setting o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0055 - PAFW - Ensure Service setting o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0056 - PAFW - SNMPv3 traps should be c... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0057 - PAFW - SNMPv3 traps should be c... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0058 - PAFW - SNMPv3 traps should be c... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0059 - PAFW - SNMPv3 traps should be c... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0060 - PAFW - SNMPv3 traps should be c... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0061 - PAFW - Ensure that the Certific... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0062 - PAFW - Ensure application secur... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0063 - PAFW - Ensure application secur... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0064 - PAFW - Ensure application secur... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0065 - PAFW - Ensure application secur... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0066 - PAFW - Ensure application secur... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0067 - PAFW - Check for existence of p... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0068 - PAFW - Check for existence of p... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0069 - PAFW - Ensure an anti-spyware p... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0070 - PAFW - Ensure an anti-spyware p... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0071 - PAFW - Ensure an anti-spyware p... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0072 - PAFW - Ensure an anti-spyware p... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0073 - PAFW - Ensure Security Policy d... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0074 - PAFW - Ensure Security Policy d... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0075 - PAFW - Ensure Security Policy d... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0076 - PAFW - Ensure Security Policy d... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0077 - PAFW - NetPAFW - Ensure Permitt... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0078 - PAFW - NetPAFW - Ensure Permitt... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0079 - PAFW - NetPAFW - Ensure Permitt... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0080 - PAFW - NetPAFW - Ensure Permitt... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0081 - PAFW - SSH... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0082 - PAFW - SSH... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0083 - PAFW - Ensure SSL Inbound Inspe... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0084 - PAFW - Ensure SSL Inbound Inspe... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0085 - PAFW - Ensure SSL Inbound Inspe... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0086 - PAFW - Ensure SSL Inbound Inspe... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0087 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0088 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0089 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0090 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0091 - PAFW - NetPAFW - Syslog logging... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0092 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0093 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0094 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0095 - PAFW - NetPAFW - Audit Logging ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0096 - PAFW - NetPAFW - Syslog logging... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0097 - PAFW - Ensure that logging is e... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0098 - PAFW - Ensure that logging is e... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0099 - PAFW - Ensure that logging is e... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0100 - PAFW - Ensure that logging is e... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0101 - PAFW - Choosing Wildfire public... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0102 - PAFW - Choosing Wildfire public... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0103 - PAFW - Ensure a secure anti-spy... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0104 - PAFW - Ensure a secure anti-spy... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0105 - PAFW - Ensure a secure anti-spy... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0106 - PAFW - Ensure a secure anti-spy... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0107 - PAFW - Ensure secure URL filter... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0108 - PAFW - Ensure a secure Data Fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0109 - PAFW - Ensure secure URL filter... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0110 - PAFW - Ensure a secure Data Fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0111 - PAFW - Ensure secure URL filter... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0112 - PAFW - Ensure a secure Data Fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0113 - PAFW - Ensure secure URL filter... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0114 - PAFW - Ensure a secure Data Fil... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0115 - PAFW - NetPAFW - Banner - Enabl... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0116 - PAFW - NetPAFW - Ensure Enable ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0117 - PAFW - NetPAFW - Ensure Permitt... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0118 - PAFW - NetPAFW - Management Pro... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0119 - PAFW - NetPAFW - Management Int... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0120 - PAFW - NetPAFW - Management Pro... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0121 - PAFW - NetPAFW - Management Pro... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0122 - PAFW - NetPAFW - Wildfire Sessi... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0123 - PAFW - NetPAFW - Idle Timeout -... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0124 - PAFW - NetPAFW - SNMP Polling v... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0125 - PAFW - NetPAFW - Update Server ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0126 - PAFW - NetPAFW - Banner - Enabl... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0127 - PAFW - NetPAFW - Ensure Enable ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0128 - PAFW - NetPAFW - Ensure Permitt... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0129 - PAFW - NetPAFW - Idle Timeout -... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0130 - PAFW - NetPAFW - Management Int... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0131 - PAFW - NetPAFW - Management Pro... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0132 - PAFW - NetPAFW - Management Pro... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0133 - PAFW - NetPAFW - Management Pro... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0134 - PAFW - NetPAFW - SNMP Polling v... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0135 - PAFW - NetPAFW - Update Server ... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0136 - PAFW - NetPAFW - Wildfire Sessi... | starts with: #<custom_item>\n#  type             : AUDIT_XML\n#  ... | opening commented: True
+  Storing [COMMENTED]: 1.0144 - PAFW - host... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0145 - PAFW - system... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0146 - PAFW - configuration... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0147 - PAFW - user-id... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0148 - PAFW - hip match... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0149 - PAFW - Ensure that IP addresses... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0150 - PAFW - tag... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0151 - PAFW - Ensure that IP addresses... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0152 - PAFW - host... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0153 - PAFW - Ensure that WMI probing ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0154 - PAFW - system... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0155 - PAFW - configuration... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0156 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0157 - PAFW - user-id... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0158 - PAFW - Ensure that the Certific... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0159 - PAFW - hip match... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0160 - PAFW - tag... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0163 - PAFW - Enabling Post-Quantum (P... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0164 - PAFW - Ensure Login Banner is s... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0165 - PAFW - Enabling Post-Quantum (P... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0166 - PAFW - Ensure Login Banner is s... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0169 - PAFW - Ensure Enable Log on Hig... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0170 - PAFW - Ensure Enable Log on Hig... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0173 - PAFW - Ensure Permitted IP Addr... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0174 - PAFW - GlobalProtect Gateways... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0175 - PAFW - Certificates... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0176 - PAFW - Ensure Permitted IP Addr... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0177 - PAFW - GlobalProtect Portals... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0179 - PAFW - GlobalProtect Gateways... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0181 - PAFW - Certificates... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0182 - PAFW - GlobalProtect Portals... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0183 - PAFW - HTTPS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0185 - PAFW - SNMP... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0187 - PAFW - HTTPS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0188 - PAFW - Zones... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0189 - PAFW - SNMP... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0190 - PAFW - User ID Agents... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0191 - PAFW - Ensure that WMI probing ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0194 - PAFW - Zones... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0195 - PAFW - Ensure HTTP and Telnet o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0196 - PAFW - User ID Agents... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0197 - PAFW - Ensure HTTP and Telnet o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0198 - PAFW - Ensure that WMI probing ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0201 - PAFW - HTTP... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0202 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0203 - PAFW - Telnet... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0204 - PAFW - HTTP... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0205 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0206 - PAFW - Telnet... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0211 - PAFW - Ensure that the Certific... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0212 - PAFW - Ensure that the Certific... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0215 - PAFW - Ensure Idle timeout is l... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0216 - PAFW - Failed Attempts... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0217 - PAFW - Ensure Idle timeout is l... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0218 - PAFW - Failed Attempts... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0221 - PAFW - Ensure V3 is selected fo... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0222 - PAFW - Ensure V3 is selected fo... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0225 - PAFW - Ensure Verify Update Ser... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0226 - PAFW - Ensure Verify Update Ser... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0229 - PAFW - Ensure redundant NTP ser... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0230 - PAFW - Ensure primary-ntp-serve... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0231 - PAFW - Ensure redundant NTP ser... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0232 - PAFW - Ensure secondary-ntp-ser... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0236 - PAFW - Ensure that User-ID is o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0238 - PAFW - Ensure that User-ID is o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0239 - PAFW - GlobalProtect Gateways... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0240 - PAFW - Certificates... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0242 - PAFW - GlobalProtect Portals... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0244 - PAFW - Check that User ID is en... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0245 - PAFW - GlobalProtect Gateways... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0246 - PAFW - Certificates... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0247 - PAFW - Ensure that Include/Excl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0248 - PAFW - Check that User ID is en... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0249 - PAFW - GlobalProtect Portals... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0250 - PAFW - Ensure that Include/Excl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0253 - PAFW - Ensure that User-ID is o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0254 - PAFW - Ensure that User-ID is o... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0257 - PAFW - Check that User ID is en... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0258 - PAFW - Ensure that Include/Excl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0259 - PAFW - Check that User ID is en... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0261 - PAFW - Ensure that Include/Excl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0263 - PAFW - Ensure a fully-synchroni... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0264 - PAFW - Path Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0265 - PAFW - Link Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0267 - PAFW - Passive Link State... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0268 - PAFW - Election Setings... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0270 - PAFW - Ensure a fully-synchroni... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0271 - PAFW - Path Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0272 - PAFW - Link Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0275 - PAFW - Passive Link State... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0276 - PAFW - Election Setings... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0277 - PAFW - Ensure a fully-synchroni... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0279 - PAFW - Path Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0280 - PAFW - Link Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0282 - PAFW - Ensure Antivirus Update ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0283 - PAFW - Passive Link State... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0284 - PAFW - Election Setings... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0285 - PAFW - Ensure Applications and ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0286 - PAFW - Ensure a fully-synchroni... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0287 - PAFW - Ensure Antivirus Update ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0288 - PAFW - Ensure Applications and ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0289 - PAFW - Path Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0290 - PAFW - Link Monitoring Failure ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0293 - PAFW - Passive Link State... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0294 - PAFW - Election Setings... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0297 - PAFW - Ensure all WildFire sess... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0298 - PAFW - Ensure Antivirus Update ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0299 - PAFW - Ensure alerts are enable... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0300 - PAFW - Ensure Applications and ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0301 - PAFW - Ensure Antivirus Update ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0302 - PAFW - Ensure WildFire Update S... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0303 - PAFW - Ensure Applications and ... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0306 - PAFW - Ensure all WildFire sess... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0307 - PAFW - Ensure alerts are enable... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0308 - PAFW - Ensure WildFire Update S... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0309 - PAFW - Ensure all WildFire sess... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0311 - PAFW - Ensure alerts are enable... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0313 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0314 - PAFW - Ensure WildFire Update S... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0315 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0318 - PAFW - Ensure all WildFire sess... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0319 - PAFW - Ensure alerts are enable... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0320 - PAFW - Ensure WildFire Update S... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0324 - PAFW - Ensure that antivirus pr... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0326 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0327 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0328 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0329 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0331 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0333 - PAFW - Ensure that antivirus pr... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0334 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0335 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0336 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0337 - PAFW - Ensure that antivirus pr... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0340 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0341 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0342 - PAFW - Ensure a Vulnerability P... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0343 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0344 - PAFW - Ensure a secure Vulnerab... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0345 - PAFW - Ensure that PAN-DB URL F... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0347 - PAFW - Ensure that URL Filterin... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0349 - PAFW - Ensure a Vulnerability P... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0350 - PAFW - Ensure a secure Vulnerab... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0352 - PAFW - Ensure that PAN-DB URL F... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0354 - PAFW - Ensure that URL Filterin... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0355 - PAFW - Ensure a Vulnerability P... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0357 - PAFW - Ensure a secure Vulnerab... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0359 - PAFW - Ensure that access to ev... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0360 - PAFW - Ensure that PAN-DB URL F... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0361 - PAFW - Ensure that URL Filterin... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0362 - PAFW - Log Container Page... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0363 - PAFW - User-Agent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0364 - PAFW - Ensure a Vulnerability P... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0365 - PAFW - Referer... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0366 - PAFW - Ensure a secure Vulnerab... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0367 - PAFW - X-Forwarded-For... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0368 - PAFW - Ensure that access to ev... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0369 - PAFW - Ensure that PAN-DB URL F... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0370 - PAFW - Ensure that URL Filterin... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0371 - PAFW - Log Container Page... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0373 - PAFW - User-Agent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0375 - PAFW - Referer... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0376 - PAFW - Ensure that access to ev... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0377 - PAFW - X-Forwarded-For... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0378 - PAFW - Log Container Page... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0381 - PAFW - User-Agent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0382 - PAFW - Referer... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0383 - PAFW - Data Object... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0384 - PAFW - X-Forwarded-For... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0385 - PAFW - Data Filtering Profile... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0386 - PAFW - Ensure that access to ev... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0387 - PAFW - Log Container Page... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0388 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0389 - PAFW - User-Agent... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0390 - PAFW - Referer... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0391 - PAFW - Data Object... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0392 - PAFW - X-Forwarded-For... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0393 - PAFW - Data Filtering Profile... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0396 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0397 - PAFW - Data Object... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0399 - PAFW - Data Filtering Profile... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0401 - PAFW - Ensure that all zones ha... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0402 - PAFW - Ensure all zones have Zo... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0403 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0404 - PAFW - Data Object... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0405 - PAFW - Ensure that all zones ha... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0406 - PAFW - Data Filtering Profile... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0407 - PAFW - Ensure all zones have Zo... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0408 - PAFW - Ensure that a Zone Prote... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0412 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0414 - PAFW - Ensure that all zones ha... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0415 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0416 - PAFW - Ensure all zones have Zo... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0417 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0418 - PAFW - Ensure that Cloud Inline... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0419 - PAFW - Ensure that all zones ha... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0420 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0421 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0422 - PAFW - Ensure all zones have Zo... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0423 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0424 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0426 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0428 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0429 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0430 - PAFW - Ensure that Cloud Inline... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0431 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0432 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0433 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0434 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0435 - PAFW - Ensure that Cloud Inline... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0436 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0437 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0438 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0440 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0442 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0443 - PAFW - Ensure that Wildfire Inl... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0444 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0445 - PAFW - Ensure that Cloud Inline... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0446 - PAFW - Ensure that Inline Cloud... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0447 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0448 - PAFW - Anti-Spyware Profile DNS... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0453 - PAFW - Policies... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0454 - PAFW - Invalid Categories... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0455 - PAFW - Policies... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0456 - PAFW - Invalid Categories... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0459 - PAFW - Policies... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0460 - PAFW - Invalid Categories... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0461 - PAFW - Ensure that the Certific... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0462 - PAFW - Policies... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0463 - PAFW - Invalid Categories... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+  Storing [COMMENTED]: 1.0464 - PAFW - Ensure that the Certific... | starts with: #<custom_item>\n#   type             : AUDIT_XML\n# ... | opening commented: True
+✅ Items processed: 0 used, 369 commented

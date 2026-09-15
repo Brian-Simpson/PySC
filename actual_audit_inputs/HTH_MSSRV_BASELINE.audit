@@ -2916,18 +2916,18 @@
 #   check_type      : CHECK_REGEX
 # </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0220 - MSSRV - Ensure Disable HTTP proxy features: Disable WPAD is set to Enabled: Checked"
-#   info            : "This policy setting determines whether Web Proxy Auto-Discovery protocol (WPAD) is disabled on the system."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to Enabled: Checked :"
-#   reference       : "NIST 800-53r5|CM-6 CM-7"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "1"
-#   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\Software\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp'; $K = 'DisableWpad'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0220 - MSSRV - Ensure Disable HTTP proxy features: Disable WPAD is set to Enabled: Checked"
+   info            : "This policy setting determines whether Web Proxy Auto-Discovery protocol (WPAD) is disabled on the system."
+   solution        : "To establish the recommended configuration via GP, set the following UI path to Enabled: Checked :"
+   reference       : "NIST 800-53r5|CM-6 CM-7"
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : "1"
+   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\Software\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp'; $K = 'DisableWpad'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_REGEX
+ </custom_item>
 
 # <custom_item>
 #   type            : AUDIT_POWERSHELL
@@ -3943,57 +3943,57 @@
 #   check_type      : CHECK_SUPERSET
 # </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0299 - MSSRV - (L1) Ensure Deny log on as a service to include Guests"
-#   info            : "This security setting determines which service accounts are prevented from registering a process as a service."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to include Guests :"
-#   reference       : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "(?s)^(?:Guests|'?NO_MEMBERS'?)$"
-#   powershell_args : "$__pysc_result = (& { $t=[IO.Path]::GetTempFileName(); $ok=$false; try { secedit /export /cfg $t /areas USER_RIGHTS /mergedpolicy /quiet | Out-Null; $ok=$true } catch {} ; if(-not $ok){ secedit /export /cfg $t /areas USER_RIGHTS /quiet | Out-Null }; $l=(Get-Content $t | Where-Object { $_ -match '^\s*SeDenyServiceLogonRight\s*=' } | Select-Object -Last 1); $m=if($l){ ($l -replace '.*=', '').Split(',') | ForEach-Object { $s=$_.Trim(); $s=$s -replace '^\*', ''; if($s -match '^S-1-5-'){ try{([Security.Principal.SecurityIdentifier]$s).Translate([Security.Principal.NTAccount]).Value.Split('\\')[-1]}catch{$s} } else { if($s -match '\\'){ $s.Split('\\')[-1] } else { $s } } } | Where-Object { $_ } | Sort-Object -Unique }else{ @() }; Remove-Item $t -Force -ErrorAction SilentlyContinue; if($m){ $m -join ',' } else { 'NO_MEMBERS' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_SUPERSET
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0299 - MSSRV - (L1) Ensure Deny log on as a service to include Guests"
+   info            : "This security setting determines which service accounts are prevented from registering a process as a service."
+   solution        : "To establish the recommended configuration via GP, set the following UI path to include Guests :"
+   reference       : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : "(?s)^(?:Guests|'?NO_MEMBERS'?)$"
+   powershell_args : "$__pysc_result = (& { $t=[IO.Path]::GetTempFileName(); $ok=$false; try { secedit /export /cfg $t /areas USER_RIGHTS /mergedpolicy /quiet | Out-Null; $ok=$true } catch {} ; if(-not $ok){ secedit /export /cfg $t /areas USER_RIGHTS /quiet | Out-Null }; $l=(Get-Content $t | Where-Object { $_ -match '^\s*SeDenyServiceLogonRight\s*=' } | Select-Object -Last 1); $m=if($l){ ($l -replace '.*=', '').Split(',') | ForEach-Object { $s=$_.Trim(); $s=$s -replace '^\*', ''; if($s -match '^S-1-5-'){ try{([Security.Principal.SecurityIdentifier]$s).Translate([Security.Principal.NTAccount]).Value.Split('\\')[-1]}catch{$s} } else { if($s -match '\\'){ $s.Split('\\')[-1] } else { $s } } } | Where-Object { $_ } | Sort-Object -Unique }else{ @() }; Remove-Item $t -Force -ErrorAction SilentlyContinue; if($m){ $m -join ',' } else { 'NO_MEMBERS' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_SUPERSET
+ </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0300 - MSSRV - (L1) Ensure Restore files and directories is set to Administrators"
-#   info            : "This policy setting determines which users can bypass file, directory, registry, and other persistent object permissions when restoring backed up files and directories on computers that run Windows Vista (or newer) in your environment."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to Administrators :"
-#   reference       : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "(?s)^(?:Administrators|'?NO_MEMBERS'?)$"
-#   powershell_args : "$__pysc_result = (& { $t=[IO.Path]::GetTempFileName(); $ok=$false; try { secedit /export /cfg $t /areas USER_RIGHTS /mergedpolicy /quiet | Out-Null; $ok=$true } catch {} ; if(-not $ok){ secedit /export /cfg $t /areas USER_RIGHTS /quiet | Out-Null }; $l=(Get-Content $t | Where-Object { $_ -match '^\s*SeRestorePrivilege\s*=' } | Select-Object -Last 1); $m=if($l){ ($l -replace '.*=', '').Split(',') | ForEach-Object { $s=$_.Trim(); $s=$s -replace '^\*', ''; if($s -match '^S-1-5-'){ try{([Security.Principal.SecurityIdentifier]$s).Translate([Security.Principal.NTAccount]).Value.Split('\\')[-1]}catch{$s} } else { if($s -match '\\'){ $s.Split('\\')[-1] } else { $s } } } | Where-Object { $_ } | Sort-Object -Unique }else{ @() }; Remove-Item $t -Force -ErrorAction SilentlyContinue; if($m){ $m -join ',' } else { 'NO_MEMBERS' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0300 - MSSRV - (L1) Ensure Restore files and directories is set to Administrators"
+   info            : "This policy setting determines which users can bypass file, directory, registry, and other persistent object permissions when restoring backed up files and directories on computers that run Windows Vista (or newer) in your environment."
+   solution        : "To establish the recommended configuration via GP, set the following UI path to Administrators :"
+   reference       : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : "(?s)^(?:Administrators|'?NO_MEMBERS'?)$"
+   powershell_args : "$__pysc_result = (& { $t=[IO.Path]::GetTempFileName(); $ok=$false; try { secedit /export /cfg $t /areas USER_RIGHTS /mergedpolicy /quiet | Out-Null; $ok=$true } catch {} ; if(-not $ok){ secedit /export /cfg $t /areas USER_RIGHTS /quiet | Out-Null }; $l=(Get-Content $t | Where-Object { $_ -match '^\s*SeRestorePrivilege\s*=' } | Select-Object -Last 1); $m=if($l){ ($l -replace '.*=', '').Split(',') | ForEach-Object { $s=$_.Trim(); $s=$s -replace '^\*', ''; if($s -match '^S-1-5-'){ try{([Security.Principal.SecurityIdentifier]$s).Translate([Security.Principal.NTAccount]).Value.Split('\\')[-1]}catch{$s} } else { if($s -match '\\'){ $s.Split('\\')[-1] } else { $s } } } | Where-Object { $_ } | Sort-Object -Unique }else{ @() }; Remove-Item $t -Force -ErrorAction SilentlyContinue; if($m){ $m -join ',' } else { 'NO_MEMBERS' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_REGEX
+ </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0301 - MSSRV - (L1) Ensure Shut down the system is set to Administrators"
-#   info            : "This policy setting determines which users who are logged on locally to the computers in your environment can shut down the operating system with the Shut Down command."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to Administrators :"
-#   reference       : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "(?s)^(?:Administrators|'?NO_MEMBERS'?)$"
-#   powershell_args : "$__pysc_result = (& { $t=[IO.Path]::GetTempFileName(); $ok=$false; try { secedit /export /cfg $t /areas USER_RIGHTS /mergedpolicy /quiet | Out-Null; $ok=$true } catch {} ; if(-not $ok){ secedit /export /cfg $t /areas USER_RIGHTS /quiet | Out-Null }; $l=(Get-Content $t | Where-Object { $_ -match '^\s*SeShutdownPrivilege\s*=' } | Select-Object -Last 1); $m=if($l){ ($l -replace '.*=', '').Split(',') | ForEach-Object { $s=$_.Trim(); $s=$s -replace '^\*', ''; if($s -match '^S-1-5-'){ try{([Security.Principal.SecurityIdentifier]$s).Translate([Security.Principal.NTAccount]).Value.Split('\\')[-1]}catch{$s} } else { if($s -match '\\'){ $s.Split('\\')[-1] } else { $s } } } | Where-Object { $_ } | Sort-Object -Unique }else{ @() }; Remove-Item $t -Force -ErrorAction SilentlyContinue; if($m){ $m -join ',' } else { 'NO_MEMBERS' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0301 - MSSRV - (L1) Ensure Shut down the system is set to Administrators"
+   info            : "This policy setting determines which users who are logged on locally to the computers in your environment can shut down the operating system with the Shut Down command."
+   solution        : "To establish the recommended configuration via GP, set the following UI path to Administrators :"
+   reference       : "NIST 800-53r5|AC-2 AC-5 AC-6 AC-6(1) AC-6(7) AU-9(4)"
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : "(?s)^(?:Administrators|'?NO_MEMBERS'?)$"
+   powershell_args : "$__pysc_result = (& { $t=[IO.Path]::GetTempFileName(); $ok=$false; try { secedit /export /cfg $t /areas USER_RIGHTS /mergedpolicy /quiet | Out-Null; $ok=$true } catch {} ; if(-not $ok){ secedit /export /cfg $t /areas USER_RIGHTS /quiet | Out-Null }; $l=(Get-Content $t | Where-Object { $_ -match '^\s*SeShutdownPrivilege\s*=' } | Select-Object -Last 1); $m=if($l){ ($l -replace '.*=', '').Split(',') | ForEach-Object { $s=$_.Trim(); $s=$s -replace '^\*', ''; if($s -match '^S-1-5-'){ try{([Security.Principal.SecurityIdentifier]$s).Translate([Security.Principal.NTAccount]).Value.Split('\\')[-1]}catch{$s} } else { if($s -match '\\'){ $s.Split('\\')[-1] } else { $s } } } | Where-Object { $_ } | Sort-Object -Unique }else{ @() }; Remove-Item $t -Force -ErrorAction SilentlyContinue; if($m){ $m -join ',' } else { 'NO_MEMBERS' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_REGEX
+ </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0302 - MSSRV - (L1) Ensure Network access: Shares that can be accessed anonymously is set to None"
-#   info            : "This policy setting determines which network shares can be accessed by anonymous users."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to <blank> (i.e. None):"
-#   reference       : "NIST 800-53r5|AC-3"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : ".+"
-#   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\System\CurrentControlSet\Services\LanManServer\Parameters'; $K = 'NullSessionShares'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0302 - MSSRV - (L1) Ensure Network access: Shares that can be accessed anonymously is set to None"
+   info            : "This policy setting determines which network shares can be accessed by anonymous users."
+   solution        : "To establish the recommended configuration via GP, set the following UI path to <blank> (i.e. None):"
+   reference       : "NIST 800-53r5|AC-3"
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : ".+"
+   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\System\CurrentControlSet\Services\LanManServer\Parameters'; $K = 'NullSessionShares'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_REGEX
+ </custom_item>
 
 # <custom_item>
 #   type            : AUDIT_POWERSHELL
@@ -4268,18 +4268,18 @@
 #   check_type      : CHECK_REGEX
 # </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0324 - MSSRV - 32-bit subsystem on 64-bit OS"
-#   info            : "No additional information provided."
-#   solution        : "Configure this setting to the expected baseline value shown in the control description and value_data."
-#   reference       : ""
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "1"
-#   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\Software\Wow6432Node\Microsoft\Cryptography\Wintrust\Config'; $K = 'EnableCertPaddingCheck'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0324 - MSSRV - 32-bit subsystem on 64-bit OS"
+   info            : "No additional information provided."
+   solution        : "Configure this setting to the expected baseline value shown in the control description and value_data."
+   reference       : ""
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : "1"
+   powershell_args : "$__pysc_result = (& { $P = 'Registry::HKLM\Software\Wow6432Node\Microsoft\Cryptography\Wintrust\Config'; $K = 'EnableCertPaddingCheck'; if(-not (Test-Path -Path $P)){ Write-Output '__NON_COMPLIANT__'; return }; $R = Get-ItemProperty -Path $P -ErrorAction SilentlyContinue; if($null -eq $R){ Write-Output '__NON_COMPLIANT__'; return }; $prop = $R.PSObject.Properties[$K]; if($null -eq $prop -or $null -eq $prop.Value){ Write-Output '__NON_COMPLIANT__'; return }; $V = $prop.Value; if($null -eq $V -or [string]::IsNullOrWhiteSpace([string]$V)){ Write-Output '__NON_COMPLIANT__' } elseif($V -is [System.Array]){ $joined = ($V -join [Environment]::NewLine); if([string]::IsNullOrWhiteSpace([string]$joined)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output $joined } } else { Write-Output $V; } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_REGEX
+ </custom_item>
 
 # <custom_item>
 #   type            : AUDIT_POWERSHELL
@@ -4924,18 +4924,18 @@
   check_type      : CHECK_REGEX
 </custom_item>
 
-# <custom_item>
-#   type            : AUDIT_POWERSHELL
-#   description     : "1.0373 - MSSRV - (L1) Ensure Allow Administrator account lockout is set to Enabled (MS only)"
-#   info            : "This policy setting determines whether the built-in Administrator account is subject to the following Account Lockout Policy settings: Account lockout duration , Account lockout threshold , and Reset account lockout counter."
-#   solution        : "To establish the recommended configuration via GP, set the following UI path to Enabled :"
-#   reference       : "NIST 800-53r5|AC-7 AC-19"
-#   see_also        : "See HTH Policies and Standards"
-#   value_type      : POLICY_TEXT
-#   value_data      : "(?i)^Enabled$"
-#   powershell_args : "$__pysc_result = (& { $secfile = [System.IO.Path]::GetTempFileName(); secedit /export /cfg $secfile /areas SECURITYPOLICY /quiet | Out-Null; $line = Select-String -Path $secfile -Pattern 'AllowAdministratorLockout\s*=\s*(\d)' | Select-Object -First 1; Remove-Item $secfile -ErrorAction SilentlyContinue; if($line -and $line.Matches.Count -gt 0){ if($line.Matches[0].Groups[1].Value -eq '1'){ Write-Output 'Enabled' } else { Write-Output 'Disabled' } } else { Write-Output '__NON_COMPLIANT__' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
-#   check_type      : CHECK_REGEX
-# </custom_item>
+ <custom_item>
+   type            : AUDIT_POWERSHELL
+   description     : "1.0373 - MSSRV - (L1) Ensure Allow Administrator account lockout is set to Enabled (MS only)"
+   info            : "This policy setting determines whether the built-in Administrator account is subject to the following Account Lockout Policy settings: Account lockout duration , Account lockout threshold , and Reset account lockout counter."
+   solution        : "To establish the recommended configuration via GP, set the following UI path to Enabled :"
+   reference       : "NIST 800-53r5|AC-7 AC-19"
+   see_also        : "See HTH Policies and Standards"
+   value_type      : POLICY_TEXT
+   value_data      : "(?i)^Enabled$"
+   powershell_args : "$__pysc_result = (& { $secfile = [System.IO.Path]::GetTempFileName(); secedit /export /cfg $secfile /areas SECURITYPOLICY /quiet | Out-Null; $line = Select-String -Path $secfile -Pattern 'AllowAdministratorLockout\s*=\s*(\d)' | Select-Object -First 1; Remove-Item $secfile -ErrorAction SilentlyContinue; if($line -and $line.Matches.Count -gt 0){ if($line.Matches[0].Groups[1].Value -eq '1'){ Write-Output 'Enabled' } else { Write-Output 'Disabled' } } else { Write-Output '__NON_COMPLIANT__' } } | Out-String); if([string]::IsNullOrWhiteSpace([string]$__pysc_result)){ Write-Output '__NON_COMPLIANT__' } else { Write-Output ($__pysc_result.Trim()) }"
+   check_type      : CHECK_REGEX
+ </custom_item>
 
 # <custom_item>
 #   type            : AUDIT_POWERSHELL
@@ -5369,13 +5369,14 @@
 </if>
 
   </then>
-      
+  
       <else>
         <report type:"WARNING">
           description       : "HTH_Microsoft_Server OS was not verified."
           see_also          : "See HTH Policies and Standards"
         </report>
       </else>
+
 </if>
 
 </group_policy>
